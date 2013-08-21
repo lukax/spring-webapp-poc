@@ -4,30 +4,23 @@
 	xmlns:mvc="http://www.springframework.org/schema/mvc"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
-       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd"
+   	xmlns:tx="http://www.springframework.org/schema/tx" 
+	xmlns:jpa="http://www.springframework.org/schema/data/jpa">
 
-	
-		<!--
-		 Enables automatic mapping of fund objects to and from JSON
-			<mvc:annotation-driven/>
-		-->
-	
-	
-		<!--
-		 Setup spring to pull in @Controller, @RequestMapping, etc Configuration scans specified packages
-		 for classes configured as Spring managed beans and automatically sets up objects annotated with
-		 @Controller, @Service etc.
-		 
- 		<context:component-scan base-package="com.espindola.lobwebapp.service" />
-		<context:component-scan base-package="com.espindola.lobwebapp.repository" />
-		<context:component-scan base-package="com.espindola.lobwebapp.controller" />
-		-->	
-				
+		<context:annotation-config/>
+
+		<context:component-scan base-package="com.espindola.lobwebapp.controller"/>
+		<context:component-scan base-package="com.espindola.lobwebapp.service.impl"/>
+		<context:component-scan base-package="com.espindola.lobwebapp.repository"/>
+		
+		<jpa:repositories base-package="com.espindola.lobwebapp.repository" />
+		
 		<!--
 		 Configures view for returning JSON to the client	
-		-->
+			
 		<bean class="org.springframework.web.servlet.view.json.MappingJacksonJsonView">
 			<property name="contentType" value="text/plain"/>
 		</bean>
-	
+		-->
 </beans>
