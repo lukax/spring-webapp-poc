@@ -11,13 +11,13 @@ import com.espindola.lobwebapp.service.base.AbstractEntityService;
 import com.espindola.lobwebapp.service.contract.ProductService;
 
 @Service
-public class ProductServiceImpl extends AbstractEntityService<Product>
+public class DefaultProductService extends AbstractEntityService<Product>
 		implements ProductService {
 
 	private ProductRepository repository;
 
 	@Autowired
-	public ProductServiceImpl(ProductRepository repository) {
+	public DefaultProductService(ProductRepository repository) {
 		super(repository);
 		this.repository = repository;
 	}

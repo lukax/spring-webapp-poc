@@ -16,9 +16,9 @@
 	<!-- Enable @Transaction support -->
 	<tx:annotation-driven />
 
-	<!-- Scan repository contract package to generate beans -->
+	<!-- Scan repository package to generate beans -->
 	<jpa:repositories base-package="com.espindola.lobwebapp.repository" />
-
+	
 	<bean id="dataSource" class="com.jolbox.bonecp.BoneCPDataSource">
 		<property name="driverClass" value="${jdbc.driverClassName}" />
 		<property name="jdbcUrl" value="${jdbc.url}" />

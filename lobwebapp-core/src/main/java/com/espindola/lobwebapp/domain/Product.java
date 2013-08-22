@@ -1,19 +1,18 @@
 package com.espindola.lobwebapp.domain;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
 import com.espindola.lobwebapp.domain.base.AbstractEntity;
 
 @Entity
-@Table(name = "PRODUCT")
+@Table(name = "DT_PRODUCT")
 public class Product extends AbstractEntity {
 	private String name;
 	private Double price;
 	private String description;
 
-	@Column(name = "PRODUCT_DESCRIPTION")
+	//@Column(name = "PRODUCT_DESCRIPTION")
 	public String getDescription() {
 		return description;
 	}
@@ -22,7 +21,7 @@ public class Product extends AbstractEntity {
 		this.description = description;
 	}
 
-	@Column(name = "PRODUCT_PRICE")
+	//@Column(name = "PRODUCT_PRICE")
 	public Double getPrice() {
 		return price;
 	}
@@ -31,7 +30,7 @@ public class Product extends AbstractEntity {
 		this.price = price;
 	}
 
-	@Column(name = "PRODUCT_NAME", nullable = false)
+	//@Column(name = "PRODUCT_NAME", nullable = false)
 	public String getName() {
 		return name;
 	}

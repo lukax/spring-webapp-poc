@@ -1,0 +1,6 @@
+Foo - The interface ultimately defines the concept, so it should have the best name.
+AbstractFoo - An abstract implementation intended to be used as the base of a hierarchy of classes.
+BaseFoo - An implementation intended to be used as the base of a hierarchy of classes, where the base class could be used on its own if necessary.
+DefaultFoo - A "default" implementation that would be appropriate for the majority of typical use cases.
+SimpleFoo - A "simple" implementation with no unexpected functionality, perhaps as an example or as a mock. A simple POJO would be a good "simple" implementation.
+{Descriptive}Foo - Other implementations should describe what makes them unique.
