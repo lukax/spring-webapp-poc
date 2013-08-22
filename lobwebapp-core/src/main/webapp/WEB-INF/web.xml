@@ -10,7 +10,7 @@
 	<!--  Main configuration file for this Spring web application. -->  
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>/WEB-INF/rest-context.xml</param-value>
+        <param-value>/WEB-INF/applicationContext.xml</param-value>
     </context-param>
 
 	<!--  Loads the Spring web application context using the config file defined above. --> 
