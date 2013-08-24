@@ -24,4 +24,5 @@ public class ProductController extends EntityController<Product> {
 	public String testItOut(){
 		return "It Works!";
 	}
+	
 }
