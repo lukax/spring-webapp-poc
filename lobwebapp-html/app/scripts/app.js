@@ -13,7 +13,6 @@ angular.module('lobwebappHtmlApp', [])
       .otherwise({
         redirectTo: '/'
       });
-  })//.config(['$httpProvider', function($httpProvider) {
-    //delete $httpProvider.defaults.headers.common["X-Requested-With"];
+  });//.config(['$httpProvider', function($httpProvider) {
+    //delete $httpProvider.defaults.headers.common["Accept"];
 //}]);
-;

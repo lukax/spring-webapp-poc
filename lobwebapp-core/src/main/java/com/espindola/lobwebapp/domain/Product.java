@@ -2,17 +2,25 @@ package com.espindola.lobwebapp.domain;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import com.espindola.lobwebapp.domain.base.AbstractEntity;
 
 @Entity
-@Table(name = "DT_PRODUCT")
+@Table(name = "PT_PRODUCT")
 public class Product extends AbstractEntity {
+	@NotNull
+	@Size(min = 3)
 	private String name;
+	
+	@Min(0)
 	private Double price;
+	
+	@NotNull
 	private String description;
 
-	//@Column(name = "PRODUCT_DESCRIPTION")
 	public String getDescription() {
 		return description;
 	}
@@ -21,7 +29,6 @@ public class Product extends AbstractEntity {
 		this.description = description;
 	}
 
-	//@Column(name = "PRODUCT_PRICE")
 	public Double getPrice() {
 		return price;
 	}
@@ -30,7 +37,6 @@ public class Product extends AbstractEntity {
 		this.price = price;
 	}
 
-	//@Column(name = "PRODUCT_NAME", nullable = false)
 	public String getName() {
 		return name;
 	}

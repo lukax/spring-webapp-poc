@@ -1,22 +1,69 @@
-<div class="hero-unit">
-  <form ng-submit="saveProduct()">
-      <div class="controls form-inline">
-        <u2>{{title}}</u2><br/>
-        <label>Id: </label><input type="text" ng-model="id" readonly><br/>
-        <label>Name: </label><input type="text" ng-model="name"><br/>
-        <label>Price: </label><input type="text" ng-model="price"><br/>
-        <input class="btn btn-primary" type="submit" value="Save">
+<div class="navbar navbar-inverse navbar-fixed-top">
+  <div class="navbar-inner">
+    <div class="container-fluid">
+      <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="brand" href="#">LOBWebApp</a>
+      <div class="nav-collapse collapse">
+          <form class="navbar-form pull-right">
+            <input type="text" class="span2">
+            <button type="submit" class="btn">Pesquisar</button>
+          </form>
+        <ul class="nav">
+          <li><a href="#product">Produto</a></li>
+        </ul>
+      </div><!--/.nav-collapse -->
+    </div>
+  </div>
+</div>
+<div class="container-fluid">
+  <br/>
+  <br/>
+  <br/>
+  <div class="bs-docs-grid">
+    <div class="row show-grid">
+      <div class="span4">
+        <div class="controls form-inline">
+          <form ng-submit="saveProduct()">
+            <u3>Produto: {{mode.actual}}</u3><br/><br/>
+            <label>Id: </label><input type="text" ng-model="product.id" readonly><br/>
+            <label>Nome: </label><input type="text" ng-model="product.name"><br/>
+            <label>Preço: </label><input type="text" ng-model="product.price"><br/>
+            <div class="btn-group">
+              <input class="btn btn-primary" type="submit" value="Salvar">
+              <input class="btn" ng-click="newProduct()" type="{{espBtnStat()}}" value="Novo">
+              <input class="btn" ng-click="deleteProduct(product)" type="{{espBtnStat()}}" value="Excluir">
+              <input class="btn" ng-click="listProduct()" type="button" value="Listar">
+            </div>
+          </form>
+        </div>
       </div>
-  </form>
-  <br/>   
-  <ul>
-    <input class="btn" ng-click="listProduct()" type="button" value="List Products">
-    <li ng-repeat="item in data">
-      <div class="controls form-inline">
-        <label>{{item.id}}, {{item.name}}, {{item.price}}</label>
-        <a ng-click="editProduct(item)" class="btn">edit</a>
-        <a ng-click="deleteProduct(item.id)" class="btn">x</a>
+      <div class="span5">
+        <br/>
+          
+        <div ng-repeat="prod in data">
+          <div class="dropdown">
+            <button class="btn" data-toggle="dropdown" type="text">
+              {{prod.id}}, {{prod.name}}, {{prod.price}}
+            </button>
+
+            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu" >
+              <li><a ng-click="editProduct(prod)" >Editar</a></li>
+              <li><a ng-click="deleteProduct(prod)" >&times;</a></li>
+            </ul>
+          </div>
+        </div>
       </div>
-    </li>
-  </ul>
+    </div>
+    
+      <div id="infoBar"> 
+        <div class="alert">
+            <button type="button" class="close" ng-click="dismissInfoBar()">&times;</button>
+            <strong>{{info.message}}:</strong> {{info.description}}
+        </div>
+      </div>
+  </div>
 </div>

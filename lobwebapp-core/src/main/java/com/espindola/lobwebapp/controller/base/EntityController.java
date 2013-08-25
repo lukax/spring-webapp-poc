@@ -3,6 +3,7 @@ package com.espindola.lobwebapp.controller.base;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,14 +39,14 @@ public abstract class EntityController<E extends AbstractEntity> {
 
 	@RequestMapping(method = RequestMethod.POST)
 	@ResponseStatus(value = HttpStatus.OK)
-	public void save(@RequestBody E entity) throws EntityExistsException, EntityInvalidException {
-		service.save(entity);
+	public void save(@Validated @RequestBody E data) throws EntityExistsException, EntityInvalidException {
+		service.save(data);
 	}
 
 	@RequestMapping(method = RequestMethod.PUT)
 	@ResponseStatus(value = HttpStatus.OK)
-	public void update(@RequestBody E entity) throws EntityInvalidException, EntityNotFoundException {
-		service.update(entity);
+	public void update(@Validated @RequestBody E data) throws EntityInvalidException, EntityNotFoundException {
+		service.update(data);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
@@ -54,4 +55,12 @@ public abstract class EntityController<E extends AbstractEntity> {
 			throws EntityNotFoundException {
 		service.delete(id);
 	}
+	
+	@RequestMapping(value="/test", method = RequestMethod.GET)
+	@ResponseBody
+	public String testItOut(){
+		return "It Works!";
+	}
+	
+	
 }

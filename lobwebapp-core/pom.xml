@@ -26,12 +26,6 @@
 	</properties>
 	
 	<dependencies>
-	    <dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>${junit.version}</version>
-			<scope>test</scope>
-	    </dependency>
 	    <!-- Spring 3 dependencies -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -106,6 +100,13 @@
 			<artifactId>spring-data-jpa</artifactId>
 			<version>${spring.data.version}</version>
 		</dependency>
+		<!-- JUNIT Dependencies -->
+	    <dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit.version}</version>
+			<scope>test</scope>
+	    </dependency>
 		<!-- Log4j dependencies -->
 		<dependency>
 			<groupId>log4j</groupId>
@@ -167,12 +168,26 @@
 			<artifactId>h2</artifactId>
 			<version>${h2.version}</version>
 		</dependency>
-		<!-- JAVAX SERVLET TO INCLUDE CORS -->
+		<!-- JAVAX Dependencies -->
+		<!-- JAVAX SERVLET TO INCLUDE FILTERING I.E CORS -->
 	    <dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>
 			<version>${javax.version}</version>
   		</dependency>
+		<!-- VALIDATION Dependencies -->
+		<dependency>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
+			<version>1.1.0.Final</version>
+		</dependency>
+		<dependency>
+	    <groupId>org.hibernate</groupId>
+		    <artifactId>hibernate-validator</artifactId>
+		    <version>4.2.0.Final</version>
+		</dependency>
+            
+
 	</dependencies>
 	
 	  
