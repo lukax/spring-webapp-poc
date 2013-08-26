@@ -18,8 +18,9 @@ module.exports = function (grunt) {
 
   // configurable paths
   var yeomanConfig = {
-    app: 'app',
-    dist: 'dist'
+    app: 'src/main',
+    dist: 'build',
+    test: 'src/test'
   };
 
   try {
@@ -27,6 +28,7 @@ module.exports = function (grunt) {
   } catch (e) {}
 
   grunt.initConfig({
+    pkg: grunt.file.readJSON('package.json'),
     yeoman: yeomanConfig,
     watch: {
       coffee: {
@@ -34,7 +36,7 @@ module.exports = function (grunt) {
         tasks: ['coffee:dist']
       },
       coffeeTest: {
-        files: ['test/spec/{,*/}*.coffee'],
+        files: ['<%= yeoman.test %>/spec/{,*/}*.coffee'],
         tasks: ['coffee:test']
       },
       livereload: {
@@ -71,7 +73,7 @@ module.exports = function (grunt) {
           middleware: function (connect) {
             return [
               mountFolder(connect, '.tmp'),
-              mountFolder(connect, 'test')
+              mountFolder(connect, yeomanConfig.test)
             ];
           }
         }
@@ -126,7 +128,7 @@ module.exports = function (grunt) {
       test: {
         files: [{
           expand: true,
-          cwd: 'test/spec',
+          cwd: '<%= yeoman.test %>/spec',
           src: '{,*/}*.coffee',
           dest: '.tmp/spec',
           ext: '.js'
@@ -278,13 +280,26 @@ module.exports = function (grunt) {
       }
     },
     uglify: {
-      dist: {
-        files: {
-          '<%= yeoman.dist %>/scripts/scripts.js': [
-            '<%= yeoman.dist %>/scripts/scripts.js'
-          ]
-        }
+        options: {
+            banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
+        },
+        dist: {
+            files: {
+              '<%= yeoman.app %>/scripts/scripts.js': [
+                '<%= yeoman.dist %>/scripts/scripts.js'
+              ]
+            }
       }
+    },
+    typescript: {
+        base: {
+            src: ['<%= yeoman.app%>/**/*.ts'],
+            dest: '<%= yeoman.app%>/scripts/app.js',
+            options: {
+                module: 'amd',
+                target: 'es5'
+            }
+        }
     }
   });
 
@@ -311,6 +326,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('build', [
     'clean:dist',
+    'typescript', //Strategically placed here
     'useminPrepare',
     'concurrent:dist',
     'concat',
