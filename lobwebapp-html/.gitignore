@@ -5,3 +5,4 @@ dist
 app/components
 src/main/components
 build
+src/main/scripts/app.js

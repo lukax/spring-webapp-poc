@@ -49,6 +49,10 @@ module.exports = function (grunt) {
           '{.tmp,<%= yeoman.app %>}/scripts/{,*/}*.js',
           '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
         ]
+      },
+      typescript: {
+        files: 'src/main**/*.ts',
+        tasks: ['typescript']
       }
     },
     connect: {
@@ -137,9 +141,20 @@ module.exports = function (grunt) {
     },
     // not used since Uglify task does concat,
     // but still available if needed
-    /*concat: {
-      dist: {}
-    },*/
+    concat: {
+      options: {
+        separator: ';',
+      },
+      dist: {
+        src: ['<%= yeoman.app %>/config/**/*.js', 
+              '<%= yeoman.app %>/controller/**/*.js',
+              '<%= yeoman.app %>/domain/**/*.js', 
+              '<%= yeoman.app %>/repository/**/*.js', 
+              '<%= yeoman.app %>/service/**/*.js'],
+        
+        dest: '<%= yeoman.app %>/scripts/app.js'
+      }
+    },
     rev: {
       dist: {
         files: {
@@ -285,8 +300,8 @@ module.exports = function (grunt) {
         },
         dist: {
             files: {
-              '<%= yeoman.app %>/scripts/scripts.js': [
-                '<%= yeoman.dist %>/scripts/scripts.js'
+              '<%= yeoman.dist %>/scripts/app.js': [
+                '<%= yeoman.dist %>/scripts/app.js'
               ]
             }
       }
@@ -294,7 +309,7 @@ module.exports = function (grunt) {
     typescript: {
         base: {
             src: ['<%= yeoman.app%>/**/*.ts'],
-            dest: '<%= yeoman.app%>/scripts/app.js',
+            //dest: '<%= yeoman.app%>/scripts/app.js',
             options: {
                 module: 'amd',
                 target: 'es5'
@@ -326,7 +341,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('build', [
     'clean:dist',
-    'typescript', //Strategically placed here
+    'typescript', //Build the TS's before nigga
     'useminPrepare',
     'concurrent:dist',
     'concat',

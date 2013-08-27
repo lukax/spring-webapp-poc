@@ -11,6 +11,7 @@
 		<context.path>lobwebapp-core</context.path>
 		<source.encoding>UTF-8</source.encoding>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<log4j.conf>file:./src/main/resources/log4j.xml</log4j.conf>
 		<java.version>1.7</java.version>
 		<junit.version>4.8.1</junit.version>
 		<spring.version>3.2.3.RELEASE</spring.version>
@@ -23,6 +24,7 @@
 		<h2.version>1.3.166</h2.version>
 		<mysql.version>5.1.6</mysql.version>
 		<javax.version>2.5</javax.version>
+		<tomcat.version>7.0.37</tomcat.version>
 	</properties>
 	
 	<dependencies>
@@ -186,10 +188,20 @@
 		    <artifactId>hibernate-validator</artifactId>
 		    <version>4.2.0.Final</version>
 		</dependency>
-            
-
+		<!-- TOMCAT Dependencies -->            
+		<dependency>
+		<groupId>org.apache.tomcat.extras</groupId>
+			<artifactId>tomcat-extras-juli</artifactId>
+			<version>${tomcat.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.tomcat.extras</groupId>
+			<artifactId>tomcat-extras-juli-adapters</artifactId>
+			<version>${tomcat.version}</version>
+		</dependency>
+		
+		
 	</dependencies>
-	
 	  
 	<build>
     	<finalName>${context.path}</finalName>
@@ -220,8 +232,63 @@
 					<downloadJavadocs>true</downloadJavadocs>
 				</configuration>
 			</plugin>
-			
+			<!-- TOMCAT Madness -->
+			<plugin>
+				<groupId>org.apache.tomcat.maven</groupId>
+				<artifactId>tomcat7-maven-plugin</artifactId>
+				<version>2.1</version>
+				<configuration>
+					<path>/${context.name}</path>
+					<url>http://localhost:8080/manager/text</url>
+					<httpPort>8080</httpPort>
+     				<httpsPort>8443</httpsPort>
+					<server>TomcatServer</server>
+					<uriEncoding>${source.encoding}</uriEncoding>
+					<additionalConfigFilesDir>${basedir}/src/main/tomcat/conf</additionalConfigFilesDir>
+   					<classesDir>${project.build.outputDirectory}/classes</classesDir>
+					<keystoreFile>${basedir}/src/main/tomcat/conf/keystore</keystoreFile>
+					<keystorePass>changeit</keystorePass>
+					<systemProperties>
+						<tomcat.http.port>8080</tomcat.http.port>
+						<tomcat.https.port>8443</tomcat.https.port>
+						<log4j.configuration>${log4j.conf}</log4j.configuration>
+					</systemProperties>
+				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>log4j</groupId>
+						<artifactId>log4j</artifactId>
+						<version>1.2.16</version>
+					</dependency>
+					<dependency>
+						<groupId>org.slf4j</groupId>
+						<artifactId>slf4j-api</artifactId>
+						<version>${slf4j.version}</version>
+					</dependency>
+					<dependency>
+						<groupId>org.slf4j</groupId>
+						<artifactId>slf4j-log4j12</artifactId>
+						<version>${slf4j.version}</version>
+					</dependency>
+					<dependency>
+						<groupId>mysql</groupId>
+						<artifactId>mysql-connector-java</artifactId>
+						<version>5.1.14</version>
+					</dependency>
+					<dependency>
+						<groupId>org.apache.tomcat.extras</groupId>
+						<artifactId>tomcat-extras-juli</artifactId>
+						<version>${tomcat.version}</version>
+					</dependency>
+					<dependency>
+						<groupId>org.apache.tomcat.extras</groupId>
+						<artifactId>tomcat-extras-juli-adapters</artifactId>
+						<version>${tomcat.version}</version>
+					</dependency>
+				</dependencies>
+			</plugin>				
 		</plugins>  
+		
 	</build>
 	
 </project>
