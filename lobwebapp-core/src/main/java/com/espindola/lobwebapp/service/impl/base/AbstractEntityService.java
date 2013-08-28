@@ -1,4 +1,4 @@
-package com.espindola.lobwebapp.service.base;
+package com.espindola.lobwebapp.service.impl.base;
 
 import java.util.List;
 
@@ -6,8 +6,8 @@ import com.espindola.lobwebapp.domain.base.AbstractEntity;
 import com.espindola.lobwebapp.exception.EntityExistsException;
 import com.espindola.lobwebapp.exception.EntityInvalidException;
 import com.espindola.lobwebapp.exception.EntityNotFoundException;
-import com.espindola.lobwebapp.repository.contract.EntityRepository;
-import com.espindola.lobwebapp.service.contract.EntityService;
+import com.espindola.lobwebapp.repository.contract.base.EntityRepository;
+import com.espindola.lobwebapp.service.contract.base.EntityService;
 
 public abstract class AbstractEntityService<TEntity extends AbstractEntity>
 		implements EntityService<TEntity> {

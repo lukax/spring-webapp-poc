@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 //import org.springframework.web.bind.WebDataBinder;
 //import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
+
 import com.espindola.lobwebapp.controller.base.EntityController;
 import com.espindola.lobwebapp.domain.Product;
 import com.espindola.lobwebapp.service.contract.ProductService;

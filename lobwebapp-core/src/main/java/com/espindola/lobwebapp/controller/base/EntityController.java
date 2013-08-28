@@ -15,7 +15,7 @@ import com.espindola.lobwebapp.domain.base.AbstractEntity;
 import com.espindola.lobwebapp.exception.EntityExistsException;
 import com.espindola.lobwebapp.exception.EntityInvalidException;
 import com.espindola.lobwebapp.exception.EntityNotFoundException;
-import com.espindola.lobwebapp.service.contract.EntityService;
+import com.espindola.lobwebapp.service.contract.base.EntityService;
 
 public abstract class EntityController<E extends AbstractEntity> {
 

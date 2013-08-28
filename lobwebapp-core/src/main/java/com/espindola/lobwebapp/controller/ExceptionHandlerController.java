@@ -16,7 +16,7 @@ import com.espindola.lobwebapp.exception.EntityNotFoundException;
 import com.espindola.lobwebapp.exception.base.PersistenceException;
 
 @ControllerAdvice //Allows the exception handling to operate on all controllers
-public class CentralExceptionHandlerController {
+public class ExceptionHandlerController {
 
 	@ExceptionHandler({EntityNotFoundException.class, EntityExistsException.class, EntityInvalidException.class})
 	@ResponseBody

@@ -1,0 +1,26 @@
+<div class="container-fluid">
+  <br/>
+  <br/>
+  <br/>
+  <div class="bs-docs-grid">
+    <div class="row show-grid"> 
+      <div class="span5">
+        <br/>
+          
+        <div ng-repeat="prod in data">
+          <div class="dropdown">
+            <button class="btn" data-toggle="dropdown" type="text">
+              {{prod.id}}, {{prod.name}}, {{prod.price}}
+            </button>
+
+            <!--<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu" >
+              <li><a ng-click="editProduct(prod)" >Editar</a></li>
+              <li><a ng-click="deleteProduct(prod)" >&times;</a></li>
+            </ul>-->
+          </div>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+</div>

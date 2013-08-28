@@ -1,4 +1,4 @@
-package com.espindola.lobwebapp.controller.base;
+package com.espindola.lobwebapp.controller.util;
 
 import java.io.IOException;
 

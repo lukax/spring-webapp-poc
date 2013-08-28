@@ -1,4 +1,4 @@
-package com.espindola.lobwebapp.repository.contract;
+package com.espindola.lobwebapp.repository.contract.base;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

@@ -1,4 +1,4 @@
-package com.espindola.lobwebapp.service.contract;
+package com.espindola.lobwebapp.service.contract.base;
 
 import java.util.List;
 
