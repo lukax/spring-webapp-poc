@@ -1,58 +1,70 @@
 ///<reference path='../../../../../ts-definitions/DefinitelyTyped/angularjs/angular.d.ts'/>
 
 ///<reference path='../../../domain/base/AbstractEntity.ts'/>
-
 ///<reference path='../../contract/base/EntityService.ts'/>
 
-module service.impl.base{
-    export class AbstractEntityService<T extends domain.base.AbstractEntity> implements service.contract.base.EntityService<T> {
+module service.mock.base{
+    export class AbstractEntityServiceMock<T extends domain.base.AbstractEntity> implements service.contract.base.EntityService<T> {
+        private repository: T[];
         
-        private rootUrl : string = "http://localhost:8080/lobwebapp-core/rest";
-        private http : ng.IHttpService;
-        
-        constructor(contextUrl: string, $http: ng.IHttpService){
-            this.rootUrl += '/' + contextUrl;
-            this.http = $http;
+        constructor(){
+            this.repository = new Array<T>();
         }
         
         public save (entity: T, 
                 successCallback: (data: any, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any, 
                 errorCallback: (data: any, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig)=> any)
                 {
-                    this.getHttp().post(this.rootUrl, entity).success(successCallback).error(errorCallback);
+                    this.getRepository().push(entity);
                 }
                 
         public update (entity: T, 
                 successCallback: (data: any, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any, 
                 errorCallback: (data: any, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig)=> any) 
                 {
-                    this.getHttp().put(this.rootUrl, entity).success(successCallback).error(errorCallback);
+                    this.getRepository().forEach(function(item, index){
+                        if(item.id == entity.id){
+                            this.getRepository()[index] = entity;
+                            return;
+                        }
+                    });
+                
                 }
              
         public remove (entity: T, 
                 successCallback: (data: any, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any, 
                 errorCallback: (data: any, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig)=> any)
                 {
-                    this.getHttp().delete(this.rootUrl, entity).success(successCallback).error(errorCallback);
+                    this.getRepository().forEach(function(item, index){
+                        if(item.id == entity.id){
+                            this.getRepository().splice(index, 1);
+                        }
+                    });
+                
                 }
                 
         public findById (id : number,
                 successCallback: (data: T, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any, 
                 errorCallback: (data: T, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig)=> any)
                 {
-                    this.getHttp().get(this.rootUrl + '/'+ id).success(successCallback).error(errorCallback);
+                    this.getRepository().forEach(function(item){
+                        if(item.id == id){
+                            successCallback(item, 200, null, null);
+                            return;
+                        }
+                    });
+                
                 }
                 
         public list (successCallback: (data: T[], status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any, 
                 errorCallback: (data: T[], status: number, headers: (headerName: string) => string, config: ng.IRequestConfig)=> any) 
                 {
-                    this.getHttp().get(this.rootUrl).success(successCallback).error(errorCallback);   
+                    successCallback(this.getRepository(), 200, null, null);
                 }
         
         
-        public getHttp() {
-            return this.http;
+        public getRepository(){
+            return this.repository;
         }
-       
     }
 }   

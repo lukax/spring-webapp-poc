@@ -19,7 +19,7 @@ module.exports = function (grunt) {
   // configurable paths
   var yeomanConfig = {
     app: 'src/main',
-    dist: 'build',
+    dist: 'dist',
     test: 'src/test'
   };
 
@@ -51,7 +51,7 @@ module.exports = function (grunt) {
         ]
       },
       typescript: {
-        files: 'src/main**/*.ts',
+        files: 'src/main/**/*.ts',
         tasks: ['typescript']
       }
     },
@@ -142,18 +142,18 @@ module.exports = function (grunt) {
     // not used since Uglify task does concat,
     // but still available if needed
     concat: {
-      options: {
-        separator: ';',
-      },
-      dist: {
-        src: ['<%= yeoman.app %>/config/**/*.js', 
-              '<%= yeoman.app %>/controller/**/*.js',
-              '<%= yeoman.app %>/domain/**/*.js', 
-              '<%= yeoman.app %>/repository/**/*.js', 
-              '<%= yeoman.app %>/service/**/*.js'],
-        
-        dest: '<%= yeoman.app %>/scripts/app.js'
-      }
+      //options: {
+      //  separator: ';',
+      //},
+      //dist: {
+      //  src: ['<%= yeoman.app %>/config/**/*.js', 
+      //        '<%= yeoman.app %>/controller/**/*.js',
+      //        '<%= yeoman.app %>/domain/**/*.js', 
+      //        '<%= yeoman.app %>/repository/**/*.js', 
+      //        '<%= yeoman.app %>/service/**/*.js'],
+      //  
+      //  dest: '<%= yeoman.app %>/scripts/app.js'
+      //}
     },
     rev: {
       dist: {
@@ -229,7 +229,7 @@ module.exports = function (grunt) {
         files: [{
           expand: true,
           cwd: '<%= yeoman.app %>',
-          src: ['*.html', 'views/*.html'],
+          src: ['*.html', 'views/**/*.html'],
           dest: '<%= yeoman.dist %>'
         }]
       }
@@ -295,21 +295,24 @@ module.exports = function (grunt) {
       }
     },
     uglify: {
-        options: {
-            banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
-        },
-        dist: {
-            files: {
-              '<%= yeoman.dist %>/scripts/app.js': [
-                '<%= yeoman.dist %>/scripts/app.js'
-              ]
-            }
-      }
+        //options: {
+        //    banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
+        //},
+        //dist: {
+        //    files: {
+        //      '<%= yeoman.dist %>/scripts/app.js': [
+        //        '<%= yeoman.dist %>/scripts/app.js'
+        //      ]
+        //    }
+        //}
     },
     typescript: {
         base: {
-            src: ['<%= yeoman.app%>/**/*.ts'],
-            //dest: '<%= yeoman.app%>/scripts/app.js',
+            src: ['<%= yeoman.app%>/config/**/*.ts',
+                  '<%= yeoman.app%>/controller/**/*.ts',
+                  '<%= yeoman.app%>/domain/**/*.ts',
+                  '<%= yeoman.app%>/service/**/*.ts'],
+            dest: '<%= yeoman.app%>/scripts/app.js',
             options: {
                 module: 'amd',
                 target: 'es5'
@@ -349,7 +352,7 @@ module.exports = function (grunt) {
     'cdnify',
     'ngmin',
     'cssmin',
-    'uglify',
+    //'uglify',
     'rev',
     'usemin'
   ]);

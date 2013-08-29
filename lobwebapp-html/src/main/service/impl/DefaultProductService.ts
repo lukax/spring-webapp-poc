@@ -1,8 +1,9 @@
 ///<reference path='../../../../ts-definitions/DefinitelyTyped/angularjs/angular.d.ts'/>
 
-///<reference path='../../domain/base/AbstractEntity.ts'/>
 ///<reference path='../../domain/Product.ts'/>
+
 ///<reference path='../contract/ProductService.ts'/>
+///<reference path='base/AbstractEntityService.ts'/>
 
 module service.impl{
 	export class DefaultProductService extends service.impl.base.AbstractEntityService<domain.Product> implements service.contract.ProductService {
