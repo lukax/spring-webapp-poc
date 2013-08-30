@@ -18,9 +18,11 @@ module service.mock{
             successCallback: (data: domain.Product[], status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any, 
             errorCallback: (data: domain.Product[], status: number, headers: (headerName: string) => string, config: ng.IRequestConfig)=> any) 
             {
-                return super.getRepository().filter(function(element){
+                var items = super.getRepository().filter(function(element){
                     return element.name == name;
                 });
+                
+                successCallback(items, 200, null, null);
             }                                   
        
         

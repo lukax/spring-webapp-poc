@@ -6,6 +6,9 @@ var mountFolder = function (connect, dir) {
   return connect.static(require('path').resolve(dir));
 };
 
+//LUCAS'S VARS
+var modRewrite = require('connect-modrewrite');
+
 // # Globbing
 // for performance reasons we're only matching one level down:
 // 'test/spec/{,*/}*.js'
@@ -65,6 +68,8 @@ module.exports = function (grunt) {
         options: {
           middleware: function (connect) {
             return [
+              //HTML5 SUPPORT
+              modRewrite(['!\\.html|\\.js|\\.css|\\.png$ /index.html [L]']),
               lrSnippet,
               mountFolder(connect, '.tmp'),
               mountFolder(connect, yeomanConfig.app)
@@ -295,16 +300,16 @@ module.exports = function (grunt) {
       }
     },
     uglify: {
-        //options: {
-        //    banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
-        //},
-        //dist: {
-        //    files: {
-        //      '<%= yeoman.dist %>/scripts/app.js': [
-        //        '<%= yeoman.dist %>/scripts/app.js'
-        //      ]
-        //    }
-        //}
+        options: {
+            banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
+        },
+        dist: {
+            files: {
+              '<%= yeoman.dist %>/scripts/app.js': [
+                '<%= yeoman.dist %>/scripts/app.js'
+              ]
+            }
+        }
     },
     typescript: {
         base: {
@@ -328,6 +333,7 @@ module.exports = function (grunt) {
 
     grunt.task.run([
       'clean:server',
+      'typescript', //////
       'concurrent:server',
       'connect:livereload',
       'open',
@@ -344,7 +350,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('build', [
     'clean:dist',
-    'typescript', //Build the TS's before nigga
+    'typescript', //////
     'useminPrepare',
     'concurrent:dist',
     'concat',

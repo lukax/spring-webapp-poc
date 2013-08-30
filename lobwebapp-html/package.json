@@ -39,7 +39,8 @@
     "connect-livereload": "~0.2.0",
     "grunt-google-cdn": "~0.2.0",
     "grunt-ngmin": "~0.0.2",
-    "grunt-typescript": "~0.2.4"
+    "grunt-typescript": "~0.2.4",
+    "connect-modrewrite": "~0.5.4"
   },
   "engines": {
     "node": ">=0.8.0"

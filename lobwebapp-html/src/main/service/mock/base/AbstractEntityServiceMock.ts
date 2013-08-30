@@ -15,45 +15,65 @@ module service.mock.base{
                 successCallback: (data: any, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any, 
                 errorCallback: (data: any, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig)=> any)
                 {
+                    var storId = 0;
+                    this.getRepository().forEach(
+                            (item)=>{
+                                if(item.id > storId) storId = item.id;
+                            });
+                    entity.id = ++storId;
                     this.getRepository().push(entity);
+                    
+                    successCallback(storId, 200, null, null);
                 }
                 
         public update (entity: T, 
                 successCallback: (data: any, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any, 
                 errorCallback: (data: any, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig)=> any) 
                 {
-                    this.getRepository().forEach(function(item, index){
-                        if(item.id == entity.id){
-                            this.getRepository()[index] = entity;
-                            return;
-                        }
+                    var success = false;
+                    this.getRepository().some(
+                            (item, index) => {
+                                if(item.id == entity.id){
+                                    this.getRepository()[index] = entity;
+                                    success = true;
+                                    successCallback(null, 200, null, null);
+                                    return true;
+                            }
                     });
-                
+                    if(!success) errorCallback(null, 404, null, null);
                 }
              
         public remove (entity: T, 
                 successCallback: (data: any, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any, 
                 errorCallback: (data: any, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig)=> any)
                 {
-                    this.getRepository().forEach(function(item, index){
-                        if(item.id == entity.id){
-                            this.getRepository().splice(index, 1);
-                        }
+                    var success = false;
+                    this.getRepository().some(
+                            (item, index) => {
+                                if(item.id == entity.id){
+                                    this.getRepository().splice(index, 1);
+                                    success = true;
+                                    successCallback(null, 200, null, null);
+                                    return true;
+                            }
                     });
-                
+                    if(!success) errorCallback(null, 404, null, null);
                 }
                 
         public findById (id : number,
                 successCallback: (data: T, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any, 
                 errorCallback: (data: T, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig)=> any)
                 {
-                    this.getRepository().forEach(function(item){
-                        if(item.id == id){
-                            successCallback(item, 200, null, null);
-                            return;
-                        }
+                    var success = false;
+                    this.getRepository().some(
+                            (item) => {
+                                if(item.id == id){
+                                    success = true;
+                                    successCallback(item, 200, null, null);
+                                    return true; // Break the rest of the iteration
+                                }
                     });
-                
+                    if(!success) errorCallback(null, 404, null, null) ;
                 }
                 
         public list (successCallback: (data: T[], status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any, 

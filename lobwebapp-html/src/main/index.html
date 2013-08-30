@@ -7,12 +7,12 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <title></title>
+    <base href="/index.html">
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
-        <!--({.tmp,app}) -->
-        <!-- build:css styles/main.css -->
+        <!-- build:css({.tmp,src/main}) styles/main.css -->
         <link rel="stylesheet" href="styles/bootstrap.css">
         <link rel="stylesheet" href="styles/main.css">
         <!-- endbuild -->
@@ -28,7 +28,18 @@
     <![endif]-->
 
     <!-- Add your site or application content here -->
+    <div class="navbar" bs-navbar>
+       <div class="navbar-inner">
+            <a class="brand" href="/">LOBWebApp</a>
+            <ul class="nav">
+            <!-- You can use regular expressions -->
+              <li data-match-route="/product"><a href="/product">Produtos</a></li>
+              <li data-match-route="/product/0"><a href="/product/0">Novo Produto</a></li>
+            </ul>
+        </div>
+    </div>
     <div class="container" ng-view></div>
+
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
     <script>
       var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
@@ -39,7 +50,7 @@
 
     <script src="components/jquery/jquery.js"></script>
     <script src="components/angular/angular.js"></script>
-
+    <script src="components/angular-strap/dist/angular-strap.js"></script>
         <!-- build:js scripts/plugins.js -->
         <script src="components/bootstrap-sass/js/bootstrap-affix.js"></script>
         <script src="components/bootstrap-sass/js/bootstrap-alert.js"></script>
@@ -56,8 +67,7 @@
         <script src="components/bootstrap-sass/js/bootstrap-tab.js"></script>
         <!-- endbuild -->
         
-        <!--({.tmp,app})  -->
-        <!-- build:js scripts/app.js -->
+        <!-- build:js({.tmp,src/main}) scripts/app.js -->
         <script src="scripts/app.js"></script>
         <!-- endbuild -->
 

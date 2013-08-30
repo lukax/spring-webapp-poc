@@ -1,69 +1,31 @@
-<div class="navbar navbar-inverse navbar-fixed-top">
-  <div class="navbar-inner">
-    <div class="container-fluid">
-      <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="brand" href="#">LOBWebApp</a>
-      <div class="nav-collapse collapse">
-          <form class="navbar-form pull-right">
-            <input type="text" class="span2">
-            <button type="submit" class="btn">Pesquisar</button>
-          </form>
-        <ul class="nav">
-          <li><a href="#product">Produto</a></li>
-        </ul>
-      </div><!--/.nav-collapse -->
-    </div>
-  </div>
-</div>
 <div class="container-fluid">
-  <br/>
-  <br/>
-  <br/>
   <div class="bs-docs-grid">
     <div class="row show-grid">
       <div class="span4">
         <div class="controls form-inline">
-          <form ng-submit="saveProduct()">
-            <u3>Produto: {{mode.actual}}</u3><br/><br/>
-            <label>Id: </label><input type="text" ng-model="product.id" readonly><br/>
-            <label>Nome: </label><input type="text" ng-model="product.name"><br/>
-            <label>Preço: </label><input type="text" ng-model="product.price"><br/>
+          <form ng-submit="saveChanges()">
+            Id: <input type="text" ng-model="product.id" readonly><br/>
+            Nome: <input type="text" ng-model="product.name"><br/>
+            Preço: <input type="text" ng-model="product.price"><br/>
+            Descrição: <input type="text" ng-model="product.description"><br/>
             <div class="btn-group">
               <input class="btn btn-primary" type="submit" value="Salvar">
-              <input class="btn" ng-click="newProduct()" type="{{espBtnStat()}}" value="Novo">
-              <input class="btn" ng-click="deleteProduct(product)" type="{{espBtnStat()}}" value="Excluir">
-              <input class="btn" ng-click="listProduct()" type="button" value="Listar">
+              <a class="btn" href="/product/0" style="display: {{btnEsp()}};">Novo</a>
+              <a class="btn" ng-click="removeProduct()" style="display: {{btnEsp()}};">Excluir</a>
+              <a class="btn" href="/product">Listar</a>  
             </div>
           </form>
         </div>
       </div>
-      <div class="span5">
-        <br/>
-          
-        <div ng-repeat="prod in data">
-          <div class="dropdown">
-            <button class="btn" data-toggle="dropdown" type="text">
-              {{prod.id}}, {{prod.name}}, {{prod.price}}
-            </button>
-
-            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu" >
-              <li><a ng-click="editProduct(prod)" >Editar</a></li>
-              <li><a ng-click="deleteProduct(prod)" >&times;</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
     </div>
-    
-      <div id="infoBar"> 
-        <div class="alert">
-            <button type="button" class="close" ng-click="dismissInfoBar()">&times;</button>
-            <strong>{{info.message}}:</strong> {{info.description}}
-        </div>
-      </div>
   </div>
+    
+  <div class="alert" id="infoMsg" style="display: none;">
+      <button type="button" class="close" onmouseup="$('#infoMsg').hide()">&times;</button>
+      <strong>{{info.message}}</strong> {{info.description}}
+  </div>
+</div>
+
+<div class="pull-right">
+  {{statusMessage}} {{statusNumber}}
 </div>
