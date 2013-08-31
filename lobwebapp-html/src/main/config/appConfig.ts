@@ -27,7 +27,7 @@ var locationProviderCfg = ($locationProvider: ng.ILocationProvider) => {
 
 //////////
 
-angular.module('lobwebapp-html', []) 
+angular.module('lobwebapp-html', ['$strap.directives']) 
        
        .service('$productService', () => new service.mock.DefaultProductServiceMock())
   

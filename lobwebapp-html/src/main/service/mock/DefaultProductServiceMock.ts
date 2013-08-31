@@ -12,6 +12,7 @@ module service.mock{
             super.getRepository().push(new domain.Product(1,'Vassoura', 15, 'Comum'));
             super.getRepository().push(new domain.Product(2,'Cabide', 5, 'Plastico'));
             super.getRepository().push(new domain.Product(3, 'Desodorante', 8, 'Axe super fresh'));
+            super.getRepository().push(new domain.Product(4, 'TV', 1500, 'Toshiba 49\''));
         }
         
         public findByName (name : string,
@@ -19,10 +20,12 @@ module service.mock{
             errorCallback: (data: domain.Product[], status: number, headers: (headerName: string) => string, config: ng.IRequestConfig)=> any) 
             {
                 var items = super.getRepository().filter(function(element){
-                    return element.name == name;
+                    return element.name.toLowerCase() == name.toLowerCase();
                 });
-                
-                successCallback(items, 200, null, null);
+                if(items.length != 0)
+                    successCallback(items, 200, null, null);
+                else
+                    errorCallback(null, 404, null, null);
             }                                   
        
         

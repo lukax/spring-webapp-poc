@@ -4,28 +4,24 @@
       <div class="span4">
         <div class="controls form-inline">
           <form ng-submit="saveChanges()">
-            Id: <input type="text" ng-model="product.id" readonly><br/>
+            ID: <input type="text" ng-model="product.id" readonly><br/>
             Nome: <input type="text" ng-model="product.name"><br/>
             Preço: <input type="text" ng-model="product.price"><br/>
             Descrição: <input type="text" ng-model="product.description"><br/>
             <div class="btn-group">
               <input class="btn btn-primary" type="submit" value="Salvar">
+              <a class="btn" ng-click="removeProduct()" style="display: {{btnEsp()}};">Remover</a>
               <a class="btn" href="/product/0" style="display: {{btnEsp()}};">Novo</a>
-              <a class="btn" ng-click="removeProduct()" style="display: {{btnEsp()}};">Excluir</a>
-              <a class="btn" href="/product">Listar</a>  
+              <a class="btn" href="/product">Listar</a> 
             </div>
           </form>
         </div>
       </div>
     </div>
   </div>
-    
-  <div class="alert" id="infoMsg" style="display: none;">
-      <button type="button" class="close" onmouseup="$('#infoMsg').hide()">&times;</button>
-      <strong>{{info.message}}</strong> {{info.description}}
-  </div>
-</div>
 
-<div class="pull-right">
-  {{statusMessage}} {{statusNumber}}
+  
+  <div class="alerts">
+    <div class="alert fade" ng-repeat="alert in alerts" bs-alert="alert"></div>
+  </div>
 </div>
