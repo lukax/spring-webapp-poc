@@ -1,25 +1,26 @@
-<div class="container-fluid">
-        <input type="text" ng-model="searchText" class="pull-right" class="search-query" placeholder="Procurar">
-        <table class="table table-striped table-bordered table-condensed table-hover" >
-          <tr ng-init="reverse = false">
-            <td><a class="label" ng-click="predicate = 'id'; reverse = !reverse">ID</a></td>
-            <td><a class="label" ng-click="predicate = 'name'; reverse = !reverse">Nome</a></td>
-            <td><a class="label" ng-click="predicate = 'price'; reverse = !reverse">Preço</a></td>
-            <td><a class="label" ng-click="predicate = 'description'; reverse = !reverse">Descrição</a></td>
-          </tr>
-          <tr ng-repeat="prod in products | filter:searchText | orderBy:predicate:reverse" 
-              ng-click="editProduct(prod.id)" 
-              style="cursor: pointer;">
-            <td>{{prod.id}}</td>
-            <td>{{prod.name}}</td>
-            <td>{{prod.price}}</td>
-            <td>{{prod.description}}</td>
-          </tr>
-        </table>
+<div class="row">
+  <div class="col-md-12">
+    <input type="search" ng-model="searchText" placeholder="Procurar" class="form-control" autofocus>
+    <table class="table table-striped table-bordered table-condensed table-hover">
+      <tr ng-init="reverse = false">
+        <td><a href="javascript:void(0)" ng-click="predicate = 'id'; reverse = !reverse">ID</a></td>
+        <td><a href="javascript:void(0)" ng-click="predicate = 'name'; reverse = !reverse">Nome</a></td>
+        <td><a href="javascript:void(0)" ng-click="predicate = 'price'; reverse = !reverse">Preço</a></td>
+        <td><a href="javascript:void(0)" ng-click="predicate = 'description'; reverse = !reverse">Descrição</a></td>
+      </tr>
+      <tr ng-repeat="prod in products | filter:searchText | orderBy:predicate:reverse" 
+          ng-click="editProduct(prod.id)" 
+          style="cursor: pointer;">
+        <td>{{prod.id}}</td>
+        <td>{{prod.name}}</td>
+        <td>{{prod.price}}</td>
+        <td>{{prod.description}}</td>
+      </tr>
+      </table>
 
-
-  <div class="alerts">
-    <div class="alert fade" ng-repeat="alert in alerts" bs-alert="alert"></div>
   </div>
 </div>
 
+<div class="alerts">
+  <div class="alert fade" ng-repeat="alert in alerts" bs-alert="alert"></div>
+</div>

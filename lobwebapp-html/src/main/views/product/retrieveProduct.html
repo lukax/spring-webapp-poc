@@ -1,0 +1,40 @@
+	<div class="modal-dialog">
+	  <div class="modal-content">
+	    <div class="modal-header">
+	      <h4 class="modal-title">Buscar produto</h4>
+	    </div>
+	    <div class="modal-body">
+		    <div class="form-horizontal">
+			  	<div class="row">
+				  <div class="col-md-2">
+					<label class="control-label">ID/Nome</label>    
+				  </div>
+				  <div class="col-md-8">
+				    <div class="input-group">
+				      <input type="text" class="form-control" id="textBoxInput" autofocus ng-model="id">
+				      <span class="input-group-btn">
+				        <a class="btn btn-default" id="buttonSearch" data-dismiss="modal" aria-hidden="true"
+							  	href="/product/{{id}}">Buscar</a>
+				      </span>
+				    </div>
+				  </div>
+				</div>
+
+			</div> 
+	    </div>
+	    <div class="modal-footer">
+	    	<div class="alerts">
+				<div class="alert fade" ng-repeat="alert in alerts" bs-alert="alert"></div>
+			</div>
+	    </div>
+	  </div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+
+<script>
+	$("#textBoxInput").keyup(function(event){
+	    if(event.keyCode == 13){
+	        $("#buttonSearch").click();
+	    }
+	});
+</script>
+

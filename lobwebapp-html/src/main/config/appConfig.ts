@@ -1,11 +1,11 @@
 ///<reference path='../../../ts-definitions/DefinitelyTyped/angularjs/angular.d.ts'/>
-
 ///<reference path='../controller/ListProductController.ts'/>
-
 ///<reference path='../service/contract/base/EntityService.ts'/>
 ///<reference path='../service/contract/ProductService.ts'/>
+///<reference path='../service/contract/util/AlertService.ts'/>
 ///<reference path='../service/mock/base/AbstractEntityServiceMock.ts'/>
 ///<reference path='../service/mock/DefaultProductServiceMock.ts'/>
+///<reference path='../service/impl/util/DefaultAlertService.ts'/>
 
 
 var routeProviderCfg = ($routeProvider: ng.IRouteProvider) => {
@@ -21,16 +21,16 @@ var routeProviderCfg = ($routeProvider: ng.IRouteProvider) => {
 }
 
 var locationProviderCfg = ($locationProvider: ng.ILocationProvider) => {
-    $locationProvider.html5Mode(true);
-    $locationProvider.hashPrefix('!');  
+    $locationProvider.html5Mode(true); 
 }
 
 //////////
 
 angular.module('lobwebapp-html', ['$strap.directives']) 
        
-       .service('$productService', () => new service.mock.DefaultProductServiceMock())
-  
+       .service('_productService', () => new service.mock.DefaultProductServiceMock())
+       .service('_alertService', () => new service.impl.util.DefaultAlertService()) 
+
        .config(['$routeProvider', routeProviderCfg])       
        .config(['$locationProvider', locationProviderCfg])
        

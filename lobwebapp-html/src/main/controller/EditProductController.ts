@@ -2,75 +2,85 @@
 ///<reference path='../domain/Product.ts'/>
 ///<reference path='../domain/util/Alert.ts'/>
 ///<reference path='../service/contract/ProductService.ts'/>
+///<reference path='../service/contract/util/AlertService.ts'/>
 
 module controller{
     
     export interface EditProductViewModel extends ng.IScope {
         product: domain.Product;
-        btnEsp: () => string; 
-        removeProduct: () => void;
         saveChanges: () => void;
+        removeProduct: () => void;
         modal: any;
+        btnEsp: () => string; 
         alerts: domain.util.Alert[];
     }
     
     export class EditProductController {
         private scope: EditProductViewModel;
         private routeParams: any;
-        private productService: service.contract.ProductService;
         private location: ng.ILocationService;
+        private productService: service.contract.ProductService;
+        private alertService: service.contract.util.AlertService;
         
-        constructor($productService: service.contract.ProductService, $scope: EditProductViewModel, 
-                    $routeParams: ng.IRouteParamsService, $location: ng.ILocationService, $modal: any){
+        constructor($scope: EditProductViewModel, $routeParams: ng.IRouteParamsService, 
+                    $location: ng.ILocationService, $modal: any,
+                    _productService: service.contract.ProductService, _alertService: service.contract.util.AlertService){
             this.scope = $scope;
-            this.productService = $productService;
             this.routeParams = $routeParams;
             this.location = $location;
             this.scope.modal = $modal;
-            this.scope.alerts = [];
-
+            this.productService = _productService;
+            this.alertService = _alertService;
+            //
+            this.scope.alerts = this.alertService.list();
+            //
             this.retrieveProduct();
-            
-            this.scope.saveChanges = () => {
+            this.scope.saveChanges = () => { 
                 if(this.scope.product.id == 0) this.saveProduct();
                 else this.updateProduct();
             };
             this.scope.removeProduct = () => { 
                 this.removeProduct()     
             };
-
             this.scope.btnEsp = () => { 
                 if(this.scope.product != null && this.scope.product.id != 0)  return 'inherit'; 
                 else return 'none';
             };
         }
         
-        
         saveProduct(){
             this.productService.save(this.scope.product,
-                        (successData: number, successStatus) => { this.location.url("/product/" + successData);  }, 
-                        (errorData, errorStatus) => { this.scope.alerts.push(new domain.util.Alert('error', 'Código: '+errorStatus, 'Produto não pode ser salvado')); });
+                        (successData: number, successStatus) => { this.alertService.add(new domain.util.Alert(domain.util.AlertType.success, 'Código: '+successStatus, 'Produto foi salvado com sucesso')); 
+                            this.location.url("/product/" + successData);
+                        }, 
+                        (errorData, errorStatus) => { this.alertService.add(new domain.util.Alert(domain.util.AlertType.danger, errorData, 'Produto não pode ser salvado')); 
+                    });
         }
         
         updateProduct(){
             this.productService.update(this.scope.product,
-                        (successData, successStatus) => { this.scope.alerts.push(new domain.util.Alert('success', 'Código: '+successStatus, 'Produto foi atualizado com sucesso'));  }, 
-                        (errorData, errorStatus) => { this.scope.alerts.push(new domain.util.Alert('error', 'Código: '+errorStatus, 'Produto não pode ser atualizado')); });
+                        (successData, successStatus) => { this.alertService.add(new domain.util.Alert(domain.util.AlertType.success, 'Código: '+successStatus, 'Produto foi atualizado com sucesso'));  }, 
+                        (errorData, errorStatus) => { this.alertService.add(new domain.util.Alert(domain.util.AlertType.danger, errorData, 'Produto não pode ser atualizado')); 
+                    });
         }
 
         removeProduct(){
             this.productService.remove(this.scope.product, 
-                (successData, successStatus)=> { this.scope.alerts.push(new domain.util.Alert('success', 'Código: '+successStatus, 'Produto removido com sucesso')); }, 
-                (errorData, errorStatus) => { this.scope.alerts.push(new domain.util.Alert('error', 'Código: '+errorStatus, 'Produto não pode ser removido')); });                
-                this.generateProduct();
+                        (successData, successStatus)=> { this.alertService.add(new domain.util.Alert(domain.util.AlertType.success, 'Código: '+successStatus, 'Produto removido com sucesso')); 
+                            this.newProduct(); 
+                        }, 
+                        (errorData, errorStatus) => { this.alertService.add(new domain.util.Alert(domain.util.AlertType.danger, 'Código: '+errorStatus, 'Produto não pode ser removido')); 
+                    });
         }
         
         retrieveProduct() { //Buscar produto usando ID ou NOME
             if(isNaN(this.routeParams.productId)){
                 if(this.routeParams.productId == 'n'){ //Pegar id do usuario
                     this.scope.modal = this.scope.modal({
-                        template: 'views/product/partials/retrieveProduct.html',
+                        id: 'retrieveProductModal',
+                        template: 'views/product/retrieveProduct.html',
                         show: true,
+                        keyboard: false,
                         backdrop: 'static',
                         scope: this.scope
                     });
@@ -79,7 +89,8 @@ module controller{
                             (successData, successStatus) => { this.scope.product = successData[0]; },
                             (errorData, errorStatus) => { 
                                 this.location.url('/product/n');
-                                this.scope.modal.message("ERROR"); });
+                                this.alertService.add(new domain.util.Alert(domain.util.AlertType.danger, 'Código: '+errorStatus, 'Produto com o ID/Nome especificado não foi encontrado'));
+                         });
                 }
             }else{
                 if(this.routeParams.productId == 0){ //Gerar produto vazio se id = 0
@@ -87,15 +98,17 @@ module controller{
                 } 
                 else{ //Pegar existente se id != 0
                     this.productService.findById(this.routeParams.productId, 
-                            (successData, successStatus) => { this.scope.product = successData; },
-                            (errorData, errorStatus)=>{ this.location.url('/product/0'); });
+                            (successData, successStatus) => { this.scope.product = successData;  },
+                            (errorData, errorStatus)=>{ this.alertService.add(new domain.util.Alert(domain.util.AlertType.danger, 'Código: '+errorStatus, 'Produto com o ID especificado não foi encontrado')); 
+                                this.newProduct();    
+                        });
                 }
-            }
+            } 
 
-            if(this.scope.product == null){//Checagem final se produto nao pode ser pego
-                    this.generateProduct();
-            }    
+        }
 
+        newProduct(){
+            this.location.url('product/0');
         }
 
         generateProduct(){

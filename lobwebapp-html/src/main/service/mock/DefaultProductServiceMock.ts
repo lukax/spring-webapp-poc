@@ -1,5 +1,4 @@
 ///<reference path='../../../../ts-definitions/DefinitelyTyped/angularjs/angular.d.ts'/>
-
 ///<reference path='../../domain/base/AbstractEntity.ts'/>
 ///<reference path='../../domain/Product.ts'/>
 ///<reference path='../contract/ProductService.ts'/>
@@ -9,10 +8,10 @@ module service.mock{
         
         constructor(){
             super();
-            super.getRepository().push(new domain.Product(1,'Vassoura', 15, 'Comum'));
-            super.getRepository().push(new domain.Product(2,'Cabide', 5, 'Plastico'));
-            super.getRepository().push(new domain.Product(3, 'Desodorante', 8, 'Axe super fresh'));
-            super.getRepository().push(new domain.Product(4, 'TV', 1500, 'Toshiba 49\''));
+            super.getRepository().push(new domain.Product(1,'Vassoura', 15.00, 'Comum'));
+            super.getRepository().push(new domain.Product(2,'Cabide', 5.99, 'Plastico'));
+            super.getRepository().push(new domain.Product(3, 'Desodorante', 8.75, 'Axe super fresh'));
+            super.getRepository().push(new domain.Product(4, 'TV', 1497.99, 'Toshiba 49\''));
         }
         
         public findByName (name : string,

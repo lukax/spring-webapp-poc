@@ -1,5 +1,4 @@
 ///<reference path='../../../../ts-definitions/DefinitelyTyped/angularjs/angular.d.ts'/>
-
 ///<reference path='../../domain/Product.ts'/>
 ///<reference path='base/EntityService.ts'/>
 

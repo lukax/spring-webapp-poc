@@ -1,5 +1,4 @@
 ///<reference path='../../../../../ts-definitions/DefinitelyTyped/angularjs/angular.d.ts'/>
-
 ///<reference path='../../../domain/base/AbstractEntity.ts'/>
 
 module service.contract.base{

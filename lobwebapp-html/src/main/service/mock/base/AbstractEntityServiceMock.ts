@@ -1,5 +1,4 @@
 ///<reference path='../../../../../ts-definitions/DefinitelyTyped/angularjs/angular.d.ts'/>
-
 ///<reference path='../../../domain/base/AbstractEntity.ts'/>
 ///<reference path='../../contract/base/EntityService.ts'/>
 
@@ -15,13 +14,14 @@ module service.mock.base{
                 successCallback: (data: any, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any, 
                 errorCallback: (data: any, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig)=> any)
                 {
+                    if(entity.id != 0) errorCallback('ID Inválido', 403, null, null);
                     var storId = 0;
                     this.getRepository().forEach(
                             (item)=>{
                                 if(item.id > storId) storId = item.id;
                             });
                     entity.id = ++storId;
-                    this.getRepository().push(entity);
+                    this.getRepository().push(angular.copy(entity));
                     
                     successCallback(storId, 200, null, null);
                 }
@@ -30,17 +30,18 @@ module service.mock.base{
                 successCallback: (data: any, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any, 
                 errorCallback: (data: any, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig)=> any) 
                 {
+                    if(entity.id == 0) errorCallback('ID Inválido', 403, null, null);
                     var success = false;
                     this.getRepository().some(
                             (item, index) => {
                                 if(item.id == entity.id){
-                                    this.getRepository()[index] = entity;
+                                    this.getRepository()[index] = angular.copy(entity);
                                     success = true;
                                     successCallback(null, 200, null, null);
                                     return true;
                             }
                     });
-                    if(!success) errorCallback(null, 404, null, null);
+                    if(!success) errorCallback('ID inexistente', 404, null, null);
                 }
              
         public remove (entity: T, 
@@ -57,7 +58,7 @@ module service.mock.base{
                                     return true;
                             }
                     });
-                    if(!success) errorCallback(null, 404, null, null);
+                    if(!success) errorCallback('ID inexistente', 404, null, null);
                 }
                 
         public findById (id : number,
@@ -69,7 +70,7 @@ module service.mock.base{
                             (item) => {
                                 if(item.id == id){
                                     success = true;
-                                    successCallback(item, 200, null, null);
+                                    successCallback(angular.copy(item), 200, null, null);
                                     return true; // Break the rest of the iteration
                                 }
                     });
@@ -79,7 +80,7 @@ module service.mock.base{
         public list (successCallback: (data: T[], status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any, 
                 errorCallback: (data: T[], status: number, headers: (headerName: string) => string, config: ng.IRequestConfig)=> any) 
                 {
-                    successCallback(this.getRepository(), 200, null, null);
+                    successCallback(angular.copy(this.getRepository()), 200, null, null);
                 }
         
         
