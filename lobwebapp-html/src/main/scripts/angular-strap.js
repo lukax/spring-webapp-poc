@@ -31,7 +31,9 @@
           };
           if (!attrs.bsAlert) {
             if (angular.isUndefined(attrs.closeButton) || attrs.closeButton !== '0' && attrs.closeButton !== 'false') {
-              element.prepend('<button type="button" class="close" data-dismiss="alert">&times;</button>');
+              element.click(function(){
+                  element.trigger('close.bs.alert'); //YESSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+                });
             }
             if (attrs.closeAfter)
               closeAlert(attrs.closeAfter);
@@ -52,7 +54,9 @@
               else if (attrs.closeAfter)
                 closeAlert(attrs.closeAfter);
               if (angular.isUndefined(attrs.closeButton) || attrs.closeButton !== '0' && attrs.closeButton !== 'false') {
-                element.prepend('<button type="button" class="close" data-dismiss="alert">&times;</button>');
+                element.click(function(){
+                  element.trigger('close.bs.alert'); //YESSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+                });
               }
             }, true);
           }
@@ -64,13 +68,13 @@
             });
           }
           var parentArray = attrs.ngRepeat && attrs.ngRepeat.split(' in ').pop();
-          element.on('close', function (ev) {
+          element.on('close.bs.alert', function (ev) {
             var removeElement;
             if (parentArray) {
               ev.preventDefault();
               element.removeClass('in');
               removeElement = function () {
-                element.trigger('closed');
+                element.trigger('closed.bs.alert');
                 if (scope.$parent) {
                   scope.$parent.$apply(function () {
                     var path = parentArray.split('.');
@@ -91,7 +95,7 @@
               ev.preventDefault();
               element.removeClass('in');
               removeElement = function () {
-                element.trigger('closed');
+                element.trigger('closed.bs.alert');
                 scope.$apply(function () {
                   value.closed = true;
                 });
