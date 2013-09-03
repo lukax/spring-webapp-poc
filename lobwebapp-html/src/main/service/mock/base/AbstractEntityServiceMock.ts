@@ -5,9 +5,11 @@
 module service.mock.base{
     export class AbstractEntityServiceMock<T extends domain.base.AbstractEntity> implements service.contract.base.EntityService<T> {
         private repository: T[];
-        
-        constructor(){
+        private timeoutService: ng.ITimeoutService;
+
+        constructor($timeout: ng.ITimeoutService){
             this.repository = new Array<T>();
+            this.timeoutService = $timeout;
         }
         
         public save (entity: T, 
@@ -80,7 +82,7 @@ module service.mock.base{
         public list (successCallback: (data: T[], status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any, 
                 errorCallback: (data: T[], status: number, headers: (headerName: string) => string, config: ng.IRequestConfig)=> any) 
                 {
-                    successCallback(angular.copy(this.getRepository()), 200, null, null);
+                    this.timeoutService(()=> { successCallback(angular.copy(this.getRepository()), 200, null, null); }, 2000);
                 }
         
         

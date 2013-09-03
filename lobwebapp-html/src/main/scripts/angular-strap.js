@@ -15,7 +15,19 @@
     '$strap.directives',
     '$strap.config'
   ]);
-  angular.module('$strap.directives').directive('bsAlert', [
+  angular.module('$strap.directives')
+    .directive('alerts', function(){
+        return {
+              replace:true,
+              transclude:true,
+              restrict:"E",
+              template:
+                "<div class='alerts' style='cursor: pointer;'>" +
+                    "<div class='alert fade' ng-repeat='alert in alerts' bs-alert='alert'></div>" +
+                "</div>"
+          }
+    })
+    .directive('bsAlert', [
     '$parse',
     '$timeout',
     '$compile',
@@ -40,7 +52,7 @@
           } else {
             scope.$watch(attrs.bsAlert, function (newValue, oldValue) {
               value = newValue;
-              element.html((newValue.title ? '<strong>' + newValue.title + '</strong>&nbsp;' : '') + newValue.content || '');
+              element.html((newValue.title ? '<strong>' + newValue.title + '</strong>&nbsp;' : '') + newValue.content + '<div class="pull-right">' + newValue.time + '</div>');
               if (!!newValue.closed) {
                 element.hide();
               }

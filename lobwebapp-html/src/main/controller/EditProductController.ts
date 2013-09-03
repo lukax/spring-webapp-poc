@@ -10,8 +10,9 @@ module controller{
         product: domain.Product;
         saveChanges: () => void;
         removeProduct: () => void;
-        modal: any;
-        btnEsp: () => string; 
+        isEditable: () => boolean;
+        pricePattern: RegExp;
+        modal: any; 
         alerts: domain.util.Alert[];
     }
     
@@ -32,6 +33,7 @@ module controller{
             this.productService = _productService;
             this.alertService = _alertService;
             //
+            this.scope.pricePattern = /^(?=.*[1-9])\d*(?:\.\d{1,2})?$/;
             this.scope.alerts = this.alertService.list();
             //
             this.retrieveProduct();
@@ -42,9 +44,9 @@ module controller{
             this.scope.removeProduct = () => { 
                 this.removeProduct()     
             };
-            this.scope.btnEsp = () => { 
-                if(this.scope.product != null && this.scope.product.id != 0)  return 'inherit'; 
-                else return 'none';
+            this.scope.isEditable = () => { 
+                if(this.scope.product != null && this.scope.product.id != 0)  return true; 
+                return false;
             };
         }
         
@@ -112,7 +114,7 @@ module controller{
         }
 
         generateProduct(){
-            this.scope.product = new domain.Product(0,'',0,'');
+            this.scope.product = new domain.Product(0,'',0,'',0);
         }
 
 

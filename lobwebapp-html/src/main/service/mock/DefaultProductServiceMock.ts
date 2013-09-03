@@ -6,12 +6,12 @@
 module service.mock{
 	export class DefaultProductServiceMock extends service.mock.base.AbstractEntityServiceMock<domain.Product> implements service.contract.ProductService {
         
-        constructor(){
-            super();
-            super.getRepository().push(new domain.Product(1,'Vassoura', 15.00, 'Comum'));
-            super.getRepository().push(new domain.Product(2,'Cabide', 5.99, 'Plastico'));
-            super.getRepository().push(new domain.Product(3, 'Desodorante', 8.75, 'Axe super fresh'));
-            super.getRepository().push(new domain.Product(4, 'TV', 1497.99, 'Toshiba 49\''));
+        constructor($timeout: ng.ITimeoutService){
+            super($timeout);
+            super.getRepository().push(new domain.Product(1,'Vassoura', 15.00, 'Comum', 5));
+            super.getRepository().push(new domain.Product(2,'Cabide', 5.99, 'Plastico', 1));
+            super.getRepository().push(new domain.Product(3, 'Desodorante', 8.75, 'Axe super fresh', 10));
+            super.getRepository().push(new domain.Product(4, 'TV', 1497.99, 'Toshiba 49\'', 75));
         }
         
         public findByName (name : string,
