@@ -23,9 +23,12 @@ module controller{
         private productService: service.contract.ProductService;
         private alertService: service.contract.util.AlertService;
         
-        constructor($scope: EditProductViewModel, $routeParams: ng.IRouteParamsService, 
-                    $location: ng.ILocationService, $modal: any,
-                    _productService: service.contract.ProductService, _alertService: service.contract.util.AlertService){
+        constructor($scope: EditProductViewModel, 
+                    $location: ng.ILocationService, 
+                    $routeParams: ng.IRouteParamsService,
+                    $modal: any,
+                    _productService: service.contract.ProductService, 
+                    _alertService: service.contract.util.AlertService){
             this.scope = $scope;
             this.routeParams = $routeParams;
             this.location = $location;

@@ -301,26 +301,42 @@ module.exports = function (grunt) {
     },
     uglify: {
         options: {
-            banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
+            banner: '/*! <%= pkg.name %> v<%= pkg.version %> <%= grunt.template.today("yyyy-mm-dd") %> */\n',
+            mangle: true,
+            //beautify: true,
+            wrap: true
         },
-        dist: {
-            files: {
-              '<%= yeoman.dist %>/scripts/app.js': [
-                '<%= yeoman.dist %>/scripts/app.js'
-              ]
-            }
-        }
+        //dist: {
+        //    files: {
+        //      '<%= yeoman.dist %>/scripts/app.js': [
+        //        '<%= yeoman.dist %>/scripts/app.js'
+        //      ]
+        //    }
+        //}
     },
     typescript: {
         base: {
-            src: ['<%= yeoman.app%>/config/**/*.ts',
-                  '<%= yeoman.app%>/controller/**/*.ts',
-                  '<%= yeoman.app%>/domain/**/*.ts',
-                  '<%= yeoman.app%>/service/**/*.ts'],
+            src: [//'<%= yeoman.app%>/**/*.ts',
+                  '<%= yeoman.app%>/domain/base/*.ts',
+                  '<%= yeoman.app%>/domain/util/*.ts',
+                  '<%= yeoman.app%>/domain/*.ts',
+                  '<%= yeoman.app%>/service/impl/base/*.ts',
+                  '<%= yeoman.app%>/service/impl/util/*.ts',
+                  '<%= yeoman.app%>/service/impl/*.ts',
+                  '<%= yeoman.app%>/service/mock/base/*.ts',
+                  '<%= yeoman.app%>/service/mock/*.ts',
+                  '<%= yeoman.app%>/controller/*.ts',
+                  '<%= yeoman.app%>/module/ServiceModule.ts',
+                  '<%= yeoman.app%>/module/ControllerModule.ts',
+                  '<%= yeoman.app%>/module/App.ts'
+                  ],
             dest: '<%= yeoman.app%>/scripts/app.js',
             options: {
                 module: 'amd',
-                target: 'es5'
+                target: 'es5',
+                base_path: '<%= yeoman.app%>',
+                sourcemap: false,
+                declaration: false
             }
         }
     }
@@ -358,7 +374,7 @@ module.exports = function (grunt) {
     'cdnify',
     'ngmin',
     'cssmin',
-    //'uglify',
+    'uglify',
     'rev',
     'usemin'
   ]);

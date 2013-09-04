@@ -19,8 +19,10 @@ module controller{
         private productService: service.contract.ProductService;
         private alertService: service.contract.util.AlertService;
 
-        constructor($scope: ListProductViewModel, $location: ng.ILocationService, 
-                    _productService: service.contract.ProductService, _alertService: service.contract.util.AlertService){
+        constructor($scope: ListProductViewModel, 
+                    $location: ng.ILocationService, 
+                    _productService: service.contract.ProductService, 
+                    _alertService: service.contract.util.AlertService){
             this.scope = $scope;
             this.location = $location;
             this.productService = _productService;
