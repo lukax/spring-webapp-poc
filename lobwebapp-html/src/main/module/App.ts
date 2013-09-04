@@ -9,18 +9,11 @@
 
 module module{
     export class App {
-        private appModule: ng.IModule;
-        private serviceModule: module.ServiceModule;
+        private appNgModule: ng.IModule;
         private controllerModule: module.ControllerModule;
-
-        constructor() {   
-            this.serviceModule = new module.ServiceModule().configure();
-            this.controllerModule = new module.ControllerModule().configure();
-            this.appModule = angular.module('lwa', ['lwaControllerModule','$strap.directives']);
-        }
-    
-        configure(){
-            var routeProviderCfg = ($routeProvider: ng.IRouteProvider) => {
+        private directiveModule: module.DirectiveModule;
+        private filterModule: module.FilterModule;
+        private routeProviderCfg = ($routeProvider: ng.IRouteProvider) => {
                 $routeProvider
                     .when('/', {redirectTo: '/product'})
                     .when('/product', { templateUrl: 'views/product/listProduct.html', 
@@ -30,29 +23,22 @@ module module{
                                         controller: 'EditProductCtrl',
                                         caseInsensitiveMatch: true})
                     .otherwise({redirectTo: '/'});
-            }
-    
-            var locationProviderCfg = ($locationProvider: ng.ILocationProvider) => {
+        };
+        private locationProviderCfg = ($locationProvider: ng.ILocationProvider) => {
                 $locationProvider.html5Mode(true); 
-            }
+        };
+        
+        constructor() {   
+            this.directiveModule = new module.DirectiveModule().configure();
+            this.filterModule = new module.FilterModule().configure();
+            this.controllerModule = new module.ControllerModule().configure();
+            this.appNgModule = angular.module('lw', ['lwDirectiveModule','lwFilterModule','lwControllerModule','$strap.directives']);
+        }
     
-            var lobProgressDirective = () => {
-              return {
-                        replace:true,
-                        transclude:true,
-                        restrict:"E",
-                        template:
-                            '<div class="progress progress-striped active">'
-                              +'<div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">'
-                              +'</div>'
-                          +'</div>'
-                    }
-            }
-           
-            this.appModule                        
-                .config(['$routeProvider', routeProviderCfg])       
-                .config(['$locationProvider', locationProviderCfg])
-                .directive('lwaProgress', lobProgressDirective)
+        configure(){
+            this.appNgModule                        
+                .config(['$routeProvider', this.routeProviderCfg])       
+                .config(['$locationProvider', this.locationProviderCfg])
                 ;    
             return this;
         }

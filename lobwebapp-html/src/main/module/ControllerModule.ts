@@ -9,14 +9,16 @@
 
 module module{
     export class ControllerModule{
-        private controllerModule: ng.IModule;
-        
+        private controllerNgModule: ng.IModule;
+        private serviceModule: module.ServiceModule;
+
         constructor(){
-            this.controllerModule = angular.module('lwaControllerModule',['lwaServiceModule']);
+            this.serviceModule = new module.ServiceModule().configure();
+            this.controllerNgModule = angular.module('lwControllerModule',['lwServiceModule']);
         }
         
         configure(){
-            this.controllerModule
+            this.controllerNgModule
                 .controller('ListProductCtrl', ['$scope', '$location', '_productService', '_alertService', controller.ListProductController])        
                 .controller('EditProductCtrl', ['$scope', '$location', '$routeParams', '$modal', '_productService', '_alertService', controller.EditProductController])
                 ;
