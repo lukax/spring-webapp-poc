@@ -54,7 +54,7 @@ module.exports = function (grunt) {
         ]
       },
       typescript: {
-        files: 'src/main/**/*.ts',
+        files: 'src/main/ts/**/*.ts',
         tasks: ['typescript']
       }
     },
@@ -69,7 +69,7 @@ module.exports = function (grunt) {
           middleware: function (connect) {
             return [
               //HTML5 SUPPORT
-              modRewrite(['!\\.html|\\.js|\\.css|\\.png$ /index.html [L]']),
+              modRewrite(['!\\.html|\\.js|\\.css|\\.eot|\\.jpe?g|\\.svg|\\.ttf|\\.woff|\\.ico|\\.gif|\\.otf|\\.png$ /index.html [L]']),
               lrSnippet,
               mountFolder(connect, '.tmp'),
               mountFolder(connect, yeomanConfig.app)
@@ -147,18 +147,19 @@ module.exports = function (grunt) {
     // not used since Uglify task does concat,
     // but still available if needed
     concat: {
-      //options: {
-      //  separator: ';',
-      //},
-      //dist: {
-      //  src: ['<%= yeoman.app %>/config/**/*.js', 
-      //        '<%= yeoman.app %>/controller/**/*.js',
-      //        '<%= yeoman.app %>/domain/**/*.js', 
-      //        '<%= yeoman.app %>/repository/**/*.js', 
-      //        '<%= yeoman.app %>/service/**/*.js'],
-      //  
-      //  dest: '<%= yeoman.app %>/scripts/app.js'
-      //}
+      // options: {
+      //   separator: ';',
+      // },
+      // dist: {
+      //   src: [//'<%= yeoman.app %>/config/**/*.js', 
+      //         //'<%= yeoman.app %>/controller/**/*.js',
+      //         //'<%= yeoman.app %>/domain/**/*.js', 
+      //         //'<%= yeoman.app %>/repository/**/*.js', 
+      //         //'<%= yeoman.app %>/service/**/*.js'
+      //         ],
+        
+      //   dest: '<%= yeoman.app %>/scripts/app.js'
+      // }
     },
     rev: {
       dist: {
@@ -316,22 +317,7 @@ module.exports = function (grunt) {
     },
     typescript: {
         base: {
-            src: [//'<%= yeoman.app%>/**/*.ts',
-                  '<%= yeoman.app%>/domain/base/*.ts',
-                  '<%= yeoman.app%>/domain/util/*.ts',
-                  '<%= yeoman.app%>/domain/*.ts',
-                  '<%= yeoman.app%>/service/impl/base/*.ts',
-                  '<%= yeoman.app%>/service/impl/util/*.ts',
-                  '<%= yeoman.app%>/service/impl/*.ts',
-                  '<%= yeoman.app%>/service/mock/base/*.ts',
-                  '<%= yeoman.app%>/service/mock/*.ts',
-                  '<%= yeoman.app%>/controller/*.ts',
-                  '<%= yeoman.app%>/module/DirectiveModule.ts',
-                  '<%= yeoman.app%>/module/FilterModule.ts',
-                  '<%= yeoman.app%>/module/ServiceModule.ts',
-                  '<%= yeoman.app%>/module/ControllerModule.ts',
-                  '<%= yeoman.app%>/module/App.ts'
-                  ],
+            src: ['<%= yeoman.app%>/**/*.ts' ],
             dest: '<%= yeoman.app%>/scripts/app.js',
             options: {
                 module: 'amd',
@@ -385,5 +371,10 @@ module.exports = function (grunt) {
     'jshint',
     'test',
     'build'
+  ]);
+
+  grunt.registerTask('host', [
+    'open',
+    'connect:dist:keepalive'
   ]);
 };

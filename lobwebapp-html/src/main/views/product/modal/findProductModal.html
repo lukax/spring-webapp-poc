@@ -1,0 +1,40 @@
+<div aria-hidden="true" aria-labelledby="findProductModalLabel" role="dialog" tabindex="-1" class="modal fade" id="findProductModalId" style="display: none;">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+          <h4 class="modal-title">Buscar produto</h4>
+        </div>
+        <div class="modal-body">
+            <div class="form-horizontal">
+                <div class="row">
+                  <div class="col-md-2">
+                    <label class="control-label">ID/Nome</label>    
+                  </div>
+                  <div class="col-md-8">
+                    <div class="input-group">
+                      <input type="text" class="form-control" id="searchTextId" ng-model="searchText">
+                      <span class="input-group-btn">
+                        <button class="btn btn-primary" id="buttonSearchId" 
+                                data-dismiss="modal" ng-click="findProduct(searchText)">Buscar</button>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+            </div> 
+        </div><!--
+        <div class="modal-footer">
+        </div>-->
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+
+<script type="text/javascript">
+	$("#searchTextId").keyup(function(event){
+	    if(event.keyCode == 13){
+            alert('LOL');
+	        $("#buttonSearchId").click();
+	    }
+	});
+</script>
+

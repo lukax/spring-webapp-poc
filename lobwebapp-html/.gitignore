@@ -6,3 +6,4 @@ app/components
 src/main/components
 dist
 src/main/scripts/app.js
+.idea

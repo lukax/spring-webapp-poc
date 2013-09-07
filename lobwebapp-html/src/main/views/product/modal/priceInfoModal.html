@@ -1,0 +1,42 @@
+<div aria-hidden="true" aria-labelledby="priceInfoModalLabel" role="dialog" tabindex="-1" class="modal fade" id="priceInfoModalId" style="display: none;">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+          <h4 class="modal-title">Cálculo de Preço</h4>
+        </div>
+        <div class="modal-body">
+           <form name="priceInfoForm">
+             <div class="form">
+                 <div class="form-group">
+                      <div class="">
+                        <div ng-class="{'has-error': priceInfoForm.inputCostPrice.$invalid}">
+                          <label for="inputCostPrice" class="control-label">Preço de Custo</label>
+                          <div class="input-group">
+                            <span class="input-group-addon">R$</span>
+                            <input type="text" class="form-control" name="inputCostPrice" ng-model="product.costPrice" required ng-pattern="productPricePattern">
+                          </div>
+                        </div>
+                        <div ng-class="{'has-error': productProfitMargin < 1}">
+                          <label for="inputProfit" class="control-label">Margem de Lucro</label>
+                          <div class="input-group">
+                            <input type="text" class="form-control" name="inputProfit" readonly ng-model="productProfitMargin">
+                            <span class="input-group-addon">%</span>
+                          </div>
+                        </div>
+                        <div ng-class="{'has-error': priceInfoForm.inputPrice.$invalid}">
+                          <label for="inputPrice" class="control-label">Preço de Venda</label>
+                          <div class="input-group">
+                            <span class="input-group-addon">R$</span>
+                            <input type="text" class="form-control" name="inputPrice" autofocus ng-model="product.price" required ng-pattern="productPricePattern">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                </div>
+              </form>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>     
