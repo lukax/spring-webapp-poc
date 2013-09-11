@@ -11,10 +11,11 @@ module lwa.controller{
         alerts: domain.util.Alert[];
         product: domain.Product;
         productPricePattern: RegExp;
+        productGroups: string[];
         isNewProduct: () => boolean;
         saveChanges: () => void;
         removeProduct: () => void;
-        priceInfoModal: () => void;
+        priceInfo: () => void;
         nextProduct: () => void;
         previousProduct: () => void;
 
@@ -25,14 +26,14 @@ module lwa.controller{
         private scope: EditProductViewModel;
         private routeParams: any;
         private location: ng.ILocationService;
-        private productService: service.contract.ProductService;
+        private productService: service.mock.DefaultProductServiceMock;
         private alertService: service.contract.util.AlertService;
         private modalService: any;
         
         constructor($scope: EditProductViewModel, 
                     $location: ng.ILocationService, 
                     $routeParams: ng.IRouteParamsService,
-                    _productService: service.contract.ProductService, 
+                    _productService: service.mock.DefaultProductServiceMock, 
                     _alertService: service.contract.util.AlertService,
                     $ekathuwa: any){
             this.scope = $scope;
@@ -78,12 +79,19 @@ module lwa.controller{
         processArgs(){
             if(this.routeParams.productId == 0){ //Gerar produto vazio se id = 0
                 this.scope.product = new domain.Product(0,'','',0,0,0);
-            }
-            else{ //Pegar existente se id != 0
+            }else{ //Pegar existente se id != 0
                 this.productService.findById(this.routeParams.productId, 
                         (successData, successStatus) => { this.scope.product = successData;  },
                         (errorData, errorStatus)=>{ this.alertService.add(new domain.util.Alert(domain.util.AlertType.danger, 'Código: '+errorStatus, 'Produto com o ID especificado não foi encontrado')); 
                             this.newProduct(); //Manda para /product/0 se id != number ou não existir ID
+                    });
+            }
+            if(this.routeParams.priceInfo !== undefined){
+                this.modalService.modal({
+                        id: 'findInfoModalId',
+                        templateURL: 'views/product/modal/priceInfoModal.html',
+                        scope: this.scope,
+                        onHide: () => { this.location.search('priceInfo', null); this.scope.$apply(); }
                     });
             }
         }
@@ -99,13 +107,7 @@ module lwa.controller{
                 else this.updateProduct();
             };
             this.scope.removeProduct = () => { this.removeProduct(); };
-            this.scope.priceInfoModal = () => {
-                this.modalService.modal({
-                        id: 'findInfoModalId',
-                        templateURL: 'views/product/modal/priceInfoModal.html',
-                        scope: this.scope
-                    });
-            };
+            this.scope.priceInfo = () => { this.location.search('priceInfo', ''); };
             this.scope.nextProduct = () => {
                 this.location.url('/product/' + String(Number(this.routeParams.productId) + 1)); 
             };
@@ -118,6 +120,8 @@ module lwa.controller{
                 if(this.scope.product.costPrice != 0)
                     this.scope.productProfitMargin = Math.round(this.scope.product.price / this.scope.product.costPrice * Math.pow(10, 2)) / Math.pow(10, 2);
             });
+            this.productService.listGroups((successData, successStatus) => { this.scope.productGroups = successData; }, 
+                                           (errorData, errorStatus) => { });
         }
 
     }

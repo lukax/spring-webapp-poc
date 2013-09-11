@@ -84,7 +84,8 @@ module lwa.service.mock.base{
                     else errorCallback(null, 404, null, null) ;    
                 }
                 
-        public list (successCallback: (data: T[], status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any, 
+        public list (
+                successCallback: (data: T[], status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any, 
                 errorCallback: (data: T[], status: number, headers: (headerName: string) => string, config: ng.IRequestConfig)=> any) 
                 {
                     this.timeoutService(() => { successCallback(angular.copy(this.getRepository()), 200, null, null); }, 1500);

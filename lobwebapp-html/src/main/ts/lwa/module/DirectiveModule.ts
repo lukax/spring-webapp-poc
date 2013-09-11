@@ -14,7 +14,7 @@ module lwa.module{
             this.directiveNgModule
                 .directive('lwaProgress', this.progress)
                 .directive('lwaStForm', this.stForm)
-                .directive('lwaHref', ['$location', '$route', this.lwaHref]);
+                .directive('lwaHref', ['$location', '$route', this.lwaHref])
                 ;
             return this;
         }

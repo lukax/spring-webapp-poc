@@ -36,7 +36,7 @@
                     ng-model="product.price" required ng-pattern="productPricePattern">
                 <div class="input-group-btn">
                   <button type="button" class="btn btn-default dropdown-toggle" id="btnPriceInfoId"
-                    ng-click="priceInfoModal()" data-toggle="tooltip" title="Detalhar Cálculo de Preço">
+                    ng-click="priceInfo()" data-toggle="tooltip" title="Detalhar Cálculo de Preço">
                     <span class="glyphicon glyphicon-new-window"></span>
                   </button>
                 </div>
@@ -63,7 +63,7 @@
                     <label for="inputGroup" class="col-lg-1 control-label">Grupo</label>
                     <div class="col-lg-5">
                         <input type="text" class="form-control" id="inputGroup" name="inputGroup"
-                               ng-model="product.group">
+                               ng-model="product.group" typeahead="productGroup for productGroup in productGroups | limitTo:5" typeahead-min-length="0">
                     </div>
                 </div>
             </div>
@@ -79,7 +79,7 @@
 
 
           <div class="btn-group pull-right">
-            <button class="btn btn-primary" type="submit" value="Salvar" data-toggle="tooltip" title="Salvar Alterações do Produto"
+            <button class="btn btn-primary" type="submit" data-toggle="tooltip" title="Salvar Alterações do Produto"
                   ng-disabled="productForm.inputName.$invalid || productForm.inputDescription.$invalid">
               Salvar
             </button>

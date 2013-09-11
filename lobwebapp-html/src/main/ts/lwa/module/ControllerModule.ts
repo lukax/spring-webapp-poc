@@ -24,7 +24,7 @@ module lwa.module{
 
         constructor(){
             this.serviceModule = new module.ServiceModule().configure();
-            this.controllerNgModule = angular.module('lwaControllerModule',['lwaServiceModule','ngRoute','ngEkathuwa']);
+            this.controllerNgModule = angular.module('lwaControllerModule',['lwaServiceModule','ngRoute','ngEkathuwa','ui.bootstrap','ui.directives']);
         }
         
         configure(){

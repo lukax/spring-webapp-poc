@@ -7,7 +7,7 @@ module lwa.domain{
         private profitMargin: number;
 
         constructor(public id: number, public name: string, public description: string, public quantity: number, 
-                        public costPrice: number, public price: number){
+                        public costPrice: number, public price: number, public group?: string){
             super(id);
 
         }

@@ -13,7 +13,6 @@ module lwa.controller{
         products: domain.Product[];
         editProduct: (id: number) => void;
         findProduct: (searchText: string) => void;
-        findProductModal: () => void;
     }
     
     export class ListProductController {
@@ -78,7 +77,12 @@ module lwa.controller{
                            });
                 }
             }else if(findParam == ''){ // cobre: '', undefined
-                this.scope.findProductModal();
+                this.modalService.modal({
+                        id: 'findProductModalId',
+                        templateURL: 'views/product/modal/findProductModal.html',
+                        scope: this.scope,
+                        onHide: () => { this.location.search('find', null); this.scope.$apply(); }
+                    });
             }
             
         }
@@ -87,15 +91,8 @@ module lwa.controller{
             this.scope.alerts = this.alertService.list();
             this.scope.editProduct = (id: number) => { this.editProduct(id); };
             this.scope.findProduct = (searchText: string) => { this.findProduct(searchText); }
-            this.scope.findProductModal = () => {
-                this.modalService.modal({
-                        id: 'findProductModalId',
-                        templateURL: 'views/product/modal/findProductModal.html',
-                        scope: this.scope
-                    });
-            }
         }
 
+
     }
-    
 }

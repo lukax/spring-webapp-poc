@@ -69,7 +69,7 @@ module.exports = function (grunt) {
           middleware: function (connect) {
             return [
               //HTML5 SUPPORT
-              modRewrite(['!\\.html|\\.js|\\.css|\\.eot|\\.jpe?g|\\.svg|\\.ttf|\\.woff|\\.ico|\\.gif|\\.otf|\\.png$ /index.html [L]']),
+              modRewrite(['!\\.html|\\.js|\\.css|\\.eot|\\.jpeg|\\.svg|\\.ttf|\\.woff|\\.ico|\\.gif|\\.otf|\\.png$ /index.html [L]']),
               lrSnippet,
               mountFolder(connect, '.tmp'),
               mountFolder(connect, yeomanConfig.app)
@@ -322,9 +322,10 @@ module.exports = function (grunt) {
             options: {
                 module: 'amd',
                 target: 'es5',
-                base_path: '<%= yeoman.app%>',
-                sourcemap: false,
-                declaration: false
+                base_path: '<%= yeoman.app %>'//,
+                //sourcemap: true,
+                //fullSourceMapPath: true,
+                //declaration: true
             }
         }
     }

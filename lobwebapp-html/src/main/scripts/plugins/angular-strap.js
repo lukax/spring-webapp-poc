@@ -44,7 +44,7 @@
           if (!attrs.bsAlert) {
             if (angular.isUndefined(attrs.closeButton) || attrs.closeButton !== '0' && attrs.closeButton !== 'false') {
               element.click(function(){
-                  element.trigger('close.bs.alert'); //YESSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+                  element.trigger('close.bs.alert');
                 });
             }
             if (attrs.closeAfter)
@@ -67,7 +67,7 @@
                 closeAlert(attrs.closeAfter);
               if (angular.isUndefined(attrs.closeButton) || attrs.closeButton !== '0' && attrs.closeButton !== 'false') {
                 element.click(function(){
-                  element.trigger('close.bs.alert'); //YESSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+                  element.trigger('close.bs.alert');
                 });
               }
             }, true);
