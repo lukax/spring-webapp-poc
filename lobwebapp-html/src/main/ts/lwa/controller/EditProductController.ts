@@ -6,11 +6,13 @@
 
 module lwa.controller{
     import domain = lwa.domain;
-    
+    import util = lwa.util;
+
     export interface EditProductViewModel extends ng.IScope {
         alerts: domain.util.Alert[];
         product: domain.Product;
         productPricePattern: RegExp;
+        productProfitMargin: number;
         productGroups: string[];
         isNewProduct: () => boolean;
         saveChanges: () => void;
@@ -18,8 +20,6 @@ module lwa.controller{
         priceInfo: () => void;
         nextProduct: () => void;
         previousProduct: () => void;
-
-        productProfitMargin: number;
     }
     
     export class EditProductController {
@@ -35,14 +35,15 @@ module lwa.controller{
                     $routeParams: ng.IRouteParamsService,
                     _productService: service.mock.DefaultProductServiceMock, 
                     _alertService: service.contract.util.AlertService,
-                    $ekathuwa: any){
+                    $ekathuwa: any, $modal: any){
             this.scope = $scope;
             this.routeParams = $routeParams;
             this.location = $location;
             this.productService = _productService;
             this.alertService = _alertService;
             this.modalService = $ekathuwa;
-            
+            //this.modalService = $modal;
+
             this.populateScope();
             this.processArgs();
         }
@@ -75,10 +76,10 @@ module lwa.controller{
                         (errorData, errorStatus) => { this.alertService.add(new domain.util.Alert(domain.util.AlertType.danger, 'Código: '+errorStatus, 'Produto não pode ser removido')); 
                     });
         }
-        
+
         processArgs(){
             if(this.routeParams.productId == 0){ //Gerar produto vazio se id = 0
-                this.scope.product = new domain.Product(0,'','',0,0,0);
+                this.scope.product = new domain.Product(0,'','',0,0,0,'',0);
             }else{ //Pegar existente se id != 0
                 this.productService.findById(this.routeParams.productId, 
                         (successData, successStatus) => { this.scope.product = successData;  },
@@ -91,7 +92,7 @@ module lwa.controller{
                         id: 'findInfoModalId',
                         templateURL: 'views/product/modal/priceInfoModal.html',
                         scope: this.scope,
-                        onHide: () => { this.location.search('priceInfo', null); this.scope.$apply(); }
+                        onHidden: () => { this.location.search('priceInfo', null); this.scope.$apply(); }
                     });
             }
         }
@@ -118,7 +119,7 @@ module lwa.controller{
             };
             this.scope.$watch('product.price + product.costPrice', () => {
                 if(this.scope.product.costPrice != 0)
-                    this.scope.productProfitMargin = Math.round(this.scope.product.price / this.scope.product.costPrice * Math.pow(10, 2)) / Math.pow(10, 2);
+                    this.scope.productProfitMargin = lwa.util.MathUtil.round(this.scope.product.profitMargin(), 2);
             });
             this.productService.listGroups((successData, successStatus) => { this.scope.productGroups = successData; }, 
                                            (errorData, errorStatus) => { });

@@ -37,11 +37,11 @@ module lwa.controller{
             this.modalService = $ekathuwa;
 
             this.populateScope();
-            this.listProducts();
+            //this.listProduct();
             this.processArgs();
         }
 
-        listProducts(){
+        listProduct(){
             this.productService.list(
                 (successData, successStatus) => {
                     this.scope.products = successData;
@@ -63,11 +63,13 @@ module lwa.controller{
                            this.alertService.add(new domain.util.Alert(domain.util.AlertType.warning, 'Código: '+errorStatus, 'Produto com o ID/Nome especificado não foi encontrado'));
                        });
            }
+           if(this.findProductModal) this.findProductModal.then((x) => {x.modal('hide');});
         }
 
+        private findProductModal: any;
         processArgs(){
             var findParam = this.routeParams.find;
-             if(findParam){ // cobre: 'x', '1'
+             if(findParam){ // 'x', '1'
                 if(!isNaN(Number(findParam))){ this.location.url('/product/'+findParam); }  
                 else { 
                    this.productService.findByName(findParam,
@@ -76,13 +78,15 @@ module lwa.controller{
                                this.alertService.add(new domain.util.Alert(domain.util.AlertType.warning, 'Código: '+errorStatus, 'Produto com o ID/Nome especificado não foi encontrado'));
                            });
                 }
-            }else if(findParam == ''){ // cobre: '', undefined
-                this.modalService.modal({
+            }else if(findParam == ''){ 
+                this.findProductModal = this.modalService.modal({
                         id: 'findProductModalId',
                         templateURL: 'views/product/modal/findProductModal.html',
                         scope: this.scope,
-                        onHide: () => { this.location.search('find', null); this.scope.$apply(); }
+                        onHidden: () => { this.location.search('find', null); this.scope.$apply(); }
                     });
+            }else{
+                this.listProduct();
             }
             
         }
@@ -92,7 +96,6 @@ module lwa.controller{
             this.scope.editProduct = (id: number) => { this.editProduct(id); };
             this.scope.findProduct = (searchText: string) => { this.findProduct(searchText); }
         }
-
 
     }
 }

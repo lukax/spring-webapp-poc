@@ -38,7 +38,7 @@ module lwa.module{
                                                 controller.ListProductController])        
                 .controller('EditProductCtrl', ['$scope', '$location', '$routeParams', 
                                                 '_productService', '_alertService', 
-                                                '$ekathuwa',
+                                                '$ekathuwa','$modal',
                                                 controller.EditProductController])
                 .controller('appCtrl', ['$scope', ($scope: any) => { $scope.name = "test" }])
                  

@@ -2,14 +2,12 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+          <button aria-hidden="true" data-dismiss="modal" class="close" type="button">&times;</button>
           <h4 class="modal-title">Cálculo de Preço</h4>
         </div>
         <div class="modal-body">
-           <form name="priceInfoForm">
-             <div class="form">
+           <form name="priceInfoForm" novalidate>
                  <div class="form-group">
-                      <div class="">
                         <div ng-class="{'has-error': priceInfoForm.inputCostPrice.$invalid}">
                           <label for="inputCostPrice" class="control-label">Preço de Custo</label>
                           <div class="input-group">
@@ -28,14 +26,12 @@
                           <label for="inputPrice" class="control-label">Preço de Venda</label>
                           <div class="input-group">
                             <span class="input-group-addon">R$</span>
-                            <input type="text" class="form-control" name="inputPrice" autofocus ng-model="product.price" required ng-pattern="productPricePattern">
+                            <input type="text" class="form-control" name="inputPrice" ng-model="product.price" required ng-pattern="productPricePattern">
                           </div>
                         </div>
-                      </div>
                     </div>
-                    
-                </div>
               </form>
+              
         </div>
       </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->

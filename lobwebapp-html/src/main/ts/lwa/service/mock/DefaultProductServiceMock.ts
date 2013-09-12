@@ -13,11 +13,11 @@ module lwa.service.mock{
         
         constructor($timeout: ng.ITimeoutService){
             super($timeout);
-            super.getRepository().push(new domain.Product(1,'Notebook', 'Dell Inspiron 15R Special Edition Intel Core i5-3230M 2.6 GHz 6144 MB 750 GB', 9, 2102.30, 2699.00, 'Informática/Dispositivos'));
-            super.getRepository().push(new domain.Product(2,'Notebook', 'Acer Aspire E1-471-6413 Intel Core i3-2328M 2.2 GHz 6144 MB 500 GB', 13, 976.00, 1407.12, 'Informática/Dispositivos'));
-            super.getRepository().push(new domain.Product(3, 'Memória', 'Kingston KVR1333D3N9 8192 MB PC DDR3 1333 MHz', 34, 76.34, 143.75, 'Informática/Componentes'));
-            super.getRepository().push(new domain.Product(4, 'Memória', 'Markvision KMM2GBD3-1333 2048 MB PC DDR3 1333 MHz', 27, 27.32, 25.10, 'Informática/Componentes'));
-            super.getRepository().push(new domain.Product(5, 'SSD', 'Kingston SSDNow E100 SE100S37 100 GB Interno', 6, 1035.00, 1388.82, 'Informática/Componentes'));
+            super.getRepository().push(new domain.Product(1,'Notebook', 'Dell Inspiron 15R Special Edition Intel Core i5-3230M 2.6 GHz 6144 MB 750 GB', 9, 2102.30, 2699.00, 'Informática/Dispositivos', 0));
+            super.getRepository().push(new domain.Product(2,'Notebook', 'Acer Aspire E1-471-6413 Intel Core i3-2328M 2.2 GHz 6144 MB 500 GB', 13, 976.00, 1407.12, 'Informática/Dispositivos', 0));
+            super.getRepository().push(new domain.Product(3, 'Memória', 'Kingston KVR1333D3N9 8192 MB PC DDR3 1333 MHz', 34, 76.34, 143.75, 'Informática/Componentes', 0));
+            super.getRepository().push(new domain.Product(4, 'Memória', 'Markvision KMM2GBD3-1333 2048 MB PC DDR3 1333 MHz', 27, 27.32, 25.10, 'Informática/Componentes', 0));
+            super.getRepository().push(new domain.Product(5, 'SSD', 'Kingston SSDNow E100 SE100S37 100 GB Interno', 6, 1035.00, 1388.82, 'Informática/Componentes', 0));
         }
         
         
