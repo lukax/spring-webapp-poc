@@ -80,18 +80,18 @@
 
           <div class="btn-group pull-right">
             <button class="btn btn-primary" type="submit" data-toggle="tooltip" title="Salvar Alterações do Produto" data-loading-text="Salvando..."
-                  ng-disabled="productForm.inputName.$invalid || productForm.inputDescription.$invalid">
-              Salvar
+                  ng-disabled="productForm.inputName.$invalid || productForm.inputDescription.$invalid" ng-hide="readMode">
+              <span class="glyphicon glyphicon-floppy-disk"></span> Salvar
             </button>
             <a class="btn btn-default" data-toggle="tooltip" title="Remover Produto Atual"
-                  ng-click="removeProduct()" ng-hide="isNewProduct()">
+                  ng-click="removeProduct()" ng-hide="readMode">
               Remover
             </a>
-            <a class="btn btn-default" href="/product/0" data-toggle="tooltip" title="Criar Novo Produto"
-                  ng-hide="isNewProduct()">
+            <a class="btn btn-default" href="/product/new" data-toggle="tooltip" title="Criar Novo Produto"
+                  ng-hide="readMode">
               Novo
             </a>
-            <a class="btn btn-default" href="/product" data-toggle="tooltip" title="Listar Todos os Produtos">
+            <a class="btn btn-default" href="/product/list" data-toggle="tooltip" title="Listar Todos os Produtos" ng-hide="readMode">
               Listar
             </a> 
           </div>

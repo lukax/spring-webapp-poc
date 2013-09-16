@@ -40,10 +40,10 @@ angular.module('ngEkathuwa', ['ngRoute'])
                 footerTemplate: null,
                 footerCloseBtn: true,
                 footerSaveBtn: false,
-                onHide: function() {},
-                onHidden: function() {},
-                onShow: function() {},
-                onShown: function() {}
+                onHide: null,
+                onHidden: null,
+                onShow: null,
+                onShown: null
             };
             var t = '',
                 s = '',
@@ -150,7 +150,7 @@ angular.module('ngEkathuwa', ['ngRoute'])
             }
             deferred.promise.then(function(m) { 
                 m.on('show.bs.modal', op.onShow); 
-                m.on('shown.bs.modal', op.onShown); 
+                m.on('shown.bs.modal', function() { if(op.onShown) op.onShown(); $('*[autofocus]').focus(); });
                 m.on('hide.bs.modal', op.onHide); 
                 m.on('hidden.bs.modal', op.onHidden); 
             });

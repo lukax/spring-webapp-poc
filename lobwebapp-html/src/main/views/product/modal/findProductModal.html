@@ -13,12 +13,14 @@
               </div>
               <div class="col-md-8">
                 <!-- ui-keypress="{13:'findProduct(searchText)'}" -->
-                <form role="form" name="findProductForm" ng-submit="findProduct(searchText)" novalidate>
+                <form role="form" name="findProductForm" ng-submit="findProduct(searchText)" >
                     <div ng-class="{'has-error': findProductForm.inputSearchText.$invalid}">
                       <div class="input-group">
-                        <input type="text" class="form-control" name="inputSearchText" ng-model="searchText" required>
+                        <input type="text" class="form-control" name="inputSearchText" ng-model="searchText" required autofocus>
                         <span class="input-group-btn">
-                          <button class="btn btn-primary" type="submit" id="buttonSearchId">Buscar</button>
+                          <button class="btn btn-primary" type="submit" id="buttonSearchId" ng-disabled="findProductForm.inputSearchText.$invalid">
+                            <span class="glyphicon glyphicon-search"></span>
+                          </button>
                         </span>
                       </div>
                     </div>
@@ -30,6 +32,6 @@
 
         </div> 
       </div>
-    </div>
-  </div> 
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
 </div>

@@ -1,0 +1,168 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <ProjectGuid>{FFBCA04C-F62E-4BEE-A3CE-42921245DDC7}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <OutputPath>bin</OutputPath>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+  </PropertyGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RootNamespace>lobwebapp_html</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>4566</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:4203/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+    <TypeScriptTarget>ES3</TypeScriptTarget>
+    <TypeScriptRemoveComments>false</TypeScriptRemoveComments>
+    <TypeScriptSourceMap>true</TypeScriptSourceMap>
+    <TypeScriptModuleKind>AMD</TypeScriptModuleKind>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <TypeScriptTarget>ES3</TypeScriptTarget>
+    <TypeScriptRemoveComments>true</TypeScriptRemoveComments>
+    <TypeScriptSourceMap>false</TypeScriptSourceMap>
+    <TypeScriptModuleKind>AMD</TypeScriptModuleKind>
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Include="src\main\.buildignore" />
+    <Content Include="src\main\.htaccess" />
+    <Content Include="src\main\scripts\app.js" />
+    <Content Include="src\main\scripts\AppConfig.js" >
+      <DependentUpon>AppConfig.ts</DependentUpon>
+    </Content>
+    <Content Include="src\main\scripts\lwa\controller\product\EditProductController.js" >
+      <DependentUpon>EditProductController.ts</DependentUpon>
+    </Content>
+    <Content Include="src\main\scripts\lwa\controller\product\EditProductController.ts" />
+    <Content Include="src\main\scripts\lwa\controller\product\ListProductController.js" >
+      <DependentUpon>ListProductController.ts</DependentUpon>
+    </Content>
+    <Content Include="src\main\scripts\lwa\controller\product\ListProductController.ts" />
+    <Content Include="src\main\scripts\lwa\domain\base\AbstractEntity.js" >
+      <DependentUpon>AbstractEntity.ts</DependentUpon>
+    </Content>
+    <Content Include="src\main\scripts\lwa\domain\base\AbstractEntity.ts" />
+    <Content Include="src\main\scripts\lwa\domain\Product.js" >
+      <DependentUpon>Product.ts</DependentUpon>
+    </Content>
+    <Content Include="src\main\scripts\lwa\domain\Product.ts" />
+    <Content Include="src\main\scripts\lwa\domain\util\Alert.ts" />
+    <Content Include="src\main\scripts\lwa\module\App.js" >
+      <DependentUpon>App.ts</DependentUpon>
+    </Content>
+    <Content Include="src\main\scripts\lwa\module\App.ts" />
+    <Content Include="src\main\scripts\lwa\module\ControllerModule.js" >
+      <DependentUpon>ControllerModule.ts</DependentUpon>
+    </Content>
+    <Content Include="src\main\scripts\lwa\module\ControllerModule.ts" />
+    <Content Include="src\main\scripts\lwa\module\DirectiveModule.js" >
+      <DependentUpon>DirectiveModule.ts</DependentUpon>
+    </Content>
+    <Content Include="src\main\scripts\lwa\module\DirectiveModule.ts" />
+    <Content Include="src\main\scripts\lwa\module\FilterModule.js" >
+      <DependentUpon>FilterModule.ts</DependentUpon>
+    </Content>
+    <Content Include="src\main\scripts\lwa\module\FilterModule.ts" />
+    <Content Include="src\main\scripts\lwa\module\ServiceModule.js" >
+      <DependentUpon>ServiceModule.ts</DependentUpon>
+    </Content>
+    <Content Include="src\main\scripts\lwa\module\ServiceModule.ts" />
+    <Content Include="src\main\scripts\lwa\service\contract\base\EntityService.js" >
+      <DependentUpon>EntityService.ts</DependentUpon>
+    </Content>
+    <Content Include="src\main\scripts\lwa\service\contract\base\EntityService.ts" />
+    <Content Include="src\main\scripts\lwa\service\contract\ProductService.js" >
+      <DependentUpon>ProductService.ts</DependentUpon>
+    </Content>
+    <Content Include="src\main\scripts\lwa\service\contract\ProductService.ts" />
+    <Content Include="src\main\scripts\lwa\service\contract\util\AlertService.js" >
+      <DependentUpon>AlertService.ts</DependentUpon>
+    </Content>
+    <Content Include="src\main\scripts\lwa\service\contract\util\AlertService.ts" />
+    <Content Include="src\main\scripts\lwa\service\impl\base\AbstractEntityService.js" >
+      <DependentUpon>AbstractEntityService.ts</DependentUpon>
+    </Content>
+    <Content Include="src\main\scripts\lwa\service\impl\base\AbstractEntityService.ts" />
+    <Content Include="src\main\scripts\lwa\service\impl\DefaultProductService.js" >
+      <DependentUpon>DefaultProductService.ts</DependentUpon>
+    </Content>
+    <Content Include="src\main\scripts\lwa\service\impl\DefaultProductService.ts" />
+    <Content Include="src\main\scripts\lwa\service\impl\util\DefaultAlertService.js" >
+      <DependentUpon>DefaultAlertService.ts</DependentUpon>
+    </Content>
+    <Content Include="src\main\scripts\lwa\service\impl\util\DefaultAlertService.ts" />
+    <Content Include="src\main\scripts\lwa\service\mock\base\AbstractEntityServiceMock.js" >
+      <DependentUpon>AbstractEntityServiceMock.ts</DependentUpon>
+    </Content>
+    <Content Include="src\main\scripts\lwa\service\mock\base\AbstractEntityServiceMock.ts" />
+    <Content Include="src\main\scripts\lwa\service\mock\DefaultProductServiceMock.js" >
+      <DependentUpon>DefaultProductServiceMock.ts</DependentUpon>
+    </Content>
+    <Content Include="src\main\scripts\lwa\service\mock\DefaultProductServiceMock.ts" />
+    <Content Include="src\main\scripts\lwa\util\Std.ts" />
+    <Content Include="src\main\scripts\plugins\angular-strap.js" />
+    <Content Include="src\main\scripts\plugins\ekathuwa.js" />
+    <Content Include="src\test\.jshintrc" />
+    <Content Include="ts-definitions\angularjs\angular.d.ts" />
+    <Content Include="ts-definitions\jquery\jquery.d.ts" />
+    <Content Include="ts-definitions\moment\moment.d.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="src\main\404.html" />
+    <Content Include="src\main\favicon.ico" />
+    <Content Include="src\main\index.html" />
+    <Content Include="src\main\styles\main.css" />
+    <Content Include="src\main\styles\typeahead.css" />
+    <Content Include="src\main\template\typeahead\typeahead-match.html" />
+    <Content Include="src\main\template\typeahead\typeahead-popup.html" />
+    <Content Include="src\main\views\product\editProduct.html" />
+    <Content Include="src\main\views\product\listProduct.html" />
+    <Content Include="src\main\views\product\modal\findProductModal.html" />
+    <Content Include="src\main\views\product\modal\priceInfoModal.html" />
+    <Content Include="src\test\runner.html" />
+    <Content Include="src\test\spec\controllers\main.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ts-definitions\angularjs\angular.d.key" />
+    <Content Include="ts-definitions\jquery\jquery.d.key" />
+    <Content Include="ts-definitions\moment\moment.d.key" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="src\main\scripts\AppConfig.js.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="src\main\scripts\AppConfig.ts" />
+  </ItemGroup>
+  <Import Project="$(VSToolsPath)\TypeScript\Microsoft.TypeScript.targets" />
+</Project>

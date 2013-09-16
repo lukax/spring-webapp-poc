@@ -1,9 +1,10 @@
 node_modules
+bin
+build
 dist
 .tmp
 .sass-cache
-app/components
-src/main/components
+components
 dist
 src/main/scripts/app.js
 .idea

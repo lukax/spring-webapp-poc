@@ -12,7 +12,7 @@
                           <label for="inputCostPrice" class="control-label">Preço de Custo</label>
                           <div class="input-group">
                             <span class="input-group-addon">R$</span>
-                            <input type="text" class="form-control" name="inputCostPrice" ng-model="product.costPrice" required ng-pattern="productPricePattern">
+                            <input type="text" class="form-control" name="inputCostPrice" ng-model="product.costPrice" required ng-pattern="productPricePattern" autofocus>
                           </div>
                         </div>
                         <div ng-class="{'has-error': productProfitMargin < 1}">

@@ -7,7 +7,8 @@
         <td><a href="javascript:void(0)" ng-click="predicate = 'name'; reverse = !reverse">Nome</a></td>
         <td><a href="javascript:void(0)" ng-click="predicate = 'quantity'; reverse = !reverse">Qt.</a></td>
         <td><a href="javascript:void(0)" ng-click="predicate = 'price'; reverse = !reverse">Preço</a></td>
-        <td><a href="javascript:void(0)" ng-click="predicate = 'description'; reverse = !reverse">Descrição</a></td>
+        <td><a href="javascript:void(0)" ng-click="predicate = 'description'; reverse = !reverse">Descrição</b></a></td>
+        <td><a href="javascript:void(0)" ng-click="predicate = 'group'; reverse = !reverse">Grupo</a></td>
       </tr>
       <tr ng-repeat="prod in products | filter:searchText | orderBy:predicate:reverse" 
           ng-click="editProduct(prod.id)" 
@@ -17,6 +18,7 @@
         <td>{{prod.quantity}}</td>
         <td>{{prod.price}}</td>
         <td>{{prod.description}}</td>
+        <td>{{prod.group}}</td>
       </tr>
       </table>
 
