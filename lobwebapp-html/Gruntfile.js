@@ -323,7 +323,7 @@ module.exports = function (grunt) {
       dist: {
         files: [{
           expand: true,
-          cwd: '<%= yeoman.dist %>/scripts',
+          cwd: '<%= yeoman.app %>/scripts',
           src: '*.js',
           dest: '<%= yeoman.dist %>/scripts'
         }]
@@ -331,33 +331,45 @@ module.exports = function (grunt) {
     },
     uglify: {
         options: {
-            banner: '/*! <%= pkg.name %> v<%= pkg.version %> <%= grunt.template.today("yyyy-mm-dd") %> */\n',
-            mangle: true,
+            banner: '/*! <%= pkg.name %> v<%= pkg.version %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'//,
+            //mangle: true,
             //beautify: true,
-            wrap: true
+            //wrap: true
         },
-        //dist: {
-        //    files: {
-        //      '<%= yeoman.dist %>/scripts/app.js': [
-        //        '<%= yeoman.dist %>/scripts/app.js'
-        //      ]
-        //    }
-        //}
+        dist: {
+            files: [{
+                expand: true,
+                cwd: '<%= yeoman.app %>/scripts/',
+                src: '**/*.js',
+                dest: '<%= yeoman.dist %>/scripts/'
+               }]
+        }
     },
     typescript: {
         base: {
-            src: ['<%= yeoman.app%>/scripts/lwa/**/*.ts' ],
-            dest: '<%= yeoman.app%>/scripts/app.js',
+            src: ['<%= yeoman.app%>/scripts/**/*.ts' ],
             options: {
                 module: 'amd',
-                target: 'es5',
-                base_path: '<%= yeoman.app %>'//,
+                target: 'es5'//,
+                //base_path: '<%= yeoman.app %>'//,
                 //sourcemap: true,
                 //fullSourceMapPath: true,
                 //declaration: true
             }
         }
+    },
+    requirejs: {
+        compile: {
+            options: {
+                baseUrl: "<%= yeoman.app %>/scripts",
+                name: 'lwa/modularity/App',
+                mainConfigFile: "<%= yeoman.app %>/scripts/AppConfig.js",
+                out: "<%= yeoman.dist %>/scripts/app.min.js",
+                preserveLicenseComments: false
+            }
+        }
     }
+
   });
 
   grunt.registerTask('server', function (target) {
@@ -367,9 +379,9 @@ module.exports = function (grunt) {
 
     grunt.task.run([
       'clean:server',
+      'typescript',
       'concurrent:server',
       //'autoprefixer',
-      'typescript', //////
       'connect:livereload',
       'open',
       'watch'
@@ -386,16 +398,17 @@ module.exports = function (grunt) {
 
   grunt.registerTask('build', [
     'clean:dist',
+    'typescript',
+    'uglify:dist',
+    'requirejs',
     'useminPrepare',
     'concurrent:dist',
     //'autoprefixer',
-    'typescript', //////
     'concat',
     'copy',
     'cdnify',
     'ngmin',
     'cssmin',
-    'uglify',
     'rev',
     'usemin'
   ]);
@@ -410,4 +423,5 @@ module.exports = function (grunt) {
     'open',
     'connect:dist:keepalive'
   ]);
+
 };

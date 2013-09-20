@@ -3,19 +3,20 @@
 ///<reference path='../contract/ProductService.ts'/>
 ///<reference path='base/AbstractEntityService.ts'/>
 
-module lwa.service.impl{    
-	export class DefaultProductService extends service.impl.base.AbstractEntityService<domain.Product> implements service.contract.ProductService {
+import domain = require('./../../domain/Product');
+import service_contract = require('./../contract/ProductService');
+import service_impl_base = require('./base/AbstractEntityService');
+
+export class DefaultProductService extends service_impl_base.AbstractEntityService<domain.Product> implements service_contract.ProductService {
         
-        constructor($http : ng.IHttpService){
-            super('product', $http);
-        }
-        
-        public findByName (name : string,
-            successCallback: (data: domain.Product[], status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any, 
-            errorCallback: (data: domain.Product[], status: number, headers: (headerName: string) => string, config: ng.IRequestConfig)=> any) 
-            {
-            }                                   
-       
-        
+    constructor($http : ng.IHttpService){
+        super('product', $http);
     }
+        
+    public findByName (name : string,
+        successCallback: (data: domain.Product[], status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any, 
+        errorCallback: (data: domain.Product[], status: number, headers: (headerName: string) => string, config: ng.IRequestConfig)=> any) 
+        {
+        }                                   
+       
 }

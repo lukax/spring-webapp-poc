@@ -1,10 +1,10 @@
 ///<reference path='../../../domain/util/Alert.ts'/>
 
-module lwa.service.contract.util{
-    export interface AlertService{
-        add: (alert: domain.util.Alert) => void;
-        remove: (alert: domain.util.Alert) => void;
-        removeAll: () => void;
-        list: () => domain.util.Alert[];
-    }
+import domain_util = require('./../../domain/util/Alert');
+
+export interface AlertService{
+    add: (alert: domain_util.Alert) => void;
+    remove: (alert: domain_util.Alert) => void;
+    removeAll: () => void;
+    list: () => domain_util.Alert[];
 }

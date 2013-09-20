@@ -57,86 +57,94 @@
   <ItemGroup>
     <Content Include="src\main\.buildignore" />
     <Content Include="src\main\.htaccess" />
-    <Content Include="src\main\scripts\app.js" />
-    <Content Include="src\main\scripts\AppConfig.js" >
-      <DependentUpon>AppConfig.ts</DependentUpon>
+    <Content Include="src\main\scripts\AppConfig.js">
+      <DependentUpon>appConfig.ts</DependentUpon>
     </Content>
-    <Content Include="src\main\scripts\lwa\controller\product\EditProductController.js" >
+    <Content Include="src\main\scripts\lwa\controller\product\EditProductController.js">
       <DependentUpon>EditProductController.ts</DependentUpon>
     </Content>
     <Content Include="src\main\scripts\lwa\controller\product\EditProductController.ts" />
-    <Content Include="src\main\scripts\lwa\controller\product\ListProductController.js" >
+    <Content Include="src\main\scripts\lwa\controller\product\ListProductController.js">
       <DependentUpon>ListProductController.ts</DependentUpon>
     </Content>
     <Content Include="src\main\scripts\lwa\controller\product\ListProductController.ts" />
-    <Content Include="src\main\scripts\lwa\domain\base\AbstractEntity.js" >
+    <Content Include="src\main\scripts\lwa\domain\base\AbstractEntity.js">
       <DependentUpon>AbstractEntity.ts</DependentUpon>
     </Content>
     <Content Include="src\main\scripts\lwa\domain\base\AbstractEntity.ts" />
-    <Content Include="src\main\scripts\lwa\domain\Product.js" >
+    <Content Include="src\main\scripts\lwa\domain\Product.js">
       <DependentUpon>Product.ts</DependentUpon>
     </Content>
     <Content Include="src\main\scripts\lwa\domain\Product.ts" />
     <Content Include="src\main\scripts\lwa\domain\util\Alert.ts" />
-    <Content Include="src\main\scripts\lwa\module\App.js" >
+    <Content Include="src\main\scripts\lwa\domain\util\Alert.js">
+      <DependentUpon>Alert.ts</DependentUpon>
+    </Content>
+    <Content Include="src\main\scripts\lwa\modularity\App.js">
       <DependentUpon>App.ts</DependentUpon>
     </Content>
-    <Content Include="src\main\scripts\lwa\module\App.ts" />
-    <Content Include="src\main\scripts\lwa\module\ControllerModule.js" >
+    <Content Include="src\main\scripts\lwa\modularity\App.ts" />
+    <Content Include="src\main\scripts\lwa\modularity\ControllerModule.js">
       <DependentUpon>ControllerModule.ts</DependentUpon>
     </Content>
-    <Content Include="src\main\scripts\lwa\module\ControllerModule.ts" />
-    <Content Include="src\main\scripts\lwa\module\DirectiveModule.js" >
+    <Content Include="src\main\scripts\lwa\modularity\ControllerModule.ts" />
+    <Content Include="src\main\scripts\lwa\modularity\DirectiveModule.js">
       <DependentUpon>DirectiveModule.ts</DependentUpon>
     </Content>
-    <Content Include="src\main\scripts\lwa\module\DirectiveModule.ts" />
-    <Content Include="src\main\scripts\lwa\module\FilterModule.js" >
+    <Content Include="src\main\scripts\lwa\modularity\DirectiveModule.ts" />
+    <Content Include="src\main\scripts\lwa\modularity\FilterModule.js">
       <DependentUpon>FilterModule.ts</DependentUpon>
     </Content>
-    <Content Include="src\main\scripts\lwa\module\FilterModule.ts" />
-    <Content Include="src\main\scripts\lwa\module\ServiceModule.js" >
+    <Content Include="src\main\scripts\lwa\modularity\FilterModule.ts" />
+    <Content Include="src\main\scripts\lwa\modularity\ServiceModule.js">
       <DependentUpon>ServiceModule.ts</DependentUpon>
     </Content>
-    <Content Include="src\main\scripts\lwa\module\ServiceModule.ts" />
-    <Content Include="src\main\scripts\lwa\service\contract\base\EntityService.js" >
+    <Content Include="src\main\scripts\lwa\modularity\ServiceModule.ts" />
+    <Content Include="src\main\scripts\lwa\service\contract\base\EntityService.js">
       <DependentUpon>EntityService.ts</DependentUpon>
     </Content>
     <Content Include="src\main\scripts\lwa\service\contract\base\EntityService.ts" />
-    <Content Include="src\main\scripts\lwa\service\contract\ProductService.js" >
+    <Content Include="src\main\scripts\lwa\service\contract\ProductService.js">
       <DependentUpon>ProductService.ts</DependentUpon>
     </Content>
     <Content Include="src\main\scripts\lwa\service\contract\ProductService.ts" />
-    <Content Include="src\main\scripts\lwa\service\contract\util\AlertService.js" >
+    <Content Include="src\main\scripts\lwa\service\contract\util\AlertService.js">
       <DependentUpon>AlertService.ts</DependentUpon>
     </Content>
     <Content Include="src\main\scripts\lwa\service\contract\util\AlertService.ts" />
-    <Content Include="src\main\scripts\lwa\service\impl\base\AbstractEntityService.js" >
+    <Content Include="src\main\scripts\lwa\service\impl\base\AbstractEntityService.js">
       <DependentUpon>AbstractEntityService.ts</DependentUpon>
     </Content>
     <Content Include="src\main\scripts\lwa\service\impl\base\AbstractEntityService.ts" />
-    <Content Include="src\main\scripts\lwa\service\impl\DefaultProductService.js" >
+    <Content Include="src\main\scripts\lwa\service\impl\DefaultProductService.js">
       <DependentUpon>DefaultProductService.ts</DependentUpon>
     </Content>
     <Content Include="src\main\scripts\lwa\service\impl\DefaultProductService.ts" />
-    <Content Include="src\main\scripts\lwa\service\impl\util\DefaultAlertService.js" >
+    <Content Include="src\main\scripts\lwa\service\impl\util\DefaultAlertService.js">
       <DependentUpon>DefaultAlertService.ts</DependentUpon>
     </Content>
     <Content Include="src\main\scripts\lwa\service\impl\util\DefaultAlertService.ts" />
-    <Content Include="src\main\scripts\lwa\service\mock\base\AbstractEntityServiceMock.js" >
+    <Content Include="src\main\scripts\lwa\service\mock\base\AbstractEntityServiceMock.js">
       <DependentUpon>AbstractEntityServiceMock.ts</DependentUpon>
     </Content>
     <Content Include="src\main\scripts\lwa\service\mock\base\AbstractEntityServiceMock.ts" />
-    <Content Include="src\main\scripts\lwa\service\mock\DefaultProductServiceMock.js" >
+    <Content Include="src\main\scripts\lwa\service\mock\DefaultProductServiceMock.js">
       <DependentUpon>DefaultProductServiceMock.ts</DependentUpon>
     </Content>
     <Content Include="src\main\scripts\lwa\service\mock\DefaultProductServiceMock.ts" />
     <Content Include="src\main\scripts\lwa\util\Std.ts" />
+    <Content Include="src\main\scripts\lwa\util\Std.js">
+      <DependentUpon>Std.ts</DependentUpon>
+    </Content>
     <Content Include="src\main\scripts\plugins\angular-strap.js" />
     <Content Include="src\main\scripts\plugins\ekathuwa.js" />
     <Content Include="src\test\.jshintrc" />
     <Content Include="ts-definitions\angularjs\angular.d.ts" />
+    <Content Include="ts-definitions\angularui\angular-ui.d.ts" />
     <Content Include="ts-definitions\jquery\jquery.d.ts" />
     <Content Include="ts-definitions\moment\moment.d.ts" />
+    <Content Include="ts-definitions\requirejs\require-tests.ts" />
+    <Content Include="ts-definitions\requirejs\require.d.ts" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="src\main\404.html" />
@@ -159,10 +167,15 @@
     <Content Include="ts-definitions\moment\moment.d.key" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="src\main\scripts\AppConfig.js.map" />
+    <Content Include="src\main\scripts\AppConfig.js.map">
+      <DependentUpon>appConfig.ts</DependentUpon>
+    </Content>
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="src\main\scripts\AppConfig.ts" />
+    <TypeScriptCompile Include="src\main\scripts\appConfig.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ts-definitions\requirejs\README.md" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TypeScript\Microsoft.TypeScript.targets" />
 </Project>

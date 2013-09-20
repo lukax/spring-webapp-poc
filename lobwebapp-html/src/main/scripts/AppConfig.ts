@@ -3,47 +3,59 @@
 
 require.config({
     paths: {
+        text: '../components/requirejs-text/text',
+        jquery: '../components/jquery/jquery',
+        bootstrap: '../components/bootstrap-sass/dist/js/bootstrap',
 		angular: '../components/angular/angular',
-		angularRoute: '../components/angular-route/angular-route',
+        angularRoute: '../components/angular-route/angular-route',
         angularMocks: '../components/angular-mocks/angular-mocks',
         angularUi: '../components/angular-ui/build/angular-ui',
         angularUiBootstrap: '../components/angular-ui-bootstrap/dist/ui-bootstrap-0.6.0',
         angularStrap: 'plugins/angular-strap',
-        text: '../components/requirejs-text/text'
+        ekathuwa: 'plugins/ekathuwa',
+        moment: '../components/moment/moment'
 	},
 	baseUrl: 'scripts',
-	shim: {
+    shim: {
+        'bootstrap': {
+            deps: [ 'jquery' ],
+            'exports': 'bootstrap'
+        },
         'angular': { 'exports': 'angular' },
-        'angularRoute': ['angular'],
+        'angularRoute': {
+            deps: ['angular'],
+            'exports': 'angularRoute'
+        },
         'angularMocks': {
             deps: ['angular'],
             'exports': 'angular.mock'
         },
-        'angularUi': { 'exports': 'angularUi' },
-        'angularUiBootstrap': { 'exports': 'angularUiBootstrap' },
-        'angularStrap': { 'exports': 'lib/angular-strap' },
-        'ekathuwa': { 'exports': 'lib/ekathuwa' } 
+        'angularUi': {
+            deps: ['angular', 'jquery'],
+            'exports': 'angularUi'
+        },
+        'angularUiBootstrap': {
+            deps: ['angular', 'jquery'],
+            'exports': 'angularUiBootstrap'
+        },
+        'angularStrap': {
+            deps: ['angular', 'jquery', 'bootstrap'],
+            'exports': 'angularStrap'
+        },
+        'moment': { 'exports': 'moment' }
 	},
 	priority: [
-		"angular"
+        'angular'
 	]
 });
 
 // hey Angular, we're bootstrapping manually!
-window.name = "NG_DEFER_BOOTSTRAP!";
+// not necessary when not using ng-app in index.html
+//window.name = "NG_DEFER_BOOTSTRAP!";
 
 require([
-    'angular',
-    'app'
-], function (angular, app) {
-        'use strict';
-        new app.module.App();
-        angular.resumeBootstrap();
-        //angular.element().ready(function () {
-          //  $html.addClass('ng-app');
-          //  angular.bootstrap($html, 'lwa');
-        //});
-        //angular.element(document).ready(function () {
-        //    angular.bootstrap(document, ['lwa']);
-        //});
-    });
+    'lwa/modularity/App'
+], (app: any) => {
+        new app.App().bootstrap(document);
+    }
+);

@@ -1,38 +1,39 @@
 ///<reference path='../../../domain/util/Alert.ts'/>
 ///<reference path='../../contract/util/AlertService.ts'/>
 
-module lwa.service.impl.util{
-    export class DefaultAlertService implements service.contract.util.AlertService {
-        private alerts: domain.util.Alert[];        
+import domain_util = require('./../../../domain/util/Alert');
+import service_contract = require('./../../contract/util/AlertService');
 
-        constructor(){
-            this.alerts = [];
-        }
+export class DefaultAlertService implements service_contract.AlertService {
+    private alerts: domain_util.Alert[];        
 
-        add(alert: domain.util.Alert){
-            if(this.alerts.length >= 2){
-                this.alerts.splice(0,1);
-            }
-            this.alerts.push(alert);
-
-        }
-        
-        remove(alert: domain.util.Alert){
-            this.alerts.some((currAlert, index)=>{
-                if(alert == currAlert){
-                    this.alerts.splice(index, 1);
-                    return true;
-                }
-            });
-        }
-
-        removeAll(){
-            this.alerts = [];
-        }
-
-        list(){
-            return this.alerts;
-        }
-       
+    constructor(){
+        this.alerts = [];
     }
-}   
+
+    add(alert: domain_util.Alert){
+        if(this.alerts.length >= 2){
+            this.alerts.splice(0,1);
+        }
+        this.alerts.push(alert);
+
+    }
+        
+    remove(alert: domain_util.Alert){
+        this.alerts.some((currAlert, index)=>{
+            if(alert == currAlert){
+                this.alerts.splice(index, 1);
+                return true;
+            }
+        });
+    }
+
+    removeAll(){
+        this.alerts = [];
+    }
+
+    list(){
+        return this.alerts;
+    }
+       
+}

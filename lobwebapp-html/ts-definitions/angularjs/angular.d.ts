@@ -743,6 +743,5 @@ declare module ng {
     }
 
 }
-declare module "angular" {
-    export var angular: ng.IAngularStatic;
-}
+
+declare module "angular" { export = angular; }
