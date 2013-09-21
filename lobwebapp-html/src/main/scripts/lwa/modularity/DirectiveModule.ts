@@ -10,21 +10,21 @@
 //    'angularStrap'
 //]);
 declare module "angularUiBootstrap" { }
-declare module "angularStrap" { }
+declare module "angularAnimate" { }
 
 import angular = require('angular');
+import angularAnimate = require('angularAnimate');
 import angularUi = require('angularUi');
 import angularUiBootstrap = require('angularUiBootstrap');
-import angularStrap = require('angularStrap');
 
 export class DirectiveModule{
     private directiveNgModule: ng.IModule;
         
     constructor() {
+        angularAnimate;
         angularUi;
         angularUiBootstrap;
-        angularStrap;
-        this.directiveNgModule = angular.module('lwaDirectiveModule', ['ui.directives', 'ui.bootstrap', '$strap.directives']);
+        this.directiveNgModule = angular.module('lwaDirectiveModule', ['ui.directives', 'ui.bootstrap']);
     }
         
     configure(){
@@ -33,6 +33,7 @@ export class DirectiveModule{
             .directive('lwaStForm', this.stForm)
             .directive('lwaHref', ['$location', '$route', this.lwaHref])
             .directive('lwaCaret', this.lwaCaret)
+            .directive('lwaAlerts', ['_alertService', this.lwaAlerts])
             ;                           
         return this;
     }
@@ -80,11 +81,19 @@ export class DirectiveModule{
                 var initVal = attrs.lwaCaret;
                 if(initVal == 'init') element.append(' <div class="caret"></div>');
                 element.on('click', () => {
-                    element.find('div.caret').toggleClass('caret up-caret');
-                        
-                        
+                    element.find('div.caret').toggleClass('caret up-caret');         
                 });
         }
     };
+    private lwaAlerts = (_alertService: any) => {
+        var defObj = { 
+                restrict: 'E',
+                replace: true,
+                template: '<alert ng-repeat="alert in alerts" type="alert.type" close="alerts.splice($index, 1)">'+
+                              '<strong>{{alert.title}}</strong> {{alert.content}} <div class="pull-right">{{alert.time}}</div>'+
+                          '</alert>'
+        }
 
+        return defObj;
+    }
 }

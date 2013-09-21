@@ -20,6 +20,7 @@ export class ControllerModule{
     private routeProviderCfg = ($routeProvider: ng.IRouteProvider) => {
             $routeProvider
                 .when('/', {redirectTo: '/product/list'})
+                .when('/login', { templateUrl: 'views/login.html' })
                 .when('/product/list', { templateUrl: 'views/product/listProduct.html', controller: 'ListProductCtrl'})
                 .when('/product/:productId/:mode?', { templateUrl: 'views/product/editProduct.html', controller: 'EditProductCtrl'})
                 .otherwise({redirectTo: '/'});

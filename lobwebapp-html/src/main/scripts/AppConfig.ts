@@ -9,9 +9,11 @@ require.config({
 		angular: '../components/angular/angular',
         angularRoute: '../components/angular-route/angular-route',
         angularMocks: '../components/angular-mocks/angular-mocks',
+        angularAnimate: '../components/angular-animate/angular-animate',
         angularUi: '../components/angular-ui/build/angular-ui',
-        angularUiBootstrap: '../components/angular-ui-bootstrap/dist/ui-bootstrap-0.6.0',
-        angularStrap: 'plugins/angular-strap',
+        angularUiBootstrap: 'plugins/ui-bootstrap',
+        underscore: '../components/underscore-amd/underscore',
+        backbone: '../components/backbone-amd/backbone',
         ekathuwa: 'plugins/ekathuwa',
         moment: '../components/moment/moment'
 	},
@@ -30,6 +32,10 @@ require.config({
             deps: ['angular'],
             'exports': 'angular.mock'
         },
+        'angularAnimate': {
+            deps: ['angular'],
+            'exports': 'angularAnimate'
+        },
         'angularUi': {
             deps: ['angular', 'jquery'],
             'exports': 'angularUi'
@@ -37,10 +43,6 @@ require.config({
         'angularUiBootstrap': {
             deps: ['angular', 'jquery'],
             'exports': 'angularUiBootstrap'
-        },
-        'angularStrap': {
-            deps: ['angular', 'jquery', 'bootstrap'],
-            'exports': 'angularStrap'
         },
         'moment': { 'exports': 'moment' }
 	},
