@@ -1,6 +1,6 @@
-///<reference path='../../../../../ts-definitions/angularjs/angular.d.ts'/>
-///<reference path='../../../../../ts-definitions/requirejs/require.d.ts'/>
-///<reference path='../util/Std.ts'/>
+///<reference path='./../../../../../ts-definitions/angularjs/angular.d.ts'/>
+///<reference path='./../../../../../ts-definitions/requirejs/require.d.ts'/>
+///<reference path='./../util/Std.ts'/>
 
 import angular = require('angular');
 import util = require('./../util/Std');

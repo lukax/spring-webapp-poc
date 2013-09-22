@@ -1,8 +1,8 @@
-///<reference path='../../../../../../ts-definitions/angularjs/angular.d.ts'/>
-///<reference path='../../domain/Product.ts'/>
-///<reference path='../../domain/util/Alert.ts'/>
-///<reference path='../../service/contract/ProductService.ts'/>
-///<reference path='../../service/contract/util/AlertService.ts'/>
+///<reference path='./../../../../../../ts-definitions/angularjs/angular.d.ts'/>
+///<reference path='./../../domain/Product.ts'/>
+///<reference path='./../../domain/util/Alert.ts'/>
+///<reference path='./../../service/contract/ProductService.ts'/>
+///<reference path='./../../service/contract/util/AlertService.ts'/>
 
 import domain = require('./../../domain/Product');
 import domain_util = require('./../../domain/util/Alert');
@@ -10,7 +10,6 @@ import service_contract = require('./../../service/contract/ProductService');
 import service_contract_util = require('./../../service/contract/util/AlertService');
 
 export interface ListProductViewModel extends ng.IScope {
-    alerts: domain_util.Alert[];
     product: domain.Product;
     products: domain.Product[];
     editProduct: (id: number) => void;
@@ -26,6 +25,7 @@ export class ListProductController {
     private alertService: service_contract_util.AlertService;
     private modalService: any;
 
+    static $inject = ['$scope', '$location', '$routeParams', '_productService', '_alertService', '$ekathuwa'];
     constructor($scope: ListProductViewModel, 
                 $location: ng.ILocationService, 
                 $routeParams: ng.IRouteParamsService,
@@ -40,7 +40,6 @@ export class ListProductController {
         this.modalService = $ekathuwa;
 
         this.populateScope();
-        //this.listProduct();
         this.processArgs();
     }
 
@@ -95,7 +94,6 @@ export class ListProductController {
     }
 
     populateScope(){
-        this.scope.alerts = this.alertService.list();
         this.scope.editProduct = (id: number) => { this.editProduct(id); };
         this.scope.findProduct = (searchText: string) => { this.findProduct(searchText); }
     }

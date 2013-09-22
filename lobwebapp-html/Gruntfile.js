@@ -287,22 +287,29 @@ module.exports = function (grunt) {
       styles: {
         expand: true,
         cwd: '<%= yeoman.app %>/styles',
-        dest: '<%= yeoman.tmp %>/styles/',
+        dest: '<%= yeoman.dist %>/styles/',
         src: '{,*/}*.css'
+      },
+      template: {
+        expand: true,
+        cwd: '<%= yeoman.app %>/template',
+        dest: '<%= yeoman.dist %>/template/',
+        src: '**/*.html'
       }
     },
     concurrent: {
       server: [
-        'coffee:dist',
-        //'copy:styles'
+        'coffee:dist'
+        //,'copy:styles'
       ],
       test: [
         'coffee',
         'copy:styles'
       ],
       dist: [
-        'coffee',,
+        'coffee',
         'copy:styles',
+        //'copy:template',
         'imagemin',
         'svgmin',
         'htmlmin'
@@ -396,22 +403,28 @@ module.exports = function (grunt) {
     'karma'
   ]);
 
-  grunt.registerTask('build', [
-    'clean:dist',
-    'typescript',
-    'uglify:dist',
-    'requirejs',
-    'useminPrepare',
-    'concurrent:dist',
-    //'autoprefixer',
-    'concat',
-    'copy',
-    'cdnify',
-    'ngmin',
-    'cssmin',
-    'rev',
-    'usemin'
-  ]);
+  grunt.registerTask('build', function (target) {
+    if(target === 'requirejs') {
+      return grunt.task.run(['requirejs']);
+    }
+
+    grunt.task.run([
+      'clean:dist',
+      'typescript',
+      'uglify:dist',
+      //'requirejs',
+      'useminPrepare',
+      'concurrent:dist',
+      'autoprefixer',
+      'concat',
+      'copy',
+      'cdnify',
+      'ngmin',
+      'cssmin',
+      'rev',
+      'usemin'
+    ])
+  });
 
   grunt.registerTask('default', [
     'jshint',

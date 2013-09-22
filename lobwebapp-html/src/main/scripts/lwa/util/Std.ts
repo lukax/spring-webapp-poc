@@ -1,4 +1,4 @@
-///<reference path='../../../../../ts-definitions/angularjs/angular.d.ts'/>
+///<reference path='./../../../../../ts-definitions/angularjs/angular.d.ts'/>
 
 export class Std{
 

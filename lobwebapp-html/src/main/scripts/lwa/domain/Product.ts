@@ -1,4 +1,4 @@
-///<reference path='base/AbstractEntity.ts'/>
+///<reference path='./base/AbstractEntity.ts'/>
 
 import domainBase = require('./base/AbstractEntity');
 

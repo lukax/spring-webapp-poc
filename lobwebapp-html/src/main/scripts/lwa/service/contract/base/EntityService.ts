@@ -1,5 +1,5 @@
-///<reference path='../../../../../../../ts-definitions/angularjs/angular.d.ts'/>
-///<reference path='../../../domain/base/AbstractEntity.ts'/>
+///<reference path='./../../../../../../../ts-definitions/angularjs/angular.d.ts'/>
+///<reference path='./../../../domain/base/AbstractEntity.ts'/>
 
 import domain_base = require('./../../../domain/base/AbstractEntity');
 

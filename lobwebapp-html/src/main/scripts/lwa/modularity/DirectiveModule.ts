@@ -1,14 +1,7 @@
-///<reference path='../../../../../ts-definitions/angularjs/angular.d.ts'/>
-///<reference path='../../../../../ts-definitions/requirejs/require.d.ts'/>
-///<reference path='../../../../../ts-definitions/angularui/angular-ui.d.ts'/>
+///<reference path='./../../../../../ts-definitions/angularjs/angular.d.ts'/>
+///<reference path='./../../../../../ts-definitions/requirejs/require.d.ts'/>
+///<reference path='./../../../../../ts-definitions/angularui/angular-ui.d.ts'/>
 
-//require([
-//    'jquery',
-//    'angular',
-//    'angularUi',
-//    'angularUiBootstrap',
-//    'angularStrap'
-//]);
 declare module "angularUiBootstrap" { }
 declare module "angularAnimate" { }
 
@@ -57,9 +50,9 @@ export class DirectiveModule{
             transclude: true,
             scope:{
                 formn: '@formn',
-                inputn: '@inputn',
+                inputn: '@inputn'
                 },
-            template: '<div class="form-group" ng-class="{\'has-error\': formn.inputn.$invalid}" ng-transclude>'+
+            template: '<div class="form-group" data-ng-class="{\'has-error\': formn.inputn.$invalid}" ng-transclude>'+
                         '</div>'
         }
     };
@@ -89,11 +82,21 @@ export class DirectiveModule{
         var defObj = { 
                 restrict: 'E',
                 replace: true,
+                scope: true,
+                controller: AlertController,
                 template: '<alert ng-repeat="alert in alerts" type="alert.type" close="alerts.splice($index, 1)">'+
                               '<strong>{{alert.title}}</strong> {{alert.content}} <div class="pull-right">{{alert.time}}</div>'+
                           '</alert>'
         }
 
         return defObj;
+    }
+}
+
+//TODO: Move this to somewhere else
+export class AlertController {
+    static $inject = ['$scope', '_alertService'];
+    constructor($scope, _alertService: any){
+        $scope.alerts = _alertService.list();
     }
 }

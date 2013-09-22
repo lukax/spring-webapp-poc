@@ -1,46 +1,45 @@
-///<reference path='../../../../../../ts-definitions/angularjs/angular.d.ts'/>
-///<reference path='../../../../../../ts-definitions/requirejs/require.d.ts'/>
-///<reference path='../../domain/Product.ts'/>
-///<reference path='../../domain/util/Alert.ts'/>
-///<reference path='../../service/contract/ProductService.ts'/>
-///<reference path='../../service/mock/DefaultProductServiceMock.ts'/>
-///<reference path='../../service/contract/util/AlertService.ts'/>
-///<reference path='../../util/Std.ts'/>
+///<reference path='./../../../../../../ts-definitions/angularjs/angular.d.ts'/>
+///<reference path='./../../../../../../ts-definitions/requirejs/require.d.ts'/>
+///<reference path='./../../domain/Product.ts'/>
+///<reference path='./../../domain/util/Alert.ts'/>
+///<reference path='./../../service/contract/ProductService.ts'/>
+///<reference path='./../../service/mock/DefaultProductService.ts'/>
+///<reference path='./../../service/contract/util/AlertService.ts'/>
+///<reference path='./../../util/Std.ts'/>
 
 import domain = require('./../../domain/Product');
 import domain_util = require('./../../domain/util/Alert');
-import service_mock = require('./../../service/mock/DefaultProductServiceMock');
+import service_mock = require('./../../service/mock/DefaultProductService');
 import service_contract_util = require('./../../service/contract/util/AlertService');
 import util = require('./../../util/Std');
 
 export interface EditProductViewModel extends ng.IScope {
-    alerts: domain_util.Alert[];
     product: domain.Product;
     productPricePattern: RegExp;
     productProfitMargin: number;
     productGroups: string[];
     isNewProduct: () => boolean;
+    isReadMode: boolean;
     saveChanges: () => void;
     removeProduct: () => void;
     priceInfo: () => void;
     nextProduct: () => void;
     previousProduct: () => void;
-    readMode: boolean;
 }
     
 export class EditProductController {
     private scope: EditProductViewModel;
     private routeParams: any;
     private location: ng.ILocationService;
-    private productService: service_mock.DefaultProductServiceMock;
+    private productService: service_mock.DefaultProductService;
     private alertService: service_contract_util.AlertService;
     private modalService: any;
-    private permissions: string[];
-        
+
+    static $inject = ['$scope', '$location', '$routeParams', '_productService', '_alertService', '$ekathuwa'];
     constructor($scope: EditProductViewModel, 
                 $location: ng.ILocationService, 
                 $routeParams: ng.IRouteParamsService,
-                _productService: service_mock.DefaultProductServiceMock, 
+                _productService: service_mock.DefaultProductService, 
                 _alertService: service_contract_util.AlertService,
                 $ekathuwa: any){
         this.scope = $scope;
@@ -50,7 +49,6 @@ export class EditProductController {
         this.alertService = _alertService;
         this.modalService = $ekathuwa;
 
-        this.processPermissions();
         this.populateScope();
         this.processArgs();
     }
@@ -88,7 +86,7 @@ export class EditProductController {
         if(this.routeParams.productId == 'new'){
             this.scope.product = new domain.Product(0,'','',0,0,0,'',0);
         }else{
-            this.productService.findById(this.routeParams.productId, 
+            this.productService.findById(this.routeParams.productId,
                     (successData, successStatus) => { this.scope.product = successData;  },
                     (errorData, errorStatus)=>{ this.alertService.add(new domain_util.Alert(domain_util.AlertType.danger, 'Código: '+errorStatus, 'Produto com o ID especificado não foi encontrado')); 
                         this.newProduct();
@@ -105,9 +103,8 @@ export class EditProductController {
     }
 
     populateScope(){
-        this.scope.readMode = this.routeParams.mode == 'read';
+        this.scope.isReadMode = this.routeParams.mode == 'read';
         this.scope.productPricePattern = /^(?=.*[1-9])\d*(?:\.\d{1,2})?$/;
-        this.scope.alerts = this.alertService.list();
         this.scope.isNewProduct = () => { 
             return (this.scope.product.id == 0);
         };
@@ -131,14 +128,6 @@ export class EditProductController {
         });
         this.productService.listGroups((successData, successStatus) => { this.scope.productGroups = successData; }, 
                                         (errorData, errorStatus) => { });
-    }
-
-    processPermissions(){
-        //if(util.Std.contains(this.permissions, 'edit')){
-                
-        //}else if(util.Std.contains(this.permissions, 'list')){    
-        //    this.location.path('/product/' + this.routeParams.productId + '/edit');
-        //}
     }
 
 }
