@@ -19,39 +19,46 @@ export class AbstractEntityService<T extends domain_base.AbstractEntity> impleme
             successCallback: (data: any, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any, 
             errorCallback: (data: any, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig)=> any)
             {
-                this.getHttp().post(this.rootUrl, entity).success(successCallback).error(errorCallback);
+                this.getHttpService().post(this.rootUrl, entity).success(successCallback).error(errorCallback);
             }
                 
     public update (entity: T, 
             successCallback: (data: any, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any, 
             errorCallback: (data: any, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig)=> any) 
             {
-                this.getHttp().put(this.rootUrl, entity).success(successCallback).error(errorCallback);
+                this.getHttpService().put(this.rootUrl, entity).success(successCallback).error(errorCallback);
             }
              
     public remove (entity: T, 
             successCallback: (data: any, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any, 
             errorCallback: (data: any, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig)=> any)
             {
-                this.getHttp().delete(this.rootUrl, entity).success(successCallback).error(errorCallback);
+                this.getHttpService().delete(this.rootUrl, entity).success(successCallback).error(errorCallback);
             }
                 
     public findById (id : number,
             successCallback: (data: T, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any, 
             errorCallback: (data: T, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig)=> any)
             {
-                this.getHttp().get(this.rootUrl + '/'+ id).success(successCallback).error(errorCallback);
+                this.getHttpService().get(this.rootUrl + '/'+ id).success(successCallback).error(errorCallback);
             }
                 
     public list (successCallback: (data: T[], status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any, 
             errorCallback: (data: T[], status: number, headers: (headerName: string) => string, config: ng.IRequestConfig)=> any) 
             {
-                this.getHttp().get(this.rootUrl).success(successCallback).error(errorCallback);   
+                this.getHttpService().get(this.rootUrl).success(successCallback).error(errorCallback);
             }
-        
-        
-    public getHttp() {
+
+    public contains (entity: T,
+             successCallback: (boolean: any, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
+             errorCallback: (data: any, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig)=> any)
+            {
+                //TODO: Implement this function
+            }
+
+
+    public getHttpService() {
         return this.http;
     }
-       
+
 }

@@ -1,0 +1,37 @@
+<div class="row">
+      <div class="col-lg-7">
+        <form class="form-horizontal" role="form" name="loginForm"
+            ng-submit="login()" novalidate>
+
+          <div class="form-group" ng-class="{'has-error': loginForm.inputUsername.$invalid}">
+            <label for="inputUsername" class="col-lg-2 control-label">Usuário</label>
+            <div class="col-lg-10">
+              <input type="text" class="form-control" id="inputUsername" name="inputUsername" 
+                autofocus ng-model="user.username" required ng-minlength="4">
+            </div>
+          </div>
+
+          <div class="form-group" ng-class="{'has-error': loginForm.inputPassword.$invalid}">
+            <label for="inputPassword" class="col-lg-2 control-label">Senha</label>
+            <div class="col-lg-10">
+              <input type="password" class="form-control" id="inputPassword" name="inputPassword"
+                ng-model="user.password" required ng-minlength="4">
+            </div>
+          </div>
+    
+          <div class="btn-group pull-right">
+            <button class="btn btn-primary" type="submit" data-toggle="tooltip" title="Fazer Login" data-loading-text="Entrando..."
+                  ng-disabled="loginForm.inputUsername.$invalid || loginForm.inputPassword.$invalid">
+              <span class="glyphicon glyphicon-log-in"></span> Entrar
+            </button>
+            <a class="btn btn-default" data-toggle="tooltip" title="Cancelar Login"
+                  onclick="window.history.back()">
+              Cancelar
+            </a> 
+          </div>
+        </form>
+      </div>
+</div>
+
+</br>
+<data-lwa-alerts></data-lwa-alerts>

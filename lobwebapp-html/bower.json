@@ -16,7 +16,8 @@
     "requirejs-text": "~2.0.10",
     "angular-animate": "~1.2.0-rc.2",
     "underscore-amd": "~1.5.2",
-    "backbone-amd": "~1.0.0"
+    "backbone-amd": "~1.0.0",
+    "underscore.string": "~2.3.3"
   },
   "devDependencies": {
     "angular-mocks": "1.2.0-rc.2",

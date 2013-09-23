@@ -1,6 +1,6 @@
 ///<reference path='../../../domain/util/Alert.ts'/>
 
-import domain_util = require('./../../domain/util/Alert');
+import domain_util = require('./../../../domain/util/Alert');
 
 export interface AlertService{
     add: (alert: domain_util.Alert) => void;

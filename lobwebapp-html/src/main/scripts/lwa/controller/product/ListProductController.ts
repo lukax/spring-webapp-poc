@@ -25,18 +25,18 @@ export class ListProductController {
     private alertService: service_contract_util.AlertService;
     private modalService: any;
 
-    static $inject = ['$scope', '$location', '$routeParams', '_productService', '_alertService', '$ekathuwa'];
+    static $inject = ['$scope', '$location', '$routeParams', 'ProductService', 'AlertService', '$ekathuwa'];
     constructor($scope: ListProductViewModel, 
                 $location: ng.ILocationService, 
                 $routeParams: ng.IRouteParamsService,
-                _productService: service_contract.ProductService, 
-                _alertService: service_contract_util.AlertService,
+                ProductService: service_contract.ProductService,
+                AlertService: service_contract_util.AlertService,
                 $ekathuwa: any){
         this.scope = $scope;
         this.location = $location;
         this.routeParams = $routeParams;
-        this.productService = _productService;
-        this.alertService = _alertService;
+        this.productService = ProductService;
+        this.alertService = AlertService;
         this.modalService = $ekathuwa;
 
         this.populateScope();
@@ -65,7 +65,7 @@ export class ListProductController {
                         this.alertService.add(new domain_util.Alert(domain_util.AlertType.warning, 'Código: '+errorStatus, 'Produto com o ID/Nome especificado não foi encontrado'));
                     });
         }
-        if(this.findProductModal) this.findProductModal.then((x) => {x.modal('hide');});
+        if(this.findProductModal) this.findProductModal.then((x: any) => {x.modal('hide');});
     }
 
     private findProductModal: any;

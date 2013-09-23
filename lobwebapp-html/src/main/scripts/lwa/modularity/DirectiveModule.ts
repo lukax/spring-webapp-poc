@@ -9,6 +9,7 @@ import angular = require('angular');
 import angularAnimate = require('angularAnimate');
 import angularUi = require('angularUi');
 import angularUiBootstrap = require('angularUiBootstrap');
+import AuthService = require('./../service/contract/AuthService');
 
 export class DirectiveModule{
     private directiveNgModule: ng.IModule;
@@ -26,7 +27,9 @@ export class DirectiveModule{
             .directive('lwaStForm', this.stForm)
             .directive('lwaHref', ['$location', '$route', this.lwaHref])
             .directive('lwaCaret', this.lwaCaret)
-            .directive('lwaAlerts', ['_alertService', this.lwaAlerts])
+            .directive('lwaAlerts', this.lwaAlerts)
+            .directive('lwaAuth', this.auth)
+            .directive('userAuthInfo', this.userAuthInfo)
             ;                           
         return this;
     }
@@ -78,25 +81,72 @@ export class DirectiveModule{
                 });
         }
     };
-    private lwaAlerts = (_alertService: any) => {
+    private lwaAlerts = () => {
         var defObj = { 
-                restrict: 'E',
-                replace: true,
-                scope: true,
-                controller: AlertController,
-                template: '<alert ng-repeat="alert in alerts" type="alert.type" close="alerts.splice($index, 1)">'+
-                              '<strong>{{alert.title}}</strong> {{alert.content}} <div class="pull-right">{{alert.time}}</div>'+
-                          '</alert>'
+            restrict: 'E',
+            replace: true,
+            scope: true,
+            controller: AlertController,
+            template: '<alert ng-repeat="alert in alerts" type="alert.type" close="alerts.splice($index, 1)">'+
+                          '<strong>{{alert.title}}</strong> {{alert.content}} <div class="pull-right">{{alert.time}}</div>'+
+                      '</alert>'
         }
 
+        return defObj;
+    }
+    private auth = () => {
+        var defObj = {
+            restrict: 'E',
+            //replace: true,
+            scope: true,
+            controller: AuthController,
+            //template: '<div class="auth"></div>',
+            linkFn: (scope: any, element: ng.IRootElementService, attrs: any)=>{
+                if(!scope.isAuth) element.remove();
+            }
+        }
+
+        return defObj;
+    }
+    private userAuthInfo = () => {
+        var defObj = {
+            restrict: 'E',
+            replace: true,
+            scope: {},
+            template: '<div class="authInfo">Olá {{username}}</div>',
+            controller: AuthController//,
+//            linkFn: (scope: any, element: ng.IRootElementService, attrs: any) => {
+////                if(scope.username === ''){
+////                    element.find('.strong').remove();
+////                }
+////                else{
+////                    element.append('<strong>Olá {{username}}</strong>');
+////                }
+//            }
+        }
         return defObj;
     }
 }
 
 //TODO: Move this to somewhere else
+export class AuthController {
+    static $inject = ['$scope', 'AuthService', '$timeout'];
+    constructor($scope, AuthService: AuthService.AuthService) {
+//        setInterval(() =>{
+//            $scope.isAuth = AuthService.isLoggedIn();
+//            $scope.username = AuthService.user.username;
+//        },400);
+        $scope.$watch(AuthService.currentUser, (newValue, oldValue, scope) => {
+            //if (newValue && newValue !== oldValue) {
+                scope.username = newValue;
+            //}
+        });
+    }
+}
+
 export class AlertController {
-    static $inject = ['$scope', '_alertService'];
-    constructor($scope, _alertService: any){
-        $scope.alerts = _alertService.list();
+    static $inject = ['$scope', 'AlertService'];
+    constructor($scope, AlertService: any){
+        $scope.alerts = AlertService.list();
     }
 }

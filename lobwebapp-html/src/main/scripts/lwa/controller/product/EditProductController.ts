@@ -35,18 +35,18 @@ export class EditProductController {
     private alertService: service_contract_util.AlertService;
     private modalService: any;
 
-    static $inject = ['$scope', '$location', '$routeParams', '_productService', '_alertService', '$ekathuwa'];
+    static $inject = ['$scope', '$location', '$routeParams', 'ProductService', 'AlertService', '$ekathuwa'];
     constructor($scope: EditProductViewModel, 
                 $location: ng.ILocationService, 
                 $routeParams: ng.IRouteParamsService,
-                _productService: service_mock.DefaultProductService, 
-                _alertService: service_contract_util.AlertService,
+                ProductService: service_mock.DefaultProductService,
+                AlertService: service_contract_util.AlertService,
                 $ekathuwa: any){
         this.scope = $scope;
         this.routeParams = $routeParams;
         this.location = $location;
-        this.productService = _productService;
-        this.alertService = _alertService;
+        this.productService = ProductService;
+        this.alertService = AlertService;
         this.modalService = $ekathuwa;
 
         this.populateScope();

@@ -6,8 +6,11 @@
 ///<reference path='./../service/impl/util/DefaultAlertService.ts'/>
 
 import angular = require('angular');
-import service_impl_util = require('./../service/impl/util/DefaultAlertService');
-import service_mock = require('./../service/mock/DefaultProductService');
+import service_impl_al = require('./../service/impl/util/DefaultAlertService');
+import service_mock_pr = require('./../service/mock/DefaultProductService');
+import service_mock_us = require('./../service/mock/DefaultUserService');
+import service_mock_au = require('./../service/mock/DefaultAuthService');
+import service_impl_de = require('./../service/impl/DefaultDependencyService');
 
 export class ServiceModule{
     private serviceNgModule: ng.IModule;
@@ -18,8 +21,11 @@ export class ServiceModule{
         
     configure(){
         this.serviceNgModule
-            .service('_productService', service_mock.DefaultProductService)
-            .service('_alertService', service_impl_util.DefaultAlertService)
+            .service('DependencyService', service_impl_de.DependencyService)
+            .service('ProductService', service_mock_pr.DefaultProductService)
+            .service('UserService', service_mock_us.DefaultUserService)
+            .service('AuthService', service_mock_au.DefaultAuthService)
+            .service('AlertService', service_impl_al.DefaultAlertService)
             ;
         return this;
     }

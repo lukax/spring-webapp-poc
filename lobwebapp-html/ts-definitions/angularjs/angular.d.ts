@@ -744,4 +744,6 @@ declare module ng {
 
 }
 
-declare module "angular" { export = angular; }
+declare module "angular" {
+    export = angular;
+}
