@@ -9,7 +9,8 @@ import angular = require('angular');
 import angularAnimate = require('angularAnimate');
 import angularUi = require('angularUi');
 import angularUiBootstrap = require('angularUiBootstrap');
-import AuthService = require('./../service/contract/AuthService');
+import service_contract_au = require('./../service/contract/AuthService');
+import domain_usr = require('./../domain/User');
 
 export class DirectiveModule{
     private directiveNgModule: ng.IModule;
@@ -28,7 +29,6 @@ export class DirectiveModule{
             .directive('lwaHref', ['$location', '$route', this.lwaHref])
             .directive('lwaCaret', this.lwaCaret)
             .directive('lwaAlerts', this.lwaAlerts)
-            .directive('lwaAuth', this.auth)
             .directive('userAuthInfo', this.userAuthInfo)
             ;                           
         return this;
@@ -99,7 +99,7 @@ export class DirectiveModule{
             restrict: 'E',
             //replace: true,
             scope: true,
-            controller: AuthController,
+            //controller: 'Auth',
             //template: '<div class="auth"></div>',
             linkFn: (scope: any, element: ng.IRootElementService, attrs: any)=>{
                 if(!scope.isAuth) element.remove();
@@ -112,9 +112,13 @@ export class DirectiveModule{
         var defObj = {
             restrict: 'E',
             replace: true,
-            scope: {},
-            template: '<div class="authInfo">Olá {{username}}</div>',
-            controller: AuthController//,
+            scope: true,
+            template: '<div class="authInfo">'+
+                        ''+
+                        'Olá <strong>{{user.username}}</strong> '+
+                        '<button type="button" ng-hide="!user.isLogged" ng-click="logout()">Sair</button>'+
+                      '</div>',
+            controller: 'AuthUserCtrl'//,
 //            linkFn: (scope: any, element: ng.IRootElementService, attrs: any) => {
 ////                if(scope.username === ''){
 ////                    element.find('.strong').remove();
@@ -129,20 +133,21 @@ export class DirectiveModule{
 }
 
 //TODO: Move this to somewhere else
-export class AuthController {
-    static $inject = ['$scope', 'AuthService', '$timeout'];
-    constructor($scope, AuthService: AuthService.AuthService) {
-//        setInterval(() =>{
-//            $scope.isAuth = AuthService.isLoggedIn();
-//            $scope.username = AuthService.user.username;
-//        },400);
-        $scope.$watch(AuthService.currentUser, (newValue, oldValue, scope) => {
-            //if (newValue && newValue !== oldValue) {
-                scope.username = newValue;
-            //}
-        });
-    }
-}
+//export class AuthController {
+//    private authService: service_contract_au.AuthService;
+//    private locationService: ng.ILocationService;
+//    private scope: any;
+
+//    static $inject = ['$scope', 'AuthService', '$location'];
+//    constructor($scope: any, AuthService: service_contract_au.AuthService, $location: ng.ILocationService) {
+//        this.scope = $scope;
+//        this.locationService = $location;
+//        this.authService = AuthService;
+
+//        this.scope.user =  this.authService.currentUser();
+//        this.scope.logout = () => { this.authService.logout(this.scope.user, () => { this.locationService.url('/user/auth'); }, () => { alert('Erro ao sair'); }); };
+//    }
+//}
 
 export class AlertController {
     static $inject = ['$scope', 'AlertService'];

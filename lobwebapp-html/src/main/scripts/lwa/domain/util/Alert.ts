@@ -1,19 +1,33 @@
-///<reference path='../../../../../../ts-definitions/moment/moment.d.ts'/>
+///<reference path='./../../../../../../ts-definitions/moment/moment.d.ts'/>
 
-import moment = require('moment');
 
-export class Alert {
-    public type: string;
-    public time: string;
-    constructor(type: AlertType, public title: string, public content: string) {
-        this.type = AlertType[type];
-        this.time = moment().format('h:mm:ss a');
+module domain.util {
+
+    export interface AlertBlueprint {
+        type: string;
+        title: string;
+        content: string;
+        time: Date;
     }
-}
 
-export enum AlertType {
-    success,
-    info,
-    warning,
-    danger
+    export class Alert {
+        public type: string;
+        private _time: Date;
+
+        constructor(type: AlertType, public title: string, public content: string) {
+            this.type = AlertType[type];
+        }
+
+        get time() {
+            return this._time ? this._time : (new Date());
+        }
+    }
+
+    export enum AlertType {
+        success,
+        info,
+        warning,
+        danger
+    }
+
 }

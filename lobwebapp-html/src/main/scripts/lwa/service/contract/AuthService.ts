@@ -3,21 +3,20 @@
  */
 ///<reference path='./../../../../../../ts-definitions/angularjs/angular.d.ts'/>
 
-import domain = require('./../../domain/User');
+import dom_usr = require('./../../domain/User');
 
 export interface AuthService {
 
-    login: (user: domain.User,
-        successCallback: (data: boolean, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
+    login: (user: dom_usr.User,
+        successCallback: (data: dom_usr.User, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
         errorCallback: (data: boolean, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any
         ) => void;
 
-    logout: (user: domain.User,
-        successCallback: (data: boolean, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
+    logout: (user: dom_usr.User,
+        successCallback: (data: dom_usr.User, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
         errorCallback: (data: boolean, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any
         ) => void;
 
+    currentUser: () => dom_usr.User;
     isLoggedIn: () => boolean;
-
-    currentUser: () => domain.User;
 }

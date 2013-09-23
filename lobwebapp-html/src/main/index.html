@@ -18,8 +18,8 @@
     <base href="/index.html"><!-- THIS IS IMPORTANT!!! -->
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
-    
-    <!-- Styles -->
+
+    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="components/bootstrap-sass/dist/css/bootstrap.css" media="screen">
         
         <!-- build:css({.tmp,src/main}) styles/main.css -->
@@ -65,7 +65,11 @@
                 </li>
             </ul>
             <div class="navbar-right">
-                <user-auth-info></user-auth-info>
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a><user-auth-info></user-auth-info></a>
+                    </li>
+                </ul>
             </div>
             <!--<form class="navbar-form navbar-right" role="search">-->
                 <!--<div class="form-group">-->

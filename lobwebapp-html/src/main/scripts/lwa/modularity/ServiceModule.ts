@@ -21,7 +21,7 @@ export class ServiceModule{
         
     configure(){
         this.serviceNgModule
-            .service('DependencyService', service_impl_de.DependencyService)
+            .factory('DependencyService', service_impl_de.DependencyService)
             .service('ProductService', service_mock_pr.DefaultProductService)
             .service('UserService', service_mock_us.DefaultUserService)
             .service('AuthService', service_mock_au.DefaultAuthService)

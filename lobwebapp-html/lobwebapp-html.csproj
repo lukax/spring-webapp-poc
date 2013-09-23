@@ -57,9 +57,6 @@
   <ItemGroup>
     <Content Include="src\main\.buildignore" />
     <Content Include="src\main\.htaccess" />
-    <Content Include="src\main\scripts\AppConfig.js">
-      <DependentUpon>appConfig.ts</DependentUpon>
-    </Content>
     <Content Include="src\main\scripts\lwa\controller\product\EditProductController.js">
       <DependentUpon>EditProductController.ts</DependentUpon>
     </Content>
@@ -68,6 +65,7 @@
       <DependentUpon>ListProductController.ts</DependentUpon>
     </Content>
     <Content Include="src\main\scripts\lwa\controller\product\ListProductController.ts" />
+    <Content Include="src\main\scripts\lwa\controller\user\AuthUserController.ts" />
     <Content Include="src\main\scripts\lwa\domain\base\AbstractEntity.js">
       <DependentUpon>AbstractEntity.ts</DependentUpon>
     </Content>
@@ -76,14 +74,12 @@
       <DependentUpon>Product.ts</DependentUpon>
     </Content>
     <Content Include="src\main\scripts\lwa\domain\Product.ts" />
+    <Content Include="src\main\scripts\lwa\domain\User.ts" />
     <Content Include="src\main\scripts\lwa\domain\util\Alert.ts" />
     <Content Include="src\main\scripts\lwa\domain\util\Alert.js">
       <DependentUpon>Alert.ts</DependentUpon>
     </Content>
-    <Content Include="src\main\scripts\lwa\modularity\App.js">
-      <DependentUpon>App.ts</DependentUpon>
-    </Content>
-    <Content Include="src\main\scripts\lwa\modularity\App.ts" />
+    <Content Include="src\main\scripts\lwa\modularity\AppModule.ts" />
     <Content Include="src\main\scripts\lwa\modularity\ControllerModule.js">
       <DependentUpon>ControllerModule.ts</DependentUpon>
     </Content>
@@ -100,6 +96,7 @@
       <DependentUpon>ServiceModule.ts</DependentUpon>
     </Content>
     <Content Include="src\main\scripts\lwa\modularity\ServiceModule.ts" />
+    <Content Include="src\main\scripts\lwa\service\contract\AuthService.ts" />
     <Content Include="src\main\scripts\lwa\service\contract\base\EntityService.js">
       <DependentUpon>EntityService.ts</DependentUpon>
     </Content>
@@ -108,6 +105,7 @@
       <DependentUpon>ProductService.ts</DependentUpon>
     </Content>
     <Content Include="src\main\scripts\lwa\service\contract\ProductService.ts" />
+    <Content Include="src\main\scripts\lwa\service\contract\UserService.ts" />
     <Content Include="src\main\scripts\lwa\service\contract\util\AlertService.js">
       <DependentUpon>AlertService.ts</DependentUpon>
     </Content>
@@ -116,6 +114,7 @@
       <DependentUpon>AbstractEntityService.ts</DependentUpon>
     </Content>
     <Content Include="src\main\scripts\lwa\service\impl\base\AbstractEntityService.ts" />
+    <Content Include="src\main\scripts\lwa\service\impl\DefaultDependencyService.ts" />
     <Content Include="src\main\scripts\lwa\service\impl\DefaultProductService.js">
       <DependentUpon>DefaultProductService.ts</DependentUpon>
     </Content>
@@ -124,20 +123,17 @@
       <DependentUpon>DefaultAlertService.ts</DependentUpon>
     </Content>
     <Content Include="src\main\scripts\lwa\service\impl\util\DefaultAlertService.ts" />
-    <Content Include="src\main\scripts\lwa\service\mock\base\AbstractEntityServiceMock.js">
-      <DependentUpon>AbstractEntityServiceMock.ts</DependentUpon>
-    </Content>
-    <Content Include="src\main\scripts\lwa\service\mock\base\AbstractEntityServiceMock.ts" />
-    <Content Include="src\main\scripts\lwa\service\mock\DefaultProductServiceMock.js">
-      <DependentUpon>DefaultProductServiceMock.ts</DependentUpon>
-    </Content>
-    <Content Include="src\main\scripts\lwa\service\mock\DefaultProductServiceMock.ts" />
+    <Content Include="src\main\scripts\lwa\service\mock\base\AbstractEntityService.ts" />
+    <Content Include="src\main\scripts\lwa\service\mock\DefaultAuthService.ts" />
+    <Content Include="src\main\scripts\lwa\service\mock\DefaultProductService.ts" />
+    <Content Include="src\main\scripts\lwa\service\mock\DefaultUserService.ts" />
     <Content Include="src\main\scripts\lwa\util\Std.ts" />
     <Content Include="src\main\scripts\lwa\util\Std.js">
       <DependentUpon>Std.ts</DependentUpon>
     </Content>
-    <Content Include="src\main\scripts\plugins\angular-strap.js" />
+    <TypeScriptCompile Include="src\main\scripts\main.ts" />
     <Content Include="src\main\scripts\plugins\ekathuwa.js" />
+    <Content Include="src\main\scripts\plugins\ui-bootstrap.js" />
     <Content Include="src\test\.jshintrc" />
     <Content Include="ts-definitions\angularjs\angular.d.ts" />
     <Content Include="ts-definitions\angularui\angular-ui.d.ts" />
@@ -148,7 +144,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="src\main\404.html" />
-    <Content Include="src\main\favicon.ico" />
     <Content Include="src\main\index.html" />
     <Content Include="src\main\styles\main.css" />
     <Content Include="src\main\styles\typeahead.css" />
@@ -165,14 +160,6 @@
     <Content Include="ts-definitions\angularjs\angular.d.key" />
     <Content Include="ts-definitions\jquery\jquery.d.key" />
     <Content Include="ts-definitions\moment\moment.d.key" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="src\main\scripts\AppConfig.js.map">
-      <DependentUpon>appConfig.ts</DependentUpon>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <TypeScriptCompile Include="src\main\scripts\appConfig.ts" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="ts-definitions\requirejs\README.md" />

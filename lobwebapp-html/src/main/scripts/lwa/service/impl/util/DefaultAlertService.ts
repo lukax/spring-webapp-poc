@@ -1,30 +1,37 @@
 ///<reference path='../../../domain/util/Alert.ts'/>
 ///<reference path='../../contract/util/AlertService.ts'/>
 
-import domain_util = require('./../../../domain/util/Alert');
-import service_contract = require('./../../contract/util/AlertService');
+//import dom_al = require('./../../../domain/util/Alert');
+import svc_ct_as = require('./../../contract/util/AlertService');
 
-export class DefaultAlertService implements service_contract.AlertService {
-    private alerts: domain_util.Alert[];        
+export class DefaultAlertService implements svc_ct_as.AlertService {
+    private alerts: domain.util.AlertBlueprint[];        
 
     constructor(){
         this.alerts = [];
     }
 
-    add(alert: domain_util.Alert){
+    add(message: string, title?: string, type?: string){
         if(this.alerts.length >= 2){
             this.alerts.splice(0,1);
         }
+        var alert: domain.util.AlertBlueprint = {
+            type: type ? type : 'success',
+            title: title,
+            content: message,
+            time: new Date()
+        };
         this.alerts.push(alert);
-
+        return alert;
     }
         
-    remove(alert: domain_util.Alert){
+    remove(alert: domain.util.Alert){
         this.alerts.some((currAlert, index)=>{
-            if(alert == currAlert){
+            if(alert === currAlert){
                 this.alerts.splice(index, 1);
                 return true;
             }
+            return false;
         });
     }
 

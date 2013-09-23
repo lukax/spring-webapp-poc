@@ -7,14 +7,13 @@
 ///<reference path='./../../service/contract/util/AlertService.ts'/>
 ///<reference path='./../../util/Std.ts'/>
 
-import domain = require('./../../domain/Product');
-import domain_util = require('./../../domain/util/Alert');
-import service_mock = require('./../../service/mock/DefaultProductService');
-import service_contract_util = require('./../../service/contract/util/AlertService');
-import util = require('./../../util/Std');
+import dom_pr = require('./../../domain/Product');
+import svc_mock_ps = require('./../../service/mock/DefaultProductService');
+import svc_cr_as = require('./../../service/contract/util/AlertService');
+import util_st = require('./../../util/Std');
 
 export interface EditProductViewModel extends ng.IScope {
-    product: domain.Product;
+    product: dom_pr.Product;
     productPricePattern: RegExp;
     productProfitMargin: number;
     productGroups: string[];
@@ -31,16 +30,16 @@ export class EditProductController {
     private scope: EditProductViewModel;
     private routeParams: any;
     private location: ng.ILocationService;
-    private productService: service_mock.DefaultProductService;
-    private alertService: service_contract_util.AlertService;
+    private productService: svc_mock_ps.DefaultProductService;
+    private alertService: svc_cr_as.AlertService;
     private modalService: any;
 
     static $inject = ['$scope', '$location', '$routeParams', 'ProductService', 'AlertService', '$ekathuwa'];
     constructor($scope: EditProductViewModel, 
                 $location: ng.ILocationService, 
                 $routeParams: ng.IRouteParamsService,
-                ProductService: service_mock.DefaultProductService,
-                AlertService: service_contract_util.AlertService,
+                ProductService: svc_mock_ps.DefaultProductService,
+                AlertService: svc_cr_as.AlertService,
                 $ekathuwa: any){
         this.scope = $scope;
         this.routeParams = $routeParams;
@@ -59,37 +58,45 @@ export class EditProductController {
 
     saveProduct(){
         this.productService.save(this.scope.product,
-                    (successData: number, successStatus) => { this.alertService.add(new domain_util.Alert(domain_util.AlertType.success, 'Código: '+successStatus, 'Produto foi salvado com sucesso')); 
-                        this.location.url("/product/" + successData);
-                    }, 
-                    (errorData, errorStatus) => { this.alertService.add(new domain_util.Alert(domain_util.AlertType.danger, errorData, 'Produto não pode ser salvado')); 
-                });
+            (successData: number, successStatus) => { this.alertService.add('Produto foi salvado com sucesso');
+                this.location.url("/product/" + successData);
+            }, 
+            (errorData, errorStatus) => {
+                this.alertService.add('Produto não pode ser salvado', String(errorData), domain.util.AlertType.danger);
+            });
     }
         
     updateProduct(){
         this.productService.update(this.scope.product,
-                    (successData, successStatus) => { this.alertService.add(new domain_util.Alert(domain_util.AlertType.success, 'Código: '+successStatus, 'Produto foi atualizado com sucesso'));  }, 
-                    (errorData, errorStatus) => { this.alertService.add(new domain_util.Alert(domain_util.AlertType.danger, errorData, 'Produto não pode ser atualizado')); 
-                });
+            (successData, successStatus) => {
+                this.alertService.add('Produto foi atualizado com sucesso');
+            },
+            (errorData, errorStatus) => {
+                this.alertService.add('Produto não pode ser atualizado', String(errorData), domain.util.AlertType.danger);
+            });
     }
 
     removeProduct(){
         this.productService.remove(this.scope.product, 
-                    (successData, successStatus)=> { this.alertService.add(new domain_util.Alert(domain_util.AlertType.success, 'Código: '+successStatus, 'Produto removido com sucesso')); 
-                        this.newProduct(); 
-                    }, 
-                    (errorData, errorStatus) => { this.alertService.add(new domain_util.Alert(domain_util.AlertType.danger, 'Código: '+errorStatus, 'Produto não pode ser removido')); 
-                });
+            (successData, successStatus)=> { this.alertService.add('Produto removido com sucesso');
+                this.newProduct(); 
+            }, 
+            (errorData, errorStatus) => {
+                this.alertService.add('Produto não pode ser removido', String(errorData), domain.util.AlertType.danger);
+            });
     }
 
     processArgs() {
         if(this.routeParams.productId == 'new'){
-            this.scope.product = new domain.Product(0,'','',0,0,0,'',0);
+            this.scope.product = new dom_pr.Product(0,'','',0,0,0,'',0);
         }else{
             this.productService.findById(this.routeParams.productId,
-                    (successData, successStatus) => { this.scope.product = successData;  },
-                    (errorData, errorStatus)=>{ this.alertService.add(new domain_util.Alert(domain_util.AlertType.danger, 'Código: '+errorStatus, 'Produto com o ID especificado não foi encontrado')); 
-                        this.newProduct();
+                (successData, successStatus) => {
+                    this.scope.product = successData;
+                },
+                (errorData, errorStatus) => {
+                    this.alertService.add('Produto com o ID especificado não foi encontrado', String(errorData), domain.util.AlertType.danger);
+                    this.newProduct();
                 });
         }
         if(this.location.hash() === 'priceInfo'){
@@ -124,10 +131,11 @@ export class EditProductController {
         };
         this.scope.$watch('product.price + product.costPrice', () => {
             if(this.scope.product.costPrice !== 0)
-                this.scope.productProfitMargin = util.Std.round(this.scope.product.profitMargin(), 2);
+                this.scope.productProfitMargin = util_st.Std.round(this.scope.product.profitMargin(), 2);
         });
-        this.productService.listGroups((successData, successStatus) => { this.scope.productGroups = successData; }, 
-                                        (errorData, errorStatus) => { });
+        this.productService.listGroups(
+            (successData, successStatus) => { this.scope.productGroups = successData; }, 
+            (errorData, errorStatus) => { });
     }
 
 }

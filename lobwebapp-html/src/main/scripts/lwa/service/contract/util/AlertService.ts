@@ -1,10 +1,8 @@
-///<reference path='../../../domain/util/Alert.ts'/>
-
-import domain_util = require('./../../../domain/util/Alert');
+///<reference path='./../../../domain/util/Alert.ts'/>
 
 export interface AlertService{
-    add: (alert: domain_util.Alert) => void;
-    remove: (alert: domain_util.Alert) => void;
+    add: (message: string, title?: string, type?: domain.util.AlertType) => domain.util.AlertBlueprint;
+    remove: (alert: domain.util.AlertBlueprint) => void;
     removeAll: () => void;
-    list: () => domain_util.Alert[];
+    list: () => domain.util.AlertBlueprint[];
 }
