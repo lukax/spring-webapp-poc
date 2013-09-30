@@ -1,67 +1,51 @@
-///<reference path='./../../../../../../ts-definitions/angularjs/angular.d.ts'/>
-///<reference path='./../../../../../../ts-definitions/requirejs/require.d.ts'/>
-///<reference path='./../../domain/User.ts'/>
-///<reference path='./../../service/contract/ProductService.ts'/>
-///<reference path='./../../service/mock/DefaultUserService.ts'/>
-///<reference path='./../../service/contract/util/AlertService.ts'/>
-///<reference path='./../../util/Std.ts'/>
+///<reference path="./../../reference.d.ts"/>
 
-import dom_usr = require('./../../domain/User');
-import svc_ct_as = require('./../../service/contract/AuthService')
-import svc_util_as = require('./../../service/contract/util/AlertService');
-
-export interface AuthUserViewModel extends ng.IScope {
-    user: dom_usr.User;
-    login: () => void;
-    logout: () => void;
-}
-
-export class AuthUserController {
-    private scope: AuthUserViewModel;
-    private authService: svc_ct_as.AuthService;
-    private alertService: svc_util_as.AlertService;
-    private locationService: ng.ILocationService;
-        
-	static $inject = ['$scope', 'AuthService', 'AlertService', '$location'];
-    constructor($scope: AuthUserViewModel,
-                AuthService: svc_ct_as.AuthService,
-                AlertService: svc_util_as.AlertService,
-                $location: ng.ILocationService){
-        this.scope = $scope;
-        this.authService = AuthService;
-        this.alertService = AlertService;
-        this.locationService = $location;
-
-        this.populateScope();
+export module controller.user {
+    export interface AuthUserViewModel extends ng.IScope {
+        user: domain.User;
+        login: () => void;
+        logout: () => void;
     }
 
-    populateScope(){
-        this.scope.user = new dom_usr.User(0, 'Visitante', '', dom_usr.UserRole.client);
-        this.scope.login = () => { this.login(); }
-        this.scope.logout = () => { this.logout(); }
-    }
+    export class AuthUserController {
 
-    login(){
-        this.authService.login(this.scope.user,
-            (successData) => {
-                this.locationService.url('/product/list');
-                this.scope.user = successData;
-                this.alertService.add('Bem vindo ' + this.scope.user.username);
-            },
-            () => {
-                this.alertService.add('Usu·rio ou senha inv·lido', 'Login falhou', domain.util.AlertType.warning);
-            });
-    }
+        static $inject = ['$scope', 'AuthService', 'AlertService', 'NavigationSvc'];
+        constructor(public $scope: AuthUserViewModel,
+                    public AuthService: d.service.contract.AuthService,
+                    public AlertService: d.service.contract.util.AlertService,
+                    public NavigationSvc: d.service.contract.util.NavigationSvc) {
 
-    logout() {
-        this.authService.logout(this.scope.user,
-            (successData) => {
-                this.locationService.url('/user/auth');
-                this.scope.user = successData;
-                this.alertService.add(this.scope.user.username + ' saiu');
-            },
-            (errorData, errorStatus) => {
-                this.alertService.add('N„o foi possÌvel sair', String(errorStatus), domain.util.AlertType.warning);
-            });
+            this.populateScope();
+        }
+
+        populateScope() {
+            this.$scope.user = { id: 0, username: '', password: '', role: '', isLogged:false };
+            this.$scope.login = () => { this.login(); }
+            this.$scope.logout = () => { this.logout(); }
+        }
+
+        login() {
+            this.AuthService.login(this.$scope.user,
+                (successData) => {
+                    this.NavigationSvc.$location.url('/product/list');
+                    this.$scope.user = successData;
+                    this.AlertService.add('Bem vindo ' + this.$scope.user.username);
+                },
+                () => {
+                    this.AlertService.add('Usu√°rio ou senha inv√°lido', 'Login falhou', 'warning');
+                });
+        }
+
+        logout() {
+            this.AuthService.logout(this.$scope.user,
+                (successData) => {
+                    this.NavigationSvc.$location.url('/user/auth');
+                    this.$scope.user = successData;
+                    this.AlertService.add(this.$scope.user.username + ' saiu');
+                },
+                (errorData, errorStatus) => {
+                    this.AlertService.add('N√£o foi poss√≠vel sair', String(errorStatus), 'warning');
+                });
+        }
     }
 }

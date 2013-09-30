@@ -12,13 +12,13 @@
                           <label for="inputCostPrice" class="control-label">Preço de Custo</label>
                           <div class="input-group">
                             <span class="input-group-addon">R$</span>
-                            <input type="text" class="form-control" name="inputCostPrice" ng-model="product.costPrice" required ng-pattern="productPricePattern" autofocus>
+                            <input type="text" class="form-control" id="inputCostPrice" name="inputCostPrice" ng-model="product.costPrice" required ng-pattern="productPricePattern" autofocus>
                           </div>
                         </div>
                         <div ng-class="{'has-error': productProfitMargin < 1}">
                           <label for="inputProfit" class="control-label">Margem de Lucro</label>
                           <div class="input-group">
-                            <input type="text" class="form-control" name="inputProfit" readonly ng-model="productProfitMargin">
+                            <input type="text" class="form-control" id="inputProfit" name="inputProfit" readonly ng-model="productProfitMargin">
                             <span class="input-group-addon">%</span>
                           </div>
                         </div>
@@ -26,7 +26,7 @@
                           <label for="inputPrice" class="control-label">Preço de Venda</label>
                           <div class="input-group">
                             <span class="input-group-addon">R$</span>
-                            <input type="text" class="form-control" name="inputPrice" ng-model="product.price" required ng-pattern="productPricePattern">
+                            <input type="text" class="form-control" id="inputPrice" name="inputPrice" ng-model="product.price" required ng-pattern="productPricePattern">
                           </div>
                         </div>
                     </div>

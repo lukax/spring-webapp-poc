@@ -1,105 +1,86 @@
-///<reference path='./../../../../../../ts-definitions/angularjs/angular.d.ts'/>
-///<reference path='./../../domain/Product.ts'/>
-///<reference path='./../../domain/util/Alert.ts'/>
-///<reference path='./../../service/contract/ProductService.ts'/>
-///<reference path='./../../service/contract/util/AlertService.ts'/>
+///<reference path="./../../reference.d.ts"/>
 
-import dom_pr = require('./../../domain/Product');
-import svc_ct_ps = require('./../../service/contract/ProductService');
-import svc_ct_as = require('./../../service/contract/util/AlertService');
-
-export interface ListProductViewModel extends ng.IScope {
-    product: dom_pr.Product;
-    products: dom_pr.Product[];
-    editProduct: (id: number) => void;
-    findProduct: (searchText: string) => void;
-    gridOptions: any;
-}
-    
-export class ListProductController {
-    private scope: ListProductViewModel;
-    private location: ng.ILocationService;
-    private routeParams: any;
-    private productService: svc_ct_ps.ProductService;
-    private alertService: svc_ct_as.AlertService;
-    private modalService: any;
-
-    static $inject = ['$scope', '$location', '$routeParams', 'ProductService', 'AlertService', '$ekathuwa'];
-    constructor($scope: ListProductViewModel, 
-                $location: ng.ILocationService, 
-                $routeParams: any,
-                ProductService: svc_ct_ps.ProductService,
-                AlertService: svc_ct_as.AlertService,
-                $ekathuwa: any){
-        this.scope = $scope;
-        this.location = $location;
-        this.routeParams = $routeParams;
-        this.productService = ProductService;
-        this.alertService = AlertService;
-        this.modalService = $ekathuwa;
-
-        this.populateScope();
-        this.processArgs();
+export module controller.product {
+    export interface ListProductViewModel extends ng.IScope {
+        product: domain.Product;
+        products: domain.Product[];
+        editProduct: (id: number) => void;
+        findProduct: (searchText: string) => void;
+        gridOptions: any;
     }
 
-    listProduct(){
-        this.productService.list(
-            (successData, successStatus) => {
-                this.scope.products = successData;
-            },
-            (errorData, errorStatus) => {
-                this.alertService.add('Lista de Produtos não pode ser carregada', String(errorData), domain.util.AlertType.danger);
-            });
-    }
+    export class ListProductController {
 
-    editProduct(id: number){
-        this.location.url('/product/' + id);
-    }
+        static $inject = ['$scope', 'NavigationSvc', 'ProductService', 'AlertService', '$ekathuwa'];
+        constructor(public $scope: ListProductViewModel,
+                    public NavigationSvc: d.service.contract.util.NavigationSvc,
+                    public ProductService: d.service.contract.ProductService,
+                    public AlertService: d.service.contract.util.AlertService,
+                    public $ekathuwa: any) {
 
-    findProduct(searchText?: string) { 
-        if(!isNaN(Number(searchText))){ this.location.url('/product/'+searchText); }  
-        else { 
-            this.productService.findByName(searchText,
+            this.populateScope();
+            this.processArgs();
+        }
+
+        listProduct() {
+            this.ProductService.list(
                 (successData, successStatus) => {
-                    this.location.url('/product/' + successData[0].id);
+                    this.$scope.products = successData;
                 },
                 (errorData, errorStatus) => {
-                    this.alertService.add('Produto com o ID/Nome especificado não foi encontrado', String(errorData), domain.util.AlertType.danger);
+                    this.AlertService.add('Lista de Produtos não pode ser carregada', String(errorData), 'danger');
                 });
         }
-        if(this.findProductModal) this.findProductModal.then((x: any) => {x.modal('hide');});
-    }
 
-    private findProductModal: any;
-    processArgs(){
-        var findParam = this.routeParams.find;
-            if(findParam){ // 'x', '1'
-            if(!isNaN(Number(findParam))){ this.location.url('/product/'+findParam); }  
-            else { 
-                this.productService.findByName(findParam,
+        editProduct(id: number) {
+            this.NavigationSvc.$location.url('/product/' + id);
+        }
+
+        findProduct(searchText?: string) {
+            if (!isNaN(Number(searchText))) { this.NavigationSvc.$location.url('/product/' + searchText); }
+            else {
+                this.ProductService.findByName(searchText,
                     (successData, successStatus) => {
-                        this.location.url('/product/' + successData[0].id);
+                        this.NavigationSvc.$location.url('/product/' + successData[0].id);
                     },
                     (errorData, errorStatus) => {
-                        this.alertService.add('Produto com o ID/Nome especificado não foi encontrado', String(errorData), domain.util.AlertType.danger);
+                        this.AlertService.add('Produto com o ID/Nome especificado não foi encontrado', String(errorData), 'danger');
                     });
             }
-        }else if(findParam == ''){ 
-            this.findProductModal = this.modalService.modal({
+            if (this.findProductModal) this.findProductModal.then((x: any) => { x.modal('hide'); });
+        }
+
+        private findProductModal: any;
+        processArgs() {
+            var findParam = this.NavigationSvc.$routeParams.find;
+            if (findParam) { // 'x', '1'
+                if (!isNaN(Number(findParam))) { this.NavigationSvc.$location.url('/product/' + findParam); }
+                else {
+                    this.ProductService.findByName(findParam,
+                        (successData, successStatus) => {
+                            this.NavigationSvc.$location.url('/product/' + successData[0].id);
+                        },
+                        (errorData, errorStatus) => {
+                            this.AlertService.add('Produto com o ID/Nome especificado não foi encontrado', String(errorData), 'danger');
+                        });
+                }
+            } else if (findParam == '') {
+                this.findProductModal = this.$ekathuwa.modal({
                     id: 'findProductModalId',
                     templateURL: 'views/product/modal/findProductModal.html',
-                    scope: this.scope,
-                    onHidden: () => { this.location.search('find', null); this.scope.$apply(); }
+                    scope: this.$scope,
+                    onHidden: () => { this.NavigationSvc.$location.search('find', null); this.$scope.$apply(); }
                 });
-        }else{
-            this.listProduct();
+            } else {
+                this.listProduct();
+            }
+
         }
-            
+
+        populateScope() {
+            this.$scope.editProduct = (id: number) => { this.editProduct(id); };
+            this.$scope.findProduct = (searchText: string) => { this.findProduct(searchText); }
     }
 
-    populateScope(){
-        this.scope.editProduct = (id: number) => { this.editProduct(id); };
-        this.scope.findProduct = (searchText: string) => { this.findProduct(searchText); }
     }
-
 }

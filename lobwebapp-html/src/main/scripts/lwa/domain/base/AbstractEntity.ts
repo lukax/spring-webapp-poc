@@ -1,4 +1,6 @@
-export class AbstractEntity{
-    constructor(public id : number){
+
+module domain.base {
+    export interface AbstractEntity {
+        id: number;
     }
 }

@@ -1,22 +1,18 @@
-/**
- * Created by lucas on 9/22/13.
- */
-///<reference path='./../../../../../../ts-definitions/angularjs/angular.d.ts'/>
+///<reference path="./../../reference.d.ts"/>
 
-import dom_usr = require('./../../domain/User');
+module d.service.contract {
+    export interface AuthService {
+        login(user: domain.User,
+            successCallback: (data: domain.User, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
+            errorCallback: (data: boolean, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any
+            ): void;
 
-export interface AuthService {
+        logout(user: domain.User,
+            successCallback: (data: domain.User, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
+            errorCallback: (data: boolean, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any
+            ): void;
 
-    login: (user: dom_usr.User,
-        successCallback: (data: dom_usr.User, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
-        errorCallback: (data: boolean, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any
-        ) => void;
-
-    logout: (user: dom_usr.User,
-        successCallback: (data: dom_usr.User, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
-        errorCallback: (data: boolean, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any
-        ) => void;
-
-    currentUser: () => dom_usr.User;
-    isLoggedIn: () => boolean;
+        currentUser(): domain.User;
+        isLoggedIn(): boolean;
+    }
 }

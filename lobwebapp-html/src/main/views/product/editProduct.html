@@ -12,9 +12,9 @@
                 <button type="button" class="btn btn-default" ng-click="previousProduct()">
                   <span class="glyphicon glyphicon-arrow-left"></span>
                 </button>
-                <button type="button" class="btn btn-default" ng-click="nextProduct()">
+                <a type="button" class="btn btn-default" data-ng-href="#/product/{{product.id + 1}}">
                   <span class="glyphicon glyphicon-arrow-right"></span>
-                </button>
+                </a>
               </span>
             </div>
           </div>
@@ -87,11 +87,11 @@
                   ng-click="removeProduct()" ng-hide="readMode">
               Remover
             </a>
-            <a class="btn btn-default" href="/product/new" data-toggle="tooltip" title="Criar Novo Produto"
+            <a class="btn btn-default" href="#/product/new" data-toggle="tooltip" title="Criar Novo Produto"
                   ng-hide="readMode">
               Novo
             </a>
-            <a class="btn btn-default" href="/product/list" data-toggle="tooltip" title="Listar Todos os Produtos" ng-hide="readMode">
+            <a class="btn btn-default" href="#/product/list" data-toggle="tooltip" title="Listar Todos os Produtos" ng-hide="readMode">
               Listar
             </a> 
           </div>

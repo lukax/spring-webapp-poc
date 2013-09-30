@@ -1,32 +1,30 @@
-///<reference path='./../../../../../ts-definitions/angularjs/angular.d.ts'/>
-///<reference path='./../../../../../ts-definitions/requirejs/require.d.ts'/>
-///<reference path='./../service/mock/base/AbstractEntityService.ts'/>
-///<reference path='./../service/mock/DefaultProductService.ts'/>
-///<reference path='./../service/impl/DefaultProductService.ts'/>
-///<reference path='./../service/impl/util/DefaultAlertService.ts'/>
+///<reference path="./../reference.d.ts"/>
+///<amd-dependency path="angular"/>
+import a = require('./../service/impl/util/DefaultAlertServiceImpl');
+import b = require('./../service/mock/DefaultProductServiceMock');
+import c = require('./../service/mock/DefaultUserServiceMock');
+import d = require('./../service/mock/DefaultAuthServiceMock');
+import e = require('./../service/impl/DefaultDependencyServiceImpl');
+import f = require('./../service/impl/util/NavigationSvcImpl');
 
-import angular = require('angular');
-import service_impl_al = require('./../service/impl/util/DefaultAlertService');
-import service_mock_pr = require('./../service/mock/DefaultProductService');
-import service_mock_us = require('./../service/mock/DefaultUserService');
-import service_mock_au = require('./../service/mock/DefaultAuthService');
-import service_impl_de = require('./../service/impl/DefaultDependencyService');
+export module modularity {
+    export class ServiceModule {
+        private serviceNgModule: ng.IModule;
 
-export class ServiceModule{
-    private serviceNgModule: ng.IModule;
-        
-    constructor(){
-        this.serviceNgModule = angular.module('lwaServiceModule',[]);
-    }
-        
-    configure(){
-        this.serviceNgModule
-            .factory('DependencyService', service_impl_de.DependencyService)
-            .service('ProductService', service_mock_pr.DefaultProductService)
-            .service('UserService', service_mock_us.DefaultUserService)
-            .service('AuthService', service_mock_au.DefaultAuthService)
-            .service('AlertService', service_impl_al.DefaultAlertService)
+        constructor() {
+            this.serviceNgModule = angular.module('lwaServiceModule', []);
+        }
+
+        configure() {
+            this.serviceNgModule
+                .factory('DependencyService', <Function>e.service.impl.DependencyService)
+                .service('ProductService', <Function>b.service.mock.DefaultProductService)
+                .service('UserService', <Function>c.service.mock.DefaultUserService)
+                .service('AuthService', <Function>d.service.mock.DefaultAuthService)
+                .service('AlertService', <Function>a.service.impl.util.DefaultAlertService)
+                .service('NavigationSvc', <Function>f.service.impl.util.NavigationSvcImpl)
             ;
-        return this;
+            return this;
+        }
     }
 }

@@ -15,7 +15,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <title></title>
-    <base href="/index.html"><!-- THIS IS IMPORTANT!!! -->
+    <!--<base href="/index.html"><!-- HTML5 support -->
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
 
@@ -38,46 +38,7 @@
         <script src="components/json3/lib/json3.min.js"></script>
     <![endif]-->
 
-    <nav class="navbar navbar-default navbar-static-top" role="navigation">
-        <div class="navbar-header">
-            <a class="navbar-brand" href="/">LOBWebApp</a>
-        </div>
-        <div class="collapse navbar-collapse">
-            <ul class="nav navbar-nav">
-                <li class="dropdown">
-                    <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">
-                        Usuário <b class="caret"></b>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a data-lwa-href="/user/auth">Login</a></li>
-                        <li><a data-lwa-href="/user/cp">Status</a></li>
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">
-                        Produto <b class="caret"></b>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a data-lwa-href="/product/list?find=">Buscar</a></li>
-                        <li><a data-lwa-href="/product/list">Listar</a></li>
-                        <li><a data-lwa-href="/product/new">Novo</a></li>
-                    </ul>
-                </li>
-            </ul>
-            <div class="navbar-right">
-                <ul class="nav navbar-nav">
-                    <li>
-                        <a><user-auth-info></user-auth-info></a>
-                    </li>
-                </ul>
-            </div>
-            <!--<form class="navbar-form navbar-right" role="search">-->
-                <!--<div class="form-group">-->
-                    <!--<input type="text" class="form-control" placeholder="Buscar">-->
-                <!--</div>-->
-            <!--</form>-->
-        </div><!-- /.navbar-collapse -->
-    </nav>
+    <div data-ng-include="'views/mainNavbarView.html'"></div>
     <div class="container" data-ng-view=""></div>
     
 

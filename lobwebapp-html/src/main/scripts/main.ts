@@ -1,5 +1,6 @@
 ///<reference path='./../../../ts-definitions/angularjs/angular.d.ts'/>
 ///<reference path='./../../../ts-definitions/requirejs/require.d.ts'/>
+///<reference path='./lwa/reference.d.ts'/>
 
 require.config({
     paths: {
@@ -56,11 +57,12 @@ require.config({
 	]
 });
 
+
+
 // hey Angular, we're bootstrapping manually!
 // not necessary when not using ng-app in index.html
 //window.name = "NG_DEFER_BOOTSTRAP!";
 
 require(['lwa/modularity/AppModule'], (app: any) => {
-        new app.AppModule().bootstrap(document);
-    }
-);
+    new app.modularity.AppModule().bootstrap(document);
+});

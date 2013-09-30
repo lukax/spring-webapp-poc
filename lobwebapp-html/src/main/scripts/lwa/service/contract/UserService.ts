@@ -1,16 +1,19 @@
-///<reference path='./../../../../../../ts-definitions/angularjs/angular.d.ts'/>
-///<reference path='./../../domain/base/AbstractEntity.ts'/>
-///<reference path='./../../domain/User.ts'/>
-///<reference path='./base/EntityService.ts'/>
+///<reference path="./../../reference.d.ts"/>
 
-import domain = require('./../../domain/User');
-import service_contract_base = require('./base/EntityService');
+module d.service.contract {
+    export interface UserService extends d.service.contract.base.EntityService<domain.User> {
 
-export interface UserService extends service_contract_base.EntityService<domain.User>{
-        
-    findByUsername : (username : string,
-        successCallback: (data: domain.User, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
-        errorCallback: (data: any, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any
-        ) => void;
-    	
+        findByUsername(username: string,
+            successCallback: (data: domain.User, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
+            errorCallback: (data: any, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any
+            ): void;
+
+    }
+
+    export interface UserRole {
+        admin: string;
+        manager: string;
+        salesman: string;
+        client: string;
+    }
 }

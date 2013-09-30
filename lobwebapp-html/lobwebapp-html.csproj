@@ -57,83 +57,42 @@
   <ItemGroup>
     <Content Include="src\main\.buildignore" />
     <Content Include="src\main\.htaccess" />
-    <Content Include="src\main\scripts\lwa\controller\product\EditProductController.js">
-      <DependentUpon>EditProductController.ts</DependentUpon>
-    </Content>
     <Content Include="src\main\scripts\lwa\controller\product\EditProductController.ts" />
-    <Content Include="src\main\scripts\lwa\controller\product\ListProductController.js">
-      <DependentUpon>ListProductController.ts</DependentUpon>
-    </Content>
     <Content Include="src\main\scripts\lwa\controller\product\ListProductController.ts" />
+    <Content Include="src\main\scripts\lwa\controller\MainNavbarController.ts" />
     <Content Include="src\main\scripts\lwa\controller\user\AuthUserController.ts" />
-    <Content Include="src\main\scripts\lwa\domain\base\AbstractEntity.js">
-      <DependentUpon>AbstractEntity.ts</DependentUpon>
-    </Content>
+    <TypeScriptCompile Include="src\main\scripts\lwa\directive\util\AlertsDirective.ts" />
     <Content Include="src\main\scripts\lwa\domain\base\AbstractEntity.ts" />
-    <Content Include="src\main\scripts\lwa\domain\Product.js">
-      <DependentUpon>Product.ts</DependentUpon>
-    </Content>
     <Content Include="src\main\scripts\lwa\domain\Product.ts" />
     <Content Include="src\main\scripts\lwa\domain\User.ts" />
     <Content Include="src\main\scripts\lwa\domain\util\Alert.ts" />
-    <Content Include="src\main\scripts\lwa\domain\util\Alert.js">
-      <DependentUpon>Alert.ts</DependentUpon>
-    </Content>
     <Content Include="src\main\scripts\lwa\modularity\AppModule.ts" />
-    <Content Include="src\main\scripts\lwa\modularity\ControllerModule.js">
-      <DependentUpon>ControllerModule.ts</DependentUpon>
-    </Content>
     <Content Include="src\main\scripts\lwa\modularity\ControllerModule.ts" />
-    <Content Include="src\main\scripts\lwa\modularity\DirectiveModule.js">
-      <DependentUpon>DirectiveModule.ts</DependentUpon>
-    </Content>
     <Content Include="src\main\scripts\lwa\modularity\DirectiveModule.ts" />
-    <Content Include="src\main\scripts\lwa\modularity\FilterModule.js">
-      <DependentUpon>FilterModule.ts</DependentUpon>
-    </Content>
     <Content Include="src\main\scripts\lwa\modularity\FilterModule.ts" />
-    <Content Include="src\main\scripts\lwa\modularity\ServiceModule.js">
-      <DependentUpon>ServiceModule.ts</DependentUpon>
-    </Content>
     <Content Include="src\main\scripts\lwa\modularity\ServiceModule.ts" />
+    <Content Include="src\main\scripts\lwa\reference.d.ts" />
     <Content Include="src\main\scripts\lwa\service\contract\AuthService.ts" />
-    <Content Include="src\main\scripts\lwa\service\contract\base\EntityService.js">
-      <DependentUpon>EntityService.ts</DependentUpon>
-    </Content>
     <Content Include="src\main\scripts\lwa\service\contract\base\EntityService.ts" />
-    <Content Include="src\main\scripts\lwa\service\contract\ProductService.js">
-      <DependentUpon>ProductService.ts</DependentUpon>
-    </Content>
     <Content Include="src\main\scripts\lwa\service\contract\ProductService.ts" />
     <Content Include="src\main\scripts\lwa\service\contract\UserService.ts" />
-    <Content Include="src\main\scripts\lwa\service\contract\util\AlertService.js">
-      <DependentUpon>AlertService.ts</DependentUpon>
-    </Content>
     <Content Include="src\main\scripts\lwa\service\contract\util\AlertService.ts" />
-    <Content Include="src\main\scripts\lwa\service\impl\base\AbstractEntityService.js">
-      <DependentUpon>AbstractEntityService.ts</DependentUpon>
-    </Content>
-    <Content Include="src\main\scripts\lwa\service\impl\base\AbstractEntityService.ts" />
-    <Content Include="src\main\scripts\lwa\service\impl\DefaultDependencyService.ts" />
-    <Content Include="src\main\scripts\lwa\service\impl\DefaultProductService.js">
-      <DependentUpon>DefaultProductService.ts</DependentUpon>
-    </Content>
-    <Content Include="src\main\scripts\lwa\service\impl\DefaultProductService.ts" />
-    <Content Include="src\main\scripts\lwa\service\impl\util\DefaultAlertService.js">
-      <DependentUpon>DefaultAlertService.ts</DependentUpon>
-    </Content>
-    <Content Include="src\main\scripts\lwa\service\impl\util\DefaultAlertService.ts" />
-    <Content Include="src\main\scripts\lwa\service\mock\base\AbstractEntityService.ts" />
-    <Content Include="src\main\scripts\lwa\service\mock\DefaultAuthService.ts" />
-    <Content Include="src\main\scripts\lwa\service\mock\DefaultProductService.ts" />
-    <Content Include="src\main\scripts\lwa\service\mock\DefaultUserService.ts" />
+    <Content Include="src\main\scripts\lwa\service\contract\util\NavigationSvc.ts" />
+    <Content Include="src\main\scripts\lwa\service\impl\base\AbstractEntityServiceImpl.ts" />
+    <Content Include="src\main\scripts\lwa\service\impl\DefaultDependencyServiceImpl.ts" />
+    <Content Include="src\main\scripts\lwa\service\impl\DefaultProductServiceImpl.ts" />
+    <TypeScriptCompile Include="src\main\scripts\lwa\service\impl\util\NavigationSvcImpl.ts" />
+    <Content Include="src\main\scripts\lwa\service\impl\util\DefaultAlertServiceImpl.ts" />
+    <Content Include="src\main\scripts\lwa\service\mock\base\AbstractEntityServiceMock.ts" />
+    <Content Include="src\main\scripts\lwa\service\mock\DefaultAuthServiceMock.ts" />
+    <Content Include="src\main\scripts\lwa\service\mock\DefaultProductServiceMock.ts" />
+    <Content Include="src\main\scripts\lwa\service\mock\DefaultUserServiceMock.ts" />
     <Content Include="src\main\scripts\lwa\util\Std.ts" />
-    <Content Include="src\main\scripts\lwa\util\Std.js">
-      <DependentUpon>Std.ts</DependentUpon>
-    </Content>
     <TypeScriptCompile Include="src\main\scripts\main.ts" />
     <Content Include="src\main\scripts\plugins\ekathuwa.js" />
     <Content Include="src\main\scripts\plugins\ui-bootstrap.js" />
+    <Content Include="src\main\views\mainNavbarView.html" />
+    <Content Include="src\main\views\user\authUser.html" />
     <Content Include="src\test\.jshintrc" />
     <Content Include="ts-definitions\angularjs\angular.d.ts" />
     <Content Include="ts-definitions\angularui\angular-ui.d.ts" />
@@ -163,6 +122,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ts-definitions\requirejs\README.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="src\main\scripts\lwa\filter\" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TypeScript\Microsoft.TypeScript.targets" />
 </Project>

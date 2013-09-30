@@ -1,8 +1,17 @@
-///<reference path='./../../../domain/util/Alert.ts'/>
+///<reference path="./../../../reference.d.ts"/>
 
-export interface AlertService{
-    add: (message: string, title?: string, type?: domain.util.AlertType) => domain.util.AlertBlueprint;
-    remove: (alert: domain.util.AlertBlueprint) => void;
-    removeAll: () => void;
-    list: () => domain.util.AlertBlueprint[];
+module d.service.contract.util {
+    export interface AlertService {
+        add(message: string, title?: string, type?: string): domain.util.Alert;
+        remove(alert: domain.util.Alert): void;
+        removeAll(): void;
+        list(): domain.util.Alert[];
+    }
+
+    export interface AlertType {
+        ok: string;
+        info: string;
+        warn: string;
+        error: string;
+    }
 }

@@ -1,31 +1,28 @@
-///<reference path='./../../../../../ts-definitions/angularjs/angular.d.ts'/>
-///<reference path='./../../../../../ts-definitions/requirejs/require.d.ts'/>
-///<reference path='./ControllerModule.ts'/>
-///<reference path='./DirectiveModule.ts'/>
-///<reference path='./FilterModule.ts'/>
+///<reference path="./../reference.d.ts"/>
+///<amd-dependency path="angular"/>
+import a = require('./ControllerModule');
+import b = require('./DirectiveModule');
+import c = require('./FilterModule');
 
-import angular = require('angular');
-import module_c = require('./ControllerModule');
-import module_d = require('./DirectiveModule');
-import module_f = require('./FilterModule');
+export module modularity {
+    export class AppModule {
+        private appNgModule: ng.IModule;
+        private controllerModule: a.modularity.ControllerModule;
+        private directiveModule: b.modularity.DirectiveModule;
+        private filterModule: c.modularity.FilterModule;
 
-export class AppModule {
-    private appNgModule: ng.IModule;
-    private controllerModule: module_c.ControllerModule;
-    private directiveModule: module_d.DirectiveModule;
-    private filterModule: module_f.FilterModule;
-        
-    constructor() {
+        constructor() {
 
-        this.controllerModule = new module_c.ControllerModule().configure();
-        this.directiveModule = new module_d.DirectiveModule().configure();
-        this.filterModule = new module_f.FilterModule().configure();
-        this.appNgModule = angular.module('lwa', ['lwaDirectiveModule', 'lwaFilterModule', 'lwaControllerModule']);
-    }
+            this.controllerModule = new a.modularity.ControllerModule().configure();
+            this.directiveModule = new b.modularity.DirectiveModule().configure();
+            this.filterModule = new c.modularity.FilterModule().configure();
+            this.appNgModule = angular.module('lwa', ['lwaDirectiveModule', 'lwaFilterModule', 'lwaControllerModule']);
+        }
 
-    bootstrap(rootElement: any){
-        angular.element(rootElement).ready(() => {
-            angular.bootstrap(rootElement, ['lwa']);
-        });
+        bootstrap(rootElement: any) {
+            angular.element(rootElement).ready(() => {
+                angular.bootstrap(rootElement, ['lwa']);
+            });
+        }
     }
 }
