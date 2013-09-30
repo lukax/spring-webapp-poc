@@ -4,10 +4,9 @@ export module controller.user {
     export interface AuthUserViewModel extends ng.IScope {
         user: domain.User;
         login: () => void;
-        logout: () => void;
     }
 
-    export class AuthUserController {
+    export class AuthUserController implements d.controller.contract.Controller{
 
         static $inject = ['$scope', 'AuthService', 'AlertService', 'NavigationSvc'];
         constructor(public $scope: AuthUserViewModel,
@@ -15,13 +14,8 @@ export module controller.user {
                     public AlertService: d.service.contract.util.AlertService,
                     public NavigationSvc: d.service.contract.util.NavigationSvc) {
 
+            this.processArgs();
             this.populateScope();
-        }
-
-        populateScope() {
-            this.$scope.user = { id: 0, username: '', password: '', role: '', isLogged:false };
-            this.$scope.login = () => { this.login(); }
-            this.$scope.logout = () => { this.logout(); }
         }
 
         login() {
@@ -36,16 +30,13 @@ export module controller.user {
                 });
         }
 
-        logout() {
-            this.AuthService.logout(this.$scope.user,
-                (successData) => {
-                    this.NavigationSvc.$location.url('/user/auth');
-                    this.$scope.user = successData;
-                    this.AlertService.add(this.$scope.user.username + ' saiu');
-                },
-                (errorData, errorStatus) => {
-                    this.AlertService.add('Não foi possível sair', String(errorStatus), 'warning');
-                });
+        processArgs(){
+
+        }
+
+        populateScope() {
+            this.$scope.user = { id: 0, username: '', password: '', role: '', isLogged:false };
+            this.$scope.login = () => this.login();
         }
     }
 }

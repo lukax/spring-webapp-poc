@@ -7,7 +7,7 @@
 ///<reference path="./../../../../ts-definitions/underscore/underscore.d.ts"/>
 
 
-
+///<reference path="./controller/base/Controller.ts"/>
 ///<reference path="./controller/product/EditProductController.ts"/>
 ///<reference path="./controller/product/ListProductController.ts"/>
 ///<reference path="./controller/user/AuthUserController.ts"/>

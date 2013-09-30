@@ -14,7 +14,7 @@ export module controller.product {
         previousProduct: () => void;
     }
 
-    export class EditProductController {
+    export class EditProductController implements d.controller.contract.Controller {
         
         static $inject = ['$scope', 'NavigationSvc', 'ProductService', 'AlertService', '$ekathuwa'];
         constructor(public $scope: EditProductViewModel,
@@ -23,8 +23,8 @@ export module controller.product {
                     public AlertService: d.service.contract.util.AlertService,
                     public $ekathuwa: any) {
 
-            this.populateScope();
             this.processArgs();
+            this.populateScope();
         }
 
         newProduct() {
@@ -68,37 +68,44 @@ export module controller.product {
                 });
         }
 
-        processArgs() {
-            if (this.NavigationSvc.$routeParams.productId == 'new') {
-                //this.$scope.product = { id:0, name:'', description:'', quantity: 0, price: 0, costPrice:0, group:'', ncm:0 };
-            } else {
-                this.ProductService.findById(this.NavigationSvc.$routeParams.productId,
-                    (successData, successStatus) => {
-                        this.$scope.product = successData;
-                    },
-                    (errorData, errorStatus) => {
-                        this.AlertService.add('Produto com o ID especificado não foi encontrado', String(errorData), 'warning');
-                        this.newProduct();
-                    });
-            }
-            if (this.NavigationSvc.$location.hash() == 'priceInfo') {
-                this.$ekathuwa.modal({
-                    id: 'priceInfoModalId',
-                    templateURL: 'views/product/modal/priceInfoModal.html',
-                    scope: this.$scope,
-                    onHidden: () => { this.NavigationSvc.$location.hash(null); this.$scope.$apply(); }
+        findProduct(prodId: number){
+            this.ProductService.findById(prodId,
+                (successData, successStatus) => {
+                    this.$scope.product = successData;
+                },
+                (errorData, errorStatus) => {
+                    this.AlertService.add('Produto com o ID especificado não foi encontrado', String(errorData), 'warning');
+                    this.newProduct();
                 });
-            }
         }
 
-        getProfitMargin() {
+        previousProduct(){
+            var param = Number(this.NavigationSvc.$routeParams.productId) - 1;
+            if (param >= 0) this.NavigationSvc.$location.url('/product/' + param);
+            else this.NavigationSvc.$location.url('/product');
+        }
+
+        priceInfo(){
+            this.NavigationSvc.$location.hash('priceInfo');
+        }
+
+        priceInfoModal(){
+            this.$ekathuwa.modal({
+                id: 'priceInfoModalId',
+                templateURL: 'views/product/modal/priceInfoModal.html',
+                scope: this.$scope,
+                onHidden: () => { this.NavigationSvc.$location.hash(null); this.$scope.$apply(); }
+            });
+        }
+
+        setupProfitMargin() {
             this.$scope.$watch('product.price + product.costPrice', () => {
                 if (this.$scope.product.costPrice !== 0)
                     this.$scope.productProfitMargin = a.util.Std.round(this.$scope.product.price / this.$scope.product.costPrice, 2);
             });
         }
 
-        getGroups(){
+        setupGroups(){
             this.ProductService.listGroups(
                 (successData, successStatus) => { this.$scope.productGroups = successData; },
                 (errorData, errorStatus) => { });
@@ -108,20 +115,30 @@ export module controller.product {
             return (this.$scope.product.id == 0);
         }
 
+        processArgs() {
+            var routeProdId = this.NavigationSvc.$routeParams.productId;
+            if(!isNaN(routeProdId)){
+                this.findProduct(Number(routeProdId));
+            }else if(routeProdId == 'new'){
+                this.$scope.product = { id:0, name:'', description:'', quantity: 0, price: 0, costPrice:0, group:'', ncm:0 };
+            }else{
+                this.AlertService.add('Produto ID Inválido', '', 'warning');
+            }
+
+            if (this.NavigationSvc.$location.hash() == 'priceInfo') {
+                this.priceInfoModal();
+            }
+        }
+
         populateScope() {
-            this.$scope.product = { id:0, name:'', description:'', quantity: 0, price: 0, costPrice:0, group:'', ncm:0 };
             this.$scope.productPricePattern = /^(?=.*[1-9])\d*(?:\.\d{1,2})?$/;
             this.$scope.isReadMode = () => this.isReadMode();
             this.$scope.saveChanges = () => this.saveChanges();
             this.$scope.removeProduct = () => this.removeProduct();
-            this.$scope.priceInfo = () => this.NavigationSvc.$location.hash('priceInfo');
-            this.$scope.previousProduct = () => {
-                var param = Number(this.NavigationSvc.$routeParams.productId) - 1;
-                if (param >= 0) this.NavigationSvc.$location.url('/product/' + param);
-                else this.NavigationSvc.$location.url('/product');
-            };
-            this.getProfitMargin();
-            this.getGroups();
+            this.$scope.priceInfo = () => this.priceInfo();
+            this.$scope.previousProduct = () => this.previousProduct();
+            this.setupProfitMargin();
+            this.setupGroups();
         }
     }
 }

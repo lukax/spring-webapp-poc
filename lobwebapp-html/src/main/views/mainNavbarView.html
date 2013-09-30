@@ -34,6 +34,7 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li><a data-ng-href="#/user/auth" data-ng-hide="user.isLogged">Entrar</a></li>
+                                <li><a data-ng-href="#/user/status" data-ng-hide="!user.isLogged">Status</a></li>
                                 <li><a  data-ng-click="logout()" data-ng-hide="!user.isLogged">Sair</a></li>
                             </ul>
                         </li>
