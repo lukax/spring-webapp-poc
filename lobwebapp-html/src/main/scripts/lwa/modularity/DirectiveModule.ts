@@ -11,7 +11,7 @@ export module modularity {
         private directiveNgModule: ng.IModule;
 
         constructor() {
-            this.directiveNgModule = angular.module('lwaDirectiveModule', ['ui.directives', 'ui.bootstrap']);
+            this.directiveNgModule = angular.module('lwa.directive', ['ui.directives', 'ui.bootstrap']);
         }
 
         configure() {

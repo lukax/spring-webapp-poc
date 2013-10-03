@@ -1,5 +1,5 @@
 ///<reference path="./../../reference.d.ts"/>
-import a = require('./base/AbstractEntityServiceMock');
+import a = require('./base/EntityServiceMock');
 
 export module service.mock {
     export class DefaultUserService extends a.service.mock.base.AbstractEntityService<domain.User> implements d.service.contract.UserService {

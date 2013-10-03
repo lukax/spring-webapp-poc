@@ -1,5 +1,5 @@
 ///<reference path="./../../reference.d.ts"/>
-import a = require('./base/AbstractEntityServiceImpl');
+import a = require('./base/EntityServiceImpl');
 
 export module service.impl {
     export class DefaultProductService extends a.service.impl.base.AbstractEntityService<domain.Product> implements d.service.contract.ProductService {

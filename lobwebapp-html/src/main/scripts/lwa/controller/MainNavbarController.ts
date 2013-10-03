@@ -1,18 +1,18 @@
 ﻿///<reference path="./../reference.d.ts"/>
 
 export module controller {
-    export interface MainNavbarViewModel extends ng.IScope {
+    export interface MainNavbarViewModel extends d.controller.base.BaseViewModel {
         user: domain.User;
         username: string;
         logout: () => void;
     }
 
-    export class MainNavbarController implements d.controller.contract.Controller{
+    export class MainNavbarController implements d.controller.base.Controller{
 
-        static $inject = ['$scope', 'AuthService', 'NavigationSvc', 'AlertService', '$rootScope'];
+        static $inject = ['$scope', 'AuthService', 'NavigationService', 'AlertService', '$rootScope'];
         constructor(public $scope: MainNavbarViewModel,
                     public AuthService: d.service.contract.AuthService,
-                    public NavigationSvc: d.service.contract.util.NavigationSvc,
+                    public NavigationSvc: d.service.contract.util.NavigationService,
                     public AlertService: d.service.contract.util.AlertService,
                     public $rootScope: ng.IRootScopeService ) {
 

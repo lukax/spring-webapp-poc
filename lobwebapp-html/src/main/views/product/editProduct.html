@@ -1,103 +1,101 @@
 <div class="row">
-      <div class="col-lg-7">
-        <form class="form-horizontal" role="form" name="productForm"
-            ng-submit="saveChanges()" novalidate>
+  <div class="col-lg-7">
+    <form class="form-horizontal" role="form" name="productForm"
+        ng-submit="saveChanges()" novalidate>
 
-           <div class="form-group">
-            <label for="inputId" class="col-lg-2 control-label">ID</label>
-            <div class="col-lg-10 input-group">
-              <input type="text" class="form-control" id="inputId" name="inputId" readonly
-                    ng-model="product.id">
-              <span class="input-group-btn">
-                <button type="button" class="btn btn-default" ng-click="previousProduct()">
-                  <span class="glyphicon glyphicon-arrow-left"></span>
-                </button>
-                <a type="button" class="btn btn-default" data-ng-href="#/product/{{product.id + 1}}">
-                  <span class="glyphicon glyphicon-arrow-right"></span>
-                </a>
-              </span>
-            </div>
-          </div>
-
-          <div class="form-group" ng-class="{'has-error': productForm.inputName.$invalid}">
-            <label for="inputName" class="col-lg-2 control-label">Nome</label>
-            <div class="col-lg-10">
-              <input type="text" class="form-control" id="inputName" name="inputName"  placeholder="Digite o nome do Produto"
-                autofocus ng-model="product.name" required ng-minlength="2">
-            </div>
-          </div>
-
-          <div class="form-group">
-            <div ng-class="{'has-error': productForm.inputPrice.$invalid}">
-              <label for="inputPrice" class="col-lg-2 control-label">Preço</label>
-              <div class="col-lg-7 input-group">
-                <span class="input-group-addon">R$</span>
-                <input type="text" class="form-control" id="inputPrice" name="inputPrice"
-                    ng-model="product.price" required ng-pattern="productPricePattern">
-                <div class="input-group-btn">
-                  <button type="button" class="btn btn-default dropdown-toggle" id="btnPriceInfoId"
-                    ng-click="priceInfo()" data-toggle="tooltip" title="Detalhar Cálculo de Preço">
-                    <span class="glyphicon glyphicon-new-window"></span>
-                  </button>
-                </div>
-              </div>
-            </div>
-            <div ng-class="{'has-error': productForm.inputQuantity.$invalid}">
-                <label class="col-lg-1 control-label" for="inputQuantity">Qt.</label>
-                <div class="col-lg-2">
-                <input type="number" class="form-control" id="inputQuantity" name="inputQuantity"
-                    ng-model="product.quantity" required min="0">
-                </div>
-            </div>
-          </div>
-
-            <div class="form-group">
-                <div ng-class="{'has-error': productForm.inputNcm.$invalid}">
-                    <label for="inputNcm" class="col-lg-2 control-label">NCM</label>
-                    <div class="col-lg-4">
-                        <input type="text" class="form-control" id="inputNcm" name="inputNcm"
-                                  ng-model="product.ncm">
-                    </div>
-                </div>
-                <div ng-class="">
-                    <label for="inputGroup" class="col-lg-1 control-label">Grupo</label>
-                    <div class="col-lg-5">
-                        <input type="text" class="form-control" id="inputGroup" name="inputGroup"
-                               ng-model="product.group" typeahead="productGroup for productGroup in productGroups | limitTo:5" typeahead-min-length="0">
-                    </div>
-                </div>
-            </div>
-
-          <div class="form-group" ng-class="{'has-error': productForm.inputDescription.$invalid}">
-            <label for="inputDescription" class="col-lg-2 control-label">Descrição</label>
-            <div class="col-lg-10">
-              <textarea type="text" class="form-control" id="inputDescription" name="inputDescription" placeholder="Digite uma Descrição" rows="2"
-                  ng-model="product.description" required></textarea>
-            </div>
-          </div>
-
-
-
-          <div class="btn-group pull-right">
-            <button class="btn btn-primary" type="submit" data-toggle="tooltip" title="Salvar Alterações do Produto" data-loading-text="Salvando..."
-                  ng-disabled="productForm.inputName.$invalid || productForm.inputDescription.$invalid" ng-hide="readMode">
-              <span class="glyphicon glyphicon-floppy-disk"></span> Salvar
+       <div class="form-group">
+        <label for="inputId" class="col-lg-2 control-label">ID</label>
+        <div class="col-lg-10 input-group">
+          <input type="text" class="form-control" id="inputId" name="inputId" readonly
+                ng-model="product.id">
+          <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="previousProduct()">
+              <span class="glyphicon glyphicon-arrow-left"></span>
             </button>
-            <a class="btn btn-default" data-toggle="tooltip" title="Remover Produto Atual"
-                  ng-click="removeProduct()" ng-hide="readMode">
-              Remover
+            <a type="button" class="btn btn-default" data-ng-href="#/product/{{product.id + 1}}">
+              <span class="glyphicon glyphicon-arrow-right"></span>
             </a>
-            <a class="btn btn-default" href="#/product/new" data-toggle="tooltip" title="Criar Novo Produto"
-                  ng-hide="readMode">
-              Novo
-            </a>
-            <a class="btn btn-default" href="#/product/list" data-toggle="tooltip" title="Listar Todos os Produtos" ng-hide="readMode">
-              Listar
-            </a> 
-          </div>
-        </form>
+          </span>
+        </div>
       </div>
-</div>
 
+      <div class="form-group" ng-class="{'has-error': productForm.inputName.$invalid}">
+        <label for="inputName" class="col-lg-2 control-label">Nome</label>
+        <div class="col-lg-10">
+          <input type="text" class="form-control" id="inputName" name="inputName"  placeholder="Digite o nome do Produto"
+            autofocus ng-model="product.name" required ng-minlength="2">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div ng-class="{'has-error': productForm.inputPrice.$invalid}">
+          <label for="inputPrice" class="col-lg-2 control-label">Preço</label>
+          <div class="col-lg-7 input-group">
+            <span class="input-group-addon">R$</span>
+            <input type="text" class="form-control" id="inputPrice" name="inputPrice"
+                ng-model="product.price" required ng-pattern="productPricePattern">
+            <div class="input-group-btn">
+              <button type="button" class="btn btn-default dropdown-toggle" id="btnPriceInfoId"
+                ng-click="priceInfo()" data-toggle="tooltip" title="Detalhar Cálculo de Preço">
+                <span class="glyphicon glyphicon-new-window"></span>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div ng-class="{'has-error': productForm.inputQuantity.$invalid}">
+            <label class="col-lg-1 control-label" for="inputQuantity">Qt.</label>
+            <div class="col-lg-2">
+            <input type="number" class="form-control" id="inputQuantity" name="inputQuantity"
+                ng-model="product.quantity" required min="0">
+            </div>
+        </div>
+      </div>
+
+        <div class="form-group">
+            <div ng-class="{'has-error': productForm.inputNcm.$invalid}">
+                <label for="inputNcm" class="col-lg-2 control-label">NCM</label>
+                <div class="col-lg-4">
+                    <input type="text" class="form-control" id="inputNcm" name="inputNcm"
+                              ng-model="product.ncm">
+                </div>
+            </div>
+            <div ng-class="">
+                <label for="inputGroup" class="col-lg-1 control-label">Grupo</label>
+                <div class="col-lg-5">
+                    <input type="text" class="form-control" id="inputGroup" name="inputGroup"
+                           ng-model="product.group" typeahead="productGroup for productGroup in productGroups | limitTo:5" typeahead-min-length="0">
+                </div>
+            </div>
+        </div>
+
+      <div class="form-group" ng-class="{'has-error': productForm.inputDescription.$invalid}">
+        <label for="inputDescription" class="col-lg-2 control-label">Descrição</label>
+        <div class="col-lg-10">
+          <textarea type="text" class="form-control" id="inputDescription" name="inputDescription" placeholder="Digite uma Descrição" rows="2"
+              ng-model="product.description" required></textarea>
+        </div>
+      </div>
+
+
+
+      <div class="btn-group pull-right">
+        <button class="btn btn-primary" type="submit" data-toggle="tooltip" title="Salvar Alterações do Produto" data-loading-text="Salvando..."
+              ng-disabled="productForm.inputName.$invalid || productForm.inputDescription.$invalid" ng-hide="readMode">
+          <span class="glyphicon glyphicon-floppy-disk"></span> Salvar
+        </button>
+        <a class="btn btn-default" data-toggle="tooltip" title="Remover Produto Atual"
+              ng-click="removeProduct()" ng-hide="readMode">
+          Remover
+        </a>
+        <a class="btn btn-default" href="#/product/new" data-toggle="tooltip" title="Criar Novo Produto"
+              ng-hide="readMode">
+          Novo
+        </a>
+        <a class="btn btn-default" href="#/product/list" data-toggle="tooltip" title="Listar Todos os Produtos" ng-hide="readMode">
+          Listar
+        </a>
+      </div>
+    </form>
+  </div>
+</div>
 </br>
-<data-lwa-alerts></data-lwa-alerts>

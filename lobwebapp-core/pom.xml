@@ -7,6 +7,13 @@
 	<version>1.0-SNAPSHOT</version>
 	<name>lobwebapp-core Maven Webapp</name>
 	<url>http://maven.apache.org</url>
+	<!-- JBoss repository for Hibernate -->
+	<repositories>
+		<repository>
+			<id>JBoss repository</id>
+			<url>http://repository.jboss.org/nexus/content/groups/public/</url>
+		</repository>
+	</repositories>
 	<properties>
 		<context.path>lobwebapp-core</context.path>
 		<source.encoding>UTF-8</source.encoding>
@@ -15,6 +22,7 @@
 		<java.version>1.7</java.version>
 		<junit.version>4.8.1</junit.version>
 		<spring.version>3.2.3.RELEASE</spring.version>
+		<spring-security.version>3.1.4.RELEASE</spring-security.version>
 		<jpa.version>1.0</jpa.version>
 		<jackson.version>1.9.9</jackson.version>
 		<slf4j.version>1.6.4</slf4j.version>
@@ -54,7 +62,6 @@
             <artifactId>spring-aop</artifactId>
             <version>${spring.version}</version>
         </dependency>
-        <!-- 
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-aspects</artifactId>
@@ -64,7 +71,7 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-expression</artifactId>
             <version>${spring.version}</version>
-        </dependency> -->
+        </dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-web</artifactId>
@@ -91,10 +98,47 @@
 			<artifactId>spring-tx</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
+		<!-- SPRING SECURITY -->
+		<!-- Spring Security -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-core</artifactId>
+			<version>${spring-security.version}</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+			<version>${spring-security.version}</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+			<version>${spring-security.version}</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-taglibs</artifactId>
+			<version>${spring-security.version}</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+		<!--  -->
 		<dependency>
 			<groupId>cglib</groupId>
 			<artifactId>cglib</artifactId>
 			<version>2.2.2</version>
+		</dependency>
+		<dependency>
+			<groupId>taglibs</groupId>
+			<artifactId>standard</artifactId>
+			<version>1.1.2</version>
+			<scope>runtime</scope>
 		</dependency>
 		<!-- Spring Data dependencies -->
 		<dependency>

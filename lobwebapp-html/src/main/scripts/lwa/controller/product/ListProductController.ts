@@ -1,7 +1,7 @@
 ///<reference path="./../../reference.d.ts"/>
 
 export module controller.product {
-    export interface ListProductViewModel extends ng.IScope {
+    export interface ListProductViewModel extends d.controller.base.BaseViewModel {
         product: domain.Product;
         products: domain.Product[];
         editProduct: (id: number) => void;
@@ -9,11 +9,11 @@ export module controller.product {
         gridOptions: any;
     }
 
-    export class ListProductController implements d.controller.contract.Controller{
+    export class ListProductController implements d.controller.base.Controller{
 
-        static $inject = ['$scope', 'NavigationSvc', 'ProductService', 'AlertService', '$ekathuwa'];
+        static $inject = ['$scope', 'NavigationService', 'ProductService', 'AlertService', '$ekathuwa'];
         constructor(public $scope: ListProductViewModel,
-                    public NavigationSvc: d.service.contract.util.NavigationSvc,
+                    public NavigationSvc: d.service.contract.util.NavigationService,
                     public ProductService: d.service.contract.ProductService,
                     public AlertService: d.service.contract.util.AlertService,
                     public $ekathuwa: any) {
@@ -61,7 +61,7 @@ export module controller.product {
         }
 
         processArgs() {
-            var findParam = this.NavigationSvc.$routeParams.find;
+            var findParam = this.NavigationSvc.urlParams.find;
             switch (findParam) {
                 case true: this.findProduct(findParam);
                 case '': this.findProductModal();

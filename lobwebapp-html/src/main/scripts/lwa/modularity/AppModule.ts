@@ -16,11 +16,11 @@ export module modularity {
             this.controllerModule = new a.modularity.ControllerModule().configure();
             this.directiveModule = new b.modularity.DirectiveModule().configure();
             this.filterModule = new c.modularity.FilterModule().configure();
-            this.appNgModule = angular.module('lwa', ['lwaDirectiveModule', 'lwaFilterModule', 'lwaControllerModule']);
+            this.appNgModule = angular.module('lwa', ['lwa.directive', 'lwa.filter', 'lwa.controller']);
         }
 
         bootstrap(rootElement: any) {
-            angular.element(rootElement).ready(() => {
+            (<any>angular.element(rootElement)).ready(() => {
                 angular.bootstrap(rootElement, ['lwa']);
             });
         }

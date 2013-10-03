@@ -16,6 +16,6 @@
 		scans specified packages for classes configured as Spring managed beans and 
 		automatically sets up objects annotated with @Controller, @Service etc. -->
 	<context:component-scan base-package="com.espindola.lobwebapp.controller" />
-
+ 
 
 </beans>

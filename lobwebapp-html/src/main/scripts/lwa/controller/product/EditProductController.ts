@@ -1,8 +1,8 @@
 ///<reference path="./../../reference.d.ts"/>
-import a = require('./../../util/Std');
+import a = require('./../../util/StdUtil');
 
 export module controller.product {
-    export interface EditProductViewModel extends ng.IScope {
+    export interface EditProductViewModel extends d.controller.base.BaseViewModel {
         product: domain.Product;
         productPricePattern: RegExp;
         productProfitMargin: number;
@@ -14,11 +14,11 @@ export module controller.product {
         previousProduct: () => void;
     }
 
-    export class EditProductController implements d.controller.contract.Controller {
+    export class EditProductController implements d.controller.base.Controller {
         
-        static $inject = ['$scope', 'NavigationSvc', 'ProductService', 'AlertService', '$ekathuwa'];
+        static $inject = ['$scope', 'NavigationService', 'ProductService', 'AlertService', '$ekathuwa'];
         constructor(public $scope: EditProductViewModel,
-                    public NavigationSvc: d.service.contract.util.NavigationSvc,
+                    public NavigationSvc: d.service.contract.util.NavigationService,
                     public ProductService: d.service.contract.ProductService,
                     public AlertService: d.service.contract.util.AlertService,
                     public $ekathuwa: any) {
@@ -80,13 +80,14 @@ export module controller.product {
         }
 
         previousProduct(){
-            var param = Number(this.NavigationSvc.$routeParams.productId) - 1;
+            var param = Number(this.NavigationSvc.urlParams.productId) - 1;
             if (param >= 0) this.NavigationSvc.$location.url('/product/' + param);
             else this.NavigationSvc.$location.url('/product');
         }
 
         priceInfo(){
-            this.NavigationSvc.$location.hash('priceInfo');
+            //this.NavigationService.$location.hash('priceInfo');
+            this.NavigationSvc.$location.search('priceInfo', 'true');
         }
 
         priceInfoModal(){
@@ -94,7 +95,7 @@ export module controller.product {
                 id: 'priceInfoModalId',
                 templateURL: 'views/product/modal/priceInfoModal.html',
                 scope: this.$scope,
-                onHidden: () => { this.NavigationSvc.$location.hash(null); this.$scope.$apply(); }
+                onHidden: () => { this.NavigationSvc.$location.search('priceInfo', null); }
             });
         }
 
@@ -116,16 +117,15 @@ export module controller.product {
         }
 
         processArgs() {
-            var routeProdId = this.NavigationSvc.$routeParams.productId;
+            var routeProdId = this.NavigationSvc.urlParams.productId;
             if(!isNaN(routeProdId)){
                 this.findProduct(Number(routeProdId));
             }else if(routeProdId == 'new'){
-                this.$scope.product = { id:0, name:'', description:'', quantity: 0, price: 0, costPrice:0, group:'', ncm:0 };
+                this.$scope.product = { id:0, name:'s', description:'', quantity: 0, price: 0, costPrice:0, group:'', ncm:0 };
             }else{
                 this.AlertService.add('Produto ID Inválido', '', 'warning');
             }
-
-            if (this.NavigationSvc.$location.hash() == 'priceInfo') {
+            if (<any>this.NavigationSvc.urlParams.priceInfo == 'true') {
                 this.priceInfoModal();
             }
         }

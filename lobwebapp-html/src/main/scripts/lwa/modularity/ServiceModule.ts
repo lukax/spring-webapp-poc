@@ -1,18 +1,18 @@
 ///<reference path="./../reference.d.ts"/>
 ///<amd-dependency path="angular"/>
-import a = require('./../service/impl/util/DefaultAlertServiceImpl');
-import b = require('./../service/mock/DefaultProductServiceMock');
-import c = require('./../service/mock/DefaultUserServiceMock');
-import d = require('./../service/mock/DefaultAuthServiceMock');
-import e = require('./../service/impl/DefaultDependencyServiceImpl');
-import f = require('./../service/impl/util/NavigationSvcImpl');
+import a = require('./../service/impl/util/AlertServiceImpl');
+import b = require('./../service/mock/ProductServiceMock');
+import c = require('./../service/mock/UserServiceMock');
+import d = require('./../service/mock/AuthServiceMock');
+import e = require('./../service/impl/DependencyServiceImpl');
+import f = require('./../service/impl/util/NavigationServiceImpl');
 
 export module modularity {
     export class ServiceModule {
         private serviceNgModule: ng.IModule;
 
         constructor() {
-            this.serviceNgModule = angular.module('lwaServiceModule', []);
+            this.serviceNgModule = angular.module('lwa.service', []);
         }
 
         configure() {
@@ -22,7 +22,7 @@ export module modularity {
                 .service('UserService', <Function>c.service.mock.DefaultUserService)
                 .service('AuthService', <Function>d.service.mock.DefaultAuthService)
                 .service('AlertService', <Function>a.service.impl.util.DefaultAlertService)
-                .service('NavigationSvc', <Function>f.service.impl.util.NavigationSvcImpl)
+                .service('NavigationService', <Function>f.service.impl.util.NavigationSvcImpl)
             ;
             return this;
         }

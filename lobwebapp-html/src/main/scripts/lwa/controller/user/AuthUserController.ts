@@ -1,18 +1,18 @@
 ///<reference path="./../../reference.d.ts"/>
 
 export module controller.user {
-    export interface AuthUserViewModel extends ng.IScope {
+    export interface AuthUserViewModel extends d.controller.base.BaseViewModel {
         user: domain.User;
         login: () => void;
     }
 
-    export class AuthUserController implements d.controller.contract.Controller{
+    export class AuthUserController implements d.controller.base.Controller{
 
-        static $inject = ['$scope', 'AuthService', 'AlertService', 'NavigationSvc'];
+        static $inject = ['$scope', 'AuthService', 'AlertService', 'NavigationService'];
         constructor(public $scope: AuthUserViewModel,
                     public AuthService: d.service.contract.AuthService,
                     public AlertService: d.service.contract.util.AlertService,
-                    public NavigationSvc: d.service.contract.util.NavigationSvc) {
+                    public NavigationSvc: d.service.contract.util.NavigationService) {
 
             this.processArgs();
             this.populateScope();

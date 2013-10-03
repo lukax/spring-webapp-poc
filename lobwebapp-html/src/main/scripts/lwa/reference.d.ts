@@ -7,7 +7,8 @@
 ///<reference path="./../../../../ts-definitions/underscore/underscore.d.ts"/>
 
 
-///<reference path="./controller/base/Controller.ts"/>
+///<reference path="./controller/base/BaseController.ts"/>
+///<reference path="./controller/base/BaseViewModel.ts"/>
 ///<reference path="./controller/product/EditProductController.ts"/>
 ///<reference path="./controller/product/ListProductController.ts"/>
 ///<reference path="./controller/user/AuthUserController.ts"/>
@@ -28,19 +29,19 @@
 
 ///<reference path="./service/contract/base/EntityService.ts"/>
 ///<reference path="./service/contract/util/AlertService.ts"/>
-///<reference path="./service/contract/util/NavigationSvc.ts"/>
+///<reference path="./service/contract/util/NavigationService.ts"/>
 ///<reference path="./service/contract/AuthService.ts"/>
 ///<reference path="./service/contract/ProductService.ts"/>
 ///<reference path="./service/contract/UserService.ts"/>
 
-///<reference path="./service/impl/base/AbstractEntityServiceImpl.ts"/>
-///<reference path="./service/impl/util/DefaultAlertServiceImpl.ts"/>
-///<reference path="./service/impl/DefaultDependencyServiceImpl.ts"/>
-///<reference path="./service/impl/DefaultProductServiceImpl.ts"/>
+///<reference path="./service/impl/base/EntityServiceImpl.ts"/>
+///<reference path="./service/impl/util/AlertServiceImpl.ts"/>
+///<reference path="./service/impl/DependencyServiceImpl.ts"/>
+///<reference path="./service/impl/ProductServiceImpl.ts"/>
 
-///<reference path="./service/mock/DefaultAuthServiceMock.ts"/>
-///<reference path="./service/mock/DefaultProductServiceMock.ts"/>
-///<reference path="./service/mock/DefaultUserServiceMock.ts"/>
-///<reference path="./service/mock/base/AbstractEntityServiceMock.ts"/>
+///<reference path="./service/mock/AuthServiceMock.ts"/>
+///<reference path="./service/mock/ProductServiceMock.ts"/>
+///<reference path="./service/mock/UserServiceMock.ts"/>
+///<reference path="./service/mock/base/EntityServiceMock.ts"/>
 
-///<reference path="./util/Std.ts"/>
+///<reference path="./util/StdUtil.ts"/>

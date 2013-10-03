@@ -142,6 +142,12 @@ define(['angular', 'angularRoute', 'jquery', 'bootstrap'], function (angular, an
                     $('body').append(m);
                     $compile(m)(op.scope);
                     var deferred = $q.defer();
+                    function safeApply(fn) {
+                        ($rootScope.$$phase || $rootScope.$root.$$phase) ? fn() : $rootScope.$apply(fn);
+                    }
+                    function delayedApply(fn) {
+                        $timeout(fn, 100);
+                    }
                     if (op.templateURL !== null && op.templateURL !== '') {
                         $timeout(function () {
                             deferred.resolve($(modSelector).modal(btOPs));
@@ -150,10 +156,18 @@ define(['angular', 'angularRoute', 'jquery', 'bootstrap'], function (angular, an
                         deferred.resolve($(modSelector).modal(btOPs));
                     }
                     deferred.promise.then(function (m) {
-                        m.on('show.bs.modal', op.onShow);
-                        m.on('shown.bs.modal', function () { if (op.onShown) op.onShown(); $('*[autofocus]').focus(); });
-                        m.on('hide.bs.modal', op.onHide);
-                        m.on('hidden.bs.modal', op.onHidden);
+                        m.on('show.bs.modal', function() {delayedApply(function() {
+                            if(op.onShow) op.onShow();
+                        })});
+                        m.on('shown.bs.modal', function() {delayedApply(function() {
+                            if (op.onShown) op.onShown(); $('*[autofocus]').focus();
+                        })});
+                        m.on('hide.bs.modal', function() {delayedApply(function() {
+                            if(op.onHide) op.onHide();
+                        })});
+                        m.on('hidden.bs.modal', function() {delayedApply(function() {
+                            if(op.onHidden) op.onHidden();
+                        })});
                     });
                     return deferred.promise;
                 };

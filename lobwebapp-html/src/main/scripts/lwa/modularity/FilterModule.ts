@@ -1,13 +1,13 @@
 ///<reference path="./../reference.d.ts"/>
 ///<amd-dependency path="angular"/>
-import a = require('./../util/Std');
+import a = require('./../util/StdUtil');
 
 export module modularity {
     export class FilterModule {
         private filterNgModule: ng.IModule;
 
         constructor() {
-            this.filterNgModule = angular.module('lwaFilterModule', []);
+            this.filterNgModule = angular.module('lwa.filter', []);
         }
 
         configure() {

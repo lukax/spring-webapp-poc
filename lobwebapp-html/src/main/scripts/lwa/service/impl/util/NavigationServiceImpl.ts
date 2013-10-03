@@ -3,10 +3,17 @@
 import svcu = d.service.contract.util;
 
 export module service.impl.util {
-    export class NavigationSvcImpl implements d.service.contract.util.NavigationSvc {
+    export class NavigationSvcImpl implements d.service.contract.util.NavigationService {
+        //private $routeParams: ng.IRouteParamsService;
+        private $stateParams: ng.ui.IStateParams;
 
-        static $inject = ['$location', '$routeParams'];
-        constructor(public $location: ng.ILocationService, public $routeParams: ng.IRouteParamsService) {
+        static $inject = ['$location', '$stateParams'];
+        constructor(public $location: ng.ILocationService, $stateParams: ng.ui.IStateParams) {
+            this.$stateParams = $stateParams;
+        }
+
+        get urlParams(){
+            return this.$stateParams;
         }
 
         navigate(viewId: string, arg?: string) {

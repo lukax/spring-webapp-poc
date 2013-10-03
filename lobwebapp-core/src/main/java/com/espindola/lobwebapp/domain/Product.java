@@ -11,6 +11,7 @@ import com.espindola.lobwebapp.domain.base.AbstractEntity;
 @Entity
 @Table(name = "PT_PRODUCT")
 public class Product extends AbstractEntity {
+	
 	@NotNull
 	@Size(min = 3)
 	private String name;

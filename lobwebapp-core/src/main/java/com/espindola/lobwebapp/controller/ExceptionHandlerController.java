@@ -31,6 +31,7 @@ public class ExceptionHandlerController {
 	public ResponseMessage handleMethodArgEx(MethodArgumentNotValidException ex){
 		return new ResponseMessage(ClassUtils.getShortName(ex.getClass()), ex.getMessage(), ResponseDegree.ALERT);
 	}
+	
 //	@ExceptionHandler(EntityInvalidException.class)
 //	@ResponseBody
 //	@ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)

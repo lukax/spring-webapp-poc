@@ -3,6 +3,8 @@ package com.espindola.lobwebapp.controller.base;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,6 +19,7 @@ import com.espindola.lobwebapp.exception.EntityInvalidException;
 import com.espindola.lobwebapp.exception.EntityNotFoundException;
 import com.espindola.lobwebapp.service.contract.base.EntityService;
 
+@Controller
 public abstract class EntityController<E extends AbstractEntity> {
 
 	private EntityService<E> service;
@@ -39,19 +42,19 @@ public abstract class EntityController<E extends AbstractEntity> {
 
 	@RequestMapping(method = RequestMethod.POST)
 	@ResponseStatus(value = HttpStatus.OK)
-	public void save(@Validated @RequestBody E data) throws EntityExistsException, EntityInvalidException {
+	public synchronized void save(@Validated @RequestBody E data) throws EntityExistsException, EntityInvalidException {
 		service.save(data);
 	}
 
 	@RequestMapping(method = RequestMethod.PUT)
 	@ResponseStatus(value = HttpStatus.OK)
-	public void update(@Validated @RequestBody E data) throws EntityInvalidException, EntityNotFoundException {
+	public synchronized void update(@Validated @RequestBody E data) throws EntityInvalidException, EntityNotFoundException {
 		service.update(data);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	@ResponseStatus(value = HttpStatus.OK)
-	public void delete(@PathVariable("id") Long id)
+	public synchronized void delete(@PathVariable("id") Long id)
 			throws EntityNotFoundException {
 		service.delete(id);
 	}
