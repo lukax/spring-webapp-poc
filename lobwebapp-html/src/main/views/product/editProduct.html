@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-lg-7">
-    <form class="form-horizontal" role="form" name="productForm"
+    <form class="form-horizontal" role="form" name="productDetailsForm"
         ng-submit="saveChanges()" novalidate>
 
        <div class="form-group">
@@ -19,7 +19,7 @@
         </div>
       </div>
 
-      <div class="form-group" ng-class="{'has-error': productForm.inputName.$invalid}">
+      <div class="form-group" ng-class="{'has-error': productDetailsForm.inputName.$invalid}">
         <label for="inputName" class="col-lg-2 control-label">Nome</label>
         <div class="col-lg-10">
           <input type="text" class="form-control" id="inputName" name="inputName"  placeholder="Digite o nome do Produto"
@@ -28,7 +28,7 @@
       </div>
 
       <div class="form-group">
-        <div ng-class="{'has-error': productForm.inputPrice.$invalid}">
+        <div ng-class="{'has-error': productDetailsForm.inputPrice.$invalid}">
           <label for="inputPrice" class="col-lg-2 control-label">Preço</label>
           <div class="col-lg-7 input-group">
             <span class="input-group-addon">R$</span>
@@ -42,7 +42,7 @@
             </div>
           </div>
         </div>
-        <div ng-class="{'has-error': productForm.inputQuantity.$invalid}">
+        <div ng-class="{'has-error': productDetailsForm.inputQuantity.$invalid}">
             <label class="col-lg-1 control-label" for="inputQuantity">Qt.</label>
             <div class="col-lg-2">
             <input type="number" class="form-control" id="inputQuantity" name="inputQuantity"
@@ -52,7 +52,7 @@
       </div>
 
         <div class="form-group">
-            <div ng-class="{'has-error': productForm.inputNcm.$invalid}">
+            <div ng-class="{'has-error': productDetailsForm.inputNcm.$invalid}">
                 <label for="inputNcm" class="col-lg-2 control-label">NCM</label>
                 <div class="col-lg-4">
                     <input type="text" class="form-control" id="inputNcm" name="inputNcm"
@@ -68,7 +68,7 @@
             </div>
         </div>
 
-      <div class="form-group" ng-class="{'has-error': productForm.inputDescription.$invalid}">
+      <div class="form-group" ng-class="{'has-error': productDetailsForm.inputDescription.$invalid}">
         <label for="inputDescription" class="col-lg-2 control-label">Descrição</label>
         <div class="col-lg-10">
           <textarea type="text" class="form-control" id="inputDescription" name="inputDescription" placeholder="Digite uma Descrição" rows="2"
@@ -80,7 +80,7 @@
 
       <div class="btn-group pull-right">
         <button class="btn btn-primary" type="submit" data-toggle="tooltip" title="Salvar Alterações do Produto" data-loading-text="Salvando..."
-              ng-disabled="productForm.inputName.$invalid || productForm.inputDescription.$invalid" ng-hide="readMode">
+              ng-disabled="productDetailsForm.inputName.$invalid || productDetailsForm.inputDescription.$invalid" ng-hide="readMode">
           <span class="glyphicon glyphicon-floppy-disk"></span> Salvar
         </button>
         <a class="btn btn-default" data-toggle="tooltip" title="Remover Produto Atual"
@@ -98,4 +98,3 @@
     </form>
   </div>
 </div>
-</br>

@@ -1,0 +1,44 @@
+<div class="row">
+    <div class="col-lg-7">
+            <form class="form-horizontal col-lg-12" name="detailsForm" novalidate>
+                <div class="form-group" ng-class="{'has-error': detailsForm.inputUsername.$invalid}">
+                    <label for="inputUsername" class="col-lg-2 control-label">Usuário</label>
+                    <div class="col-lg-10">
+                        <input type="text" class="form-control" id="inputUsername" name="inputUsername"
+                               autofocus ng-model="user.username" readonly>
+                    </div>
+                </div>
+            </form>
+            <form class="form-horizontal col-lg-10 col-lg-offset-2" name="alterPassForm" novalidate>
+                    <div class="panel panel-default" style="background: #fafafa;">
+                        <div class="panel-heading">Alteração de Senha</div>
+                        <div class="panel-body">
+                            <div class="form-group" ng-class="{'has-error': alterPassForm.inputActualPass.$invalid}">
+                            <label for="inputActualPass" class="col-lg-3 control-label">Senha Atual</label>
+                            <div class="col-lg-7">
+                                <input type="password" class="form-control" id="inputActualPass" name="inputActualPass"
+                                       autofocus ng-model="currPass" required>
+                            </div>
+                        </div>
+                            <div class="form-group" ng-class="{'has-error': alterPassForm.inputNewPass.$invalid}">
+                                <label for="inputNewPass" class="col-lg-3 control-label">Nova Senha</label>
+                                <div class="col-lg-7">
+                                    <input type="password" class="form-control" id="inputNewPass" name="inputNewPass"
+                                           autofocus ng-model="newPass" required>
+                                </div>
+                            </div>
+                            <div class="form-group" ng-class="{'has-error': alterPassForm.inputReNewPass.$invalid}">
+                                <label for="inputReNewPass" class="col-lg-3 control-label">Re Nova Senha</label>
+                                <div class="col-lg-7">
+                                    <input type="password" class="form-control" id="inputReNewPass" name="inputReNewPass"
+                                           autofocus ng-model="newPassRe" required>
+                                </div>
+
+                            </div>
+                            <button type="button" class="btn btn-default pull-right" data-ng-disabled="alterPassForm.inputActualPass.$invalid
+                                || alterPassForm.inputNewPass.$invalid || alterPassForm.inputReNewPass.$invalid">Mudar Senha</button>
+                        </div>
+                    </div>
+            </form>
+    </div>
+</div>

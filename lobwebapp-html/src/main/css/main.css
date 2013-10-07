@@ -34,9 +34,36 @@ body {
   content: "";
 }
 
+/* NAVBAR STUFF */
 ul.nav li.dropdown:hover > ul.dropdown-menu {
     display: block;
 }
 ul.nav li.dropdown:hover {
     background: #ebebeb;
+}
+
+.product-list.ng-enter{
+     -webkit-animation: fadeInLeft 500ms;
+     -moz-animation: fadeInLeft 500ms;
+     -ms-animation: fadeInLeft 500ms;
+     animation: fadeInLeft 500ms;
+}
+.product-list.ng-leave{
+    -webkit-animation: fadeOut 300ms;
+    -moz-animation: fadeOut 300ms;
+    -ms-animation: fadeOut 300ms;
+    animation: fadeOut 300ms;
+}
+
+.alert.ng-enter{
+    -webkit-animation: pulse 500ms;
+    -moz-animation: pulse 500ms;
+    -ms-animation: pulse 500ms;
+    animation: pulse 500ms;
+}
+.alert.ng-leave{
+    -webkit-animation: fadeOut 500ms;
+    -moz-animation: fadeOut 500ms;
+    -o-animation: fadeOut 500ms;
+    animation: fadeOut 500ms;
 }

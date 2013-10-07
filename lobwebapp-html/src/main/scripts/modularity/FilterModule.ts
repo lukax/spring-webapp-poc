@@ -1,4 +1,4 @@
-///<reference path="./../reference.d.ts"/>
+///<reference path="../reference.d.ts"/>
 ///<amd-dependency path="angular"/>
 import a = require('./../util/StdUtil');
 

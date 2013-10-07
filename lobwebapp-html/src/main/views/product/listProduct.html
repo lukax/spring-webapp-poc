@@ -11,7 +11,7 @@
         <td><a href="javascript:void(0)" ng-click="predicate = 'group'; reverse = !reverse">Grupo</a></td>
       </tr>
       <tr ng-repeat="prod in products | filter:searchText | orderBy:predicate:reverse" 
-          ng-click="editProduct(prod.id)" 
+          ng-click="editProduct(prod.id)" class="dn-fade-left"
           style="cursor: pointer;">
         <td>{{prod.id}}</td>
         <td>{{prod.name}}</td>

@@ -1,32 +1,34 @@
-///<reference path='./../../../ts-definitions/angularjs/angular.d.ts'/>
-///<reference path='./../../../ts-definitions/requirejs/require.d.ts'/>
-///<reference path='./lwa/reference.d.ts'/>
+///<reference path='reference.d.ts'/>
 
 require.config({
     paths: {
-        text: '../components/requirejs-text/text',
-        jquery: '../components/jquery/jquery',
-        bootstrap: '../components/bootstrap-sass/dist/js/bootstrap',
-		angular: '../components/angular/angular',
-        angularRoute: '../components/angular-route/angular-route',
-        angularMocks: '../components/angular-mocks/angular-mocks',
-        angularAnimate: '../components/angular-animate/angular-animate',
-        angularUi: '../components/angular-ui/build/angular-ui',
-        angularUiRouter: '../components/angular-ui-router/release/angular-ui-router',
-        angularUiBootstrap: 'plugins/ui-bootstrap',
-        underscore: '../components/underscore-amd/underscore',
-        underscoreString: '../components/underscore.string/dist/underscore.string.min',
-        backbone: '../components/backbone-amd/backbone',
-        ekathuwa: 'plugins/ekathuwa',
-        moment: '../components/moment/moment'
+        text: '../lib/requirejs-text/text',
+        jquery: '../lib/jquery/jquery',
+        bootstrap: '../lib/bootstrap-sass/dist/js/bootstrap',
+		angular: '../lib/angular/angular',
+        angularRoute: '../lib/angular-route/angular-route',
+        angularMocks: '../lib/angular-mocks/angular-mocks',
+        angularAnimate: '../lib/angular-animate/angular-animate',
+        angularUi: '../lib/angular-ui/build/angular-ui',
+        angularUiRouter: '../lib/angular-ui-router/release/angular-ui-router',
+        angularUiBootstrap: '../lib/angular-ui-bootstrap/ui-bootstrap',
+        underscore: '../lib/underscore-amd/underscore',
+        underscoreString: '../lib/underscore.string/dist/underscore.string.min',
+        backbone: '../lib/backbone-amd/backbone',
+        ngEkathuwa: '../lib/ngEkathuwa/ekathuwa',
+        moment: '../lib/moment/moment',
+        ngAnimateAnimate: '../lib/ngAnimate-animate.css/animate'
 	},
 	baseUrl: 'scripts',
     shim: {
         'bootstrap': {
-            deps: [ 'jquery' ],
+            deps: ['jquery'],
             'exports': 'bootstrap'
         },
-        'angular': { 'exports': 'angular' },
+        'angular': {
+            deps: ['jquery'],
+            'exports': 'angular'
+        },
         'angularRoute': {
             deps: ['angular'],
             'exports': 'angularRoute'
@@ -55,7 +57,11 @@ require.config({
             deps: ['underscore'],
             'exports': 'underscoreString'
         },
-        'moment': { 'exports': 'moment' }
+        'moment': { 'exports': 'moment' },
+        'ngAnimateAnimate': {
+            deps: ['angularAnimate'],
+            'exports': 'ngAnimateAnimate'
+        }
 	},
 	priority: [
         'angular'
@@ -68,6 +74,6 @@ require.config({
 // not necessary when not using ng-app in index.html
 //window.name = "NG_DEFER_BOOTSTRAP!";
 
-require(['lwa/modularity/AppModule'], (app: any) => {
+require(['modularity/AppModule'], (app: any) => {
     new app.modularity.AppModule().bootstrap(document);
 });

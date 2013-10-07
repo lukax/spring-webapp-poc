@@ -1,17 +1,19 @@
-///<reference path="./../reference.d.ts"/>
+///<reference path="../reference.d.ts"/>
 ///<amd-dependency path="angular"/>
 ///<amd-dependency path="angularAnimate"/>
 ///<amd-dependency path="angularUi"/>
 ///<amd-dependency path="angularUiBootstrap"/>
+///<amd-dependency path="ngAnimateAnimate"/>
 
 import a = require('./../directive/util/AlertsDirective');
+import b = require('./../directive/LabeledInputDirective');
 
 export module modularity {
     export class DirectiveModule {
         private directiveNgModule: ng.IModule;
 
         constructor() {
-            this.directiveNgModule = angular.module('lwa.directive', ['ui.directives', 'ui.bootstrap']);
+            this.directiveNgModule = angular.module('lwa.directive', ['ngAnimate', 'ui.directives', 'ui.bootstrap']);
         }
 
         configure() {
@@ -20,24 +22,25 @@ export module modularity {
                 .directive('lwaHref', ['$location', '$route', this.lwaHref])
                 .directive('lwaCaret', this.lwaCaret)
                 .directive('lwaAlerts', [()=> new a.directive.util.AlertsDirective()])
+                .directive('stdForm', [() => new b.directive.LabeledInputDirective()])
             ;
             return this;
         }
 
         private progress = () => {
-        return {
+            return {
                 replace: true,
                 transclude: true,
                 restrict: "E", //element
                 template:
                 '<div class="progress progress-striped active">' +
-                '<div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">' +
-                '</div>' +
+                    '<div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">' +
+                    '</div>' +
                 '</div>'
             }
         };
         private lwaHref = ($location: any, $route: any) => {
-        return (scope: any, element: ng.IRootElementService, attrs: any) => {
+            return (scope: any, element: ng.IRootElementService, attrs: any) => {
                 scope.$watch('lwaHref', () => {
                     if (attrs.lwaHref) {
                         element.attr('href', attrs.lwaHref);

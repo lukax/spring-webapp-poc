@@ -6,5 +6,5 @@ dist
 .sass-cache
 components
 dist
-src/main/scripts/app.js
 .idea
+lib

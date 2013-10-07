@@ -1,16 +1,18 @@
-///<reference path="./../reference.d.ts"/>
+///<reference path="../reference.d.ts"/>
 ///<amd-dependency path="angular"/>
 ///<amd-dependency path="angularRoute"/>
-///<amd-dependency path="plugins/ekathuwa"/>
 ///<amd-dependency path="underscore"/>
 ///<amd-dependency path="underscoreString"/>
 ///<amd-dependency path="angularUiRouter"/>
+///<amd-dependency path="ngAnimateAnimate"/>
+///<amd-dependency path="ngEkathuwa"/>
 import a = require('./ServiceModule');
 import b = require('./../controller/product/EditProductController');
 import c = require('./../controller/product/ListProductController');
 import d = require('./../controller/user/AuthUserController');
-import f = require('./../controller/MainNavbarController');
 import e = require('./../service/mock/AuthServiceMock');
+import f = require('./../controller/MainNavbarController');
+import g = require('./../controller/user/BoardUserController');
 
 declare var _: any;
 
@@ -27,15 +29,10 @@ export module modularity {
                 .otherwise({ redirectTo: '/' });
         };
         private stateProviderCfg = ($stateProvider: ng.ui.IStateProvider, $urlRouterProvider: any) => {
-            $urlRouterProvider.when('', '/');
-            $urlRouterProvider.otherwise('');
+            $urlRouterProvider.otherwise('/user/auth');
 
             $stateProvider
-                // -Main-
-                .state('index', {
-                    url: '',
-                    redirectTo: '/user/auth'
-                })
+
                 // -User-
                 .state('user', {
                     url: '/user',
@@ -48,7 +45,8 @@ export module modularity {
                 })
                 .state('user.board', {
                     url: '/board',
-                    templateUrl: 'views/user/boardUser.html'
+                    templateUrl: 'views/user/boardUser.html',
+                    controller: 'BoardUserCtrl'
                 })
                 // -Product-
                 .state('product',{
@@ -70,27 +68,28 @@ export module modularity {
         private locationProviderCfg = ($locationProvider: ng.ILocationProvider) => {
             //$locationProvider.html5Mode(true);
         };
-        private authWatcherCfg = ($rootScope: ng.IRootScopeService, $location: ng.ILocationService, AuthService: e.service.mock.DefaultAuthService) => {
-            var loginRoute = ['/user/auth'];
-            var routeClean = (route: string) => {
-                return _.find(routeClean, (noAuthRoute: string) => {
+        private authWatcherCfg = ($rootScope: ng.IRootScopeService, $location: ng.ILocationService, $timeout: ng.ITimeoutService, AuthService: e.service.mock.DefaultAuthService) => {
+            var allowedRoutes = ['/user/auth'];
+            var isAllowedRoute = (route: string) => {
+                return _.find(isAllowedRoute, (noAuthRoute: string) => {
                         return _.str.startsWith(route, noAuthRoute);
                     });
             };
-            //ngRoute
+            // -ngRoute-
 //            $rootScope.$on('$routeChangeStart', (event, next, current) => {
 //                if (!routeClean($location.url()) && !AuthService.isLoggedIn()) {
 //                    $location.path('/user/auth');
 //                }
 //            })
-            //uiRouter
+            // -uiRouter-
             $rootScope.$on('$stateChangeStart', function (ev, to, toParams, from, fromParams) {
                 // if route requires auth and user is not logged in
                 var from = $location.path();
-                if (!($location.path() == '/user/auth') && !AuthService.isLoggedIn()) {
+                if (!isAllowedRoute(from) && !AuthService.isLoggedIn()) {
                     // redirect back to login
                     $location.path('/user/auth');
                 }
+
                 console.log('state changed (from: ' + from + ' to: ' + $location.path() + ' )');
             });
         };
@@ -121,9 +120,10 @@ export module modularity {
                 //.config(['$locationProvider', this.locationProviderCfg])
                 .config(['$httpProvider', this.intercept401Cfg])
                 .config(['$stateProvider', '$urlRouterProvider', this.stateProviderCfg])
-                .run(['$rootScope', '$location', 'AuthService', this.authWatcherCfg])
+                //.run(['$rootScope', '$location', '$timeout', 'AuthService', this.authWatcherCfg])
 
                 .controller('AuthUserCtrl', <Function>d.controller.user.AuthUserController)
+                .controller('BoardUserCtrl', <Function>g.controller.user.BoardUserController)
                 .controller('MainNavbarCtrl', <Function>f.controller.MainNavbarController)
                 .controller('ListProductCtrl', <Function>c.controller.product.ListProductController)
                 .controller('EditProductCtrl', <Function>b.controller.product.EditProductController)

@@ -9,11 +9,11 @@ export module directive.util {
         public template = '<alert ng-repeat="alert in alerts" type="alert.type" close="alerts.splice($index, 1)">' +
                             '<strong>{{alert.title}}</strong> {{alert.content}} <div class="pull-right">{{alert.time | date:\'HH:mm:ss\' }}</div>' +
                             '</alert>'
-        public controller = AlertController;
+        public controller = AlertDirectiveController;
         
     }
 
-    export class AlertController {
+    export class AlertDirectiveController {
         static $inject = ['$scope', 'AlertService'];
         constructor($scope, AlertService: any) {
             $scope.alerts = AlertService.list();
