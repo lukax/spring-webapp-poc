@@ -13,16 +13,15 @@ require.config({
         angularUiRouter: '../lib/angular-ui-router/release/angular-ui-router',
         angularUiBootstrap: '../lib/angular-ui-bootstrap/ui-bootstrap',
         underscore: '../lib/underscore-amd/underscore',
-        underscoreString: '../lib/underscore.string/dist/underscore.string.min',
         backbone: '../lib/backbone-amd/backbone',
         ngEkathuwa: '../lib/ngEkathuwa/ekathuwa',
-        moment: '../lib/moment/moment',
-        ngAnimateAnimate: '../lib/ngAnimate-animate.css/animate'
+        ngAnimateAnimateCss: '../lib/ngAnimate-animate.css/animate',
+        packageLoader: 'util/package/PackageLoader'
 	},
 	baseUrl: 'scripts',
     shim: {
         'bootstrap': {
-            deps: ['jquery'],
+            deps: [ 'jquery' ],
             'exports': 'bootstrap'
         },
         'angular': {
@@ -53,14 +52,10 @@ require.config({
             deps: ['angular', 'jquery'],
             'exports': 'angularUiBootstrap'
         },
-        'underscoreString': {
-            deps: ['underscore'],
-            'exports': 'underscoreString'
-        },
         'moment': { 'exports': 'moment' },
-        'ngAnimateAnimate': {
+        'ngAnimateAnimateCss': {
             deps: ['angularAnimate'],
-            'exports': 'ngAnimateAnimate'
+            'exports': 'ngAnimateAnimateCss'
         }
 	},
 	priority: [
@@ -68,12 +63,33 @@ require.config({
 	]
 });
 
-
+require(['util/package/PackageLoader'], (loader: any) => {
+    loader.util.PackageLoader.instance.load({
+        // These frameworks are required for the preloader to run.
+        jQuery: "https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js",
+        domParent: document.body,
+    }, {
+        // These packages are not necessary to the running of the preloader, but have been used in this example.
+        // In this example, base packages 2 is backbone - reliant on the loading of underscore in base packages 1. Each set of packages begins loading when the previous set has loaded.
+        // The keys act as labels for the listing of currently loading packages.
+        "Componentes Externos": [
+            'jquery',
+            'underscore',
+        ],
+        "Modulo App": [
+            "modularity/AppModule",
+        ],
+    }, () => {
+        require(['modularity/AppModule'], (app: any) => {
+            new app.modularity.AppModule().bootstrap(document);
+        });
+    });
+})
 
 // hey Angular, we're bootstrapping manually!
 // not necessary when not using ng-app in index.html
 //window.name = "NG_DEFER_BOOTSTRAP!";
 
-require(['modularity/AppModule'], (app: any) => {
-    new app.modularity.AppModule().bootstrap(document);
-});
+//require(['modularity/AppModule'], (app: any) => {
+//    new app.modularity.AppModule().bootstrap(document);
+//});

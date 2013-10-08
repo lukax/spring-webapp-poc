@@ -3,7 +3,7 @@
 ///<amd-dependency path="angularAnimate"/>
 ///<amd-dependency path="angularUi"/>
 ///<amd-dependency path="angularUiBootstrap"/>
-///<amd-dependency path="ngAnimateAnimate"/>
+///<amd-dependency path="ngAnimateAnimateCss"/>
 
 import a = require('./../directive/util/AlertsDirective');
 import b = require('./../directive/LabeledInputDirective');
@@ -13,7 +13,7 @@ export module modularity {
         private directiveNgModule: ng.IModule;
 
         constructor() {
-            this.directiveNgModule = angular.module('lwa.directive', ['ngAnimate', 'ui.directives', 'ui.bootstrap']);
+            this.directiveNgModule = angular.module('lwa.directive', ['ngAnimate','ngAnimate-animate.css', 'ui.directives', 'ui.bootstrap']);
         }
 
         configure() {

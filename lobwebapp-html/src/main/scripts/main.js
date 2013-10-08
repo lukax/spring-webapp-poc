@@ -11,11 +11,10 @@ require.config({
         angularUiRouter: '../lib/angular-ui-router/release/angular-ui-router',
         angularUiBootstrap: '../lib/angular-ui-bootstrap/ui-bootstrap',
         underscore: '../lib/underscore-amd/underscore',
-        underscoreString: '../lib/underscore.string/dist/underscore.string.min',
         backbone: '../lib/backbone-amd/backbone',
         ngEkathuwa: '../lib/ngEkathuwa/ekathuwa',
-        moment: '../lib/moment/moment',
-        ngAnimateAnimate: '../lib/ngAnimate-animate.css/animate'
+        ngAnimateAnimateCss: '../lib/ngAnimate-animate.css/animate',
+        packageLoader: 'util/package/PackageLoader'
     },
     baseUrl: 'scripts',
     shim: {
@@ -51,14 +50,10 @@ require.config({
             deps: ['angular', 'jquery'],
             'exports': 'angularUiBootstrap'
         },
-        'underscoreString': {
-            deps: ['underscore'],
-            'exports': 'underscoreString'
-        },
         'moment': { 'exports': 'moment' },
-        'ngAnimateAnimate': {
+        'ngAnimateAnimateCss': {
             deps: ['angularAnimate'],
-            'exports': 'ngAnimateAnimate'
+            'exports': 'ngAnimateAnimateCss'
         }
     },
     priority: [
@@ -66,6 +61,21 @@ require.config({
     ]
 });
 
-require(['modularity/AppModule'], function (app) {
-    new app.modularity.AppModule().bootstrap(document);
+require(['util/package/PackageLoader'], function (loader) {
+    loader.util.PackageLoader.instance.load({
+        jQuery: "https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js",
+        domParent: document.body
+    }, {
+        "Componentes Externos": [
+            'jquery',
+            'underscore'
+        ],
+        "Modulo App": [
+            "modularity/AppModule"
+        ]
+    }, function () {
+        require(['modularity/AppModule'], function (app) {
+            new app.modularity.AppModule().bootstrap(document);
+        });
+    });
 });

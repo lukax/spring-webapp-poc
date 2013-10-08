@@ -10,7 +10,7 @@ export module service.impl.util{
             this.removeOld();
         }
 
-        add(message: string, title?: string, type?: d.service.contract.util.AlertType) {
+        add(message: string, title?: string, type?: string) {
             if (this.alerts.length >= 2) {
                 this.alerts.splice(0, 1);
             }

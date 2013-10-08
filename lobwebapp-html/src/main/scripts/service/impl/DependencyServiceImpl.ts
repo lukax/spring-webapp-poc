@@ -2,27 +2,26 @@
 
 export module service.impl{
     export class DependencyService {
-        private q: ng.IQService;
-        private rootScope: ng.IRootScopeService;
-        private isLoading: boolean;
+        private loaded: Array<string>;
 
-        static $inject = ['$q', '$rootScope'];
-        constructor($q: ng.IQService, $rootScope: ng.IRootScopeService) {
-            this.q = $q;
-            this.rootScope = $rootScope;
+        static $inject = ['$q', '$rootScope', '$timeout'];
+        constructor(public $q: ng.IQService, public $rootScope: ng.IRootScopeService, public $timeout: ng.ITimeoutService) {
+
         }
 
         load(moduleName: string){
-            var deferred = this.q.defer();
-            if(!this.isLoading){
-                this.isLoading = true;
+            var deferred = this.$q.defer();
+            if(this.loaded.indexOf(moduleName) === -1){
+                this.loaded.push(moduleName);
                 require([moduleName], () => {
-                   this.rootScope.$apply(()=> {
+                   this.$rootScope.$apply(()=> {
                        deferred.resolve();
                    });
                 });
             }
-            this.isLoading = false;
+            else{
+                deferred.reject();
+            }
             return deferred.promise;
         }
 

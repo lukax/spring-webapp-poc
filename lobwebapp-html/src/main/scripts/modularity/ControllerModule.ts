@@ -1,10 +1,7 @@
 ///<reference path="../reference.d.ts"/>
 ///<amd-dependency path="angular"/>
 ///<amd-dependency path="angularRoute"/>
-///<amd-dependency path="underscore"/>
-///<amd-dependency path="underscoreString"/>
 ///<amd-dependency path="angularUiRouter"/>
-///<amd-dependency path="ngAnimateAnimate"/>
 ///<amd-dependency path="ngEkathuwa"/>
 import a = require('./ServiceModule');
 import b = require('./../controller/product/EditProductController');

@@ -1,5 +1,4 @@
 ///<reference path="./../../../reference.d.ts"/>
-///<amd-dependency path="underscore"/>
 
 export module service.mock.base {
     export class AbstractEntityService<T extends domain.base.AbstractEntity> implements d.service.contract.base.EntityService<T> {
