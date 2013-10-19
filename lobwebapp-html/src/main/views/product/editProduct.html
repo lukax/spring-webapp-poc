@@ -83,9 +83,9 @@
               ng-disabled="productDetailsForm.inputName.$invalid || productDetailsForm.inputDescription.$invalid" ng-hide="readMode">
           <span class="glyphicon glyphicon-floppy-disk"></span> Salvar
         </button>
-        <a class="btn btn-default" data-toggle="tooltip" title="Remover Produto Atual"
-              ng-click="removeProduct()" ng-hide="readMode">
-          Remover
+        <a class="btn btn-default" data-toggle="tooltip" title="Remover Produto Atual" data-loading-text="Removendo..."
+            ng-click="removeProduct()" ng-hide="readMode">
+            Remover
         </a>
         <a class="btn btn-default" href="#/product/new" data-toggle="tooltip" title="Criar Novo Produto"
               ng-hide="readMode">

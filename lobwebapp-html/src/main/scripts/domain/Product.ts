@@ -9,5 +9,6 @@ module domain {
         price: number;
         group?: string;
         ncm?: number;
+        date?: Date;
     }
 }

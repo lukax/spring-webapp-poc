@@ -10,14 +10,14 @@ import b = require('./../directive/LabeledInputDirective');
 
 export module modularity {
     export class DirectiveModule {
-        private directiveNgModule: ng.IModule;
+        private module: ng.IModule;
 
         constructor() {
-            this.directiveNgModule = angular.module('lwa.directive', ['ngAnimate','ngAnimate-animate.css', 'ui.directives', 'ui.bootstrap']);
+            this.module = angular.module('lwa.directive', ['ngAnimate','ngAnimate-animate.css', 'ui.directives', 'ui.bootstrap']);
         }
 
         configure() {
-            this.directiveNgModule
+            this.module
                 .directive('lwaProgress', this.progress)
                 .directive('lwaHref', ['$location', '$route', this.lwaHref])
                 .directive('lwaCaret', this.lwaCaret)

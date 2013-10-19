@@ -1,35 +1,20 @@
-///<reference path="../reference.d.ts"/>
+///<reference path="./../reference.d.ts"/>
 ///<amd-dependency path="angular"/>
 ///<amd-dependency path="angularRoute"/>
 ///<amd-dependency path="angularUiRouter"/>
 ///<amd-dependency path="ngEkathuwa"/>
+
 import a = require('./ServiceModule');
-import b = require('./../controller/product/EditProductController');
-import c = require('./../controller/product/ListProductController');
-import d = require('./../controller/user/AuthUserController');
 import e = require('./../service/mock/AuthServiceMock');
 import f = require('./../controller/MainNavbarController');
-import g = require('./../controller/user/BoardUserController');
-
-declare var _: any;
+import h = require('./../util/DependencyManager');
 
 export module modularity {
     export class ControllerModule {
-        private controllerNgModule: ng.IModule;
-        private serviceModule: a.modularity.ServiceModule;
-        private routeProviderCfg = ($routeProvider: ng.IRouteProvider) => {
-            $routeProvider
-                .when('/', { redirectTo: '/user/auth' })
-                .when('/user/auth', { templateUrl: 'views/user/authUser.html', controller: 'AuthUserCtrl' })
-                .when('/product/list', { templateUrl: 'views/product/listProduct.html', controller: 'ListProductCtrl' })
-                .when('/product/:productId/:mode?', { templateUrl: 'views/product/editProduct.html', controller: 'EditProductCtrl' })
-                .otherwise({ redirectTo: '/' });
-        };
+        private module: ng.IModule;
         private stateProviderCfg = ($stateProvider: ng.ui.IStateProvider, $urlRouterProvider: any) => {
             $urlRouterProvider.otherwise('/user/auth');
-
             $stateProvider
-
                 // -User-
                 .state('user', {
                     url: '/user',
@@ -38,12 +23,14 @@ export module modularity {
                 .state('user.auth', {
                     url: '/auth',
                     templateUrl: 'views/user/authUser.html',
-                    controller: 'AuthUserCtrl'
+                    controller: 'AuthUserController',
+                    resolve: this.loadController('controller/user/AuthUserController')
                 })
                 .state('user.board', {
                     url: '/board',
                     templateUrl: 'views/user/boardUser.html',
-                    controller: 'BoardUserCtrl'
+                    controller: 'BoardUserController',
+                    resolve: this.loadController('controller/user/BoardUserController')
                 })
                 // -Product-
                 .state('product',{
@@ -53,41 +40,44 @@ export module modularity {
                 .state('product.list',{
                     url: '/list?find',
                     templateUrl: 'views/product/listProduct.html',
-                    controller: 'ListProductCtrl'
+                    controller: 'ListProductController',
+                    resolve: this.loadController('controller/product/ListProductController')
                 })
                 .state('product.edit', {
                     url: '/{productId:[0-9]{1,8}|new}?priceInfo', //0-9 numbers in 1-8 digits match
                     templateUrl: 'views/product/editProduct.html',
-                    controller: 'EditProductCtrl'
+                    controller: 'EditProductController',
+                    resolve: this.loadController('controller/product/EditProductController')
+                })
+                .state('product.graph',{
+                    url: '/graph',
+                    templateUrl: 'views/product/graphProduct.html',
+                    controller: 'GraphProductController',
+                    resolve: this.loadController('controller/product/GraphProductController')
                 })
             ;
         };
         private locationProviderCfg = ($locationProvider: ng.ILocationProvider) => {
             //$locationProvider.html5Mode(true);
         };
-        private authWatcherCfg = ($rootScope: ng.IRootScopeService, $location: ng.ILocationService, $timeout: ng.ITimeoutService, AuthService: e.service.mock.DefaultAuthService) => {
+        private userAuthCfg = ($rootScope: ng.IRootScopeService, $location: ng.ILocationService, AuthService: e.service.mock.DefaultAuthService) => {
             var allowedRoutes = ['/user/auth'];
             var isAllowedRoute = (route: string) => {
-                return _.find(isAllowedRoute, (noAuthRoute: string) => {
-                        return _.str.startsWith(route, noAuthRoute);
-                    });
+                return allowedRoutes.some((x) => {
+                    return x === route;
+                });
             };
-            // -ngRoute-
-//            $rootScope.$on('$routeChangeStart', (event, next, current) => {
-//                if (!routeClean($location.url()) && !AuthService.isLoggedIn()) {
-//                    $location.path('/user/auth');
-//                }
-//            })
-            // -uiRouter-
-            $rootScope.$on('$stateChangeStart', function (ev, to, toParams, from, fromParams) {
+            $rootScope.$on('$stateChangeStart', (event: any, to: string, toParams: any, from: string, fromParams: any) => {
                 // if route requires auth and user is not logged in
                 var from = $location.path();
                 if (!isAllowedRoute(from) && !AuthService.isLoggedIn()) {
                     // redirect back to login
+                    event.preventDefault();
+                    console.log('State Watcher: user not authenticated, redirecting ...');
                     $location.path('/user/auth');
+                }else if(from === '/user/auth' && AuthService.isLoggedIn()){
+                    $location.path('/user/board');
                 }
-
-                console.log('state changed (from: ' + from + ' to: ' + $location.path() + ' )');
             });
         };
         private intercept401Cfg = ($httpProvider) => {
@@ -107,27 +97,37 @@ export module modularity {
         }
 
         constructor() {
-            this.serviceModule = new a.modularity.ServiceModule().configure();
-            this.controllerNgModule = angular.module('lwa.controller', ['lwa.service', 'ui.router', 'ngEkathuwa']);
+            new a.modularity.ServiceModule().configure();
+            this.module = angular.module('lwa.controller', ['lwa.service', 'ui.router', 'ngEkathuwa']);
+            this.module.config(['$controllerProvider', ($controllerProvider: ng.IControllerProvider) => {
+                (<any>this.module).lazy = {
+                    controller: $controllerProvider.register
+                };
+            }]);
         }
 
         configure() {
-            this.controllerNgModule
-                //.config(['$routeProvider', this.routeProviderCfg])
+            this.module
                 //.config(['$locationProvider', this.locationProviderCfg])
-                .config(['$httpProvider', this.intercept401Cfg])
                 .config(['$stateProvider', '$urlRouterProvider', this.stateProviderCfg])
-                //.run(['$rootScope', '$location', '$timeout', 'AuthService', this.authWatcherCfg])
-
-                .controller('AuthUserCtrl', <Function>d.controller.user.AuthUserController)
-                .controller('BoardUserCtrl', <Function>g.controller.user.BoardUserController)
+                .config(['$httpProvider', this.intercept401Cfg])
+                
+                //.run(['$rootScope', this.contentLoadProgress])
+                //.run(['$rootScope', '$location', 'AuthService', this.userAuthCfg])
+                
                 .controller('MainNavbarCtrl', <Function>f.controller.MainNavbarController)
-                .controller('ListProductCtrl', <Function>c.controller.product.ListProductController)
-                .controller('EditProductCtrl', <Function>b.controller.product.EditProductController)
-
                 ;
 
             return this;
+        }
+
+        loadController(dependencyPath: string) {
+            var definition = {
+                resolver: ['$q', '$rootScope', ($q: ng.IQService, $rootScope: ng.IRootScopeService) => {
+                    return (new h.util.DependencyManager($q, $rootScope)).resolve(dependencyPath);
+                }]
+            }
+            return definition;
         }
     }
 }

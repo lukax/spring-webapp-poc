@@ -31,7 +31,7 @@ export module controller.user {
         }
 
         processArgs(){
-
+            
         }
 
         populateScope() {
@@ -40,3 +40,5 @@ export module controller.user {
         }
     }
 }
+
+(<any>angular.module('lwa.controller')).lazy.controller('AuthUserController', controller.user.AuthUserController);

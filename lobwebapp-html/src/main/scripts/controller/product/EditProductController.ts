@@ -101,7 +101,7 @@ export module controller.product {
 
         setupProfitMargin() {
             this.$scope.$watch('product.price + product.costPrice', () => {
-                if (this.$scope.product.costPrice !== 0)
+                if (this.$scope.product != null && this.$scope.product.costPrice !== 0)
                     this.$scope.productProfitMargin = a.util.Std.round(this.$scope.product.price / this.$scope.product.costPrice, 2);
             });
         }
@@ -142,3 +142,5 @@ export module controller.product {
         }
     }
 }
+
+(<any>angular.module('lwa.controller')).lazy.controller('EditProductController', controller.product.EditProductController);

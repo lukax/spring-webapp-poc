@@ -26,3 +26,5 @@ export module controller.user {
         }
     }
 }
+
+(<any>angular.module('lwa.controller')).lazy.controller('BoardUserController', controller.user.BoardUserController);

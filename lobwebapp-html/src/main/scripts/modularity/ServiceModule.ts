@@ -4,20 +4,18 @@ import a = require('./../service/impl/util/AlertServiceImpl');
 import b = require('./../service/mock/ProductServiceMock');
 import c = require('./../service/mock/UserServiceMock');
 import d = require('./../service/mock/AuthServiceMock');
-import e = require('./../service/impl/DependencyServiceImpl');
 import f = require('./../service/impl/util/NavigationServiceImpl');
 
 export module modularity {
     export class ServiceModule {
-        private serviceNgModule: ng.IModule;
+        private module: ng.IModule;
 
         constructor() {
-            this.serviceNgModule = angular.module('lwa.service', []);
+            this.module = angular.module('lwa.service', []);
         }
 
         configure() {
-            this.serviceNgModule
-                .factory('DependencyService', <Function>e.service.impl.DependencyService)
+            this.module
                 .service('ProductService', <Function>b.service.mock.DefaultProductService)
                 .service('UserService', <Function>c.service.mock.DefaultUserService)
                 .service('AuthService', <Function>d.service.mock.DefaultAuthService)

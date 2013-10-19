@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <!--[if lt IE 7]>      
     <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="pt"> 
 <![endif]-->
@@ -9,7 +9,7 @@
     <html class="no-js lt-ie9" lang="pt"> 
 <![endif]-->
 <!--[if gt IE 8]><!--> 
-    <html class="no-js" lang="pt"> 
+    <html class="no-js"> 
 <!--<![endif]-->
 <head>
     <meta charset="utf-8">
@@ -21,8 +21,10 @@
 
     <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="lib/bootstrap-sass/dist/css/bootstrap.min.css" media="screen">
+    <link rel="stylesheet" href="lib/bootstrap-sass/dist/css/bootstrap-theme.min.css" media="screen">
     <link rel="stylesheet" href="lib/animate.css/animate.min.css" media="screen">
-    <link rel="stylesheet" href="css/progressbar.css" media="screen">
+    <link rel="stylesheet" href="lib/nprogress/nprogress.css" media="screen">
+    <link rel="stylesheet" href="lib/dcjs/dc.css" media="screen">
 
         <!-- build:css({.tmp,src/main}) styles/main.css -->
         <link rel="stylesheet" href="css/main.css">
@@ -40,6 +42,7 @@
         <script src="lib/json3/lib/json3.min.js"></script>
     <![endif]-->
 
+    <div role="bar" class="bar"></div>
     <div data-ng-include="'views/mainNavbarView.html'"></div>
     <!--<div class="container" data-ng-view=""></div>-->
     <div class="container" data-ui-view></div>
