@@ -17,11 +17,16 @@
     "backbone-amd": "~1.0.0",
     "angular-ui-router": "~0.2.0",
     "animate.css": "~2.1.0",
-    "linqjs": "*",
-    "underscore-amd": "~1.5.2"
+    "nprogress": "~0.1.2",
+    "ngAnimate-animate.css": "*",
+    "dcjs": "~1.6.0",
+    "linqjs-amd": "*"
   },
   "devDependencies": {
     "angular-mocks": "1.2.0-rc.2",
     "angular-scenario": "1.2.0-rc.2"
+  },
+  "resolutions": {
+    "angular": "1.2.0-rc.3"
   }
 }

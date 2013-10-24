@@ -76,3 +76,5 @@ export module controller.product {
 
     }
 }
+
+(<any>angular.module('lwa.controller')).lazy.controller('ListProductController', controller.product.ListProductController);

@@ -4,25 +4,29 @@ import a = require('./../util/StdUtil');
 
 export module modularity {
     export class FilterModule {
-        private filterNgModule: ng.IModule;
+        private module: ng.IModule;
 
         constructor() {
-            this.filterNgModule = angular.module('lwa.filter', []);
+            this.module = angular.module('lwa.filter', []);
         }
 
         configure() {
-            this.filterNgModule.filter('lwaRound', () => {
-                return (input: number, inputDecimals: number) => {
-                    var out = input;
-                    var outDecimals = 2; // Padrão duas casas na conversão
-                    if (inputDecimals) outDecimals = inputDecimals;
-                    if (isNaN(out) || isNaN(outDecimals)) return 0;
-
-                    out = a.util.Std.round(out, outDecimals);
-                    return out;
-                };
-            });
+            this.module
+                .filter('lwaRound', this.lwaRound)
+            ;
             return this;
+        }
+
+        private lwaRound = () => {
+            return (input: number, inputDecimals: number) => {
+                var out = input;
+                var outDecimals = 2; // Padrão duas casas na conversão
+                if (inputDecimals) outDecimals = inputDecimals;
+                if (isNaN(out) || isNaN(outDecimals)) return 0;
+
+                out = a.util.Std.round(out, outDecimals);
+                return out;
+            }
         }
     }
 }
