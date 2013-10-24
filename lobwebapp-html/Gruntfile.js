@@ -6,8 +6,8 @@ var mountFolder = function (connect, dir) {
   return connect.static(require('path').resolve(dir));
 };
 
-//LUCAS'S VARS
-var modRewrite = require('connect-modrewrite');
+// HTML5 REDIRECT
+// var modRewrite = require('connect-modrewrite');
 
 // # Globbing
 // for performance reasons we're only matching one level down:
@@ -35,9 +35,9 @@ module.exports = function (grunt) {
     pkg: grunt.file.readJSON('package.json'),
     yeoman: yeomanConfig,
     watch: {
-      styles: {
-        files: ['<%= yeoman.app %>/styles/{,*/}*.css'],
-        tasks: ['copy:styles', 'autoprefixer']
+      css: {
+        files: ['<%= yeoman.app %>/css/{,*/}*.css'],
+        tasks: ['copy:css', 'autoprefixer']
       },
       livereload: {
         options: {
@@ -45,13 +45,13 @@ module.exports = function (grunt) {
         },
         files: [
           '<%= yeoman.app %>/{,*/}*.html',
-          '{<%= yeoman.tmp %>,<%= yeoman.app %>}/styles/{,*/}*.css',
-          '{<%= yeoman.tmp %>,<%= yeoman.app %>}/scripts/{,*/}*.js',
-          '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
+          '{<%= yeoman.tmp %>,<%= yeoman.app %>}/css/{,*/}*.css',
+          '{<%= yeoman.tmp %>,<%= yeoman.app %>}/script/{,*/}*.js',
+          '<%= yeoman.app %>/img/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
         ]
       },
       typescript: {
-        files: 'src/main/scripts/**/*.ts',
+        files: 'src/main/script/**/*.ts',
         tasks: ['typescript']
       }
     },
@@ -60,9 +60,9 @@ module.exports = function (grunt) {
       dist: {
         files: [{
           expand: true,
-          cwd: '<%= yeoman.tmp %>/styles/',
+          cwd: '<%= yeoman.tmp %>/css/',
           src: '{,*/}*.css',
-          dest: '<%= yeoman.tmp %>/styles/'
+          dest: '<%= yeoman.tmp %>/css/'
         }]
       }
     },
@@ -76,8 +76,8 @@ module.exports = function (grunt) {
         options: {
           middleware: function (connect) {
             return [
-              //HTML5 SUPPORT
-              //modRewrite(['!\\.html|\\.js|\\.css|\\.eot|\\.jpeg|\\.svg|\\.ttf|\\.woff|\\.ico|\\.gif|\\.otf|\\.png$ /index.html [L]']),
+              // HTML5 SUPPORT
+              // modRewrite(['!\\.html|\\.js|\\.css|\\.eot|\\.jpeg|\\.svg|\\.ttf|\\.woff|\\.ico|\\.gif|\\.otf|\\.png$ /index.html [L]']),
               lrSnippet,
               mountFolder(connect, yeomanConfig.tmp),
               mountFolder(connect, yeomanConfig.app)
@@ -129,34 +129,28 @@ module.exports = function (grunt) {
       },
       all: [
         'Gruntfile.js',
-        '<%= yeoman.app %>/scripts/{,*/}*.js'
+        '<%= yeoman.app %>/script/{,*/}*.js'
       ]
     },
     // not used since Uglify task does concat,
     // but still available if needed
-    concat: {
-      // options: {
-      //   separator: ';',
-      // },
-      // dist: {
-      //   src: [//'<%= yeoman.app %>/config/**/*.js', 
-      //         //'<%= yeoman.app %>/controller/**/*.js',
-      //         //'<%= yeoman.app %>/domain/**/*.js', 
-      //         //'<%= yeoman.app %>/repository/**/*.js', 
-      //         //'<%= yeoman.app %>/service/**/*.js'
-      //         ],
-        
-      //   dest: '<%= yeoman.app %>/scripts/app.js'
-      // }
-    },
+    // concat: {
+    //   options: {
+    //     separator: ';',
+    //   },
+    //   dist: {
+    //     src: [],
+    //     dest: '<%= yeoman.app %>/script/app.js'
+    //   }
+    // },
     rev: {
       dist: {
         files: {
           src: [
-            '<%= yeoman.dist %>/scripts/{,*/}*.js',
-            '<%= yeoman.dist %>/styles/{,*/}*.css',
-            '<%= yeoman.dist %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
-            '<%= yeoman.dist %>/styles/fonts/*'
+            '<%= yeoman.dist %>/script/{,*/}*.js',
+            '<%= yeoman.dist %>/css/{,*/}*.css',
+            '<%= yeoman.dist %>/img/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
+            '<%= yeoman.dist %>/css/fonts/*'
           ]
         }
       }
@@ -169,7 +163,7 @@ module.exports = function (grunt) {
     },
     usemin: {
       html: ['<%= yeoman.dist %>/{,*/}*.html'],
-      css: ['<%= yeoman.dist %>/styles/{,*/}*.css'],
+      css: ['<%= yeoman.dist %>/css/{,*/}*.css'],
       options: {
         dirs: ['<%= yeoman.dist %>']
       }
@@ -178,9 +172,9 @@ module.exports = function (grunt) {
       dist: {
         files: [{
           expand: true,
-          cwd: '<%= yeoman.app %>/images',
+          cwd: '<%= yeoman.app %>/img',
           src: '{,*/}*.{png,jpg,jpeg}',
-          dest: '<%= yeoman.dist %>/images'
+          dest: '<%= yeoman.dist %>/img'
         }]
       }
     },
@@ -188,46 +182,46 @@ module.exports = function (grunt) {
       dist: {
         files: [{
           expand: true,
-          cwd: '<%= yeoman.app %>/images',
+          cwd: '<%= yeoman.app %>/img',
           src: '{,*/}*.svg',
-          dest: '<%= yeoman.dist %>/images'
+          dest: '<%= yeoman.dist %>/img'
         }]
       }
     },
-    cssmin: {
-      // By default, your `index.html` <!-- Usemin Block --> will take care of
-      // minification. This option is pre-configured if you do not wish to use
-      // Usemin blocks.
-      // dist: {
-      //   files: {
-      //     '<%= yeoman.dist %>/styles/main.css': [
-      //       '<%= yeoman.tmp %>/styles/{,*/}*.css',
-      //       '<%= yeoman.app %>/styles/{,*/}*.css'
-      //     ]
-      //   }
-      // }
-    },
-    htmlmin: {
-      dist: {
-        options: {
-          /*removeCommentsFromCDATA: true,
-          // https://github.com/yeoman/grunt-usemin/issues/44
-          //collapseWhitespace: true,
-          collapseBooleanAttributes: true,
-          removeAttributeQuotes: true,
-          removeRedundantAttributes: true,
-          useShortDoctype: true,
-          removeEmptyAttributes: true,
-          removeOptionalTags: true*/
-        },
-        files: [{
-          expand: true,
-          cwd: '<%= yeoman.app %>',
-          src: ['*.html', 'views/**/*.html'],
-          dest: '<%= yeoman.dist %>'
-        }]
-      }
-    },
+    // cssmin: {
+    //   By default, your `index.html` <!-- Usemin Block --> will take care of
+    //   minification. This option is pre-configured if you do not wish to use
+    //   Usemin blocks.
+    //   dist: {
+    //     files: {
+    //       '<%= yeoman.dist %>/css/main.css': [
+    //         '<%= yeoman.tmp %>/css/{,*/}*.css',
+    //         '<%= yeoman.app %>/css/{,*/}*.css'
+    //       ]
+    //     }
+    //   }
+    // },
+    // htmlmin: {
+    //   dist: {
+    //     options: {
+    //       removeCommentsFromCDATA: true,
+    //       // https://github.com/yeoman/grunt-usemin/issues/44
+    //       //collapseWhitespace: true,
+    //       collapseBooleanAttributes: true,
+    //       removeAttributeQuotes: true,
+    //       removeRedundantAttributes: true,
+    //       useShortDoctype: true,
+    //       removeEmptyAttributes: true,
+    //       removeOptionalTags: true
+    //     },
+    //     files: [{
+    //       expand: true,
+    //       cwd: '<%= yeoman.app %>',
+    //       src: ['*.html', 'views/**/*.html'],
+    //       dest: '<%= yeoman.dist %>'
+    //     }]
+    //   }
+    // },
     // Put files not handled in other tasks here
     copy: {
       dist: {
@@ -241,21 +235,21 @@ module.exports = function (grunt) {
             '.htaccess',
             'lib/**/*',
             'img/{,*/}*.{gif,webp,png}',
-            'styles/fonts/*'
+            'css/fonts/*'
           ]
         }, {
           expand: true,
-          cwd: '<%= yeoman.tmp %>/images',
-          dest: '<%= yeoman.dist %>/images',
+          cwd: '<%= yeoman.tmp %>/img',
+          dest: '<%= yeoman.dist %>/img',
           src: [
             'generated/*'
           ]
         }]
       },
-      styles: {
+      css: {
         expand: true,
-        cwd: '<%= yeoman.app %>/styles',
-        dest: '<%= yeoman.dist %>/styles/',
+        cwd: '<%= yeoman.app %>/css',
+        dest: '<%= yeoman.dist %>/css/',
         src: '{,*/}*.css'
       },
       template: {
@@ -267,14 +261,14 @@ module.exports = function (grunt) {
     },
     concurrent: {
       server: [
-        //,'copy:styles'
+        // ,'copy:css'
       ],
       test: [
-        'copy:styles'
+        'copy:css'
       ],
       dist: [
-        'copy:styles',
-        //'copy:template',
+        'copy:css',
+        'copy:template',
         'imagemin',
         'svgmin',
         'htmlmin'
@@ -290,48 +284,40 @@ module.exports = function (grunt) {
       dist: {
         files: [{
           expand: true,
-          cwd: '<%= yeoman.app %>/scripts',
+          cwd: '<%= yeoman.app %>/script',
           src: '*.js',
-          dest: '<%= yeoman.dist %>/scripts'
+          dest: '<%= yeoman.dist %>/script'
         }]
       }
     },
     uglify: {
         options: {
             banner: '/*! <%= pkg.name %> v<%= pkg.version %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'//,
-            //mangle: true,
-            //beautify: true,
-            //wrap: true
         },
         dist: {
             files: [{
                 expand: true,
-                cwd: '<%= yeoman.app %>/scripts/',
+                cwd: '<%= yeoman.app %>/script/',
                 src: '**/*.js',
-                dest: '<%= yeoman.dist %>/scripts/'
+                dest: '<%= yeoman.dist %>/script/'
                }]
         }
     },
     typescript: {
         base: {
-            src: ['<%= yeoman.app%>/scripts/**/*.ts' ],
+            src: ['<%= yeoman.app%>/script/**/*.ts' ],
             options: {
                 module: 'amd',
-                target: 'es5'//,
-                //base_path: '<%= yeoman.app %>'//,
-                //sourcemap: true,
-                //fullSourceMapPath: true,
-                //declaration: true
+                target: 'es5'
             }
         }
     },
     requirejs: {
         compile: {
             options: {
-                baseUrl: "<%= yeoman.app %>/scripts",
-                name: 'lwa/modularity/App',
-                mainConfigFile: "<%= yeoman.app %>/scripts/AppConfig.js",
-                out: "<%= yeoman.dist %>/scripts/app.min.js",
+                baseUrl: "<%= yeoman.app %>/script",
+                mainConfigFile: "<%= yeoman.app %>/script/main.js",
+                out: "<%= yeoman.dist %>/script/app.min.js",
                 preserveLicenseComments: false
             }
         }

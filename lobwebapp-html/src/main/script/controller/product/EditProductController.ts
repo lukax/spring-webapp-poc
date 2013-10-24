@@ -93,7 +93,7 @@ export module controller.product {
         priceInfoModal(){
             this.$ekathuwa.modal({
                 id: 'priceInfoModalId',
-                templateURL: 'views/product/modal/priceInfoModal.html',
+                templateURL: 'view/product/modal/priceInfoModal.html',
                 scope: this.$scope,
                 onHidden: () => { this.NavigationSvc.$location.search('priceInfo', null); }
             });

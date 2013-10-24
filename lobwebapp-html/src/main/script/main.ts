@@ -22,7 +22,7 @@ require.config({
         nprogress: './../lib/nprogress/nprogress',
         linqjs: './../lib/linqjs-amd/linq'
     },
-	baseUrl: 'scripts',
+	baseUrl: 'script',
     shim: {
         'bootstrap': {
             deps: [ 'jquery' ],

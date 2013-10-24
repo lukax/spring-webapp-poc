@@ -18,40 +18,40 @@ export module modularity {
                 // -User-
                 .state('user', {
                     url: '/user',
-                    templateUrl: 'views/user/user.html'
+                    templateUrl: 'view/user/user.html'
                 })
                 .state('user.auth', {
                     url: '/auth',
-                    templateUrl: 'views/user/authUser.html',
+                    templateUrl: 'view/user/authUser.html',
                     controller: 'AuthUserController',
                     resolve: this.loadController('controller/user/AuthUserController')
                 })
                 .state('user.board', {
                     url: '/board',
-                    templateUrl: 'views/user/boardUser.html',
+                    templateUrl: 'view/user/boardUser.html',
                     controller: 'BoardUserController',
                     resolve: this.loadController('controller/user/BoardUserController')
                 })
                 // -Product-
                 .state('product',{
                     url:'/product',
-                    templateUrl: 'views/product/product.html'
+                    templateUrl: 'view/product/product.html'
                 })
                 .state('product.list',{
                     url: '/list?find',
-                    templateUrl: 'views/product/listProduct.html',
+                    templateUrl: 'view/product/listProduct.html',
                     controller: 'ListProductController',
                     resolve: this.loadController('controller/product/ListProductController')
                 })
                 .state('product.edit', {
                     url: '/{productId:[0-9]{1,8}|new}?priceInfo', //0-9 numbers in 1-8 digits match
-                    templateUrl: 'views/product/editProduct.html',
+                    templateUrl: 'view/product/editProduct.html',
                     controller: 'EditProductController',
                     resolve: this.loadController('controller/product/EditProductController')
                 })
                 .state('product.graph',{
                     url: '/graph',
-                    templateUrl: 'views/product/graphProduct.html',
+                    templateUrl: 'view/product/graphProduct.html',
                     controller: 'GraphProductController',
                     resolve: this.loadController('controller/product/GraphProductController')
                 })

@@ -54,7 +54,7 @@ export module controller.product {
         findProductModal(){
             this.openedFindProductModal = this.$ekathuwa.modal({
                 id: 'findProductModalId',
-                templateURL: 'views/product/modal/findProductModal.html',
+                templateURL: 'view/product/modal/findProductModal.html',
                 scope: this.$scope,
                 onHidden: () => { this.NavigationSvc.$location.search('find', null); this.$scope.$apply(); }
             });
