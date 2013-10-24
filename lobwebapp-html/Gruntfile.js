@@ -35,14 +35,6 @@ module.exports = function (grunt) {
     pkg: grunt.file.readJSON('package.json'),
     yeoman: yeomanConfig,
     watch: {
-      coffee: {
-        files: ['<%= yeoman.app %>/scripts/{,*/}*.coffee'],
-        tasks: ['coffee:dist']
-      },
-      coffeeTest: {
-        files: ['<%= yeoman.test %>/spec/{,*/}*.coffee'],
-        tasks: ['coffee:test']
-      },
       styles: {
         files: ['<%= yeoman.app %>/styles/{,*/}*.css'],
         tasks: ['copy:styles', 'autoprefixer']
@@ -139,30 +131,6 @@ module.exports = function (grunt) {
         'Gruntfile.js',
         '<%= yeoman.app %>/scripts/{,*/}*.js'
       ]
-    },
-    coffee: {
-      options: {
-        sourceMap: true,
-        sourceRoot: ''
-      },
-      dist: {
-        files: [{
-          expand: true,
-          cwd: '<%= yeoman.app %>/scripts',
-          src: '{,*/}*.coffee',
-          dest: '<%= yeoman.tmp %>/scripts',
-          ext: '.js'
-        }]
-      },
-      test: {
-        files: [{
-          expand: true,
-          cwd: '<%= yeoman.test %>/spec',
-          src: '{,*/}*.coffee',
-          dest: '<%= yeoman.tmp %>/spec',
-          ext: '.js'
-        }]
-      }
     },
     // not used since Uglify task does concat,
     // but still available if needed
@@ -299,15 +267,12 @@ module.exports = function (grunt) {
     },
     concurrent: {
       server: [
-        'coffee:dist'
         //,'copy:styles'
       ],
       test: [
-        'coffee',
         'copy:styles'
       ],
       dist: [
-        'coffee',
         'copy:styles',
         //'copy:template',
         'imagemin',
@@ -319,11 +284,6 @@ module.exports = function (grunt) {
       unit: {
         configFile: 'karma.conf.js',
         singleRun: true
-      }
-    },
-    cdnify: {
-      dist: {
-        html: ['<%= yeoman.dist %>/*.html']
       }
     },
     ngmin: {
@@ -418,7 +378,6 @@ module.exports = function (grunt) {
       'autoprefixer',
       'concat',
       'copy',
-      'cdnify',
       'ngmin',
       'cssmin',
       'rev',
