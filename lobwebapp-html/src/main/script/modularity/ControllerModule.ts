@@ -38,7 +38,7 @@ export module modularity {
                     templateUrl: 'view/product/product.html'
                 })
                 .state('product.list',{
-                    url: '/list?find',
+                    url: '/list?search',
                     templateUrl: 'view/product/listProduct.html',
                     controller: 'ListProductController',
                     resolve: this.loadController('controller/product/ListProductController')

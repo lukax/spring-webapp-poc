@@ -17,7 +17,7 @@ export module service.mock {
 
         findByName(name: string,
             successCallback: (data: domain.Product[], status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
-            errorCallback: (data: domain.Product[], status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
+            errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
             var items = super.getRepository().filter(function (element) {
                 return element.name.toLowerCase() == name.toLowerCase();
             });
@@ -27,7 +27,7 @@ export module service.mock {
 
         listGroups(
             successCallback: (data: string[], status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
-            errorCallback: (data: string, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
+            errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
             var groups = [];
             super.getRepository().forEach((item) => {
                 if (groups.indexOf(item.group) === -1) groups.push(item.group);

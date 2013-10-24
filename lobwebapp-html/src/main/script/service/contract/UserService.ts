@@ -5,7 +5,7 @@ module d.service.contract {
 
         findByUsername(username: string,
             successCallback: (data: domain.User, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
-            errorCallback: (data: any, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any
+            errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any
             ): void;
 
     }

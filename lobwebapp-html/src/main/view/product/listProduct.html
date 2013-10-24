@@ -10,9 +10,8 @@
         <td><a href="javascript:void(0)" ng-click="predicate = 'description'; reverse = !reverse">Descrição</b></a></td>
         <td><a href="javascript:void(0)" ng-click="predicate = 'group'; reverse = !reverse">Grupo</a></td>
       </tr>
-      <tr ng-repeat="prod in products | filter:searchText | orderBy:predicate:reverse" 
-          ng-click="editProduct(prod.id)" class="product-list"
-          style="cursor: pointer;">
+      <tr ng-repeat="prod in products | filter:searchText | orderBy:predicate:reverse"
+          ng-click="editProduct(prod.id)" style="cursor: pointer;">
         <td>{{prod.id}}</td>
         <td>{{prod.name}}</td>
         <td>{{prod.quantity}}</td>
@@ -20,9 +19,8 @@
         <td>{{prod.description}}</td>
         <td>{{prod.group}}</td>
       </tr>
-      </table>
-
+    </table>
   </div>
 
-  <data-lwa-progress ng-hide="products.length > 0"></data-lwa-progress>
+  <data-lwa-progress ng-hide="products.length != 0"></data-lwa-progress>
 </div>

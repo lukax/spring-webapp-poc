@@ -13,27 +13,27 @@ export module service.mock.base {
         }
 
         public save(entity: T,
-            successCallback: (data: any, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
-            errorCallback: (data: any, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
-                if (entity.id != 0) errorCallback('ID Inválido', 403, null, null);
+            successCallback: (data: T, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
+            errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
+                if (entity.id != 0) errorCallback({message: 'ID Inválido'}, 403, null, null);
                 var storId = 0;
                 this.getRepository().forEach(
-                    (item) => {
+                    (item: T) => {
                         if (item.id > storId) storId = item.id;
                     });
                 entity.id = ++storId;
                 this.getRepository().push(angular.copy(entity));
 
-                successCallback(storId, 200, null, null);
+                successCallback(entity, 200, null, null);
         }
 
         public update(entity: T,
-            successCallback: (data: any, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
-            errorCallback: (data: any, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
-                if (entity.id == 0) errorCallback('ID Inválido', 403, null, null);
+            successCallback: (data: T, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
+            errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
+                if (entity.id == 0) errorCallback({message: 'ID Inválido'}, 403, null, null);
                 var success = false;
                 this.getRepository().some(
-                    (item, index) => {
+                    (item: T, index: number) => {
                         if (item.id == entity.id) {
                             this.getRepository()[index] = angular.copy(entity);
                             success = true;
@@ -42,15 +42,15 @@ export module service.mock.base {
                         }
                         else return false;
                     });
-                if (!success) errorCallback('ID inexistente', 404, null, null);
+                if (!success) errorCallback({message: 'ID inexistente'}, 404, null, null);
         }
 
         public remove(entity: T,
-            successCallback: (data: any, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
-            errorCallback: (data: any, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
+            successCallback: (data: T, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
+            errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
                 var success = false;
                 this.getRepository().some(
-                    (item, index) => {
+                    (item: T, index: number) => {
                         if (item.id == entity.id) {
                             this.getRepository().splice(index, 1);
                             success = true;
@@ -59,16 +59,16 @@ export module service.mock.base {
                         }
                         else return false;
                     });
-                if (!success) errorCallback('ID inexistente', 404, null, null);
+                if (!success) errorCallback({message: 'ID inexistente'}, 404, null, null);
         }
 
         public findById(id: number,
             successCallback: (data: T, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
-            errorCallback: (data: T, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
+            errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
                 var success = false;
-                var retrievedEntity;
+                var retrievedEntity = null;
                 this.getRepository().some(
-                    (item) => {
+                    (item: T) => {
                         if (item.id == id) {
                             success = true;
                             retrievedEntity = angular.copy(item);
@@ -82,15 +82,15 @@ export module service.mock.base {
 
         public list(
             successCallback: (data: T[], status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
-            errorCallback: (data: T[], status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
+            errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
                 this.timeoutService(() => { successCallback(angular.copy(this.getRepository()), 200, null, null); }, 1000);
         }
 
         public contains(entity: T,
-            successCallback: (boolean: any, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
-            errorCallback: (data: any, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
+            successCallback: (data: boolean, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
+            errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
                 if(linqjs.From(this.getRepository()).Contains(entity)) successCallback(true, 200, null, null);
-                else errorCallback(false, 200, null, null);
+                else errorCallback(null, 200, null, null);
         }
 
 

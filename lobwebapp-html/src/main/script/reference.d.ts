@@ -16,6 +16,7 @@
 
 ///<reference path="./domain/base/AbstractEntity.ts"/>
 ///<reference path="./domain/util/Alert.ts"/>
+///<reference path="./domain/util/Error.ts"/>
 ///<reference path="./domain/Product.ts"/>
 ///<reference path="./domain/User.ts"/>
 

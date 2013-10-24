@@ -16,7 +16,7 @@ export module service.mock {
 
         login(user: domain.User,
             successCallback: (data: domain.User, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
-            errorCallback: (data: boolean, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
+            errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
             this.userService.findByUsername(user.username,
                 (x: domain.User) => {
                     if (x.password === user.password) {
@@ -26,16 +26,16 @@ export module service.mock {
                         this.$rootScope.$broadcast('USER_CHANGED', [this.user]);
                     }
                     else {
-                        errorCallback(false, 200, null, null);
+                        errorCallback(null, 200, null, null);
                     }
                 }, () => {
-                    errorCallback(false, 200, null, null);
+                    errorCallback(null, 200, null, null);
                 });
         }
 
         logout(user: domain.User,
             successCallback: (data: domain.User, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
-            errorCallback: (data: boolean, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
+            errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
             this.userService.findByUsername(user.username,
                 (x: domain.User) => {
                     if (x.password === user.password) {
@@ -44,9 +44,9 @@ export module service.mock {
                         this.$rootScope.$broadcast('USER_CHANGED', [this.user]);
                         return;
                     }
-                    errorCallback(false, 200, null, null);
+                    errorCallback(null, 200, null, null);
                 }, () => {
-                    errorCallback(false, 200, null, null);
+                    errorCallback(null, 200, null, null);
                 }
                 );
         }

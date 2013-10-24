@@ -33,7 +33,7 @@ export module controller.product {
 
         saveProduct() {
             this.ProductService.save(this.$scope.product,
-                (successData: number, successStatus) => {
+                (successData: domain.Product, successStatus) => {
                     this.AlertService.add('Produto foi salvado com sucesso');
                     this.NavigationSvc.$location.url('/product/'+ String(successData));
                 },
