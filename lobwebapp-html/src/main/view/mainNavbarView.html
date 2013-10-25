@@ -1,60 +1,45 @@
 ﻿<div data-ng-controller="MainNavbarCtrl">
     <nav class="navbar navbar-default navbar-static-top" role="navigation">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="/">LOBWebApp</a>
-            </div>
-            <div class="collapse navbar-collapse">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/">LOBWebApp</a>
+        </div>
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li class="dropdown">
+                    <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">
+                        Pedido <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a data-lwa-href="#/order/new">Novo</a></li>
+                        <li><a data-lwa-href="#/order/list">Listar</a></li>
+                        <li><a data-lwa-href="#/order/graph">Gráfico</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">
+                        Produto <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a data-lwa-href="#/product/new">Novo</a></li>
+                        <li><a data-lwa-href="#/product/list">Listar</a></li>
+                        <li><a data-lwa-href="#/product/graph">Gráfico</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="navbar-right">
                 <ul class="nav navbar-nav">
                     <li class="dropdown">
-                        <!-- <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">
-                            Usuário <b class="caret"></b>
+                        <a class="authInfo">
+                            Olá <strong>{{username}}</strong>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a data-lwa-href="#/user/list?find=">Buscar</a></li>
-                            <li><a data-lwa-href="#/user/list">Listar</a></li>
-                            <li><a data-lwa-href="#/user/new">Novo</a></li>
-                        </ul> -->
-                    </li>
-                    <li class="dropdown">
-                        <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">
-                            Pedido <b class="caret"></b>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a data-lwa-href="#/order/new">Novo</a></li>
-                            <li><a data-lwa-href="#/order/list">Listar</a></li>
-                            <li><a data-lwa-href="#/order/graph">Gráfico</a></li>
-                        </ul>
-                    </li>
-                    <li class="dropdown">
-                        <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">
-                            Produto <b class="caret"></b>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a data-lwa-href="#/product/new">Novo</a></li>
-                            <li><a data-lwa-href="#/product/list">Listar</a></li>
-                            <li><a data-lwa-href="#/product/graph">Gráfico</a></li>
+                            <li><a data-ng-href="#/user/auth" data-ng-hide="user.isLogged">Entrar</a></li>
+                            <li><a data-ng-href="#/user/board" data-ng-hide="!user.isLogged">Painel</a></li>
+                            <li><a  data-ng-click="logout()" data-ng-hide="!user.isLogged">Sair</a></li>
                         </ul>
                     </li>
                 </ul>
-                <div class="navbar-right">
-                    <ul class="nav navbar-nav">
-                        <li class="dropdown">
-                            <a class="authInfo">
-                                Olá <strong>{{username}}</strong>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a data-ng-href="#/user/auth" data-ng-hide="user.isLogged">Entrar</a></li>
-                                <li><a data-ng-href="#/user/board" data-ng-hide="!user.isLogged">Painel</a></li>
-                                <li><a  data-ng-click="logout()" data-ng-hide="!user.isLogged">Sair</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-                <!--<form class="navbar-form navbar-right" role="search">-->
-                    <!--<div class="form-group">-->
-                        <!--<input type="text" class="form-control" placeholder="Buscar">-->
-                    <!--</div>-->
-                <!--</form>-->
-            </div><!-- /.navbar-collapse -->
+            </div>
+        </div>
     </nav>
 </div>

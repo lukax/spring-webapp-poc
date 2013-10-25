@@ -26,7 +26,7 @@ export module controller.product {
                     this.$scope.products = successData;
                 },
                 (errorData, errorStatus) => {
-                    this.AlertService.add('Lista de Produtos não pode ser carregada', String(errorData), 'danger');
+                    this.AlertService.add('Lista de Produtos não pôde ser carregada', String(errorData), 'danger');
                 });
         }
 

@@ -4,23 +4,6 @@ body {
     color: #333;
 }
 
-.hero-unit {
-    margin: 50px auto 0 auto;
-    width: 300px;
-    font-size: 18px;
-    font-weight: 200;
-    line-height: 30px;
-    background-color: #eee;
-    border-radius: 6px;
-    padding: 60px;
-}
-
-.hero-unit h1 {
-    font-size: 60px;
-    line-height: 1;
-    letter-spacing: -1px;
-}
-
 .up-caret {
   display: inline-block;
   width: 0;
@@ -34,7 +17,18 @@ body {
   content: "";
 }
 
-/* NAVBAR STUFF */
+#nprogress .bar {
+  z-index: 10000;
+  height: 3px;
+}
+
+#nprogress .spinner {
+  z-index: 10000;
+  top: 5px;
+  right: 5px;
+}
+
+/* NAVBAR */
 ul.nav li.dropdown:hover > ul.dropdown-menu {
     display: block;
 }
@@ -42,6 +36,7 @@ ul.nav li.dropdown:hover {
     background: #ebebeb;
 }
 
+/* ANIMATION */
 .product-list.ng-enter{
      -webkit-animation: fadeInLeft 500ms;
      -moz-animation: fadeInLeft 500ms;
