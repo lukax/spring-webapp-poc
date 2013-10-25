@@ -55,6 +55,17 @@ export module modularity {
                     controller: 'GraphProductController',
                     resolve: this.loadController('controller/product/GraphProductController')
                 })
+                // -Order-
+                .state('order', {
+                    url: '/order',
+                    templateUrl: 'view/order/order.html'
+                })
+                .state('order.edit', {
+                    url: '/{productId:[0-9]{1,8}|new}',
+                    templateUrl: 'view/order/editOrder.html'
+                    //controller: 'AuthUserController',
+                    //resolve: this.loadController('controller/user/AuthUserController')
+                })
             ;
         };
         private locationProviderCfg = ($locationProvider: ng.ILocationProvider) => {

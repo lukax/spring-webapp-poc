@@ -1,0 +1,7 @@
+<div>
+    <data-ui-view></data-ui-view>
+    </br>
+    <alert ng-repeat="alert in alerts" type="alert.type" close="alerts.splice($index, 1)">
+        <strong>{{alert.title}}</strong> {{alert.content}} <div class="pull-right">{{alert.time | date:'HH:mm:ss' }}</div> +
+    </alert>
+</div>

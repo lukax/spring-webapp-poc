@@ -1,0 +1,100 @@
+<div class="row">
+    <div class="col-md-8">
+        <form class="form-horizontal" role="form" name="productDetailsForm" ng-submit="saveChanges()" novalidate>
+
+            <div class="form-group">
+                <label for="inputId" class="col-md-2 control-label">ID</label>
+                <div class="col-md-10 input-group">
+                    <input type="text" class="form-control" id="inputId" name="inputId" readonly ng-model="product.id">
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="previousProduct()">
+                            <span class="glyphicon glyphicon-arrow-left"></span>
+                        </button>
+                        <a type="button" class="btn btn-default" data-ng-href="#/product/{{product.id + 1}}">
+                            <span class="glyphicon glyphicon-arrow-right"></span>
+                        </a>
+                    </span>
+                </div>
+            </div>
+
+            <div class="form-group" ng-class="{'has-error': productDetailsForm.inputName.$invalid}">
+                <label for="inputName" class="col-md-2 control-label">Cliente</label>
+                <div class="col-md-10">
+                    <input type="text" class="form-control" id="inputName" name="inputName"  placeholder="Digite o nome do Cliente"
+                           autofocus ng-model="product.name" required ng-minlength="2">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div ng-class="{'has-error': productDetailsForm.inputPrice.$invalid}">
+                    <label for="inputPrice" class="col-md-2 control-label">Produto</label>
+                    <div class="col-md-7 input-group">
+                        <input type="text" class="form-control" id="inputPrice" name="inputPrice" ng-model="product.price" required>
+                        <div class="input-group-btn">
+                            <button type="button" class="btn btn-default dropdown-toggle" id="btnPriceInfoId" ng-click="priceInfo()" data-toggle="tooltip" title="Detalhar Cálculo de Preço">
+                                <span class="glyphicon glyphicon-new-window"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div ng-class="{'has-error': productDetailsForm.inputQuantity.$invalid}">
+                    <label class="col-md-1 control-label" for="inputQuantity">Qt.</label>
+                    <div class="col-md-2">
+                        <input type="number" class="form-control" id="inputQuantity" name="inputQuantity"
+                               ng-model="product.quantity" required min="0">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div ng-class="{'has-error': productDetailsForm.inputNcm.$invalid}">
+                    <label class="col-md-2 control-label"></label>
+                    <div class="col-md-10">
+                        <ul class="list-group">
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group" ng-class="{'has-error': productDetailsForm.inputDescription.$invalid}">
+                <label for="inputDescription" class="col-md-2 control-label">Total</label>
+                <div class="col-md-10 input-group">
+                    <span class="input-group-addon">R$</span>
+                    <input type="text" class="form-control" id="inputDescription" name="inputDescription" ng-model="product.description">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="inputDescription" class="col-md-2 control-label">Status</label>
+                <div class="col-md-8" ng-init="statusList = []">
+                    <div ng-repeat="status in statusList">
+                        <span class="label label-default">{{status}}</span>
+                    </div>
+                </div>
+                <div class="col-md-2 btn-group pull-right">
+                    <button type="button" class="btn btn-default" data-ng-click="statusList.push('Vendido')" data-ng-disabled="statusList.indexOf('Vendido') != -1">Vender</button>
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a data-ng-click="statusList.push('Pagamento Pendente')" data-ng-hide="statusList.indexOf('Pagamento Pendente') != -1">Pagamento Pendente</a></li>
+                        <li><a data-ng-click="statusList.push('Entrega Pendente')" data-ng-hide="statusList.indexOf('Entrega Pendente') != -1">Entrega Pendente</a></li>
+                        <li class="divider"></li>
+                    </ul>
+                </div>
+            </div>
+
+
+            <div class="btn-group pull-right">
+                <button class="btn btn-primary" type="submit" data-toggle="tooltip" title="Salvar Alterações do Produto" data-loading-text="Salvando..."
+                        data-ng-disabled="productDetailsForm.inputName.$invalid || productDetailsForm.inputDescription.$invalid" data-ng-hide="readMode">
+                    <span class="glyphicon glyphicon-floppy-disk"></span> Salvar
+                </button>
+                <a class="btn btn-default" data-toggle="tooltip" title="Remover Produto Atual" data-loading-text="Removendo..."
+                        data-ng-click="removeOrder()" data-ng-hide="readMode">
+                    Remover
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
