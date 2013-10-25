@@ -7,11 +7,10 @@ export module controller.product {
         productPricePattern: RegExp;
         productProfitMargin: number;
         productGroups: string[];
-        isReadMode: () => boolean;
+        isNewProduct: () => boolean;
         saveChanges: () => void;
         removeProduct: () => void;
         priceInfo: () => void;
-        previousProduct: () => void;
     }
 
     export class EditProductController implements d.controller.base.Controller {
@@ -79,14 +78,7 @@ export module controller.product {
                 });
         }
 
-        previousProduct(){
-            var param = Number(this.NavigationSvc.urlParams.productId) - 1;
-            if (param >= 0) this.NavigationSvc.$location.url('/product/' + param);
-            else this.NavigationSvc.$location.url('/product');
-        }
-
         priceInfo(){
-            //this.NavigationService.$location.hash('priceInfo');
             this.NavigationSvc.$location.search('priceInfo', 'true');
         }
 
@@ -99,46 +91,48 @@ export module controller.product {
             });
         }
 
-        setupProfitMargin() {
+        loadProfitMargin() {
             this.$scope.$watch('product.price + product.costPrice', () => {
                 if (this.$scope.product != null && this.$scope.product.costPrice !== 0)
                     this.$scope.productProfitMargin = a.util.Std.round(this.$scope.product.price / this.$scope.product.costPrice, 2);
             });
         }
 
-        setupGroups(){
+        loadGroups(){
             this.ProductService.listGroups(
-                (successData, successStatus) => { this.$scope.productGroups = successData; },
-                (errorData, errorStatus) => { });
+                (successData) => { this.$scope.productGroups = successData; },
+                (errorData) => { });
         }
 
-        isReadMode(){
-            return (this.$scope.product.id == 0);
+        isNewProduct(){
+            return (this.$scope.product && this.$scope.product.id == 0);
         }
 
         processArgs() {
             var routeProdId = this.NavigationSvc.urlParams.productId;
-            if(!isNaN(routeProdId)){
+            if(routeProdId > 0){
                 this.findProduct(Number(routeProdId));
+            }else if(routeProdId == 0){
+                this.newProduct();
             }else if(routeProdId == 'new'){
                 this.$scope.product = { id:0, name:'s', description:'', quantity: 0, price: 0, costPrice:0, group:'', ncm:0 };
             }else{
                 this.AlertService.add('Produto ID Inválido', '', 'warning');
+                this.newProduct();
             }
-            if (<any>this.NavigationSvc.urlParams.priceInfo == 'true') {
+            if (this.NavigationSvc.urlParams.priceInfo == 'true') {
                 this.priceInfoModal();
             }
         }
 
         populateScope() {
             this.$scope.productPricePattern = /^(?=.*[1-9])\d*(?:\.\d{1,2})?$/;
-            this.$scope.isReadMode = () => this.isReadMode();
+            this.$scope.isNewProduct = () => this.isNewProduct();
             this.$scope.saveChanges = () => this.saveChanges();
             this.$scope.removeProduct = () => this.removeProduct();
             this.$scope.priceInfo = () => this.priceInfo();
-            this.$scope.previousProduct = () => this.previousProduct();
-            this.setupProfitMargin();
-            this.setupGroups();
+            this.loadProfitMargin();
+            this.loadGroups();
         }
     }
 }
