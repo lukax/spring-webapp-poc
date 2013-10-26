@@ -1,7 +1,7 @@
 ///<reference path="./../../reference.d.ts"/>
 
 export module controller.product {
-    export interface ListProductViewModel extends d.controller.base.BaseViewModel {
+    export interface ListProductViewModel extends d.controller.base.ViewModel {
         product: domain.Product;
         products: domain.Product[];
         searchText: string;

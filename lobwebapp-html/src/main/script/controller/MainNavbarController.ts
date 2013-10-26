@@ -1,7 +1,7 @@
 ﻿///<reference path="./../reference.d.ts"/>
 
 export module controller {
-    export interface MainNavbarViewModel extends d.controller.base.BaseViewModel {
+    export interface MainNavbarViewModel extends d.controller.base.ViewModel {
         user: domain.User;
         username: string;
         logout: () => void;

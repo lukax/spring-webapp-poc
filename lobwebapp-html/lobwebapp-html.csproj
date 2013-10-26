@@ -60,8 +60,8 @@
     <Content Include="src\main\css\main.css" />
     <Content Include="src\main\css\typeahead.css" />
     <Content Include="src\main\img\favicon.ico" />
-    <TypeScriptCompile Include="src\main\scripts\controller\base\BaseController.ts" />
-    <TypeScriptCompile Include="src\main\scripts\controller\base\BaseViewModel.ts" />
+    <TypeScriptCompile Include="src\main\scripts\controller\base\Controller.ts" />
+    <TypeScriptCompile Include="src\main\scripts\controller\base\ViewModel.ts" />
     <TypeScriptCompile Include="src\main\scripts\controller\MainNavbarController.ts" />
     <TypeScriptCompile Include="src\main\scripts\controller\product\EditProductController.ts" />
     <TypeScriptCompile Include="src\main\scripts\controller\product\ListProductController.ts" />

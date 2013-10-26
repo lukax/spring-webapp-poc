@@ -62,9 +62,9 @@ export module modularity {
                 })
                 .state('order.edit', {
                     url: '/{productId:[0-9]{1,8}|new}',
-                    templateUrl: 'view/order/editOrder.html'
-                    //controller: 'AuthUserController',
-                    //resolve: this.loadController('controller/user/AuthUserController')
+                    templateUrl: 'view/order/editOrder.html',
+                    controller: 'EditOrderController',
+                    resolve: this.loadController('controller/order/EditOrderController')
                 })
             ;
         };
