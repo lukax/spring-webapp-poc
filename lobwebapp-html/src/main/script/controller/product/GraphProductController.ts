@@ -6,7 +6,7 @@
 import linqjs = require('linqjs');
 
 export module controller.product {
-    export interface GraphProductViewModel extends d.controller.base.BaseViewModel {
+    export interface GraphProductViewModel extends d.controller.base.ViewModel {
 
     }
 

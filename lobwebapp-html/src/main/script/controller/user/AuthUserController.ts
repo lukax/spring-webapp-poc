@@ -1,7 +1,7 @@
 ///<reference path="./../../reference.d.ts"/>
 
 export module controller.user {
-    export interface AuthUserViewModel extends d.controller.base.BaseViewModel {
+    export interface AuthUserViewModel extends d.controller.base.ViewModel {
         user: domain.User;
         login: () => void;
     }

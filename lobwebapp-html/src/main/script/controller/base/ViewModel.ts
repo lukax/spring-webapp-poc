@@ -1,7 +1,7 @@
 ///<reference path="./../../reference.d.ts"/>
 
 module d.controller.base{
-    export interface BaseViewModel extends ng.IScope{
+    export interface ViewModel extends ng.IScope{
 
     }
 }

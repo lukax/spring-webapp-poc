@@ -2,7 +2,7 @@
 import a = require('./../../util/StdUtil');
 
 export module controller.product {
-    export interface EditProductViewModel extends d.controller.base.BaseViewModel {
+    export interface EditProductViewModel extends d.controller.base.ViewModel {
         product: domain.Product;
         productPricePattern: RegExp;
         productProfitMargin: number;

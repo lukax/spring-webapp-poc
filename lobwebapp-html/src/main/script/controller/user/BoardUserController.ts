@@ -1,7 +1,7 @@
 ///<reference path="./../../reference.d.ts"/>
 
 export module controller.user {
-    export interface BoardUserViewModel extends d.controller.base.BaseViewModel {
+    export interface BoardUserViewModel extends d.controller.base.ViewModel {
         user: domain.User;
     }
 

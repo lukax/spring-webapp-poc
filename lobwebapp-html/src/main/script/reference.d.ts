@@ -6,8 +6,8 @@
 ///<reference path="./../../../ts-definitions/linq/linq.d.ts"/>
 ///<reference path="./../../../ts-definitions/d3/d3.d.ts"/>
 
-///<reference path="./controller/base/BaseController.ts"/>
-///<reference path="./controller/base/BaseViewModel.ts"/>
+///<reference path="./controller/base/Controller.ts"/>
+///<reference path="./controller/base/ViewModel.ts"/>
 ///<reference path="./controller/product/EditProductController.ts"/>
 ///<reference path="./controller/product/ListProductController.ts"/>
 ///<reference path="./controller/user/AuthUserController.ts"/>
@@ -19,6 +19,7 @@
 ///<reference path="./domain/util/Error.ts"/>
 ///<reference path="./domain/Product.ts"/>
 ///<reference path="./domain/User.ts"/>
+///<reference path="./domain/Order.ts"/>
 
 ///<reference path="./directive/util/AlertsDirective.ts"/>
 ///<reference path="./directive/LabeledInputDirective.ts"/>
