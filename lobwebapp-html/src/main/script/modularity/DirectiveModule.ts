@@ -21,7 +21,6 @@ export module modularity {
                 .directive('lwaProgress', this.progress)
                 .directive('lwaHref', ['$location', '$route', this.lwaHref])
                 .directive('lwaCaret', this.lwaCaret)
-                .directive('lwaAlerts', [()=> new a.directive.util.AlertsDirective()])
                 .directive('stdForm', [() => new b.directive.LabeledInputDirective()])
             ;
             return this;

@@ -7,7 +7,7 @@ export module controller.product {
         productPricePattern: RegExp;
         productProfitMargin: number;
         productGroups: string[];
-        isNewProduct: () => boolean;
+        isNewProduct: boolean;
         saveChanges: () => void;
         removeProduct: () => void;
         priceInfo: () => void;
@@ -79,7 +79,7 @@ export module controller.product {
         }
 
         priceInfo(){
-            this.NavigationSvc.$location.search('priceInfo', 'true');
+            this.priceInfoModal();
         }
 
         priceInfoModal(){
@@ -126,8 +126,11 @@ export module controller.product {
         }
 
         populateScope() {
+            this.$scope.$watch('product', (newValue: domain.Product, oldValue: domain.Product) => {
+                    console.log('EditProductController: product object changed');
+                    this.$scope.isNewProduct = this.isNewProduct();
+                });
             this.$scope.productPricePattern = /^(?=.*[1-9])\d*(?:\.\d{1,2})?$/;
-            this.$scope.isNewProduct = () => this.isNewProduct();
             this.$scope.saveChanges = () => this.saveChanges();
             this.$scope.removeProduct = () => this.removeProduct();
             this.$scope.priceInfo = () => this.priceInfo();

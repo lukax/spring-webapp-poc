@@ -8,6 +8,7 @@ import a = require('./ServiceModule');
 import e = require('./../service/mock/AuthServiceMock');
 import f = require('./../controller/MainNavbarController');
 import h = require('./../util/DependencyManager');
+import g = require('./../controller/AlertController');
 
 export module modularity {
     export class ControllerModule {
@@ -126,7 +127,8 @@ export module modularity {
                 //.run(['$rootScope', this.contentLoadProgress])
                 //.run(['$rootScope', '$location', 'AuthService', this.userAuthCfg])
                 
-                .controller('MainNavbarCtrl', <Function>f.controller.MainNavbarController)
+                .controller('MainNavbarController', <Function>f.controller.MainNavbarController)
+                .controller('AlertController', <Function>g.controller.AlertController)
                 ;
 
             return this;
