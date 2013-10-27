@@ -1,6 +1,6 @@
 ///<reference path="./../reference.d.ts"/>
 
-import p = require('./Progress');
+import p = require("./Progress");
 
 export module util {
     export class DependencyManager {
@@ -18,7 +18,24 @@ export module util {
                 this.$rootScope.$apply(() =>
                 {
                     deferred.resolve();
-                    console.log('Dependency Manager: resolved ' + path);
+                    console.log("Dependency Manager: resolved " + path);
+                    p.util.Progress.done();
+                });
+            });
+
+            return deferred.promise;
+        }
+
+        public resolveMany(paths: string[]) {
+            var deferred = this.$q.defer();
+            p.util.Progress.start();
+
+            require(paths, () =>
+            {
+                this.$rootScope.$apply(() =>
+                {
+                    deferred.resolve();
+                    console.log("Dependency Manager: resolved " + paths);
                     p.util.Progress.done();
                 });
             });
