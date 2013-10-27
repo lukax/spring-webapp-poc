@@ -97,7 +97,7 @@ export module modularity {
             if(deps.length === 0) return;
             var definition = {
                 resolver: ["$q", "$rootScope", ($q: ng.IQService, $rootScope: ng.IRootScopeService) => {
-                    return (new h.util.DependencyManager($q, $rootScope)).resolveMany(deps);
+                    return (new h.util.DependencyManager($q, $rootScope)).resolve(deps);
                 }]
             }
             return definition;

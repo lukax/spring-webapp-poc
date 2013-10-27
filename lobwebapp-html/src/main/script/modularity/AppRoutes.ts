@@ -36,7 +36,8 @@ export var routes =
     "templateUrl": "view/product/listProduct.html",
     "controller": "ListProductController",
     "dependencies": [
-        "controller/product/ListProductController"
+        "controller/product/ListProductController",
+        "service/mock/ProductServiceMock"
     ]
 }, {
     "name": "product.edit",
@@ -45,7 +46,8 @@ export var routes =
     "templateUrl": "view/product/editProduct.html",
     "controller": "EditProductController",
     "dependencies": [
-        "controller/product/EditProductController"
+        "controller/product/EditProductController",
+        "service/mock/ProductServiceMock"
     ]
 }, {
     "name": "product.graph",
@@ -54,7 +56,8 @@ export var routes =
     "templateUrl": "view/product/graphProduct.html",
     "controller": "GraphProductController",
     "dependencies": [
-        "controller/product/GraphProductController"
+        "controller/product/GraphProductController",
+        "service/mock/ProductServiceMock"
     ]
 }, {
     "name": "order",
@@ -69,6 +72,7 @@ export var routes =
     "templateUrl": "view/order/editOrder.html",
     "controller": "EditOrderController",
     "dependencies": [
-        "controller/order/EditOrderController"
+        "controller/order/EditOrderController",
+        "service/mock/ProductServiceMock"
     ]
 }];

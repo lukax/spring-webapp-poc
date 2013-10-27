@@ -9,24 +9,7 @@ export module util {
 
         }
 
-        public resolve(path: string) {
-            var deferred = this.$q.defer();
-            p.util.Progress.start();
-
-            require([path], () =>
-            {
-                this.$rootScope.$apply(() =>
-                {
-                    deferred.resolve();
-                    console.log("Dependency Manager: resolved " + path);
-                    p.util.Progress.done();
-                });
-            });
-
-            return deferred.promise;
-        }
-
-        public resolveMany(paths: string[]) {
+        public resolve(paths: string[]) {
             var deferred = this.$q.defer();
             p.util.Progress.start();
 

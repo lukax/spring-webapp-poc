@@ -37,3 +37,5 @@ export module service.mock {
         }
     }
 }
+
+(<any>angular.module('lwa.service')).lazy.service('ProductService', service.mock.DefaultProductService);
