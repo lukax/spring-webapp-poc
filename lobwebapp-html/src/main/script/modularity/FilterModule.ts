@@ -1,6 +1,5 @@
 ///<reference path="../reference.d.ts"/>
 ///<amd-dependency path="angular"/>
-import a = require('./../util/StdUtil');
 
 export module modularity {
     export class FilterModule {
@@ -11,22 +10,23 @@ export module modularity {
         }
 
         configure() {
+            //Global usage filters configuration
             this.module
-                .filter('lwaRound', this.lwaRound)
+                //.filter('lwaRound', this.lwaRound)
             ;
             return this;
         }
 
-        private lwaRound = () => {
-            return (input: number, inputDecimals: number) => {
-                var out = input;
-                var outDecimals = 2; // Padrão duas casas na conversão
-                if (inputDecimals) outDecimals = inputDecimals;
-                if (isNaN(out) || isNaN(outDecimals)) return 0;
+        // private lwaRound = () => {
+        //     return (input: number, inputDecimals: number) => {
+        //         var out = input;
+        //         var outDecimals = 2; // Padrão duas casas na conversão
+        //         if (inputDecimals) outDecimals = inputDecimals;
+        //         if (isNaN(out) || isNaN(outDecimals)) return 0;
 
-                out = a.util.Std.round(out, outDecimals);
-                return out;
-            }
-        }
+        //         out = a.util.Std.round(out, outDecimals);
+        //         return out;
+        //     }
+        // }
     }
 }

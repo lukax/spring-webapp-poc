@@ -78,6 +78,7 @@ export module modularity {
         }
 
         configure() {
+            //Global usage controllers configuration
             this.module
                 //.config(["$locationProvider", this.locationProviderCfg])
                 .config(["$stateProvider", "$urlRouterProvider", this.stateProviderCfg])

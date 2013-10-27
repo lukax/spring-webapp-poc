@@ -19,6 +19,7 @@ export module modularity {
         }
 
         configure() {
+            //Global usage services configuration
             this.module
                 .service('UserService', <Function>c.service.mock.DefaultUserService)
                 .service('AuthService', <Function>d.service.mock.DefaultAuthService)

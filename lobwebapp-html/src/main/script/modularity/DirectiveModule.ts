@@ -16,6 +16,7 @@ export module modularity {
         }
 
         configure() {
+            //Global usage directives configuration
             this.module
                 .directive('lwaProgress', this.progress)
                 .directive('lwaHref', ['$location', '$route', this.lwaHref])
