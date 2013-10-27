@@ -46,7 +46,6 @@
 ///<reference path="./service/mock/base/EntityServiceMock.ts"/>
 
 ///<reference path="./util/StdUtil.ts"/>
-///<reference path="./util/PackageLoader.ts"/>
 ///<reference path="./util/DependencyManager.ts"/>
 ///<reference path="./util/Progress.ts"/>
 

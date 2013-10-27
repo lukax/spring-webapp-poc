@@ -1,7 +1,6 @@
 ///<reference path="../reference.d.ts"/>
 ///<amd-dependency path="angular"/>
 import a = require('./../service/impl/util/AlertServiceImpl');
-import b = require('./../service/mock/ProductServiceMock');
 import c = require('./../service/mock/UserServiceMock');
 import d = require('./../service/mock/AuthServiceMock');
 import f = require('./../service/impl/util/NavigationServiceImpl');
@@ -12,11 +11,16 @@ export module modularity {
 
         constructor() {
             this.module = angular.module('lwa.service', []);
+            this.module.config(["$provide", ($provide: ng.auto.IProvideService) => {
+                (<any>this.module).lazy = {
+                    service: $provide.service
+                };
+            }]);
         }
 
         configure() {
+            //Global usage services configuration
             this.module
-                .service('ProductService', <Function>b.service.mock.DefaultProductService)
                 .service('UserService', <Function>c.service.mock.DefaultUserService)
                 .service('AuthService', <Function>d.service.mock.DefaultAuthService)
                 .service('AlertService', <Function>a.service.impl.util.DefaultAlertService)
