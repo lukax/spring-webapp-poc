@@ -21,7 +21,6 @@
 ///<reference path="./domain/User.ts"/>
 ///<reference path="./domain/Order.ts"/>
 
-///<reference path="./directive/util/AlertsDirective.ts"/>
 ///<reference path="./directive/LabeledInputDirective.ts"/>
 
 ///<reference path="./modularity/AppModule.ts"/>

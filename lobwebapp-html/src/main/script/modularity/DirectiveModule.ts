@@ -5,7 +5,6 @@
 ///<amd-dependency path="angularUiBootstrap"/>
 ///<amd-dependency path="ngAnimateAnimateCss"/>
 
-import a = require('./../directive/util/AlertsDirective');
 import b = require('./../directive/LabeledInputDirective');
 
 export module modularity {
