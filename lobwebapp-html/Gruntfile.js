@@ -50,9 +50,9 @@ module.exports = function (grunt) {
           '<%= yeoman.app %>/img/**/*.{png,jpg,jpeg,gif,webp,svg}'
         ]
       },
-      typescript: {
+      ts: {
         files: 'src/main/script/**/*.ts',
-        tasks: ['typescript']
+        tasks: ['ts:dev']
       }
     },
     autoprefixer: {
@@ -261,7 +261,6 @@ module.exports = function (grunt) {
     },
     concurrent: {
       server: [
-        // ,'copy:css'
       ],
       test: [
         'copy:css'
@@ -303,13 +302,30 @@ module.exports = function (grunt) {
                }]
         }
     },
-    typescript: {
-        base: {
-            src: ['<%= yeoman.app%>/script/**/*.ts' ],
+    ts: {
+    	watch: {
+    		src: ['<%= yeoman.app%>/script/**/*.ts'],
+    		watch: '<%= yeoman.app%>/script',  
+    		options: {
+                target: 'es5',
+                declaration: false,                
+                comments: false
+            },
+    	}
+        dev: {
+        	src: ['<%= yeoman.app%>/script/**/*.ts'],        // The source typescript files, http://gruntjs.com/configuring-tasks#files
+            //html: [], // The source html files, https://github.com/basarat/grunt-ts#html-2-typescript-support
+            //reference: './test/reference.ts',  // If specified, generate this file that you can use for your reference management
+            //out: 'test/out.js',                // If specified, generate an out.js file which is the merged js file                     
+            //outDir: 'test/outputdirectory',    // If specified, the generate javascript files are placed here. Only works if out is not specified
+            //watch: '<%= yeoman.app%>/script',   // If specified, watches this directory for changes, and re-runs the current target  
             options: {
-                module: 'amd',
-                target: 'es5'
-            }
+                module: 'amd',       // 'amd' (default) | 'commonjs'
+                target: 'es5',            // 'es3' (default) | 'es5'
+                sourcemap: false,          // true  (default) | false
+                declaration: false,       // true | false  (default)                
+                comments: false           // true | false (default)
+            },
         }
     },
     requirejs: {
@@ -326,19 +342,19 @@ module.exports = function (grunt) {
   });
 
   grunt.registerTask('server', function (target) {
-    if (target === 'dist') {
-      return grunt.task.run(['build', 'open', 'connect:dist:keepalive']);
-    }
+	    if (target === 'dist') {
+	      return grunt.task.run(['build', 'open', 'connect:dist:keepalive']);
+	}
 
-    grunt.task.run([
-      'clean:server',
-      'typescript',
-      'concurrent:server',
-      //'autoprefixer',
-      'connect:livereload',
-      'open',
-      'watch'
-    ]);
+	grunt.task.run([
+	  'clean:server',
+	  'ts:dev',
+	  'concurrent:server',
+	  //'autoprefixer',
+	  'connect:livereload',
+	  'open',
+	  'watch'
+	]);
   });
 
   grunt.registerTask('test', [
@@ -356,7 +372,7 @@ module.exports = function (grunt) {
 
     grunt.task.run([
       'clean:dist',
-      'typescript',
+      'ts:dev',
       'uglify:dist',
       //'requirejs',
       'useminPrepare',
@@ -382,4 +398,6 @@ module.exports = function (grunt) {
     'connect:dist:keepalive'
   ]);
 
+
+  grunt.loadNpmTasks('grunt-ts');
 };

@@ -12,6 +12,7 @@ bin
 build
 dist
 .tmp
+.tmp.txt
 .sass-cache
 components
 dist

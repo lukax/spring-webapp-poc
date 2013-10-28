@@ -31,9 +31,9 @@
     "grunt-open": "~0.2.0",
     "grunt-concurrent": "~0.3.0",
     "grunt-ngmin": "~0.0.2",
-    "grunt-typescript": "~0.2.4",
     "grunt-autoprefixer": "~0.3.0",
     "grunt-contrib-requirejs": "~0.4.1",
+    "grunt-ts": "~1.4.0",
     "matchdep": "~0.1.2",
     "connect-livereload": "~0.2.0",
     "connect-modrewrite": "~0.5.4"
