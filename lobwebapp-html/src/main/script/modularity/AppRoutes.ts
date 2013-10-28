@@ -32,7 +32,7 @@ export var routes =
 }, {
     "name": "product.list",
     "baseUrl": "/product",
-    "url": "/product/list?search",
+    "url": "/product/list?search&redirect",
     "templateUrl": "view/product/listProduct.html",
     "controller": "ListProductController",
     "dependencies": [
@@ -68,7 +68,7 @@ export var routes =
 },{
     "name": "order.edit",
     "baseUrl": "/order",
-    "url": "/order/{productId:[0-9]{1,8}|new}", //0-9 numbers in 1-8 digits long match
+    "url": "/order/{orderId:[0-9]{1,8}|new}?clientId&productId", //0-9 numbers in 1-8 digits long match
     "templateUrl": "view/order/editOrder.html",
     "controller": "EditOrderController",
     "dependencies": [

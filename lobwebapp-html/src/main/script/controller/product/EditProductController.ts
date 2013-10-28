@@ -1,5 +1,5 @@
 ///<reference path="./../../reference.d.ts"/>
-import a = require('./../../util/StdUtil');
+import a = require("./../../util/StdUtil");
 
 export module controller.product {
     export interface EditProductViewModel extends d.controller.base.ViewModel {
@@ -15,7 +15,7 @@ export module controller.product {
 
     export class EditProductController implements d.controller.base.Controller {
         
-        static $inject = ['$scope', 'ProductService', 'AlertService', '$ekathuwa'];
+        static $inject = ["$scope", "ProductService", "AlertService", "$ekathuwa"];
         constructor(public $scope: EditProductViewModel,
                     public ProductService: d.service.contract.ProductService,
                     public AlertService: d.service.contract.util.AlertService,
@@ -26,27 +26,27 @@ export module controller.product {
         }
 
         newProduct() {
-            this.$scope.navigator.$location.url('/product/new');
+            this.$scope.navigator.$location.url("/product/new");
         }
 
         saveProduct() {
             this.ProductService.save(this.$scope.product,
                 (successData: domain.Product, successStatus) => {
-                    this.AlertService.add('Produto foi salvado com sucesso');
-                    this.$scope.navigator.$location.url('/product/' + String(successData));
+                    this.AlertService.add("Novo produto " + successData.name + " foi adicionado", "Novo");
+                    this.$scope.navigator.$location.url("/product/" + String(successData));
                 },
                 (errorData, errorStatus) => {
-                    this.AlertService.add('Produto não pode ser salvado', String(errorData), 'danger');
+                    this.AlertService.add("Produto não pode ser salvado", String(errorData), "danger");
                 });
         }
 
         updateProduct() {
             this.ProductService.update(this.$scope.product,
                 (successData, successStatus) => {
-                    this.AlertService.add('Produto foi atualizado com sucesso');
+                    this.AlertService.add("Alterações em " + successData.name + " foram bem sucedidas", "Atualização");
                 },
                 (errorData, errorStatus) => {
-                    this.AlertService.add('Produto não pode ser atualizado', String(errorData), 'danger');
+                    this.AlertService.add("Produto não pode ser atualizado", String(errorData), "danger");
                 });
         }
 
@@ -58,11 +58,11 @@ export module controller.product {
         removeProduct() {
             this.ProductService.remove(this.$scope.product,
                 (successData, successStatus) => {
-                    this.AlertService.add('Produto removido com sucesso');
+                    this.AlertService.add("Produto removido com sucesso");
                     this.newProduct();
                 },
                 (errorData, errorStatus) => {
-                    this.AlertService.add('Produto não pode ser removido', String(errorData), 'danger');
+                    this.AlertService.add("Produto não pode ser removido", String(errorData), "danger");
                 });
         }
 
@@ -72,7 +72,7 @@ export module controller.product {
                     this.$scope.product = successData;
                 },
                 (errorData, errorStatus) => {
-                    this.AlertService.add('Produto com o ID especificado não foi encontrado', String(errorData), 'warning');
+                    this.AlertService.add("Produto com o ID especificado não foi encontrado", String(errorData), "warning");
                     this.newProduct();
                 });
         }
@@ -83,15 +83,15 @@ export module controller.product {
 
         priceInfoModal(){
             this.$ekathuwa.modal({
-                id: 'priceInfoModalId',
-                templateURL: 'view/product/modal/priceInfoModal.html',
+                id: "priceInfoModalId",
+                templateURL: "view/product/modal/priceInfoModal.html",
                 scope: this.$scope,
-                onHidden: () => { this.$scope.navigator.$location.search('priceInfo', null); }
+                onHidden: () => { this.$scope.navigator.$location.search("priceInfo", null); }
             });
         }
 
         loadProfitMargin() {
-            this.$scope.$watch('product.price + product.costPrice', () => {
+            this.$scope.$watch("product.price + product.costPrice", () => {
                 if (this.$scope.product != null && this.$scope.product.costPrice !== 0)
                     this.$scope.productProfitMargin = a.util.Std.round(this.$scope.product.price / this.$scope.product.costPrice, 2);
             });
@@ -113,20 +113,20 @@ export module controller.product {
                 this.findProduct(Number(routeProdId));
             }else if(routeProdId == 0){
                 this.newProduct();
-            }else if(routeProdId == 'new'){
-                this.$scope.product = { id:0, name:'s', description:'', quantity: 0, price: 0, costPrice:0, group:'', ncm:0 };
+            }else if(routeProdId == "new"){
+                this.$scope.product = { id:0, name:"s", description:"", quantity: 0, price: 0, costPrice:0, group:"", ncm:0 };
             }else{
-                this.AlertService.add('Produto ID Inválido', '', 'warning');
+                this.AlertService.add("Produto ID Inválido", "", "warning");
                 this.newProduct();
             }
-            if (this.$scope.navigator.urlParams.priceInfo == 'true') {
+            if (this.$scope.navigator.urlParams.priceInfo == "true") {
                 this.priceInfoModal();
             }
         }
 
         populateScope() {
-            this.$scope.$watch('product', (newValue: domain.Product, oldValue: domain.Product) => {
-                    console.log('EditProductController: product object changed');
+            this.$scope.$watch("product", (newValue: domain.Product, oldValue: domain.Product) => {
+                    console.log("EditProductController: product object changed");
                     this.$scope.isNewProduct = this.isNewProduct();
                 });
             this.$scope.productPricePattern = /^(?=.*[1-9])\d*(?:\.\d{1,2})?$/;
@@ -139,4 +139,4 @@ export module controller.product {
     }
 }
 
-(<any>angular.module('lwa.controller')).lazy.controller('EditProductController', controller.product.EditProductController);
+(<any>angular.module("lwa.controller")).lazy.controller("EditProductController", controller.product.EditProductController);

@@ -1,6 +1,6 @@
 ///<reference path="./../../../reference.d.ts"/>
 
-import linqjs = require('linqjs');
+import linqjs = require("linqjs");
 
 export module service.mock.base {
     export class AbstractEntityService<T extends domain.base.AbstractEntity> implements d.service.contract.base.EntityService<T> {
@@ -15,7 +15,7 @@ export module service.mock.base {
         public save(entity: T,
             successCallback: (data: T, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
             errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
-                if (entity.id != 0) errorCallback({message: 'ID Inválido'}, 403, null, null);
+                if (entity.id != 0) errorCallback({message: "ID Inválido"}, 403, null, null);
                 var storId = 0;
                 this.getRepository().forEach(
                     (item: T) => {
@@ -30,19 +30,19 @@ export module service.mock.base {
         public update(entity: T,
             successCallback: (data: T, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
             errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
-                if (entity.id == 0) errorCallback({message: 'ID Inválido'}, 403, null, null);
+                if (entity.id == 0) errorCallback({message: "ID Inválido"}, 403, null, null);
                 var success = false;
                 this.getRepository().some(
                     (item: T, index: number) => {
                         if (item.id == entity.id) {
                             this.getRepository()[index] = angular.copy(entity);
                             success = true;
-                            successCallback(null, 200, null, null);
+                            successCallback(entity, 200, null, null);
                             return true;
                         }
                         else return false;
                     });
-                if (!success) errorCallback({message: 'ID inexistente'}, 404, null, null);
+                if (!success) errorCallback({message: "ID Inexistente"}, 404, null, null);
         }
 
         public remove(entity: T,
@@ -54,12 +54,12 @@ export module service.mock.base {
                         if (item.id == entity.id) {
                             this.getRepository().splice(index, 1);
                             success = true;
-                            successCallback(null, 200, null, null);
+                            successCallback(entity, 200, null, null);
                             return true;
                         }
                         else return false;
                     });
-                if (!success) errorCallback({message: 'ID inexistente'}, 404, null, null);
+                if (!success) errorCallback({message: "ID Inexistente"}, 404, null, null);
         }
 
         public findById(id: number,
@@ -77,7 +77,7 @@ export module service.mock.base {
                         else return false;
                     });
                 if (success) successCallback(retrievedEntity, 200, null, null);
-                else errorCallback(null, 404, null, null);
+                else errorCallback({message: "ID Inexistente"}, 404, null, null);
         }
 
         public list(
@@ -90,7 +90,7 @@ export module service.mock.base {
             successCallback: (data: boolean, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
             errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
                 if(linqjs.From(this.getRepository()).Contains(entity)) successCallback(true, 200, null, null);
-                else errorCallback(null, 200, null, null);
+                else errorCallback({message: "Entidade Inexistente"}, 200, null, null);
         }
 
 

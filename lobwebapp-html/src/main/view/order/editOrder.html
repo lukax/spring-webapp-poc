@@ -19,11 +19,12 @@
         <label for="clientId" class="col-md-1 control-label">Cliente</label>
         <div class="col-md-2 input-group">
             <div class="input-group-btn">
-                <button type="button" class="btn btn-default" data-toggle="tooltip" title="Buscar Cliente">
+                <button type="button" class="btn btn-default" data-toggle="tooltip" title="Buscar Rápida de Cliente" disabled>
                     <span class="glyphicon glyphicon-search"></span>
                 </button>
             </div>
-            <input type="text" class="form-control" id="clientId" name="clientId" placeholder="ID" autofocus ng-model="clientId" required ng-minlength="2">
+            <input type="text" class="form-control" id="clientId" name="clientId" placeholder="ID" autofocus 
+                   data-ng-model="clientId" required>
         </div>
         <div class="col-md-9">
             <p class="form-control-static">Detalhes do Cliente</p>
@@ -31,23 +32,23 @@
     </div>
 
     <div class="form-group">
-        <div ng-class="{'has-error': orderDetail.currProdId.$invalid}">
-            <label for="currProdId" class="col-md-1 control-label">Produto</label>
+        <div ng-class="{'has-error': orderDetail.productId.$invalid}">
+            <label for="productId" class="col-md-1 control-label">Produto</label>
             <div class="col-md-2 input-group">
                 <div class="input-group-btn">
-                    <button type="button" class="btn btn-default" data-toggle="tooltip" title="Buscar Produto">
+                    <button type="button" class="btn btn-default" data-toggle="tooltip" title="Buscar Rápida de Produto" data-ng-click="findProduct()">
                         <span class="glyphicon glyphicon-search"></span>
                     </button>
                 </div>
-                <input type="text" class="form-control" id="currProdId" name="currProdId" placeholder="ID"
-                        data-ng-model="currProdId" required>
+                <input type="text" class="form-control" id="productId" name="productId" placeholder="ID"
+                        data-ng-model="productId" required>
             </div>
         </div>
-        <div ng-class="{'has-error': orderDetail.currProdQuantity.$invalid}" class="col-md-2">
-            <label class="col-md-3 control-label" for="currProdQuantity">Qt.</label>
+        <div ng-class="{'has-error': orderDetail.productQuantity.$invalid}" class="col-md-2">
+            <label class="col-md-3 control-label" for="productQuantity">Qt.</label>
             <div class="col-md-9">
-                <input type="number" class="form-control" id="currProdQuantity" name="currProdQuantity"
-                       data-ng-model="currProdQuantity" required min="0">
+                <input type="number" class="form-control" id="productQuantity" name="productQuantity"
+                       data-ng-model="productQuantity" required min="0">
             </div>
         </div>
         <div class="col-md-7">

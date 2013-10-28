@@ -1,16 +1,16 @@
 ///<reference path="./../../reference.d.ts"/>
-import a = require('./base/EntityServiceMock');
+import a = require("./base/EntityServiceMock");
 
 export module service.mock {
     export class DefaultUserService extends a.service.mock.base.AbstractEntityService<domain.User> implements d.service.contract.UserService {
 
-        static $inject = ['$timeout'];
+        static $inject = ["$timeout"];
         constructor($timeout: ng.ITimeoutService) {
             super($timeout);
-            super.getRepository().push({ id: 1, username: 'admin', password: '1234', role: '' });
-            super.getRepository().push({ id: 2, username: 'manager', password: '1234', role: '' });
-            super.getRepository().push({ id: 3, username: 'employee', password: '1234', role: '' });
-            super.getRepository().push({ id: 4, username: 'client', password: '1234', role: '' });
+            super.getRepository().push({ id: 1, username: "admin", password: "1234", role: "" });
+            super.getRepository().push({ id: 2, username: "manager", password: "1234", role: "" });
+            super.getRepository().push({ id: 3, username: "employee", password: "1234", role: "" });
+            super.getRepository().push({ id: 4, username: "client", password: "1234", role: "" });
         }
 
 

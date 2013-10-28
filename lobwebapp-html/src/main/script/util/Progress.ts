@@ -23,8 +23,8 @@ export module util{
             NProgress.set(percent);
         }
 
-        public static done(show?: boolean){
-            NProgress.done(show);
+        public static done(){
+            NProgress.done();
         }
     }
 }

@@ -30,7 +30,7 @@ body {
 
 #nprogress .bar {
   z-index: 10000;
-  height: 3px;
+  height: 2px;
 }
 
 #nprogress .spinner {

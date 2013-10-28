@@ -11,7 +11,7 @@ export module service.impl.util{
         }
 
         add(message: string, title?: string, type?: string) {
-            if (this.alerts.length >= 2) {
+            if (this.alerts.length >= 3) {
                 this.alerts.splice(0, 1);
             }
             var alert: domain.util.Alert = {

@@ -1,5 +1,5 @@
 ///<reference path="./../../reference.d.ts"/>
-import a = require('./UserServiceMock');;
+import a = require("./UserServiceMock");;
 
 export module service.mock {
     export class DefaultAuthService implements d.service.contract.AuthService {
@@ -7,7 +7,7 @@ export module service.mock {
         private userService: a.service.mock.DefaultUserService;
         private user: domain.User;
 
-        static $inject = ['$timeout', 'UserService','$rootScope'];
+        static $inject = ["$timeout", "UserService","$rootScope"];
         constructor($timeout: ng.ITimeoutService, UserService: a.service.mock.DefaultUserService, public $rootScope: ng.IRootScopeService) {
             this.timeoutService = $timeout;
             this.userService = UserService;
@@ -23,7 +23,7 @@ export module service.mock {
                         this.user = user;
                         this.user.isLogged = true;
                         successCallback(this.user, 200, null, null);
-                        this.$rootScope.$broadcast('USER_CHANGED', [this.user]);
+                        this.$rootScope.$broadcast("USER_CHANGED", [this.user]);
                     }
                     else {
                         errorCallback(null, 200, null, null);
@@ -41,7 +41,7 @@ export module service.mock {
                     if (x.password === user.password) {
                         this.temporaryUser();
                         successCallback(this.user, 200, null, null);
-                        this.$rootScope.$broadcast('USER_CHANGED', [this.user]);
+                        this.$rootScope.$broadcast("USER_CHANGED", [this.user]);
                         return;
                     }
                     errorCallback(null, 200, null, null);
@@ -60,7 +60,7 @@ export module service.mock {
         }
 
         private temporaryUser() {
-            this.user = { id: 0, username: '', password: '', role: null, isLogged: false };
+            this.user = { id: 0, username: "", password: "", role: null, isLogged: false };
         }
 
     }

@@ -10,8 +10,9 @@ export module controller.product {
     }
 
     export class ListProductController implements d.controller.base.Controller{
+        private redirect: string;
 
-        static $inject = ['$scope', 'ProductService', 'AlertService'];
+        static $inject = ["$scope", "ProductService", "AlertService"];
         constructor(public $scope: ListProductViewModel,
                     public ProductService: d.service.contract.ProductService,
                     public AlertService: d.service.contract.util.AlertService) {
@@ -25,21 +26,24 @@ export module controller.product {
             this.ProductService.list(
                 (successData, successStatus) => {
                     this.$scope.products = successData;
-                    this.$scope.navigator.progress.done();  
+                    this.$scope.navigator.progress.done();
+                    if (this.redirect) this.AlertService.add("Clique em um produto da lista para voltar para a página anterior", "Busca Rápida", "info"); 
                 },
                 (errorData, errorStatus) => {
-                    this.AlertService.add('Lista de Produtos não pôde ser carregada', String(errorData), 'danger');
+                    this.AlertService.add("Lista de Produtos não pôde ser carregada", String(errorData), "danger");
                     this.$scope.navigator.progress.done();  
                 });
         }
 
-        editProduct(id: number){
-            this.$scope.navigator.navigateTo('/product/'+id);
+        editProduct(id: number) {
+            if (this.redirect) this.$scope.navigator.navigateTo(this.redirect + "?productId=" + id);
+            else this.$scope.navigator.navigateTo("/product/"+id);
         }
 
         processArgs() {
             var searchText = this.$scope.navigator.urlParams.search;
-            if(searchText) this.$scope.searchText = searchText;
+            this.redirect = this.$scope.navigator.urlParams.redirect;
+            if (searchText) this.$scope.searchText = searchText;    
             this.listProduct();
         }
 
@@ -51,4 +55,4 @@ export module controller.product {
     }
 }
 
-(<any>angular.module('lwa.controller')).lazy.controller('ListProductController', controller.product.ListProductController);
+(<any>angular.module("lwa.controller")).lazy.controller("ListProductController", controller.product.ListProductController);
