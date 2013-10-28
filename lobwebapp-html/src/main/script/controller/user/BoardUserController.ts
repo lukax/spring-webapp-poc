@@ -7,11 +7,10 @@ export module controller.user {
 
     export class BoardUserController implements d.controller.base.Controller{
 
-        static $inject = ['$scope', 'AuthService', 'AlertService', 'NavigationService'];
+        static $inject = ['$scope', 'AuthService', 'AlertService'];
         constructor(public $scope: BoardUserViewModel,
                     public AuthService: d.service.contract.AuthService,
-                    public AlertService: d.service.contract.util.AlertService,
-                    public NavigationSvc: d.service.contract.util.NavigationService) {
+                    public AlertService: d.service.contract.util.AlertService) {
 
             this.processArgs();
             this.populateScope();

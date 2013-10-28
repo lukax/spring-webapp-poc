@@ -28,9 +28,11 @@ export module modularity {
             });
 
         };
+
         private locationProviderCfg = ($locationProvider: ng.ILocationProvider) => {
             //$locationProvider.html5Mode(true);
         };
+
         private userAuthCfg = ($rootScope: ng.IRootScopeService, $location: ng.ILocationService, AuthService: e.service.mock.DefaultAuthService) => {
             var allowedRoutes = ["/user/auth"];
             var isAllowedRoute = (route: string) => {
@@ -51,6 +53,7 @@ export module modularity {
                 }
             });
         };
+        
         private intercept401Cfg = ($httpProvider) => {
             var logoutUserOn401 = ["$q", "$location", ($q: ng.IQService, $location: ng.ILocationService) => {
                 return{
@@ -67,6 +70,10 @@ export module modularity {
             $httpProvider.interceptors.push(logoutUserOn401);
         }
 
+        private rootscopeVariables = ($rootScope: d.controller.base.ViewModel, NavigationService: d.service.contract.util.NavigationService) => {
+            $rootScope.navigator = NavigationService;
+        }
+
         constructor() {
             new a.modularity.ServiceModule().configure();
             this.module = angular.module("lwa.controller", ["lwa.service", "ui.router", "ngEkathuwa"]);
@@ -80,13 +87,14 @@ export module modularity {
         configure() {
             //Global usage controllers configuration
             this.module
-                //.config(["$locationProvider", this.locationProviderCfg])
+            //.config(["$locationProvider", this.locationProviderCfg])
                 .config(["$stateProvider", "$urlRouterProvider", this.stateProviderCfg])
                 .config(["$httpProvider", this.intercept401Cfg])
-                
+
+                .run(["$rootScope","NavigationService", this.rootscopeVariables])
                 //.run(["$rootScope", this.contentLoadProgress])
                 //.run(["$rootScope", "$location", "AuthService", this.userAuthCfg])
-                
+
                 .controller("MainNavbarController", <Function>f.controller.MainNavbarController)
                 .controller("AlertController", <Function>g.controller.AlertController)
                 ;

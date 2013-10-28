@@ -51,21 +51,21 @@
         </div>
       </div>
 
-        <div class="form-group">
-            <div ng-class="{'has-error': productDetail.inputNcm.$invalid}">
-                <label for="inputNcm" class="col-md-2 control-label">NCM</label>
-                <div class="col-md-4">
-                    <input type="text" class="form-control" id="inputNcm" name="inputNcm" ng-model="product.ncm">
-                </div>
-            </div>
-            <div ng-class="">
-                <label for="inputGroup" class="col-md-1 control-label">Grupo</label>
-                <div class="col-md-5">
-                    <input type="text" class="form-control" id="inputGroup" name="inputGroup"
-                        ng-model="product.group" typeahead="productGroup for productGroup in productGroups | limitTo:5">
-                </div>
-            </div>
-        </div>
+      <div class="form-group">
+          <div ng-class="{'has-error': productDetail.inputNcm.$invalid}">
+              <label for="inputNcm" class="col-md-2 control-label">NCM</label>
+              <div class="col-md-4">
+                  <input type="text" class="form-control" id="inputNcm" name="inputNcm" ng-model="product.ncm">
+              </div>
+          </div>
+          <div ng-class="">
+              <label for="inputGroup" class="col-md-1 control-label">Grupo</label>
+              <div class="col-md-5">
+                  <input type="text" class="form-control" id="inputGroup" name="inputGroup"
+                      ng-model="product.group" typeahead="productGroup for productGroup in productGroups | limitTo:5">
+              </div>
+          </div>
+      </div>
 
       <div class="form-group" ng-class="{'has-error': productDetail.inputDescription.$invalid}">
         <label for="inputDescription" class="col-md-2 control-label">Descrição</label>

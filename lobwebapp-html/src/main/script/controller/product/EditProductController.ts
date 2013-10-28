@@ -15,9 +15,8 @@ export module controller.product {
 
     export class EditProductController implements d.controller.base.Controller {
         
-        static $inject = ['$scope', 'NavigationService', 'ProductService', 'AlertService', '$ekathuwa'];
+        static $inject = ['$scope', 'ProductService', 'AlertService', '$ekathuwa'];
         constructor(public $scope: EditProductViewModel,
-                    public NavigationSvc: d.service.contract.util.NavigationService,
                     public ProductService: d.service.contract.ProductService,
                     public AlertService: d.service.contract.util.AlertService,
                     public $ekathuwa: any) {
@@ -27,14 +26,14 @@ export module controller.product {
         }
 
         newProduct() {
-            this.NavigationSvc.$location.url('/product/new');
+            this.$scope.navigator.$location.url('/product/new');
         }
 
         saveProduct() {
             this.ProductService.save(this.$scope.product,
                 (successData: domain.Product, successStatus) => {
                     this.AlertService.add('Produto foi salvado com sucesso');
-                    this.NavigationSvc.$location.url('/product/'+ String(successData));
+                    this.$scope.navigator.$location.url('/product/' + String(successData));
                 },
                 (errorData, errorStatus) => {
                     this.AlertService.add('Produto não pode ser salvado', String(errorData), 'danger');
@@ -67,7 +66,7 @@ export module controller.product {
                 });
         }
 
-        findProduct(prodId: number){
+        findProduct(prodId: number) {
             this.ProductService.findById(prodId,
                 (successData, successStatus) => {
                     this.$scope.product = successData;
@@ -87,7 +86,7 @@ export module controller.product {
                 id: 'priceInfoModalId',
                 templateURL: 'view/product/modal/priceInfoModal.html',
                 scope: this.$scope,
-                onHidden: () => { this.NavigationSvc.$location.search('priceInfo', null); }
+                onHidden: () => { this.$scope.navigator.$location.search('priceInfo', null); }
             });
         }
 
@@ -109,7 +108,7 @@ export module controller.product {
         }
 
         processArgs() {
-            var routeProdId = this.NavigationSvc.urlParams.productId;
+            var routeProdId = this.$scope.navigator.urlParams.productId;
             if(routeProdId > 0){
                 this.findProduct(Number(routeProdId));
             }else if(routeProdId == 0){
@@ -120,7 +119,7 @@ export module controller.product {
                 this.AlertService.add('Produto ID Inválido', '', 'warning');
                 this.newProduct();
             }
-            if (this.NavigationSvc.urlParams.priceInfo == 'true') {
+            if (this.$scope.navigator.urlParams.priceInfo == 'true') {
                 this.priceInfoModal();
             }
         }

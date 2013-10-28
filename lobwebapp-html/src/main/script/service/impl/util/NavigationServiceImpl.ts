@@ -1,6 +1,7 @@
 ///<reference path="./../../../reference.d.ts"/>
 
 import svcu = d.service.contract.util;
+import p = require("./../../../util/Progress");
 
 export module service.impl.util {
     export class NavigationSvcImpl implements d.service.contract.util.NavigationService {
@@ -10,6 +11,10 @@ export module service.impl.util {
         static $inject = ['$location', '$stateParams'];
         constructor(public $location: ng.ILocationService, $stateParams: ng.ui.IStateParams) {
             this.$stateParams = $stateParams;
+        }
+
+        get progress() {
+            return p.util.Progress;
         }
 
         get urlParams(){

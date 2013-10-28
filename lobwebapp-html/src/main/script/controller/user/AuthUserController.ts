@@ -8,11 +8,10 @@ export module controller.user {
 
     export class AuthUserController implements d.controller.base.Controller{
 
-        static $inject = ['$scope', 'AuthService', 'AlertService', 'NavigationService'];
+        static $inject = ['$scope', 'AuthService', 'AlertService'];
         constructor(public $scope: AuthUserViewModel,
                     public AuthService: d.service.contract.AuthService,
-                    public AlertService: d.service.contract.util.AlertService,
-                    public NavigationSvc: d.service.contract.util.NavigationService) {
+                    public AlertService: d.service.contract.util.AlertService) {
 
             this.processArgs();
             this.populateScope();
@@ -21,7 +20,7 @@ export module controller.user {
         login() {
             this.AuthService.login(this.$scope.user,
                 (successData) => {
-                    this.NavigationSvc.$location.url('/product/list');
+                    this.$scope.navigator.$location.url('/product/list');
                     this.$scope.user = successData;
                     this.AlertService.add('Bem vindo ' + this.$scope.user.username);
                 },

@@ -9,10 +9,9 @@ export module controller {
 
     export class MainNavbarController implements d.controller.base.Controller{
 
-        static $inject = ['$scope', 'AuthService', 'NavigationService', 'AlertService', '$rootScope'];
+        static $inject = ['$scope', 'AuthService', 'AlertService', '$rootScope'];
         constructor(public $scope: MainNavbarViewModel,
                     public AuthService: d.service.contract.AuthService,
-                    public NavigationSvc: d.service.contract.util.NavigationService,
                     public AlertService: d.service.contract.util.AlertService,
                     public $rootScope: ng.IRootScopeService ) {
 
@@ -25,7 +24,7 @@ export module controller {
                 (successData) => {
                     this.AlertService.add(this.$scope.user.username + ' saiu', String(successData));
                     this.$scope.user = successData;
-                    this.NavigationSvc.$location.url('/user/auth');
+                    this.$scope.navigator.$location.url('/user/auth');
                 },
                 (errorData, errorStatus) => {
                     this.AlertService.add('Não foi possível sair', String(errorStatus), 'warning'); });

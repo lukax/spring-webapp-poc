@@ -16,6 +16,7 @@ export module controller.order{
     }
 
     export class EditOrderController implements d.controller.base.Controller{
+
         static $inject = ['$scope', 'ProductService'];
         constructor(public $scope: EditOrderViewModel, public ProductService: d.service.contract.ProductService){
             this.processArgs();

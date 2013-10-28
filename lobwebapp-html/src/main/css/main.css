@@ -17,6 +17,13 @@ body {
   content: "";
 }
 
+.alert {
+  padding: 5px;
+  margin-bottom: 1px;
+  border: 0px solid transparent;
+  border-radius: 4px;
+}
+
 .link {
   cursor: pointer;
 }

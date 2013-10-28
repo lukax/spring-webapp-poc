@@ -11,9 +11,8 @@ export module controller.product {
 
     export class ListProductController implements d.controller.base.Controller{
 
-        static $inject = ['$scope', 'NavigationService', 'ProductService', 'AlertService'];
+        static $inject = ['$scope', 'ProductService', 'AlertService'];
         constructor(public $scope: ListProductViewModel,
-                    public NavigationSvc: d.service.contract.util.NavigationService,
                     public ProductService: d.service.contract.ProductService,
                     public AlertService: d.service.contract.util.AlertService) {
 
@@ -22,21 +21,24 @@ export module controller.product {
         }
 
         listProduct() {
+            this.$scope.navigator.progress.start();
             this.ProductService.list(
                 (successData, successStatus) => {
-                    this.$scope.products = successData;  
+                    this.$scope.products = successData;
+                    this.$scope.navigator.progress.done();  
                 },
                 (errorData, errorStatus) => {
                     this.AlertService.add('Lista de Produtos não pôde ser carregada', String(errorData), 'danger');
+                    this.$scope.navigator.progress.done();  
                 });
         }
 
         editProduct(id: number){
-            this.NavigationSvc.navigateTo('/product/'+id);
+            this.$scope.navigator.navigateTo('/product/'+id);
         }
 
         processArgs() {
-            var searchText = this.NavigationSvc.urlParams.search;
+            var searchText = this.$scope.navigator.urlParams.search;
             if(searchText) this.$scope.searchText = searchText;
             this.listProduct();
         }
