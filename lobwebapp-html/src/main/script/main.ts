@@ -1,5 +1,10 @@
 ///<reference path="reference.d.ts"/>
 
+var ApplyCSS = ($: JQueryStatic, css: any) => {
+    var el = $("<style></style>").append(css);
+    $("head").append(el);
+}
+
 require.config({
     paths: {
         text: "./../lib/requirejs-text/text",
@@ -69,10 +74,7 @@ require.config({
         "dcjs": {   //Loading CSS On Demand
             deps: ["jquery","text!./../lib/dcjs/dc.css","d3js","crossfilter"],
             "exports": "dcjs",
-            init: ($, css) => {
-                var el = $("<style></style>").append(css);
-                $("head").append(el);
-            }
+            init: ApplyCSS
         }
     },
 	priority: [
@@ -88,3 +90,4 @@ require(["modularity/AppModule", "util/Progress"], (app: any, progress: any) => 
     new app.modularity.AppModule().bootstrap(document);
     progress.util.Progress.done();
 });
+

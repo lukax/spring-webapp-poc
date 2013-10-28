@@ -311,22 +311,22 @@ module.exports = function (grunt) {
                 declaration: false,                
                 comments: false
             },
-    	}
-        dev: {
-        	src: ['<%= yeoman.app%>/script/**/*.ts'],        // The source typescript files, http://gruntjs.com/configuring-tasks#files
-            //html: [], // The source html files, https://github.com/basarat/grunt-ts#html-2-typescript-support
-            //reference: './test/reference.ts',  // If specified, generate this file that you can use for your reference management
-            //out: 'test/out.js',                // If specified, generate an out.js file which is the merged js file                     
-            //outDir: 'test/outputdirectory',    // If specified, the generate javascript files are placed here. Only works if out is not specified
-            //watch: '<%= yeoman.app%>/script',   // If specified, watches this directory for changes, and re-runs the current target  
-            options: {
-                module: 'amd',       // 'amd' (default) | 'commonjs'
-                target: 'es5',            // 'es3' (default) | 'es5'
-                sourcemap: false,          // true  (default) | false
-                declaration: false,       // true | false  (default)                
-                comments: false           // true | false (default)
-            },
-        }
+    	},
+      dev: {
+      	src: ['<%= yeoman.app%>/script/**/*.ts'],        // The source typescript files, http://gruntjs.com/configuring-tasks#files
+          //html: [], // The source html files, https://github.com/basarat/grunt-ts#html-2-typescript-support
+          //reference: './test/reference.ts',  // If specified, generate this file that you can use for your reference management
+          //out: 'test/out.js',                // If specified, generate an out.js file which is the merged js file                     
+          //outDir: 'test/outputdirectory',    // If specified, the generate javascript files are placed here. Only works if out is not specified
+          //watch: '<%= yeoman.app%>/script',   // If specified, watches this directory for changes, and re-runs the current target  
+          options: {
+              module: 'amd',       // 'amd' (default) | 'commonjs'
+              target: 'es5',            // 'es3' (default) | 'es5'
+              sourcemap: false,          // true  (default) | false
+              declaration: false,       // true | false  (default)                
+              comments: false           // true | false (default)
+          },
+      }
     },
     requirejs: {
         compile: {

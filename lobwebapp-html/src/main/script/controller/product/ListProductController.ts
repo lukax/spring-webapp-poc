@@ -6,6 +6,7 @@ export module controller.product {
         products: domain.Product[];
         searchText: string;
         editProduct: (id: number) => void;
+        listProduct: () => void;
     }
 
     export class ListProductController implements d.controller.base.Controller{
@@ -23,7 +24,7 @@ export module controller.product {
         listProduct() {
             this.ProductService.list(
                 (successData, successStatus) => {
-                    this.$scope.products = successData;
+                    this.$scope.products = successData;  
                 },
                 (errorData, errorStatus) => {
                     this.AlertService.add('Lista de Produtos não pôde ser carregada', String(errorData), 'danger');
@@ -36,14 +37,13 @@ export module controller.product {
 
         processArgs() {
             var searchText = this.NavigationSvc.urlParams.search;
-            if(searchText) {
-                this.$scope.searchText = searchText;
-            }
+            if(searchText) this.$scope.searchText = searchText;
             this.listProduct();
         }
 
         populateScope() {
             this.$scope.editProduct = (id: number) => this.editProduct(id);
+            this.$scope.listProduct = () => this.listProduct();
         }
 
     }

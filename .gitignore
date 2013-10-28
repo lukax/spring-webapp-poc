@@ -11,8 +11,7 @@ node_modules
 bin
 build
 dist
-.tmp
-.tmp.txt
+*.tmp.*
 .sass-cache
 components
 dist
