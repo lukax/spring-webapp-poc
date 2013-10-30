@@ -4,6 +4,14 @@ body {
     color: #333;
 }
 
+.form-validation input.ng-dirty {
+	/*TODO*/
+}
+
+.form-validation input.ng-valid {
+	/*TODO*/
+}
+
 .up-caret {
   display: inline-block;
   width: 0;

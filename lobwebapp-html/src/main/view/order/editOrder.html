@@ -1,4 +1,4 @@
-<form class="form-horizontal" role="form" name="orderDetail" novalidate>
+<form class="form-horizontal form-validation" role="form" name="orderDetail" novalidate>
 
     <div class="form-group">
         <label for="orderId" class="col-md-1 control-label">ID</label>
@@ -15,7 +15,7 @@
         </div>
     </div>
 
-    <div class="form-group" data-ng-class="{'has-error': orderDetail.clientId.$invalid}">
+    <div class="form-group">
         <label for="clientId" class="col-md-1 control-label">Cliente</label>
         <div class="col-md-2 input-group">
             <div class="input-group-btn">
@@ -32,23 +32,21 @@
     </div>
 
     <div class="form-group">
-        <div data-ng-class="{'has-error': orderDetail.productId.$invalid}">
-            <label for="productId" class="col-md-1 control-label">Produto</label>
-            <div class="col-md-2 input-group">
-                <div class="input-group-btn">
-                    <button type="button" class="btn btn-default" data-toggle="tooltip" title="Buscar Rápida de Produto" data-ng-click="findProduct()">
-                        <span class="glyphicon glyphicon-search"></span>
-                    </button>
-                </div>
-                <input type="text" class="form-control" id="productId" name="productId" placeholder="ID"
-                        data-ng-model="productId" required>
+        <label for="productId" class="col-md-1 control-label">Produto</label>
+        <div class="col-md-2 input-group">
+            <div class="input-group-btn">
+                <button type="button" class="btn btn-default" data-toggle="tooltip" title="Buscar Rápida de Produto" data-ng-click="lookupProduct()">
+                    <span class="glyphicon glyphicon-search"></span>
+                </button>
             </div>
+            <input type="text" class="form-control" id="productId" name="productId" placeholder="ID"
+                    data-ng-model="productId" required>
         </div>
-        <div data-ng-class="{'has-error': orderDetail.productQuantity.$invalid}" class="col-md-2 input-group">
+        <div class="col-md-2 input-group">
             <input type="number" class="form-control" id="productQuantity" name="productQuantity" placeholder="Qt."
                     data-ng-model="productQuantity" required min="0">
             <div class="input-group-btn">
-                <button type="button" class="btn btn-default" data-toggle="tooltip" title="Adicionar produto à lista" data-ng-click="addProduct()">
+                <button type="button" class="btn btn-default" data-toggle="tooltip" title="Adicionar produto à lista" data-ng-click="addProduct(order.product)">
                     <span class="glyphicon glyphicon-plus"></span>
                 </button>
             </div>
@@ -64,7 +62,7 @@
                 <li class="list-group-item" data-ng-repeat="product in order.products">
                     {{product.quantity}} Unid, R${{product.quantity * product.price}} - {{product.name}} {{product.description}} 
                     <div class="pull-right">
-                        <button type="button" class="close" data-ng-click="removeProduct($index)">&times;</button>
+                        <button type="button" class="close" data-ng-click="removeProduct(product.id)">&times;</button>
                     </div>
                 </li>
             </ul>
@@ -75,7 +73,7 @@
         <label for="total" class="col-md-1 control-label">Total</label>
         <div class="col-md-11 input-group">
             <span class="input-group-addon">R$</span>
-            <input type="text" class="form-control" id="total" data-ng-model="total" readonly>
+            <input type="text" class="form-control" id="total" data-ng-bind="total" readonly>
         </div>
     </div>
 

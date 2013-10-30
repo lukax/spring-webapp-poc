@@ -1,11 +1,11 @@
 <div>
-  <form role="form" name="loginForm" data-ng-submit="login()" novalidate>
-    <div class="form-group" data-ng-class="{'has-error': loginForm.inputUsername.$invalid}">
+  <form class="form-validation" role="form" name="loginForm" data-ng-submit="login()" novalidate>
+    <div class="form-group">
       <label for="inputUsername" class="control-label">Usuário</label>
       <input type="text" class="form-control" id="inputUsername" name="inputUsername" 
         autofocus data-ng-model="user.username" required data-ng-minlength="4">
     </div>
-    <div class="form-group" data-ng-class="{'has-error': loginForm.inputPassword.$invalid}">
+    <div class="form-group">
       <label for="inputPassword" class="control-label">Senha</label>
       <input type="password" class="form-control" id="inputPassword" name="inputPassword"
         data-ng-model="user.password" required data-ng-minlength="4">
