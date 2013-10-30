@@ -3,19 +3,19 @@
     <div class="form-group">
         <label for="orderId" class="col-md-1 control-label">ID</label>
         <div class="col-md-11 input-group">
-            <input type="text" class="form-control" id="orderId" readonly ng-model="order.id">
+            <input type="text" class="form-control" id="orderId" readonly data-ng-model="order.id">
             <span class="input-group-btn">
-                <a type="button" class="btn btn-default" data-ng-href="#/order/{{order.id -1}}" data-ng-disabled="isNewOrder">
+                <a class="btn btn-default" data-ng-href="#/order/{{order.id -1}}" data-ng-disabled="isNewOrder">
                     <span class="glyphicon glyphicon-arrow-left"></span>
                 </a>
-                <a type="button" class="btn btn-default" data-ng-href="#/order/{{order.id +1}}">
+                <a class="btn btn-default" data-ng-href="#/order/{{order.id +1}}">
                     <span class="glyphicon glyphicon-arrow-right"></span>
                 </a>
             </span>
         </div>
     </div>
 
-    <div class="form-group" ng-class="{'has-error': orderDetail.clientId.$invalid}">
+    <div class="form-group" data-ng-class="{'has-error': orderDetail.clientId.$invalid}">
         <label for="clientId" class="col-md-1 control-label">Cliente</label>
         <div class="col-md-2 input-group">
             <div class="input-group-btn">
@@ -32,7 +32,7 @@
     </div>
 
     <div class="form-group">
-        <div ng-class="{'has-error': orderDetail.productId.$invalid}">
+        <div data-ng-class="{'has-error': orderDetail.productId.$invalid}">
             <label for="productId" class="col-md-1 control-label">Produto</label>
             <div class="col-md-2 input-group">
                 <div class="input-group-btn">
@@ -44,11 +44,13 @@
                         data-ng-model="productId" required>
             </div>
         </div>
-        <div ng-class="{'has-error': orderDetail.productQuantity.$invalid}" class="col-md-2">
-            <label class="col-md-3 control-label" for="productQuantity">Qt.</label>
-            <div class="col-md-9">
-                <input type="number" class="form-control" id="productQuantity" name="productQuantity"
-                       data-ng-model="productQuantity" required min="0">
+        <div data-ng-class="{'has-error': orderDetail.productQuantity.$invalid}" class="col-md-2 input-group">
+            <input type="number" class="form-control" id="productQuantity" name="productQuantity" placeholder="Qt."
+                    data-ng-model="productQuantity" required min="0">
+            <div class="input-group-btn">
+                <button type="button" class="btn btn-default" data-toggle="tooltip" title="Adicionar produto à lista" data-ng-click="addProduct()">
+                    <span class="glyphicon glyphicon-plus"></span>
+                </button>
             </div>
         </div>
         <div class="col-md-7">
@@ -60,7 +62,7 @@
         <div class="col-md-offset-1 col-md-11">
             <ul class="list-group">
                 <li class="list-group-item" data-ng-repeat="product in order.products">
-                    {{product.name}}, {{product.quantity}} Unid, R${{product.quantity * product.price}}
+                    {{product.quantity}} Unid, R${{product.quantity * product.price}} - {{product.name}} {{product.description}} 
                     <div class="pull-right">
                         <button type="button" class="close" data-ng-click="removeProduct($index)">&times;</button>
                     </div>
@@ -69,13 +71,28 @@
         </div>
     </div>
 
-    <div class="form-group" ng-class="{'has-error': orderDetail.total.$invalid}">
+    <div class="form-group">
         <label for="total" class="col-md-1 control-label">Total</label>
         <div class="col-md-11 input-group">
             <span class="input-group-addon">R$</span>
-            <input type="text" class="form-control" id="total" name="total" ng-model="total" readonly>
+            <input type="text" class="form-control" id="total" data-ng-model="total" readonly>
         </div>
     </div>
+
+    <!--
+    <div class="form-group">
+        <label for="total" class="col-md-1 col-md-offset-1 control-label">Dinheiro</label>
+        <div class="col-md-10 input-group">
+            <span class="input-group-addon">R$</span>
+            <input type="text" class="form-control" id="inputPayment" name="inputPayment" data-ng-model="payment">    
+        </div>
+        <label for="total" class="col-md-1 col-md-offset-1 control-label">Troco</label>
+        <div class="col-md-10 input-group">
+            <span class="input-group-addon">R$</span>
+            <input type="text" class="form-control" id="inputExchange" name="inputExchange" data-ng-model="exchange">    
+        </div>   
+    </div>
+    -->
 
     <div class="form-group">
         <div class="col-md-1 btn-group">
@@ -83,23 +100,23 @@
             Status <span class="caret"></span>
           </button>
           <ul class="dropdown-menu" role="menu">
-            <li><a class="link">Confirmar Venda</a></li>
-            <li><a class="link">Cancelar Venda</a></li>
-            <li class="divider"></li>
-            <li><a class="link">Pagamento Efetuado</a></li>
+            <li><a class="link">Pago</a></li>
             <li><a class="link">Pagamento Pendente</a></li>
+            <li class="divider"></li>
+            <li><a class="link">Entregue</a></li>
+            <li><a class="link">Entrega Pendente</a></li>
           </ul>
         </div>
         <div class="col-md-8">
-            <div ng-repeat="status in statusList">
+            <div data-ng-repeat="status in statusList">
                 <span class="label label-default">{{status}}</span>
             </div>
         </div>
     </div>
 
     <div class="pull-right" data-ng-class="{'btn-group': !isNewOrder}">
-        <button class="btn btn-primary" type="submit" data-toggle="tooltip" title="Salvar Alterações do Produto" data-loading-text="Salvando...">
-            <span class="glyphicon glyphicon-floppy-disk"></span> Salvar
+        <button class="btn btn-primary" type="submit" data-toggle="tooltip" title="Confirmar mudanças" data-loading-text="Salvando...">
+            <span class="glyphicon glyphicon-floppy-disk"></span> Confirmar
         </button>
         <a class="btn btn-default" data-toggle="tooltip" title="Remover Produto Atual" data-loading-text="Removendo..."data-ng-hide="isNewOrder">
             Remover

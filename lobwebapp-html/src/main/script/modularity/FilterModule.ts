@@ -12,12 +12,24 @@ export module modularity {
         configure() {
             //Global usage filters configuration
             this.module
-                //.filter('lwaRound', this.lwaRound)
+                .filter('sum', this.sum);
+                //.filter('round', this.round)
             ;
             return this;
         }
 
-        // private lwaRound = () => {
+        private sum = () => {
+            return (input: Array<any>, propertyName: string) => {
+                var sum = 0;
+                input.forEach((x: any) => {
+                    sum += x[propertyName];
+                });
+                console.log('Filter sum called: '+ sum);
+                return sum;
+            }
+        }
+
+        // private round = () => {
         //     return (input: number, inputDecimals: number) => {
         //         var out = input;
         //         var outDecimals = 2; // Padrão duas casas na conversão

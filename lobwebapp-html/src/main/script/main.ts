@@ -15,6 +15,7 @@ require.config({
         //angularMocks: "./../lib/angular-mocks/angular-mocks",
         angularAnimate: "./../lib/angular-animate/angular-animate",
         angularUi: "./../lib/angular-ui/build/angular-ui",
+        angularUiUtils: "./../lib/angular-ui-utils/ui-utils",
         angularUiRouter: "./../lib/angular-ui-router/release/angular-ui-router",
         angularUiBootstrap: "./../lib/angular-ui-bootstrap/ui-bootstrap",
         //backbone: "./../lib/backbone-amd/backbone",
@@ -52,6 +53,10 @@ require.config({
         "angularUi": {
             deps: ["angular", "jquery"],
             "exports": "angularUi"
+        },
+        "angularUiUtils": {
+            deps: ["angular"],
+            "exports": "angularUiUtils"
         },
         "angularUiRouter": {
             deps: ["angular"],

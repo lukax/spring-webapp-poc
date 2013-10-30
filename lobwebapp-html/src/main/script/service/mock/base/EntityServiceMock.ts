@@ -66,18 +66,17 @@ export module service.mock.base {
             successCallback: (data: T, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
             errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
                 var success = false;
-                var retrievedEntity = null;
+                var retrievedEntity = <T>{};
                 this.getRepository().some(
                     (item: T) => {
                         if (item.id == id) {
+                            angular.copy(item, retrievedEntity);
                             success = true;
-                            retrievedEntity = angular.copy(item);
-                            return true; // Break the rest of the iteration
+                            return true;
                         }
-                        else return false;
                     });
                 if (success) successCallback(retrievedEntity, 200, null, null);
-                else errorCallback({message: "ID Inexistente"}, 404, null, null);
+                else errorCallback({ message: "ID Inexistente" }, 404, null, null);
         }
 
         public list(

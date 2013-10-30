@@ -4,6 +4,7 @@
 ///<amd-dependency path="angularUi"/>
 ///<amd-dependency path="angularUiBootstrap"/>
 ///<amd-dependency path="ngAnimateAnimateCss"/>
+///<amd-dependency path="angularUiUtils"/>
 
 import b = require('./../directive/LabeledInputDirective');
 
@@ -12,7 +13,7 @@ export module modularity {
         private module: ng.IModule;
 
         constructor() {
-            this.module = angular.module('lwa.directive', ['ngAnimate','ngAnimate-animate.css', 'ui.directives', 'ui.bootstrap']);
+            this.module = angular.module('lwa.directive', ['ngAnimate','ngAnimate-animate.css', 'ui.directives', 'ui.bootstrap', 'ui.utils']);
         }
 
         configure() {

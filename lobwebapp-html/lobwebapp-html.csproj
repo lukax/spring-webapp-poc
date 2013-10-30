@@ -43,97 +43,120 @@
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
-    <TypeScriptTarget>ES3</TypeScriptTarget>
+    <TypeScriptTarget>ES5</TypeScriptTarget>
     <TypeScriptRemoveComments>false</TypeScriptRemoveComments>
     <TypeScriptSourceMap>true</TypeScriptSourceMap>
     <TypeScriptModuleKind>AMD</TypeScriptModuleKind>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
-    <TypeScriptTarget>ES3</TypeScriptTarget>
+    <TypeScriptTarget>ES5</TypeScriptTarget>
     <TypeScriptRemoveComments>true</TypeScriptRemoveComments>
     <TypeScriptSourceMap>false</TypeScriptSourceMap>
     <TypeScriptModuleKind>AMD</TypeScriptModuleKind>
   </PropertyGroup>
   <ItemGroup>
-    <Content Include="src\main\.buildignore" />
     <Content Include="src\main\.htaccess" />
-    <Content Include="src\main\css\main.css" />
-    <Content Include="src\main\css\typeahead.css" />
-    <Content Include="src\main\img\favicon.ico" />
-    <TypeScriptCompile Include="src\main\scripts\controller\base\Controller.ts" />
-    <TypeScriptCompile Include="src\main\scripts\controller\base\ViewModel.ts" />
-    <TypeScriptCompile Include="src\main\scripts\controller\MainNavbarController.ts" />
-    <TypeScriptCompile Include="src\main\scripts\controller\product\EditProductController.ts" />
-    <TypeScriptCompile Include="src\main\scripts\controller\product\ListProductController.ts" />
-    <TypeScriptCompile Include="src\main\scripts\controller\user\AuthUserController.ts" />
-    <TypeScriptCompile Include="src\main\scripts\controller\user\BoardUserController.ts" />
-    <TypeScriptCompile Include="src\main\scripts\directive\LabeledInputDirective.ts" />
-    <TypeScriptCompile Include="src\main\scripts\directive\util\AlertsDirective.ts" />
-    <TypeScriptCompile Include="src\main\scripts\domain\base\AbstractEntity.ts" />
-    <TypeScriptCompile Include="src\main\scripts\domain\Product.ts" />
-    <TypeScriptCompile Include="src\main\scripts\domain\User.ts" />
-    <TypeScriptCompile Include="src\main\scripts\domain\util\Alert.ts" />
-    <TypeScriptCompile Include="src\main\scripts\main.ts" />
-    <Content Include="src\main\template\alert\alert.html" />
-    <Content Include="src\main\template\typeahead\typeahead-match.html" />
-    <Content Include="src\main\template\typeahead\typeahead-popup.html" />
-    <Content Include="src\main\views\mainNavbarView.html" />
-    <Content Include="src\main\views\product\editProduct.html" />
-    <Content Include="src\main\views\product\listProduct.html" />
-    <Content Include="src\main\views\product\modal\findProductModal.html" />
-    <Content Include="src\main\views\product\modal\priceInfoModal.html" />
-    <Content Include="src\main\views\product\product.html" />
-    <Content Include="src\main\views\user\authUser.html" />
-    <Content Include="src\main\views\user\boardUser.html" />
-    <Content Include="src\main\views\user\user.html" />
-    <Content Include="src\test\.jshintrc" />
+    <Content Include="ts-definitions\angularjs\angular-cookies.d.ts" />
+    <Content Include="ts-definitions\angularjs\angular-mocks.d.ts" />
+    <Content Include="ts-definitions\angularjs\angular-resource.d.ts" />
+    <Content Include="ts-definitions\angularjs\angular-sanitize.d.ts" />
+    <Content Include="ts-definitions\angularjs\angular-scenario.d.ts" />
+    <Content Include="ts-definitions\angularjs\angular-tests.js" />
+    <Content Include="ts-definitions\angularjs\angular-tests.ts" />
     <Content Include="ts-definitions\angularjs\angular.d.ts" />
     <Content Include="ts-definitions\angularui\angular-ui.d.ts" />
+    <Content Include="ts-definitions\backbone\backbone-tests.ts" />
+    <Content Include="ts-definitions\backbone\backbone.d.ts" />
+    <Content Include="ts-definitions\d3\d3-tests.ts" />
+    <Content Include="ts-definitions\d3\d3.d.ts" />
+    <Content Include="ts-definitions\d3\plugins\d3.superformula-tests.ts" />
+    <Content Include="ts-definitions\d3\plugins\d3.superformula.d.ts" />
     <Content Include="ts-definitions\jquery\jquery.d.ts" />
-    <Content Include="ts-definitions\moment\moment.d.ts" />
+    <Content Include="ts-definitions\linq\linq-tests.ts" />
+    <Content Include="ts-definitions\linq\linq.3.0.3-Beta4.d.ts" />
+    <Content Include="ts-definitions\linq\linq.d.ts" />
+    <Content Include="ts-definitions\linq\linq.jquery.d.ts" />
     <Content Include="ts-definitions\requirejs\require-tests.ts" />
     <Content Include="ts-definitions\requirejs\require.d.ts" />
-    <TypeScriptCompile Include="src\main\scripts\modularity\AppModule.ts" />
-    <TypeScriptCompile Include="src\main\scripts\modularity\ControllerModule.ts" />
-    <TypeScriptCompile Include="src\main\scripts\modularity\DirectiveModule.ts" />
-    <TypeScriptCompile Include="src\main\scripts\modularity\FilterModule.ts" />
-    <TypeScriptCompile Include="src\main\scripts\modularity\ServiceModule.ts" />
-    <TypeScriptCompile Include="src\main\scripts\reference.d.ts" />
-    <TypeScriptCompile Include="src\main\scripts\service\contract\AuthService.ts" />
-    <TypeScriptCompile Include="src\main\scripts\service\contract\base\EntityService.ts" />
-    <TypeScriptCompile Include="src\main\scripts\service\contract\ProductService.ts" />
-    <TypeScriptCompile Include="src\main\scripts\service\contract\UserService.ts" />
-    <TypeScriptCompile Include="src\main\scripts\service\contract\util\AlertService.ts" />
-    <TypeScriptCompile Include="src\main\scripts\service\contract\util\NavigationService.ts" />
-    <TypeScriptCompile Include="src\main\scripts\service\impl\base\EntityServiceImpl.ts" />
-    <TypeScriptCompile Include="src\main\scripts\service\impl\ProductServiceImpl.ts" />
-    <TypeScriptCompile Include="src\main\scripts\service\impl\util\AlertServiceImpl.ts" />
-    <TypeScriptCompile Include="src\main\scripts\service\impl\util\NavigationServiceImpl.ts" />
-    <TypeScriptCompile Include="src\main\scripts\service\mock\AuthServiceMock.ts" />
-    <TypeScriptCompile Include="src\main\scripts\service\mock\base\EntityServiceMock.ts" />
-    <TypeScriptCompile Include="src\main\scripts\service\mock\ProductServiceMock.ts" />
-    <TypeScriptCompile Include="src\main\scripts\service\mock\UserServiceMock.ts" />
-    <TypeScriptCompile Include="src\main\scripts\util\DependencyManager.ts" />
-    <TypeScriptCompile Include="src\main\scripts\util\PackageLoader.ts" />
-    <TypeScriptCompile Include="src\main\scripts\util\Progress.ts" />
-    <TypeScriptCompile Include="src\main\scripts\util\StdUtil.ts" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="src\main\404.html" />
+    <Content Include="src\main\css\main.css" />
+    <Content Include="src\main\css\typeahead.css" />
+    <Content Include="src\main\img\favicon.ico" />
     <Content Include="src\main\index.html" />
-    <Content Include="src\test\runner.html" />
-    <Content Include="src\test\spec\controllers\main.js" />
+    <Content Include="src\main\lib\angular-ui-bootstrap\ui-bootstrap.js" />
+    <Content Include="src\main\lib\ngEkathuwa\ekathuwa.js" />
+    <Content Include="src\main\script\.gitignore" />
+    <Content Include="src\main\script\controller\AlertController.ts" />
+    <Content Include="src\main\script\controller\base\Controller.ts" />
+    <Content Include="src\main\script\controller\base\ViewModel.ts" />
+    <Content Include="src\main\script\controller\MainNavbarController.ts" />
+    <Content Include="src\main\script\controller\order\EditOrderController.ts" />
+    <Content Include="src\main\script\controller\product\EditProductController.ts" />
+    <Content Include="src\main\script\controller\product\GraphProductController.ts" />
+    <Content Include="src\main\script\controller\product\ListProductController.ts" />
+    <Content Include="src\main\script\controller\user\AuthUserController.ts" />
+    <Content Include="src\main\script\controller\user\BoardUserController.ts" />
+    <Content Include="src\main\script\directive\LabeledInputDirective.ts" />
+    <Content Include="src\main\script\domain\base\AbstractEntity.ts" />
+    <Content Include="src\main\script\domain\Order.ts" />
+    <Content Include="src\main\script\domain\Product.ts" />
+    <Content Include="src\main\script\domain\User.ts" />
+    <Content Include="src\main\script\domain\util\Alert.ts" />
+    <Content Include="src\main\script\domain\util\Error.ts" />
+    <Content Include="src\main\script\main.ts" />
+    <Content Include="src\main\script\modularity\AppModule.ts" />
+    <Content Include="src\main\script\modularity\AppRoutes.ts" />
+    <Content Include="src\main\script\modularity\ControllerModule.ts" />
+    <Content Include="src\main\script\modularity\DirectiveModule.ts" />
+    <Content Include="src\main\script\modularity\FilterModule.ts" />
+    <Content Include="src\main\script\modularity\ServiceModule.ts" />
+    <Content Include="src\main\script\reference.d.ts" />
+    <Content Include="src\main\script\service\contract\AuthService.ts" />
+    <Content Include="src\main\script\service\contract\base\EntityService.ts" />
+    <Content Include="src\main\script\service\contract\ProductService.ts" />
+    <Content Include="src\main\script\service\contract\UserService.ts" />
+    <Content Include="src\main\script\service\contract\util\AlertService.ts" />
+    <Content Include="src\main\script\service\contract\util\NavigationService.ts" />
+    <Content Include="src\main\script\service\impl\base\EntityServiceImpl.ts" />
+    <Content Include="src\main\script\service\impl\ProductServiceImpl.ts" />
+    <Content Include="src\main\script\service\impl\util\AlertServiceImpl.ts" />
+    <Content Include="src\main\script\service\impl\util\NavigationServiceImpl.ts" />
+    <Content Include="src\main\script\service\mock\AuthServiceMock.ts" />
+    <Content Include="src\main\script\service\mock\base\EntityServiceMock.ts" />
+    <Content Include="src\main\script\service\mock\ProductServiceMock.ts" />
+    <Content Include="src\main\script\service\mock\UserServiceMock.ts" />
+    <Content Include="src\main\script\util\DependencyManager.ts" />
+    <Content Include="src\main\script\util\Progress.ts" />
+    <Content Include="src\main\script\util\StdUtil.ts" />
+    <Content Include="src\main\template\alert\alert.html" />
+    <Content Include="src\main\template\typeahead\typeahead-match.html" />
+    <Content Include="src\main\template\typeahead\typeahead-popup.html" />
+    <Content Include="src\main\view\alertView.html" />
+    <Content Include="src\main\view\mainNavbarView.html" />
+    <Content Include="src\main\view\order\editOrder.html" />
+    <Content Include="src\main\view\order\order.html" />
+    <Content Include="src\main\view\product\editProduct.html" />
+    <Content Include="src\main\view\product\graphProduct.html" />
+    <Content Include="src\main\view\product\listProduct.html" />
+    <Content Include="src\main\view\product\modal\findProductModal.html" />
+    <Content Include="src\main\view\product\modal\priceInfoModal.html" />
+    <Content Include="src\main\view\product\product.html" />
+    <Content Include="src\main\view\user\authUser.html" />
+    <Content Include="src\main\view\user\boardUser.html" />
+    <Content Include="src\main\view\user\user.html" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ts-definitions\angularjs\angular-tests.js.map" />
     <Content Include="ts-definitions\angularjs\angular.d.key" />
+    <Content Include="ts-definitions\angularjs\README.md" />
+    <Content Include="ts-definitions\d3\d3-tests.ts.tscparams" />
+    <Content Include="ts-definitions\d3\d3.d.ts.tscparams" />
+    <Content Include="ts-definitions\d3\plugins\d3.superformula-tests.ts.tscparams" />
+    <Content Include="ts-definitions\d3\plugins\d3.superformula.d.ts.tscparams" />
     <Content Include="ts-definitions\jquery\jquery.d.key" />
-    <Content Include="ts-definitions\moment\moment.d.key" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="ts-definitions\requirejs\README.md" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="src\main\scripts\lwa\filter\" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TypeScript\Microsoft.TypeScript.targets" />
 </Project>
