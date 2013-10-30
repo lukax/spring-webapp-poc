@@ -19,15 +19,7 @@
     <meta name="viewport" content="width=device-width">
 
     <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="lib/bootstrap-sass/dist/css/bootstrap.css" media="screen">
-    <link rel="stylesheet" href="lib/bootstrap-sass/dist/css/bootstrap-theme.css" media="screen">
-    <link rel="stylesheet" href="lib/animate.css/animate.css" media="screen">
-    <link rel="stylesheet" href="lib/nprogress/nprogress.css" media="screen">
-
-        <!-- build:css({.tmp,src/main}) styles/main.css -->
-        <link rel="stylesheet" href="css/main.css">
-        <link rel="stylesheet" href="css/typeahead.css">
-        <!-- endbuild -->
+    <link rel="stylesheet" href="css/main.css">
 
 </head>
 <body>
@@ -41,7 +33,7 @@
     <![endif]-->
 
     <div data-ng-include="'view/mainNavbarView.html'"></div>
-    <div class="container" data-ui-view></div></br>
+    <div class="container" data-ui-view=""></div>
     <div class="container" data-ng-include="'view/alertView.html'"></div>
 
     <script data-main="script/main.js" src="lib/requirejs/require.js"></script>

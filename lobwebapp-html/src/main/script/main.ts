@@ -9,7 +9,7 @@ require.config({
     paths: {
         text: "./../lib/requirejs-text/text",
         jquery: "./../lib/jquery/jquery",
-        bootstrap: "./../lib/bootstrap-sass/dist/js/bootstrap",
+        bootstrap: "./../lib/bootstrap/dist/js/bootstrap",
 		angular: "./../lib/angular/angular",
         angularRoute: "./../lib/angular-route/angular-route",
         //angularMocks: "./../lib/angular-mocks/angular-mocks",

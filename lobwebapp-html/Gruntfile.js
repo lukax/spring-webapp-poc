@@ -35,6 +35,10 @@ module.exports = function (grunt) {
     pkg: grunt.file.readJSON('package.json'),
     yeoman: yeomanConfig,
     watch: {
+      less:{
+        files: ['<%= yeoman.app %>/css/**/*.less'],
+        tasks: ['less:dev']
+      },
       css: {
         files: ['<%= yeoman.app %>/css/**/*.css'],
         tasks: ['copy:css', 'autoprefixer']
@@ -273,6 +277,16 @@ module.exports = function (grunt) {
         'htmlmin'
       ]
     },
+    less: {
+        dev: {
+            options: {
+                paths: ["<%= yeoman.app %>/css"]
+            },
+            files: {
+                "<%= yeoman.app %>/css/main.css": "<%= yeoman.app %>/css/main.less"
+            }
+        }
+    },
     karma: {
       unit: {
         configFile: 'karma.conf.js',
@@ -312,21 +326,21 @@ module.exports = function (grunt) {
                 comments: false
             },
     	},
-      dev: {
+        dev: {
       	src: ['<%= yeoman.app%>/script/**/*.ts'],        // The source typescript files, http://gruntjs.com/configuring-tasks#files
-          //html: [], // The source html files, https://github.com/basarat/grunt-ts#html-2-typescript-support
-          //reference: './test/reference.ts',  // If specified, generate this file that you can use for your reference management
-          //out: 'test/out.js',                // If specified, generate an out.js file which is the merged js file                     
-          //outDir: 'test/outputdirectory',    // If specified, the generate javascript files are placed here. Only works if out is not specified
-          //watch: '<%= yeoman.app%>/script',   // If specified, watches this directory for changes, and re-runs the current target  
-          options: {
-              module: 'amd',       // 'amd' (default) | 'commonjs'
-              target: 'es5',            // 'es3' (default) | 'es5'
-              sourcemap: false,          // true  (default) | false
-              declaration: false,       // true | false  (default)                
-              comments: false           // true | false (default)
-          },
-      }
+            //html: [], // The source html files, https://github.com/basarat/grunt-ts#html-2-typescript-support
+            //reference: './test/reference.ts',  // If specified, generate this file that you can use for your reference management
+            //out: 'test/out.js',                // If specified, generate an out.js file which is the merged js file                     
+            //outDir: 'test/outputdirectory',    // If specified, the generate javascript files are placed here. Only works if out is not specified
+            //watch: '<%= yeoman.app%>/script',   // If specified, watches this directory for changes, and re-runs the current target  
+            options: {
+                module: 'amd',       // 'amd' (default) | 'commonjs'
+                target: 'es5',            // 'es3' (default) | 'es5'
+                sourcemap: false,          // true  (default) | false
+                declaration: false,       // true | false  (default)                
+                comments: false           // true | false (default)
+            },
+        }
     },
     requirejs: {
         compile: {
@@ -348,6 +362,7 @@ module.exports = function (grunt) {
 
 	grunt.task.run([
 	  'clean:server',
+      'less:dev',
 	  'ts:dev',
 	  'concurrent:server',
 	  //'autoprefixer',
@@ -372,6 +387,7 @@ module.exports = function (grunt) {
 
     grunt.task.run([
       'clean:dist',
+      'less:dev',
       'ts:dev',
       'uglify:dist',
       //'requirejs',
