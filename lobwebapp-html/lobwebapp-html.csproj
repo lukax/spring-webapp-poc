@@ -81,8 +81,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="src\main\404.html" />
-    <Content Include="src\main\css\main.css" />
-    <Content Include="src\main\css\typeahead.css" />
     <Content Include="src\main\img\favicon.ico" />
     <Content Include="src\main\index.html" />
     <Content Include="src\main\lib\angular-ui-bootstrap\ui-bootstrap.js" />
@@ -157,6 +155,12 @@
     <Content Include="ts-definitions\d3\plugins\d3.superformula.d.ts.tscparams" />
     <Content Include="ts-definitions\jquery\jquery.d.key" />
     <Content Include="ts-definitions\requirejs\README.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="src\main\css\main.less" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="src\main\css\typeahead.less" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TypeScript\Microsoft.TypeScript.targets" />
 </Project>

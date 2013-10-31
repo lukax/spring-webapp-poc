@@ -1,37 +1,37 @@
 <div aria-hidden="true" aria-labelledby="findProductModalLabel" role="dialog" tabindex="-1" class="modal fade" style="display: none;">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button aria-hidden="true" data-dismiss="modal" class="close" type="button">&times;</button>
-        <h4 class="modal-title">Buscar produto</h4>
-      </div>
-      <div class="modal-body">
-        <div class="form-horizontal">
-            <div class="row">
-              <div class="col-md-2">
-                <label class="control-label">ID/Nome</label>    
-              </div>
-              <div class="col-md-8">
-                <!-- ui-keypress="{13:'findProduct(searchText)'}" -->
-                <form role="form" name="findProductForm" ng-submit="findProduct(searchText)" novalidate>
-                    <div ng-class="{'has-error': findProductForm.inputSearchText.$invalid}">
-                      <div class="input-group">
-                        <input type="text" class="form-control" name="inputSearchText" ng-model="searchText" required autofocus>
-                        <span class="input-group-btn">
-                          <button class="btn btn-primary" type="submit" id="buttonSearchId" ng-disabled="findProductForm.inputSearchText.$invalid">
-                            <span class="glyphicon glyphicon-search"></span>
-                          </button>
-                        </span>
-                      </div>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button aria-hidden="true" data-dismiss="modal" class="close" type="button">&times;</button>
+                <h4 class="modal-title">Buscar produto</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-horizontal">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label class="control-label">ID/Nome</label>
+                        </div>
+                        <div class="col-md-8">
+                            <!-- ui-keypress="{13:'findProduct(searchText)'}" -->
+                            <form role="form" name="findProductForm" ng-submit="findProduct(searchText)" novalidate>
+                                <div ng-class="{'has-error': findProductForm.inputSearchText.$invalid}">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" name="inputSearchText" ng-model="searchText" required autofocus>
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-primary" type="submit" id="buttonSearchId" ng-disabled="findProductForm.inputSearchText.$invalid">
+                                                <span class="glyphicon glyphicon-search"></span>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+
+                            </form>
+
+                        </div>
                     </div>
 
-                </form>
-
-              </div>
+                </div>
             </div>
-
-        </div> 
-      </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
 </div>

@@ -1,9 +1,8 @@
 <form class="form-horizontal form-validation" role="form" name="orderDetail" novalidate>
-
     <div class="form-group">
         <label for="orderId" class="col-md-1 control-label">ID</label>
         <div class="col-md-11 input-group">
-            <input type="text" class="form-control" id="orderId" readonly data-ng-model="order.id">
+            <input type="text" class="form-control" id="orderId" readonly value="{{order.id}}">
             <span class="input-group-btn">
                 <a class="btn btn-default" data-ng-href="#/order/{{order.id -1}}" data-ng-disabled="isNewOrder">
                     <span class="glyphicon glyphicon-arrow-left"></span>
@@ -14,8 +13,7 @@
             </span>
         </div>
     </div>
-
-    <div class="form-group">
+    <div class="form-group" ng-class="{'has-error': orderDetail.clientId.$invalid}">
         <label for="clientId" class="col-md-1 control-label">Cliente</label>
         <div class="col-md-2 input-group">
             <div class="input-group-btn">
@@ -23,30 +21,29 @@
                     <span class="glyphicon glyphicon-search"></span>
                 </button>
             </div>
-            <input type="text" class="form-control" id="clientId" name="clientId" placeholder="ID" autofocus 
-                   data-ng-model="clientId" required>
+            <input type="text" class="form-control" id="clientId" name="clientId" placeholder="ID" autofocus data-ng-model="clientId" required>
         </div>
         <div class="col-md-9">
             <p class="form-control-static">Detalhes do Cliente</p>
         </div>
     </div>
-
     <div class="form-group">
-        <label for="productId" class="col-md-1 control-label">Produto</label>
-        <div class="col-md-2 input-group">
-            <div class="input-group-btn">
-                <button type="button" class="btn btn-default" data-toggle="tooltip" title="Buscar Rápida de Produto" data-ng-click="lookupProduct()">
-                    <span class="glyphicon glyphicon-search"></span>
-                </button>
+        <div ng-class="{'has-error': orderDetail.productId.$invalid}">
+            <label for="productId" class="col-md-1 control-label">Produto</label>
+            <div class="col-md-2 input-group">
+                <div class="input-group-btn">
+                    <button type="button" class="btn btn-default" data-toggle="tooltip" title="Buscar Rápida de Produto" data-ng-click="quickSearchProduct()">
+                        <span class="glyphicon glyphicon-search"></span>
+                    </button>
+                </div>
+                <input type="text" class="form-control" id="productId" name="productId" placeholder="ID" data-ng-model="productId" required>
             </div>
-            <input type="text" class="form-control" id="productId" name="productId" placeholder="ID"
-                    data-ng-model="productId" required>
         </div>
-        <div class="col-md-2 input-group">
+        <div class="col-md-2 input-group" ng-class="{'has-error': orderDetail.productQuantity.$invalid}">
             <input type="number" class="form-control" id="productQuantity" name="productQuantity" placeholder="Qt."
-                    data-ng-model="productQuantity" required min="0">
+                   data-ng-model="productQuantity" required min="0">
             <div class="input-group-btn">
-                <button type="button" class="btn btn-default" data-toggle="tooltip" title="Adicionar produto à lista" data-ng-click="addProduct(order.product)">
+                <button type="button" class="btn btn-default" data-toggle="tooltip" title="Adicionar produto à lista" data-ng-click="addProduct(productId, productQuantity)">
                     <span class="glyphicon glyphicon-plus"></span>
                 </button>
             </div>
@@ -55,12 +52,11 @@
             <p class="form-control-static">Detalhes do Produto</p>
         </div>
     </div>
-
     <div class="form-group">
         <div class="col-md-offset-1 col-md-11">
             <ul class="list-group">
                 <li class="list-group-item" data-ng-repeat="product in order.products">
-                    {{product.quantity}} Unid, R${{product.quantity * product.price}} - {{product.name}} {{product.description}} 
+                    {{product.quantity}} Unid, R${{product.quantity * product.price}} - {{product.name}} {{product.description}}
                     <div class="pull-right">
                         <button type="button" class="close" data-ng-click="removeProduct(product.id)">&times;</button>
                     </div>
@@ -68,42 +64,39 @@
             </ul>
         </div>
     </div>
-
     <div class="form-group">
         <label for="total" class="col-md-1 control-label">Total</label>
         <div class="col-md-11 input-group">
             <span class="input-group-addon">R$</span>
-            <input type="text" class="form-control" id="total" data-ng-bind="total" readonly>
+            <input type="text" class="form-control" id="total" value="{{total}}" readonly>
         </div>
     </div>
-
     <!--
     <div class="form-group">
         <label for="total" class="col-md-1 col-md-offset-1 control-label">Dinheiro</label>
         <div class="col-md-10 input-group">
             <span class="input-group-addon">R$</span>
-            <input type="text" class="form-control" id="inputPayment" name="inputPayment" data-ng-model="payment">    
+            <input type="text" class="form-control" id="inputPayment" name="inputPayment" data-ng-model="payment">
         </div>
         <label for="total" class="col-md-1 col-md-offset-1 control-label">Troco</label>
         <div class="col-md-10 input-group">
             <span class="input-group-addon">R$</span>
-            <input type="text" class="form-control" id="inputExchange" name="inputExchange" data-ng-model="exchange">    
-        </div>   
+            <input type="text" class="form-control" id="inputExchange" name="inputExchange" data-ng-model="exchange">
+        </div>
     </div>
     -->
-
     <div class="form-group">
         <div class="col-md-1 btn-group">
-          <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-            Status <span class="caret"></span>
-          </button>
-          <ul class="dropdown-menu" role="menu">
-            <li><a class="link">Pago</a></li>
-            <li><a class="link">Pagamento Pendente</a></li>
-            <li class="divider"></li>
-            <li><a class="link">Entregue</a></li>
-            <li><a class="link">Entrega Pendente</a></li>
-          </ul>
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                Status <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+                <li><a class="link">Pago</a></li>
+                <li><a class="link">Pagamento Pendente</a></li>
+                <li class="divider"></li>
+                <li><a class="link">Entregue</a></li>
+                <li><a class="link">Entrega Pendente</a></li>
+            </ul>
         </div>
         <div class="col-md-8">
             <div data-ng-repeat="status in statusList">
@@ -111,14 +104,12 @@
             </div>
         </div>
     </div>
-
     <div class="pull-right" data-ng-class="{'btn-group': !isNewOrder}">
         <button class="btn btn-primary" type="submit" data-toggle="tooltip" title="Confirmar mudanças" data-loading-text="Salvando...">
             <span class="glyphicon glyphicon-floppy-disk"></span> Confirmar
         </button>
-        <a class="btn btn-default" data-toggle="tooltip" title="Remover Produto Atual" data-loading-text="Removendo..."data-ng-hide="isNewOrder">
+        <a class="btn btn-default" data-toggle="tooltip" title="Remover Produto Atual" data-loading-text="Removendo..." data-ng-hide="isNewOrder">
             Remover
         </a>
     </div>
-        
 </form>
