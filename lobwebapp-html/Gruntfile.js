@@ -264,11 +264,6 @@ module.exports = function (grunt) {
       }
     },
     concurrent: {
-      server: [
-      ],
-      test: [
-        'copy:css'
-      ],
       dist: [
         'copy:css',
         'copy:template',
@@ -289,7 +284,7 @@ module.exports = function (grunt) {
     },
     karma: {
       unit: {
-        configFile: 'karma.conf.js',
+        configFile: '<%= yeoman.test %>/karma.conf.js',
         singleRun: true
       }
     },
@@ -327,7 +322,7 @@ module.exports = function (grunt) {
             },
     	},
         dev: {
-      	src: ['<%= yeoman.app%>/script/**/*.ts'],        // The source typescript files, http://gruntjs.com/configuring-tasks#files
+      	    src: ['<%= yeoman.app%>/script/**/*.ts'],        // The source typescript files, http://gruntjs.com/configuring-tasks#files
             //html: [], // The source html files, https://github.com/basarat/grunt-ts#html-2-typescript-support
             //reference: './test/reference.ts',  // If specified, generate this file that you can use for your reference management
             //out: 'test/out.js',                // If specified, generate an out.js file which is the merged js file                     
@@ -339,6 +334,12 @@ module.exports = function (grunt) {
                 sourcemap: false,          // true  (default) | false
                 declaration: false,       // true | false  (default)                
                 comments: false           // true | false (default)
+            },
+        },
+        test: {
+            src: ['<%= yeoman.test%>/**/*.ts'],
+            options: {
+                target: 'es5'           
             },
         }
     },
@@ -365,7 +366,6 @@ module.exports = function (grunt) {
       'less:dev',
 	  'ts:dev',
 	  'concurrent:server',
-	  //'autoprefixer',
 	  'connect:livereload',
 	  'open',
 	  'watch'
@@ -374,10 +374,8 @@ module.exports = function (grunt) {
 
   grunt.registerTask('test', [
     'clean:server',
-    'concurrent:test',
-    //'autoprefixer',
-    'connect:test',
-    'karma'
+    'ts:test',
+    'karma:unit'
   ]);
 
   grunt.registerTask('build', function (target) {
@@ -390,7 +388,6 @@ module.exports = function (grunt) {
       'less:dev',
       'ts:dev',
       'uglify:dist',
-      //'requirejs',
       'useminPrepare',
       'concurrent:dist',
       'autoprefixer',
@@ -404,9 +401,7 @@ module.exports = function (grunt) {
   });
 
   grunt.registerTask('default', [
-    'jshint',
-    'test',
-    'build'
+    'server'
   ]);
 
   grunt.registerTask('host', [

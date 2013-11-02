@@ -1,22 +1,27 @@
 // Karma configuration
 
 // base path, that will be used to resolve files and exclude
-basePath = '';
+basePath = '../';
 
 // list of files / patterns to load in the browser
 files = [
-  JASMINE,
-  JASMINE_ADAPTER,
-  'src/main/lib/angular/angular.js',
-  'src/main/lib/angular-mocks/angular-mocks.js',
-  'src/main/script/*.js',
-  'src/main/script/**/*.js',
-  'src/test/mock/**/*.js',
-  'src/test/spec/**/*.js'
+   JASMINE,
+   JASMINE_ADAPTER,
+   REQUIRE,
+   REQUIRE_ADAPTER,
+  //'main/lib/angular/angular.js',
+  //'main/lib/angular-route/angular-route.js',
+  //'main/lib/angular-mocks/angular-mocks.js',
+  //{ pattern: 'main/lib/**/*.js', included: false },
+  { pattern: 'main/script/**/*.js', included: false },
+  { pattern: 'test/unit/**/*.js', included: false },
+  'test/main.js'
 ];
 
+frameworks = ['jasmine'],
+
 // list of files to exclude
-exclude = [];
+exclude = ['main/main.js'];
 
 // test results reporter to use
 // possible values: dots || progress || growl

@@ -44,7 +44,7 @@ require.config({
         },
         "angularMocks": {
             deps: ["angular"],
-            "exports": "angular.mock"
+            "exports": "angularMocks"
         },
         "angularAnimate": {
             deps: ["angular"],

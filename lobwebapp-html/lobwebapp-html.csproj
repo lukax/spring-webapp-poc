@@ -162,5 +162,13 @@
   <ItemGroup>
     <Content Include="src\main\css\typeahead.less" />
   </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <TypeScriptCompile Include="src\test\main.ts" />
+    <TypeScriptCompile Include="src\test\reference.d.ts" />
+    <TypeScriptCompile Include="src\test\unit\service\AlertServiceSpec.ts" />
+    <TypeScriptCompile Include="ts-definitions\jasmine\jasmine-tests.ts" />
+    <TypeScriptCompile Include="ts-definitions\jasmine\jasmine.d.ts" />
+  </ItemGroup>
   <Import Project="$(VSToolsPath)\TypeScript\Microsoft.TypeScript.targets" />
 </Project>
