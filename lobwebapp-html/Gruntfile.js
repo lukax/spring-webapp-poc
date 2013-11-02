@@ -275,7 +275,7 @@ module.exports = function (grunt) {
     },
     karma: {
       unit: {
-        configFile: '<%= yeoman.test %>/karma.conf.js',
+        configFile: 'karma.conf.js',
         singleRun: true
       }
     },
@@ -303,7 +303,7 @@ module.exports = function (grunt) {
         }
     },
     ts: {
-    	watch: {
+    	devwatch: {
     		src: ['<%= yeoman.app%>/script/**/*.ts'],
     		watch: '<%= yeoman.app%>/script',  
     		options: {
@@ -331,7 +331,14 @@ module.exports = function (grunt) {
             src: ['<%= yeoman.test%>/**/*.ts'],
             options: {
                 target: 'es5'           
-            },
+            }
+        },
+        testwatch: {
+            src: ['<%= yeoman.test%>/**/*.ts'],
+            watch: '<%= yeoman.test%>/**/*.ts',
+            options: {
+                target: 'es5'
+            }
         }
     },
     requirejs: {
@@ -364,6 +371,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('test', [
     'clean:server',
+    'ts:dev',
     'ts:test',
     'karma:unit'
   ]);

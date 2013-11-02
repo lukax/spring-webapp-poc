@@ -103,7 +103,7 @@
     <Content Include="src\main\script\domain\User.ts" />
     <Content Include="src\main\script\domain\util\Alert.ts" />
     <Content Include="src\main\script\domain\util\Error.ts" />
-    <Content Include="src\main\script\main.ts" />
+    <Content Include="src\main\script\test-main.ts" />
     <Content Include="src\main\script\modularity\AppModule.ts" />
     <Content Include="src\main\script\modularity\AppRoutes.ts" />
     <Content Include="src\main\script\modularity\ControllerModule.ts" />
@@ -164,7 +164,7 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <TypeScriptCompile Include="src\test\main.ts" />
+    <TypeScriptCompile Include="src\test\test-main.ts" />
     <TypeScriptCompile Include="src\test\reference.d.ts" />
     <TypeScriptCompile Include="src\test\unit\service\AlertServiceSpec.ts" />
     <TypeScriptCompile Include="ts-definitions\jasmine\jasmine-tests.ts" />

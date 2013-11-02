@@ -10,7 +10,7 @@ export module service.impl.util{
             this.removeOld();
         }
 
-        add(message: string, title?: string, type?: string) {
+        add(message: string, title?: string, type?: string, time?: Date) {
             if (this.alerts.length >= 3) {
                 this.alerts.splice(0, 1);
             }
@@ -18,7 +18,7 @@ export module service.impl.util{
                 type: type ? String(type) : 'success',
                 title: title,
                 content: message,
-                time: new Date()
+                time: time || new Date()
             };
             this.alerts.push(alert);
             return alert;
@@ -45,13 +45,13 @@ export module service.impl.util{
         private removeOld() {
             this.$timeout(() => {
                 this.alerts.forEach((currAlert, index) => {
-                    var diffInSecs = ((new Date().getTime() - currAlert.time.getTime()) / 1000);
+                    var diffInSecs = Math.abs((new Date().getTime() - currAlert.time.getTime()) / 1000);
                     if (diffInSecs > 10) {
                         this.alerts.splice(index, 1);
                     }
                 });
                 this.removeOld();
-            }, 2000);
+            }, 1000);
         }
 
     }

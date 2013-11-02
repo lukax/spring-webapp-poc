@@ -10,12 +10,14 @@ for (var file in (<any>window).__karma__.files) {
 }
 
 requirejs.config({
-    baseUrl: "/base/src/main/",
+    baseUrl: "/base/src",
     paths: {
-        jquery: "./../main/lib/jquery/jquery",
-        angular: "./../main/lib/angular/angular",
-        angularRoute: "./../main/lib/angular-route/angular-route",
-        angularMocks: "./../main/lib/angular-mocks/angular-mocks"
+        jquery: "lib/jquery/jquery",
+        angular: "lib/angular/angular",
+        angularRoute: "lib/angular-route/angular-route",
+        angularMocks: "lib/angular-mocks/angular-mocks",
+        linqjs: "lib/linqjs-amd/linq",
+        nprogress: "lib/nprogress/nprogress"
     },
     shim: {
         "angular": {
