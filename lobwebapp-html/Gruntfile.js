@@ -127,15 +127,6 @@ module.exports = function (grunt) {
       },
       server: '<%= yeoman.tmp %>'
     },
-    jshint: {
-      options: {
-        jshintrc: '.jshintrc'
-      },
-      all: [
-        'Gruntfile.js',
-        '<%= yeoman.app %>/script/**/*.js'
-      ]
-    },
     // not used since Uglify task does concat,
     // but still available if needed
     // concat: {
