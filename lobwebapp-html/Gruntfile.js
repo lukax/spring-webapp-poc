@@ -21,9 +21,9 @@ module.exports = function (grunt) {
 
   // configurable paths
   var yeomanConfig = {
-    app: 'src/main',
-    dist: 'build',
-    test: 'src/test',
+    app: 'src',
+    dist: 'dist',
+    test: 'test',
     tmp: '.tmp'
   };
 
@@ -55,7 +55,7 @@ module.exports = function (grunt) {
         ]
       },
       ts: {
-        files: 'src/main/script/**/*.ts',
+        files: '<%= yeoman.app %>/script/**/*.ts',
         tasks: ['ts:dev']
       }
     },
@@ -365,7 +365,6 @@ module.exports = function (grunt) {
 	  'clean:server',
       'less:dev',
 	  'ts:dev',
-	  'concurrent:server',
 	  'connect:livereload',
 	  'open',
 	  'watch'

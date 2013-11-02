@@ -1,10 +1,10 @@
-﻿///<reference path="./../../../ts-definitions/angularjs/angular.d.ts"/>
-///<reference path="./../../../ts-definitions/angularui/angular-ui.d.ts"/>
-///<reference path="./../../../ts-definitions/backbone/backbone.d.ts"/>
-///<reference path="./../../../ts-definitions/jquery/jquery.d.ts"/>
-///<reference path="./../../../ts-definitions/requirejs/require.d.ts"/>
-///<reference path="./../../../ts-definitions/linq/linq.d.ts"/>
-///<reference path="./../../../ts-definitions/d3/d3.d.ts"/>
+﻿///<reference path="./../../ts-definitions/angularjs/angular.d.ts"/>
+///<reference path="./../../ts-definitions/angularui/angular-ui.d.ts"/>
+///<reference path="./../../ts-definitions/backbone/backbone.d.ts"/>
+///<reference path="./../../ts-definitions/jquery/jquery.d.ts"/>
+///<reference path="./../../ts-definitions/requirejs/require.d.ts"/>
+///<reference path="./../../ts-definitions/linq/linq.d.ts"/>
+///<reference path="./../../ts-definitions/d3/d3.d.ts"/>
 
 ///<reference path="./controller/base/Controller.ts"/>
 ///<reference path="./controller/base/ViewModel.ts"/>
