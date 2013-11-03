@@ -1,11 +1,12 @@
 ///<reference path="./../../reference.d.ts"/>
+///<amd-dependency path="angular"/>
 import a = require("./base/EntityServiceMock");
 
 export module service.mock {
     export class DefaultProductService extends a.service.mock.base.AbstractEntityService<domain.Product> implements d.service.contract.ProductService {
 
         static $inject = ["$timeout"];
-        constructor($timeout: ng.ITimeoutService) {
+        constructor(public $timeout: ng.ITimeoutService) {
             super($timeout);
             super.getRepository().push({ id: 1, name: "Notebook", description: "Dell Inspiron 15R Special Edition Intel Core i5-3230M 2.6 GHz 6144 MB 750 GB", quantity: 9, costPrice: 2102.30, price: 2699.00, group: "Informática/Dispositivos", date: new Date(12,12,12)});
             super.getRepository().push({ id: 2, name: "Notebook", description: "Acer Aspire E1-471-6413 Intel Core i3-2328M 2.2 GHz 6144 MB 500 GB", quantity: 13, costPrice: 976.00, price: 1407.12, group: "Informática/Dispositivos", date: new Date(13,10,09)});
@@ -18,24 +19,26 @@ export module service.mock {
         findByName(name: string,
             successCallback: (data: domain.Product[], status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
             errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
-            var items = super.getRepository().filter(function (element) {
-                return element.name.toLowerCase() == name.toLowerCase();
-            });
-            if (items.length !== 0) successCallback(items, 200, null, null);
-            else errorCallback({message: "Nome Inexistente"}, 404, null, null);
+                this.$timeout(()=> {
+                    var items = this.getRepository().filter(function (element) {
+                        return element.name.toLowerCase() == name.toLowerCase();
+                    });
+                    if (items.length !== 0) successCallback(items, 200, null, null);
+                    else errorCallback({message: "Nome Inexistente"}, 404, null, null);
+                }, 100);
         }
 
         listGroups(
             successCallback: (data: string[], status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
             errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
-            var groups = [];
-            super.getRepository().forEach((item) => {
-                if (groups.indexOf(item.group) === -1) groups.push(item.group);
-            });
-            if (groups.length > 0) successCallback(groups, 200, null, null);
-            else errorCallback({message: "Nenhum Grupo Encontrado"}, 404, null, null);
+                this.$timeout(() => {
+                    var groups = [];
+                    this.getRepository().forEach((item) => {
+                        if (groups.indexOf(item.group) === -1) groups.push(item.group);
+                    });
+                    if (groups.length > 0) successCallback(groups, 200, null, null);
+                    else errorCallback({message: "Nenhum Grupo Encontrado"}, 404, null, null);
+                }, 100);
         }
     }
 }
-
-(<any>angular.module("lwa.service")).lazy.service("ProductService", service.mock.DefaultProductService);
