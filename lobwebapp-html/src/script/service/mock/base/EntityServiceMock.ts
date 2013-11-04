@@ -1,12 +1,10 @@
 ///<reference path="./../../../reference.d.ts"/>
 
-import _ = require("underscore");
-
 export module service.mock.base {
     export class AbstractEntityService<T extends domain.base.AbstractEntity> implements d.service.contract.base.EntityService<T> {
         private repository: T[];
 
-        constructor(public $timeout: ng.ITimeoutService) {
+        constructor(public $timeout: ng.ITimeoutService, public _: _<T>) {
             this.repository = new Array<T>();
         }
 

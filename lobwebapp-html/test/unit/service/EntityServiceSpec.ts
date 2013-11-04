@@ -2,11 +2,14 @@
 ///<amd-dependency path="angular"/>
 ///<amd-dependency path="angularMocks"/>
 declare module "script/service/mock/base/EntityServiceMock" { export = any }
-import svc = require("script/service/mock/base/EntityServiceMock")
+import svc = require("script/service/mock/base/EntityServiceMock");
+import _ = require("underscore");
 
 describe('EntityService', () => {
     beforeEach(() => {
-        angular.module('lwa.service', []).service("EntityService", svc.service.mock.base.AbstractEntityService);
+        angular.module('lwa.service', [])
+            .constant("_", _)
+            .service("EntityService", svc.service.mock.base.AbstractEntityService);
         module('lwa.service');
     });
 

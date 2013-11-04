@@ -1,5 +1,5 @@
 ///<reference path="./../../reference.d.ts"/>
-import a = require("./UserServiceMock");;
+import a = require("./UserServiceMock");
 
 export module service.mock {
     export class DefaultAuthService implements d.service.contract.AuthService {

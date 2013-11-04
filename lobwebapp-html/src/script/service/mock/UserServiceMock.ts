@@ -4,9 +4,9 @@ import a = require("./base/EntityServiceMock");
 export module service.mock {
     export class DefaultUserService extends a.service.mock.base.AbstractEntityService<domain.User> implements d.service.contract.UserService {
 
-        static $inject = ["$timeout"];
-        constructor(public $timeout: ng.ITimeoutService) {
-            super($timeout);
+        static $inject = ["$timeout", "_"];
+        constructor(public $timeout: ng.ITimeoutService, public _: _<domain.User>) {
+            super($timeout, _);
             super.getRepository().push({ id: 1, username: "admin", password: "1234", role: "" });
             super.getRepository().push({ id: 2, username: "manager", password: "1234", role: "" });
             super.getRepository().push({ id: 3, username: "employee", password: "1234", role: "" });

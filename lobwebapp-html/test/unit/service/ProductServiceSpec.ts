@@ -3,10 +3,13 @@
 ///<amd-dependency path="angularMocks"/>
 declare module "script/service/mock/ProductServiceMock" { export = any }
 import svc = require("script/service/mock/ProductServiceMock")
+import _ = require("underscore");
 
 describe('ProductService', () => {
     beforeEach(() => {
-        angular.module('lwa.service', []).service("ProductService", svc.service.mock.DefaultProductService);
+        angular.module('lwa.service', [])
+            .constant("_", _)
+            .service("ProductService", svc.service.mock.DefaultProductService);
         module('lwa.service');
     });
 
