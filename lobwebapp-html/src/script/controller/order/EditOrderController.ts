@@ -1,7 +1,5 @@
 ///<reference path="./../../reference.d.ts"/>
 
-import Enumerable = require("linqjs");
-
 export module controller.order {
     interface Status { content: string; type: string; }
     export interface EditOrderViewModel extends d.controller.base.ViewModel {
@@ -32,9 +30,10 @@ export module controller.order {
                     exists = true;
                     return true;
                 }
+                return false;
             });
             if (!exists) {
-                this.ProductService.findById(id,
+                this.ProductService.find(id,
                     (successData: domain.Product) => {
                         successData.quantity = quantity;
                         this.$scope.order.products.push(successData);
@@ -48,6 +47,7 @@ export module controller.order {
                     this.$scope.order.products.splice(index, 1);
                     return true;
                 }
+                return false;
             });
         }
 

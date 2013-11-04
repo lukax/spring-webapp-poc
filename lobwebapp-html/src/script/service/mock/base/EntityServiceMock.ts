@@ -1,6 +1,6 @@
 ///<reference path="./../../../reference.d.ts"/>
 
-import linqjs = require("linqjs");
+import _ = require("underscore");
 
 export module service.mock.base {
     export class AbstractEntityService<T extends domain.base.AbstractEntity> implements d.service.contract.base.EntityService<T> {
@@ -66,7 +66,7 @@ export module service.mock.base {
                 }, 100);
         }
 
-        public findById(id: number,
+        public find(id: number,
             successCallback: (data: T, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
             errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
                 this.$timeout(() => {
@@ -98,7 +98,16 @@ export module service.mock.base {
             successCallback: (data: boolean, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
             errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
                 this.$timeout(() => {
-                    if(linqjs.From(this.getRepository()).Contains(entity)) successCallback(true, 200, null, null);
+                    var success = false;
+                    this.getRepository().some((x: T) => {
+                       if(_.isEqual(entity, x)) {
+                           success = true;
+                           return true;
+                       }
+                       return false;
+                    });
+
+                    if(success) successCallback(true, 200, null, null);
                     else errorCallback({message: "Entidade Inexistente"}, 200, null, null);
                 }, 100);
         }

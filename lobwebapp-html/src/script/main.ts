@@ -18,6 +18,7 @@ require.config({
         angularUiUtils: "./../lib/angular-ui-utils/ui-utils",
         angularUiRouter: "./../lib/angular-ui-router/release/angular-ui-router",
         angularUiBootstrap: "./../lib/angular-ui-bootstrap/ui-bootstrap",
+        underscore: "./../lib/underscore-amd/underscore",
         //backbone: "./../lib/backbone-amd/backbone",
         ngEkathuwa: "./../lib/ngEkathuwa/ekathuwa",
         ngAnimateAnimateCss: "./../lib/ngAnimate-animate.css/animate",
@@ -25,8 +26,7 @@ require.config({
         dcjs: "./../lib/dcjs/dc",
         d3js: "./../lib/d3/d3",
         crossfilter: "./../lib/crossfilter/crossfilter",
-        nprogress: "./../lib/nprogress/nprogress",
-        linqjs: "./../lib/linqjs-amd/linq"
+        nprogress: "./../lib/nprogress/nprogress"
     },
 	baseUrl: "script",
     shim: {

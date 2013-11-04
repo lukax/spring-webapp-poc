@@ -12,7 +12,7 @@ describe("AlertService", () => {
 
     it("should retrieve an alert", inject((AlertService: d.service.contract.util.AlertService) => {
         expect(AlertService.list()).toBeDefined();
-        expect(AlertService.list().length).toBe(0);
+        expect(AlertService.list()).toEqual(jasmine.any(Array));
     }));
 
     it("should add an alert", inject((AlertService:d.service.contract.util.AlertService) => {
@@ -41,4 +41,10 @@ describe("AlertService", () => {
         expect(AlertService.list().length).toBe(0);
     }));
 
+    it("should not remove new alerts", inject((AlertService:d.service.contract.util.AlertService, $timeout: ng.ITimeoutService) => {
+        AlertService.add("content 1", null, null, new Date());
+        expect(AlertService.list().length).toBe(1);
+        $timeout.flush();
+        expect(AlertService.list().length).toBe(1);
+    }));
 });

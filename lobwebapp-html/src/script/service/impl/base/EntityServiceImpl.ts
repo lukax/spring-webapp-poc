@@ -29,7 +29,7 @@ export module service.impl.base {
             this.getHttpService().delete(this.rootUrl, entity).success(successCallback).error(errorCallback);
         }
 
-        public findById(id: number,
+        public find(id: number,
             successCallback: (data: T, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
             errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
             this.getHttpService().get(this.rootUrl + '/' + id).success(successCallback).error(errorCallback);

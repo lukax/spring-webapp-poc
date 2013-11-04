@@ -3,8 +3,6 @@
 ///<amd-dependency path="d3js"/>
 ///<amd-dependency path="dcjs"/>
 
-import linqjs = require("linqjs");
-
 export module controller.product {
     export interface GraphProductViewModel extends d.controller.base.ViewModel {
 
@@ -49,7 +47,7 @@ export module controller.product {
                     return d.quantity;
             });
 
-            var lastProductId = linqjs.From(products).Last().id;
+            //var lastProductId = linqjs.From(products).Last().id;
             
             var categoryByPrice = dc.rowChart("#dc-category-price", "1");
             categoryByPrice
@@ -84,7 +82,7 @@ export module controller.product {
                 .transitionDuration(500)
                 .centerBar(true)
                 .gap(1)
-                .x(d3.scale.linear().domain([0, lastProductId+1]))
+                .x(d3.scale.linear().domain([0, 1]))
                 //.elasticY(true)
                 .renderHorizontalGridLines(true)
                 .title(function (d) { return "ID: " + Math.floor(d.value); })

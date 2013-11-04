@@ -17,7 +17,8 @@ requirejs.config({
         angularRoute: "lib/angular-route/angular-route",
         angularMocks: "lib/angular-mocks/angular-mocks",
         linqjs: "lib/linqjs-amd/linq",
-        nprogress: "lib/nprogress/nprogress"
+        nprogress: "lib/nprogress/nprogress",
+        underscore: "lib/underscore-amd/underscore"
     },
     shim: {
         "angular": {

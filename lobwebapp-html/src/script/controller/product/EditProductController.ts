@@ -67,7 +67,7 @@ export module controller.product {
         }
 
         findProduct(id: number) {
-            this.ProductService.findById(id,
+            this.ProductService.find(id,
                 (successData, successStatus) => {
                     this.$scope.product = successData;
                 },
