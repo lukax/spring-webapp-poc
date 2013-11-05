@@ -4,7 +4,6 @@
 ///<amd-dependency path="angularUiRouter"/>
 ///<amd-dependency path="ngEkathuwa"/>
 
-import a = require("./ServiceModule");
 import e = require("./../service/mock/AuthServiceMock");
 import f = require("./../controller/MainNavbarController");
 import h = require("./../util/DependencyManager");
@@ -75,11 +74,11 @@ export module modularity {
         }
 
         constructor() {
-            new a.modularity.ServiceModule().configure();
             this.module = angular.module("lwa.controller", ["lwa.service", "ui.router", "ngEkathuwa"]);
-            this.module.config(["$controllerProvider", ($controllerProvider: ng.IControllerProvider) => {
+            this.module.config(["$controllerProvider", "$provide", ($controllerProvider: ng.IControllerProvider, $provide: ng.auto.IProvideService) => {
                 (<any>this.module).lazy = {
-                    controller: $controllerProvider.register
+                    controller: $controllerProvider.register,
+                    service: $provide.service
                 };
             }]);
         }
@@ -87,7 +86,7 @@ export module modularity {
         configure() {
             //Global usage controllers configuration
             this.module
-            //.config(["$locationProvider", this.locationProviderCfg])
+                //.config(["$locationProvider", this.locationProviderCfg])
                 .config(["$stateProvider", "$urlRouterProvider", this.stateProviderCfg])
                 .config(["$httpProvider", this.intercept401Cfg])
 
@@ -106,7 +105,7 @@ export module modularity {
             if(deps.length === 0) return;
             var definition = {
                 resolver: ["$q", "$rootScope", ($q: ng.IQService, $rootScope: ng.IRootScopeService) => {
-                    return (new h.util.DependencyManager($q, $rootScope)).resolve(deps);
+                    return (new h.util.DependencyManager($q, $rootScope)).resolve(deps, "lwa.controller");
                 }]
             }
             return definition;

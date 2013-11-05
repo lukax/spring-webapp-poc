@@ -4,14 +4,13 @@ import a = require("./../service/impl/util/AlertServiceImpl");
 import c = require("./../service/mock/UserServiceMock");
 import d = require("./../service/mock/AuthServiceMock");
 import f = require("./../service/impl/util/NavigationServiceImpl");
-import _ = require("underscore");
 
 export module modularity {
     export class ServiceModule {
         private module: ng.IModule;
 
         constructor() {
-            this.module = angular.module("lwa.service", []);
+            this.module = angular.module("lwa.service", ["lwa.util"]);
             this.module.config(["$provide", ($provide: ng.auto.IProvideService) => {
                 (<any>this.module).lazy = {
                     service: $provide.service
@@ -22,8 +21,6 @@ export module modularity {
         configure() {
             //Global usage services configuration
             this.module
-                .constant("_", _)
-
                 .service("UserService", <Function>c.service.mock.DefaultUserService)
                 .service("AuthService", <Function>d.service.mock.DefaultAuthService)
                 .service("AlertService", <Function>a.service.impl.util.DefaultAlertService)

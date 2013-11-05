@@ -42,3 +42,7 @@ export module service.mock {
         }
     }
 }
+
+export var register = (moduleName: string) => {
+    (<any>angular.module(moduleName)).lazy.service("ProductService", service.mock.DefaultProductService);
+};

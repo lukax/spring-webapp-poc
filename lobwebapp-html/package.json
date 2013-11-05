@@ -10,7 +10,7 @@
     "karma-requirejs": "~0.1.0",
     "karma": "~0.10.4",
     "grunt": "~0.4.1",
-    "grunt-karma": "~0.6.1"
+    "grunt-karma": "~0.6.2"
   },
   "devDependencies": {
     "grunt": "~0.4.1",
