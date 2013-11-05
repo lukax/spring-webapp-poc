@@ -37,9 +37,9 @@
 ///<reference path="./service/contract/UserService.ts"/>
 
 ///<reference path="./service/impl/base/EntityServiceImpl.ts"/>
-///<reference path="./service/impl/util/AlertServiceImpl.ts"/>
 ///<reference path="./service/impl/ProductServiceImpl.ts"/>
 
+///<reference path="./service/mock/util/AlertServiceMock.ts"/>
 ///<reference path="./service/mock/AuthServiceMock.ts"/>
 ///<reference path="./service/mock/ProductServiceMock.ts"/>
 ///<reference path="./service/mock/UserServiceMock.ts"/>

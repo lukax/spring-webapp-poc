@@ -75,7 +75,6 @@
     <Content Include="src\view\user\authUser.html" />
     <Content Include="src\view\user\boardUser.html" />
     <Content Include="src\view\user\user.html" />
-    <Content Include="test\.gitignore" />
     <Content Include="ts-definitions\angularjs\angular-cookies.d.ts" />
     <Content Include="ts-definitions\angularjs\angular-mocks.d.ts" />
     <Content Include="ts-definitions\angularjs\angular-resource.d.ts" />
@@ -139,6 +138,7 @@
     <TypeScriptCompile Include="src\script\modularity\DirectiveModule.ts" />
     <TypeScriptCompile Include="src\script\modularity\FilterModule.ts" />
     <TypeScriptCompile Include="src\script\modularity\ServiceModule.ts" />
+    <TypeScriptCompile Include="src\script\modularity\UtilModule.ts" />
     <TypeScriptCompile Include="src\script\reference.d.ts" />
     <TypeScriptCompile Include="src\script\service\contract\AuthService.ts" />
     <TypeScriptCompile Include="src\script\service\contract\base\EntityService.ts" />
@@ -157,11 +157,6 @@
     <TypeScriptCompile Include="src\script\util\DependencyManager.ts" />
     <TypeScriptCompile Include="src\script\util\Progress.ts" />
     <TypeScriptCompile Include="src\script\util\StdUtil.ts" />
-    <TypeScriptCompile Include="test\reference.d.ts" />
-    <TypeScriptCompile Include="test\test-main.ts" />
-    <TypeScriptCompile Include="test\unit\service\AlertServiceSpec.ts" />
-    <TypeScriptCompile Include="test\unit\service\EntityServiceSpec.ts" />
-    <TypeScriptCompile Include="test\unit\service\ProductServiceSpec.ts" />
     <TypeScriptCompile Include="ts-definitions\jasmine\jasmine-tests.ts" />
     <TypeScriptCompile Include="ts-definitions\jasmine\jasmine.d.ts" />
   </ItemGroup>

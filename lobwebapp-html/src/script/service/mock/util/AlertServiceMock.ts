@@ -1,7 +1,7 @@
 ///<reference path="./../../../reference.d.ts"/>
 
-export module service.impl.util{
-    export class DefaultAlertService implements d.service.contract.util.AlertService {
+export module service.mock.util{
+    export class AlertServiceMock implements d.service.contract.util.AlertService {
         private alerts: domain.util.Alert[];
 
         static $inject = ['$timeout'];

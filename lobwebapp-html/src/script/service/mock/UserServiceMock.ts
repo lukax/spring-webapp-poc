@@ -2,7 +2,7 @@
 import a = require("./base/EntityServiceMock");
 
 export module service.mock {
-    export class DefaultUserService extends a.service.mock.base.AbstractEntityService<domain.User> implements d.service.contract.UserService {
+    export class UserServiceMock extends a.service.mock.base.EntityServiceMock<domain.User> implements d.service.contract.UserService {
 
         static $inject = ["$timeout", "_"];
         constructor(public $timeout: ng.ITimeoutService, public _: _<domain.User>) {

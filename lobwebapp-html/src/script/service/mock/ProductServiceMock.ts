@@ -3,7 +3,7 @@
 import a = require("./base/EntityServiceMock");
 
 export module service.mock {
-    export class DefaultProductService extends a.service.mock.base.AbstractEntityService<domain.Product> implements d.service.contract.ProductService {
+    export class ProductServiceMock extends a.service.mock.base.EntityServiceMock<domain.Product> implements d.service.contract.ProductService {
 
         static $inject = ["$timeout", "_"];
         constructor(public $timeout: ng.ITimeoutService, public _: _<domain.Product>) {
@@ -44,5 +44,5 @@ export module service.mock {
 }
 
 export var register = (moduleName: string) => {
-    (<any>angular.module(moduleName)).lazy.service("ProductService", service.mock.DefaultProductService);
+    (<any>angular.module(moduleName)).lazy.service("ProductService", service.mock.ProductServiceMock);
 };

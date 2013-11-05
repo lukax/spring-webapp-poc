@@ -1,15 +1,15 @@
-///<reference path="./../../reference.d.ts"/>
+///<reference path="./../../../reference.d.ts"/>
 ///<amd-dependency path="angular"/>
 ///<amd-dependency path="angularMocks"/>
 declare module "script/service/mock/ProductServiceMock" { export = any }
 import svc = require("script/service/mock/ProductServiceMock")
 import _ = require("underscore");
 
-describe('ProductService', () => {
+describe('service: ProductService', () => {
     beforeEach(() => {
         angular.module('lwa.service', [])
             .constant("_", _)
-            .service("ProductService", svc.service.mock.DefaultProductService);
+            .service("ProductService", svc.service.mock.ProductServiceMock);
         module('lwa.service');
     });
 

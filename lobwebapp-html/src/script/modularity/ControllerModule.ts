@@ -32,7 +32,7 @@ export module modularity {
             //$locationProvider.html5Mode(true);
         };
 
-        private userAuthCfg = ($rootScope: ng.IRootScopeService, $location: ng.ILocationService, AuthService: e.service.mock.DefaultAuthService) => {
+        private userAuthCfg = ($rootScope: ng.IRootScopeService, $location: ng.ILocationService, AuthService: e.service.mock.AuthServiceMock) => {
             var allowedRoutes = ["/user/auth"];
             var isAllowedRoute = (route: string) => {
                 return allowedRoutes.some((x) => {

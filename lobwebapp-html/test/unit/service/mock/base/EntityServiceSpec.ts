@@ -1,15 +1,15 @@
-///<reference path="./../../reference.d.ts"/>
+///<reference path="./../../../../reference.d.ts"/>
 ///<amd-dependency path="angular"/>
 ///<amd-dependency path="angularMocks"/>
 declare module "script/service/mock/base/EntityServiceMock" { export = any }
 import svc = require("script/service/mock/base/EntityServiceMock");
 import _ = require("underscore");
 
-describe('EntityService', () => {
+describe('service: EntityService', () => {
     beforeEach(() => {
         angular.module('lwa.service', [])
             .constant("_", _)
-            .service("EntityService", svc.service.mock.base.AbstractEntityService);
+            .service("EntityService", svc.service.mock.base.EntityServiceMock);
         module('lwa.service');
     });
 
