@@ -2,7 +2,6 @@
 
 export module controller.product {
     export interface ListProductViewModel extends d.controller.base.ViewModel {
-        product: domain.Product;
         products: domain.Product[];
         searchText: string;
         editProduct: (id: number) => void;
@@ -42,9 +41,8 @@ export module controller.product {
         }
 
         processArgs() {
-            var searchText = this.NavigationService.urlParams.search;
-            this.redirect = this.NavigationService.urlParams.redirect;
-            if (searchText) this.$scope.searchText = searchText;    
+            this.$scope.searchText = this.NavigationService.params().search;
+            this.redirect = this.NavigationService.params().redirect;
             this.listProduct();
         }
 
@@ -56,6 +54,6 @@ export module controller.product {
     }
 }
 
-var register = (moduleName: string) => {
+export var register = (moduleName: string) => {
     (<any>angular.module(moduleName)).lazy.controller("ListProductController", controller.product.ListProductController);
 };

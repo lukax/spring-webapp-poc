@@ -85,9 +85,9 @@ export module controller.order {
         }
 
         processArgs() {
-            this.$scope.productId = this.$scope.navigator.urlParams.productId;
-            this.$scope.clientId = this.$scope.navigator.urlParams.clientId;
-            var orderId = this.$scope.navigator.urlParams.orderId;
+            this.$scope.productId = this.$scope.navigator.params().productId;
+            this.$scope.clientId = this.$scope.navigator.params().clientId;
+            var orderId = this.$scope.navigator.params().orderId;
             if (orderId) {
                 //TODO: OrderService to fetch order...
             }

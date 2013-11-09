@@ -15,7 +15,7 @@ import z = require("script/modularity/ControllerModule");
 
 describe("controller: ListProductController", () => {
     new z.modularity.ControllerModule();
-    var scope: any;
+    var $scope: any;
     beforeEach(() => {
         module("lwa.service", ($provide: ng.auto.IProvideService, $controllerProvider: ng.IControllerProvider)=>{
             $provide.service("ProductService", b.service.mock.ProductServiceMock);
@@ -27,22 +27,22 @@ describe("controller: ListProductController", () => {
             $controllerProvider.register("ProductController", a.controller.product.ListProductController);
         });
         inject(($rootScope: ng.IRootScopeService)=> {
-           scope = $rootScope.$new();
+           $scope = $rootScope.$new();
         });
     });
 
     it("should list products", inject(($controller: ng.IControllerService, $timeout: ng.ITimeoutService) => {
         var ctrl = $controller("ProductController", {
-            $scope: scope
+            $scope: $scope
         });
         ctrl.listProduct();
         $timeout.flush();
-        expect(scope.products).toEqual(jasmine.any(Array));
+        expect($scope.products).toEqual(jasmine.any(Array));
     }));
 
     it("should edit a product", inject(($controller: ng.IControllerService, $timeout: ng.ITimeoutService, $location: ng.ILocationService) => {
         var ctrl = $controller("ProductController", {
-            $scope: scope
+            $scope: $scope
         });
         $timeout.flush();
         ctrl.editProduct(0);
@@ -52,15 +52,12 @@ describe("controller: ListProductController", () => {
 
     it("should get searchText from url Params", inject(($controller: ng.IControllerService, $timeout: ng.ITimeoutService, NavigationService:d.service.contract.util.NavigationService) => {
         var text = "SSD";
-        spyOn(NavigationService, "urlParams").andCallFake(()=> {
-            console.log("yeajh");
-        });
+        spyOn(NavigationService, "params").andReturn({ search: text });
         var ctrl = $controller("ProductController", {
-            $scope: scope,
+            $scope: $scope,
             NavigationService: NavigationService
         });
         $timeout.flush();
-        expect(NavigationService.urlParams.calls.length).toBe(1);
-        expect(ctrl.searchText).toBe(text);
+        expect($scope.searchText).toBe(text);
     }))
 });

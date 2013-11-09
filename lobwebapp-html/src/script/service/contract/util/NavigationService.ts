@@ -3,9 +3,9 @@
 module d.service.contract.util {
     export interface NavigationService {
         progress: Progress;
-        navigateTo(url: string);
+        navigateTo(url: string): void;
         navigate(viewId: string, viewArg?: string): void;
-        urlParams: any;
+        params(): any;
         $location: ng.ILocationService;
     }
 

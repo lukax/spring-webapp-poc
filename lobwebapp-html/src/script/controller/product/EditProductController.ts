@@ -100,14 +100,14 @@ export module controller.product {
             });
         }
 
-        listenProfitMargin() {
+        onProfitMargin() {
             this.$scope.$watch("product.price + product.costPrice", () => {
                 if (this.$scope.product != null && this.$scope.product.costPrice !== 0)
                     this.$scope.profitMargin = a.util.Std.round(this.$scope.product.price / this.$scope.product.costPrice, 2);
             });
         }
 
-        listenProductChanges() {
+        onProduct() {
             this.$scope.$watch("product", (newValue: domain.Product, oldValue: domain.Product) => {
                 console.log("EditProductController: product object changed");
                 this.$scope.isNewProduct = this.isNewProduct();
@@ -115,7 +115,7 @@ export module controller.product {
         }
 
         processArgs() {
-            var routeProdId = this.$scope.navigator.urlParams.productId;
+            var routeProdId = this.$scope.navigator.params().productId;
             if (routeProdId > 0) {
                 this.findProduct(Number(routeProdId));
             } else if (routeProdId == 0) {
@@ -126,15 +126,15 @@ export module controller.product {
                 this.AlertService.add("Produto ID Inválido", "", "warning");
                 this.newProduct();
             }
-            if (this.$scope.navigator.urlParams.priceInfo == "true") {
+            if (this.$scope.navigator.params().priceInfo == "true") {
                 this.priceInfoModal();
             }
         }
 
         populateScope() {
+            this.onProduct();
+            this.onProfitMargin();
             this.$scope.pricePattern = /^(?=.*[1-9])\d*(?:\.\d{1,2})?$/;
-            this.listenProductChanges();
-            this.listenProfitMargin();
             this.$scope.saveChanges = (product: domain.Product) => this.saveChanges(product);
             this.$scope.removeProduct = (product: domain.Product) => this.removeProduct(product);
             this.$scope.priceInfo = () => this.priceInfo();
