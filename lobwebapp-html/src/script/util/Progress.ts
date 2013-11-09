@@ -1,8 +1,7 @@
 ///<reference path="./../reference.d.ts"/>
 ///<amd-dependency path="jquery"/>
-///<amd-dependency path="nprogress"/>
 
-declare var NProgress: any;
+import NProgress = require("NProgress");
 
 export module util{
     export class Progress{

@@ -1,27 +1,27 @@
 {
-  "name": "lobwebapp-html",
-  "version": "0.0.0",
-  "dependencies": {
-    "jquery": "2.0.3",
-    "requirejs": "~2.1.8",
-    "requirejs-text": "~2.0.10",
-    "angular": "1.2.0-rc.3",
-    "angular-route": "~1.2.0-rc.3",
-    "angular-sanitize": "1.2.0-rc.3",
-    "angular-ui": "~0.4.0",
-    "angular-ui-router": "~0.2.0",
-    "angular-animate": "~1.2.0-rc.3",
-    "animate.css": "~2.1.0",
-    "ngAnimate-animate.css": "*",
-    "nprogress": "~0.1.2",
-    "json3": "~3.2.4",
-    "es5-shim": "2.1.0",
-    "dcjs": "~1.6.0",
-    "bootstrap": "~3.0.1",
-    "underscore-amd": "~1.5.2"
-  },
-  "devDependencies": {
-    "angular-mocks": "1.2.0-rc.3",
-    "angular-scenario": "1.2.0-rc.3"
-  }
+    "name": "lobwebapp-html",
+    "version": "0.0.0",
+    "dependencies": {
+        "jquery": "2.0.3",
+        "requirejs": "~2.1.8",
+        "requirejs-text": "~2.0.10",
+        "angular": "1.2.0-rc.3",
+        "angular-route": "~1.2.0-rc.3",
+        "angular-sanitize": "1.2.0-rc.3",
+        "angular-ui": "~0.4.0",
+        "angular-ui-router": "~0.2.0",
+        "angular-animate": "~1.2.0-rc.3",
+        "animate.css": "~2.1.0",
+        "ngAnimate-animate.css": "*",
+        "nprogress": "~0.1.2",
+        "json3": "~3.2.4",
+        "es5-shim": "2.1.0",
+        "dcjs": "~1.6.0",
+        "bootstrap": "~3.0.1",
+        "underscore-amd": "~1.5.2"
+    },
+    "devDependencies": {
+        "angular-mocks": "1.2.0-rc.3",
+        "angular-scenario": "1.2.0-rc.3"
+    }
 }

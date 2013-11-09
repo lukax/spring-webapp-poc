@@ -75,6 +75,7 @@
     <Content Include="src\view\user\authUser.html" />
     <Content Include="src\view\user\boardUser.html" />
     <Content Include="src\view\user\user.html" />
+    <Content Include="test\.gitignore" />
     <Content Include="ts-definitions\angularjs\angular-cookies.d.ts" />
     <Content Include="ts-definitions\angularjs\angular-mocks.d.ts" />
     <Content Include="ts-definitions\angularjs\angular-resource.d.ts" />
@@ -91,12 +92,9 @@
     <Content Include="ts-definitions\d3\plugins\d3.superformula-tests.ts" />
     <Content Include="ts-definitions\d3\plugins\d3.superformula.d.ts" />
     <Content Include="ts-definitions\jquery\jquery.d.ts" />
-    <Content Include="ts-definitions\linq\linq-tests.ts" />
-    <Content Include="ts-definitions\linq\linq.3.0.3-Beta4.d.ts" />
-    <Content Include="ts-definitions\linq\linq.d.ts" />
-    <Content Include="ts-definitions\linq\linq.jquery.d.ts" />
     <Content Include="ts-definitions\requirejs\require-tests.ts" />
     <Content Include="ts-definitions\requirejs\require.d.ts" />
+    <Content Include="ts-definitions\underscore\underscore-tests.js" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="ts-definitions\angularjs\angular-tests.js.map" />
@@ -148,17 +146,31 @@
     <TypeScriptCompile Include="src\script\service\contract\util\NavigationService.ts" />
     <TypeScriptCompile Include="src\script\service\impl\base\EntityServiceImpl.ts" />
     <TypeScriptCompile Include="src\script\service\impl\ProductServiceImpl.ts" />
-    <TypeScriptCompile Include="src\script\service\impl\util\AlertServiceImpl.ts" />
     <TypeScriptCompile Include="src\script\service\impl\util\NavigationServiceImpl.ts" />
     <TypeScriptCompile Include="src\script\service\mock\AuthServiceMock.ts" />
     <TypeScriptCompile Include="src\script\service\mock\base\EntityServiceMock.ts" />
     <TypeScriptCompile Include="src\script\service\mock\ProductServiceMock.ts" />
     <TypeScriptCompile Include="src\script\service\mock\UserServiceMock.ts" />
+    <TypeScriptCompile Include="src\script\service\mock\util\AlertServiceMock.ts" />
     <TypeScriptCompile Include="src\script\util\DependencyManager.ts" />
     <TypeScriptCompile Include="src\script\util\Progress.ts" />
     <TypeScriptCompile Include="src\script\util\StdUtil.ts" />
+    <TypeScriptCompile Include="test\reference.d.ts" />
+    <TypeScriptCompile Include="test\test-main.ts" />
+    <TypeScriptCompile Include="test\unit\controller\ListProductControllerSpec.ts" />
+    <TypeScriptCompile Include="test\unit\service\mock\AlertServiceSpec.ts" />
+    <TypeScriptCompile Include="test\unit\service\mock\AuthServiceSpec.ts" />
+    <TypeScriptCompile Include="test\unit\service\mock\base\EntityServiceSpec.ts" />
+    <TypeScriptCompile Include="test\unit\service\mock\ProductServiceSpec.ts" />
+    <TypeScriptCompile Include="test\unit\service\mock\UserServiceSpec.ts" />
     <TypeScriptCompile Include="ts-definitions\jasmine\jasmine-tests.ts" />
     <TypeScriptCompile Include="ts-definitions\jasmine\jasmine.d.ts" />
+    <TypeScriptCompile Include="ts-definitions\underscore\underscore-tests.ts" />
+    <TypeScriptCompile Include="ts-definitions\underscore\underscore.d.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ts-definitions\underscore\underscore-tests.js.map" />
+    <Content Include="ts-definitions\underscore\underscore-tests.ts.tscparams" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TypeScript\Microsoft.TypeScript.targets" />
 </Project>

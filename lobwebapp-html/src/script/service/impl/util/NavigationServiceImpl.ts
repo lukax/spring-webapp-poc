@@ -4,21 +4,17 @@ import svcu = d.service.contract.util;
 import p = require("./../../../util/Progress");
 
 export module service.impl.util {
-    export class NavigationSvcImpl implements d.service.contract.util.NavigationService {
-        //private $routeParams: ng.IRouteParamsService;
-        private $stateParams: ng.ui.IStateParams;
+    export class NavigationServiceImpl implements d.service.contract.util.NavigationService {
+
+        public urlParams: ng.ui.IStateParams;
 
         static $inject = ['$location', '$stateParams'];
         constructor(public $location: ng.ILocationService, $stateParams: ng.ui.IStateParams) {
-            this.$stateParams = $stateParams;
+            this.urlParams = $stateParams;
         }
 
         get progress() {
             return p.util.Progress;
-        }
-
-        get urlParams(){
-            return this.$stateParams;
         }
 
         navigateTo(url: string){

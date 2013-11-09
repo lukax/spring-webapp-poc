@@ -12,37 +12,38 @@ export module controller.product {
     export class ListProductController implements d.controller.base.Controller{
         private redirect: string;
 
-        static $inject = ["$scope", "ProductService", "AlertService"];
+        static $inject = ["$scope", "ProductService", "AlertService", "NavigationService"];
         constructor(public $scope: ListProductViewModel,
                     public ProductService: d.service.contract.ProductService,
-                    public AlertService: d.service.contract.util.AlertService) {
+                    public AlertService: d.service.contract.util.AlertService,
+                    public NavigationService:d.service.contract.util.NavigationService) {
 
             this.processArgs();
             this.populateScope();
         }
 
         listProduct() {
-            this.$scope.navigator.progress.start();
+            this.NavigationService.progress.start();
             this.ProductService.list(
                 (successData, successStatus) => {
                     this.$scope.products = successData;
-                    this.$scope.navigator.progress.done();
+                    this.NavigationService.progress.done();
                     if (this.redirect) this.AlertService.add("Clique em um produto da lista para voltar para a página anterior", "Busca Rápida", "info"); 
                 },
                 (errorData, errorStatus) => {
                     this.AlertService.add("Lista de Produtos não pôde ser carregada", String(errorData), "danger");
-                    this.$scope.navigator.progress.done();  
+                    this.NavigationService.progress.done();
                 });
         }
 
         editProduct(id: number) {
-            if (this.redirect) this.$scope.navigator.navigateTo(this.redirect + "?productId=" + id);
-            else this.$scope.navigator.navigateTo("/product/"+id);
+            if (this.redirect) this.NavigationService.navigateTo(this.redirect + "?productId=" + id);
+            else this.NavigationService.navigateTo("/product/"+id);
         }
 
         processArgs() {
-            var searchText = this.$scope.navigator.urlParams.search;
-            this.redirect = this.$scope.navigator.urlParams.redirect;
+            var searchText = this.NavigationService.urlParams.search;
+            this.redirect = this.NavigationService.urlParams.redirect;
             if (searchText) this.$scope.searchText = searchText;    
             this.listProduct();
         }
@@ -55,4 +56,6 @@ export module controller.product {
     }
 }
 
-(<any>angular.module("lwa.controller")).lazy.controller("ListProductController", controller.product.ListProductController);
+var register = (moduleName: string) => {
+    (<any>angular.module(moduleName)).lazy.controller("ListProductController", controller.product.ListProductController);
+};

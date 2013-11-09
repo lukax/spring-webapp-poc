@@ -51,3 +51,4 @@
 
 declare var dc: any;
 declare var crossfilter: any;
+declare module "NProgress" { export = any; }

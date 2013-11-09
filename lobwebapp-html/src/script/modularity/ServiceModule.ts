@@ -24,7 +24,7 @@ export module modularity {
                 .service("UserService", <Function>c.service.mock.UserServiceMock)
                 .service("AuthService", <Function>d.service.mock.AuthServiceMock)
                 .service("AlertService", <Function>a.service.mock.util.AlertServiceMock)
-                .service("NavigationService", <Function>f.service.impl.util.NavigationSvcImpl)
+                .service("NavigationService", <Function>f.service.impl.util.NavigationServiceImpl)
             ;
             return this;
         }

@@ -26,7 +26,7 @@ require.config({
         dcjs: "./../lib/dcjs/dc",
         d3js: "./../lib/d3/d3",
         crossfilter: "./../lib/crossfilter/crossfilter",
-        nprogress: "./../lib/nprogress/nprogress"
+        NProgress: "./../lib/nprogress/nprogress"
     },
 	baseUrl: "script",
     shim: {
@@ -70,9 +70,9 @@ require.config({
             deps: ["angularAnimate"],
             "exports": "ngAnimateAnimateCss"
         },
-        "nprogress": {
+        "NProgress": {
             deps: ["jquery"],
-            "exports": "nprogress"
+            "exports": "NProgress"
         },
         "d3js": { "exports": "dcjs" },
         "crossfilter": { "exports": "crossfilter" },
