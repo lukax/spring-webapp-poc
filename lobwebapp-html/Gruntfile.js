@@ -188,13 +188,10 @@ module.exports = function (grunt) {
             }
         },
         ts: {
-            watch: {
+            base: {
                 src: ['<%= yeoman.app%>/script/**/*.ts', '<%= yeoman.test%>/**/*.ts'],
-                watch: '*',
                 options: {
-                    target: 'es5',
-                    declaration: false,
-                    comments: false
+                    target: 'es5'
                 }
             },
             dev: {

@@ -1,30 +1,24 @@
 ///<reference path="./../../reference.d.ts"/>
 ///<amd-dependency path="angular"/>
 ///<amd-dependency path="angularMocks"/>
-declare module "script/controller/product/ListProductController" { export = any }
-declare module "script/service/mock/ProductServiceMock" { export = any }
-declare module "script/service/mock/util/AlertServiceMock" { export = any }
-declare module "script/service/impl/util/NavigationServiceImpl" { export = any }
-declare module "script/modularity/ControllerModule" { export = any }
-import a = require("script/controller/product/ListProductController");
-import b = require("script/service/mock/ProductServiceMock");
-import c = require("script/service/mock/util/AlertServiceMock");
-import e = require("underscore");
-import f = require("script/service/impl/util/NavigationServiceImpl");
-import z = require("script/modularity/ControllerModule");
+import i0 = require("script/controller/product/ListProductController");
+import i1 = require("script/service/mock/ProductServiceMock");
+import i2 = require("script/service/mock/util/AlertServiceMock");
+import i3 = require("script/service/impl/util/NavigationServiceImpl");
+import i4 = require("script/modularity/ControllerModule");
 
 describe("controller: ListProductController", () => {
-    new z.modularity.ControllerModule();
+    new i4.modularity.ControllerModule();
     var $scope: any;
     beforeEach(() => {
         module("lwa.service", ($provide: ng.auto.IProvideService, $controllerProvider: ng.IControllerProvider)=>{
-            $provide.service("ProductService", b.service.mock.ProductServiceMock);
-            $provide.service("AlertService", c.service.mock.util.AlertServiceMock);
-            $provide.service("NavigationService", f.service.impl.util.NavigationServiceImpl);
+            $provide.service("ProductService", i1.service.mock.ProductServiceMock);
+            $provide.service("AlertService", i2.service.mock.util.AlertServiceMock);
+            $provide.service("NavigationService", i3.service.impl.util.NavigationServiceImpl);
             $provide.service("$stateParams", () => {
                 return { }
             });
-            $controllerProvider.register("ProductController", a.controller.product.ListProductController);
+            $controllerProvider.register("ProductController", i0.controller.product.ListProductController);
         });
         inject(($rootScope: ng.IRootScopeService)=> {
            $scope = $rootScope.$new();

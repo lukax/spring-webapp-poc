@@ -1,15 +1,14 @@
 ///<reference path="./../../../reference.d.ts"/>
 ///<amd-dependency path="angular"/>
 ///<amd-dependency path="angularMocks"/>
-declare module "script/service/mock/UserServiceMock" { export = any }
-import b = require("script/service/mock/UserServiceMock");
+import i0 = require("script/service/mock/UserServiceMock");
 import _ = require("underscore");
 
 describe("service: UserService", () => {
     beforeEach(() => {
         angular.module("app",[])
             .constant("_", _)
-            .service("UserService", b.service.mock.UserServiceMock)
+            .service("UserService", i0.service.mock.UserServiceMock)
         ;
         module("app");
     });

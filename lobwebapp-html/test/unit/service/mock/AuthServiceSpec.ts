@@ -1,18 +1,16 @@
 ///<reference path="./../../../reference.d.ts"/>
 ///<amd-dependency path="angular"/>
 ///<amd-dependency path="angularMocks"/>
-declare module "script/service/mock/AuthServiceMock" { export = any }
-declare module "script/service/mock/UserServiceMock" { export = any }
-import a = require("script/service/mock/AuthServiceMock");
-import b = require("script/service/mock/UserServiceMock");
+import i0 = require("script/service/mock/AuthServiceMock");
+import i1 = require("script/service/mock/UserServiceMock");
 import _ = require("underscore");
 
 describe("service: AuthService", () => {
     beforeEach(() => {
         angular.module("app",[])
             .constant("_", _)
-            .service("UserService", b.service.mock.UserServiceMock)
-            .service("AuthService", a.service.mock.AuthServiceMock)
+            .service("UserService", i1.service.mock.UserServiceMock)
+            .service("AuthService", i0.service.mock.AuthServiceMock)
         ;
         module("app");
     });

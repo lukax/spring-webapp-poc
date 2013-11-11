@@ -1,12 +1,11 @@
 ///<reference path="./../../../reference.d.ts"/>
 ///<amd-dependency path="angular"/>
 ///<amd-dependency path="angularMocks"/>
-declare module "script/service/mock/util/AlertServiceMock" { export = any }
-import svc = require("script/service/mock/util/AlertServiceMock");
+import i0 = require("script/service/mock/util/AlertServiceMock");
 
 describe("service: AlertService", () => {
     beforeEach(() => {
-        angular.module("lwa.service", []).service("AlertService", svc.service.mock.util.AlertServiceMock);
+        angular.module("lwa.service", []).service("AlertService", i0.service.mock.util.AlertServiceMock);
         module("lwa.service");
     });
 
