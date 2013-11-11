@@ -95,6 +95,7 @@ export module controller.product {
         priceInfoModal() {
             if(this.priceInfoModalInstance){
                 this.priceInfoModalInstance.close();
+                this.priceInfoModalInstance = null;
                 return;
             }
             this.priceInfoModalInstance = this.$modal.open({
