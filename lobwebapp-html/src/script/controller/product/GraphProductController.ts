@@ -10,10 +10,11 @@ export module controller.product {
 
     export class GraphProductController implements d.controller.base.Controller {
 
-        static $inject = ["$scope", "ProductService", "AlertService"];
+        static $inject = ["$scope", "ProductService", "AlertService", "_"];
         constructor(public $scope: GraphProductViewModel,
                     public ProductService: d.service.contract.ProductService,
-                    public AlertService: d.service.contract.util.AlertService) {
+                    public AlertService: d.service.contract.util.AlertService,
+                    public _: _<any>) {
 
             this.processArgs();
             this.populateScope();
@@ -47,7 +48,7 @@ export module controller.product {
                     return d.quantity;
             });
 
-            //var lastProductId = linqjs.From(products).Last().id;
+            var lastProductId = _.last(products).id;
             
             var categoryByPrice = dc.rowChart("#dc-category-price", "1");
             categoryByPrice
@@ -89,6 +90,7 @@ export module controller.product {
                 // (optional) whether chart should render titles, :default = false
                 .renderTitle(true)
                 .xUnits(d3.scale.ordinal())
+                .x(d3.scale.linear().domain([0, lastProductId+1]))
                 // .round(d3.time.month.round)
                 // .xAxis().tickFormat();
                 ;

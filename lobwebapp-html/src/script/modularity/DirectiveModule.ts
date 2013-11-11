@@ -1,5 +1,6 @@
 ///<reference path="../reference.d.ts"/>
 ///<amd-dependency path="angular"/>
+///<amd-dependency path="angularRoute"/>
 ///<amd-dependency path="angularAnimate"/>
 ///<amd-dependency path="angularUi"/>
 ///<amd-dependency path="angularUiBootstrap"/>
@@ -13,7 +14,7 @@ export module modularity {
         private module: ng.IModule;
 
         constructor() {
-            this.module = angular.module('lwa.directive', ['ngAnimate','ngAnimate-animate.css', 'ui.directives', 'ui.bootstrap', 'ui.utils']);
+            this.module = angular.module('lwa.directive', ['ngRoute','ngAnimate','ngAnimate-animate.css', 'ui.directives', 'ui.bootstrap', 'ui.utils']);
         }
 
         configure() {
@@ -46,7 +47,7 @@ export module modularity {
                         element.attr('href', attrs.lwaHref);
                         element.bind('click', (event: any) => {
                             scope.$apply(() => {
-                                if ($location.url() == attrs.lwaHref)
+                                if ('#' + $location.url() === attrs.lwaHref)
                                     $route.reload();
                             });
                         });

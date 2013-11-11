@@ -1,38 +1,31 @@
-<div aria-hidden="true" aria-labelledby="priceInfoModalLabel" role="dialog" tabindex="-1" class="modal fade" style="display: none;">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button aria-hidden="true" data-dismiss="modal" class="close" type="button">&times;</button>
-                <h4 class="modal-title">Cálculo de Preço</h4>
-            </div>
-            <div class="modal-body">
-                <form name="priceInfoForm" novalidate>
-                    <div class="form-group">
-                        <div ng-class="{'has-error': priceInfoForm.inputCostPrice.$invalid}">
-                            <label for="inputCostPrice" class="control-label">Preço de Custo</label>
-                            <div class="input-group">
-                                <span class="input-group-addon">R$</span>
-                                <input type="text" class="form-control" id="inputCostPrice" name="inputCostPrice" ng-model="product.costPrice" required ng-pattern="pricePattern" autofocus>
-                            </div>
-                        </div>
-                        <div ng-class="{'has-error': productProfitMargin < 1}">
-                            <label for="inputProfit" class="control-label">Margem de Lucro</label>
-                            <div class="input-group">
-                                <input type="text" class="form-control" id="inputProfit" name="inputProfit" readonly ng-model="profitMargin">
-                                <span class="input-group-addon">%</span>
-                            </div>
-                        </div>
-                        <div ng-class="{'has-error': priceInfoForm.inputPrice.$invalid}">
-                            <label for="inputPrice" class="control-label">Preço de Venda</label>
-                            <div class="input-group">
-                                <span class="input-group-addon">R$</span>
-                                <input type="text" class="form-control" id="inputPrice" name="inputPrice" ng-model="product.price" required ng-pattern="pricePattern">
-                            </div>
-                        </div>
-                    </div>
-                </form>
-
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
+<div class="modal-header">
+	<button aria-hidden="true" class="close" type="button" ng-click="priceInfo()">&times;</button>
+	<h4 class="modal-title">Cálculo de Preço</h4>
+</div>
+<div class="modal-body">
+	<form name="priceInfoForm" novalidate>
+		<div class="form-group">
+			<div ng-class="{'has-error': priceInfoForm.inputCostPrice.$invalid}">
+				<label for="inputCostPrice" class="control-label">Preço de Custo</label>
+				<div class="input-group">
+					<span class="input-group-addon">R$</span>
+					<input type="text" class="form-control" id="inputCostPrice" name="inputCostPrice" ng-model="product.costPrice" required ng-pattern="pricePattern" autofocus>
+				</div>
+			</div>
+			<div ng-class="{'has-error': productProfitMargin < 1}">
+				<label for="inputProfit" class="control-label">Margem de Lucro</label>
+				<div class="input-group">
+					<input type="text" class="form-control" id="inputProfit" name="inputProfit" readonly ng-model="profitMargin">
+					<span class="input-group-addon">%</span>
+				</div>
+			</div>
+			<div ng-class="{'has-error': priceInfoForm.inputPrice.$invalid}">
+				<label for="inputPrice" class="control-label">Preço de Venda</label>
+				<div class="input-group">
+					<span class="input-group-addon">R$</span>
+					<input type="text" class="form-control" id="inputPrice" name="inputPrice" ng-model="product.price" required ng-pattern="pricePattern">
+				</div>
+			</div>
+		</div>
+	</form>
 </div>

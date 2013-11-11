@@ -15,11 +15,11 @@ export module controller.product {
 
     export class EditProductController implements d.controller.base.Controller {
 
-        static $inject = ["$scope", "ProductService", "AlertService", "$ekathuwa"];
+        static $inject = ["$scope", "$modal", "ProductService", "AlertService"];
         constructor(public $scope: EditProductViewModel,
+            public $modal: any,
             public ProductService: d.service.contract.ProductService,
-            public AlertService: d.service.contract.util.AlertService,
-            public $ekathuwa: any) {
+            public AlertService: d.service.contract.util.AlertService) {
 
             this.processArgs();
             this.populateScope();
@@ -91,12 +91,15 @@ export module controller.product {
             this.priceInfoModal();
         }
 
+        private priceInfoModalInstance;
         priceInfoModal() {
-            this.$ekathuwa.modal({
-                id: "priceInfoModalId",
-                templateURL: "view/product/modal/priceInfoModal.html",
-                scope: this.$scope,
-                onHidden: () => { this.$scope.navigator.$location.search("priceInfo", null); }
+            if(this.priceInfoModalInstance){
+                this.priceInfoModalInstance.close();
+                return;
+            }
+            this.priceInfoModalInstance = this.$modal.open({
+                templateUrl: "view/product/modal/priceInfoModal.html",
+                scope: this.$scope
             });
         }
 

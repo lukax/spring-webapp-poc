@@ -20,8 +20,7 @@ requirejs.config({
         angularMocks: "lib/angular-mocks/angular-mocks",
         linqjs: "lib/linqjs-amd/linq",
         NProgress: "lib/nprogress/nprogress",
-        underscore: "lib/underscore-amd/underscore",
-        ngEkathuwa: "lib/ngEkathuwa/ekathuwa"
+        underscore: "lib/underscore-amd/underscore"
     },
     shim: {
         "bootstrap": {

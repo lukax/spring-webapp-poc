@@ -2,7 +2,6 @@
 ///<amd-dependency path="angular"/>
 ///<amd-dependency path="angularRoute"/>
 ///<amd-dependency path="angularUiRouter"/>
-///<amd-dependency path="ngEkathuwa"/>
 
 import e = require("./../service/mock/AuthServiceMock");
 import f = require("./../controller/MainNavbarController");
@@ -74,7 +73,7 @@ export module modularity {
         }
 
         constructor() {
-            this.module = angular.module("lwa.controller", ["lwa.service", "ui.router", "ngEkathuwa"]);
+            this.module = angular.module("lwa.controller", ["lwa.service", "ui.router"]);
             this.module.config(["$controllerProvider", "$provide", ($controllerProvider: ng.IControllerProvider, $provide: ng.auto.IProvideService) => {
                 (<any>this.module).lazy = {
                     controller: $controllerProvider.register,
