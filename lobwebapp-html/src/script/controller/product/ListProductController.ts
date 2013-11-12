@@ -55,5 +55,5 @@ export module controller.product {
 }
 
 export var register = (moduleName: string) => {
-    (<any>angular.module(moduleName)).lazy.controller("ListProductController", controller.product.ListProductController);
+    angular.module(moduleName).lazy.controller("ListProductController", controller.product.ListProductController);
 };

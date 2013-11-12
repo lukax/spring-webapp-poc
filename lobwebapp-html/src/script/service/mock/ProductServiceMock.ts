@@ -1,5 +1,5 @@
 ///<reference path="./../../reference.d.ts"/>
-///<amd-dependency path="angular"/>
+
 import a = require("./base/EntityServiceMock");
 
 export module service.mock {
@@ -44,5 +44,5 @@ export module service.mock {
 }
 
 export var register = (moduleName: string) => {
-    (<any>angular.module(moduleName)).lazy.service("ProductService", service.mock.ProductServiceMock);
+    angular.module(moduleName).lazy.service("ProductService", service.mock.ProductServiceMock);
 };

@@ -1,5 +1,5 @@
 ///<reference path="../reference.d.ts"/>
-///<amd-dependency path="angular"/>
+
 import a = require("./../service/mock/util/AlertServiceMock");
 import c = require("./../service/mock/UserServiceMock");
 import d = require("./../service/mock/AuthServiceMock");
@@ -12,7 +12,7 @@ export module modularity {
         constructor() {
             this.module = angular.module("lwa.service", ["lwa.util"]);
             this.module.config(["$provide", ($provide: ng.auto.IProvideService) => {
-                (<any>this.module).lazy = {
+                this.module.lazy = {
                     service: $provide.service
                 };
             }]);

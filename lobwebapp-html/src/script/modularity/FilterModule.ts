@@ -1,5 +1,5 @@
 ///<reference path="../reference.d.ts"/>
-///<amd-dependency path="angular"/>
+
 
 export module modularity {
     export class FilterModule {

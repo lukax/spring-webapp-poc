@@ -22,6 +22,10 @@ requirejs.config({
         NProgress: "lib/nprogress/nprogress",
         underscore: "lib/underscore-amd/underscore"
     },
+    priority: [
+        "angular",
+        "angularMocks"
+    ],
     shim: {
         "bootstrap": {
             deps: ["jquery"],

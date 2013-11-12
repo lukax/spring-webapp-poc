@@ -1,6 +1,4 @@
 ///<reference path="./../../reference.d.ts"/>
-///<amd-dependency path="angular"/>
-///<amd-dependency path="angularMocks"/>
 import i0 = require("script/controller/product/ListProductController");
 import i1 = require("script/service/mock/ProductServiceMock");
 import i2 = require("script/service/mock/util/AlertServiceMock");

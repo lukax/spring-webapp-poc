@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>404 Não Encontrado :(</title>
+    <title>500 Erro Interno :(</title>
     <style>
         ::-moz-selection {
             background: #b3d4fc;
@@ -141,15 +141,30 @@
 </head>
 <body>
     <div class="container">
-        <h1>404 Não encontrado <span>:(</span></h1>
-        <p>Desculpe, mas a página que você está tentando acessar não existe.</p>
-        <p>Parece que isso foi um resultado de:</p>
-        <ul>
-            <li>endereço digitado incorretamente</li>
-            <li>um link não existente</li>
-        </ul>
+        <h1>500 Erro Interno <span>:(</span></h1>
+        <p>Desculpe, ocorreu um erro interno.</p>
+        <h6 id="message"></h6>
         <script>
             var GOOG_FIXURL_LANG = (navigator.language || '').slice(0, 2), GOOG_FIXURL_SITE = location.host;
+
+            var parseQueryString = function () {
+                var str = window.location.search;
+                var objURL = {};
+                str.replace(
+                    new RegExp("([^?=&]+)(=([^&]*))?", "g"),
+                    function ($0, $1, $2, $3) {
+                        while ($3.indexOf("%20") != -1) {
+                            $3 = $3.replace("%20", " ");
+                        }
+                        objURL[$1] = $3;
+                    }
+                );
+                return objURL;
+            };
+
+            var query = parseQueryString();
+            if (query.message)
+                document.getElementById("message").textContent = parseQueryString().message;
         </script>
         <script src="//linkhelp.clients.google.com/tbproxy/lh/wm/fixurl.js"></script>
     </div>

@@ -9,14 +9,14 @@ export module util {
 
         }
 
-        public resolve(paths: string[], register?: string) {
+        public resolve(paths: string[], registerProvider: any) {
             var deferred = this.$q.defer();
             p.util.Progress.start();
 
-            if (register) {
+            if (registerProvider) {
                 paths.forEach((x: string) => {
                     require([x], (dep) => {
-                        if (dep.register) dep.register(register);
+                        if (dep.register) dep.register(registerProvider);
                     });
                 });
             }

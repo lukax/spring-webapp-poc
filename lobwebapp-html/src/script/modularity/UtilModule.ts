@@ -1,5 +1,5 @@
 ///<reference path="../reference.d.ts"/>
-///<amd-dependency path="angular"/>
+
 import _ = require("underscore");
 
 export module modularity {

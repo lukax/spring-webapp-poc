@@ -1,5 +1,5 @@
 ///<reference path="../reference.d.ts"/>
-///<amd-dependency path="angular"/>
+
 ///<amd-dependency path="angularRoute"/>
 ///<amd-dependency path="angularAnimate"/>
 ///<amd-dependency path="angularUi"/>

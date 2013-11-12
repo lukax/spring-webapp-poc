@@ -4,14 +4,14 @@ export var routes =
     "url": "/user",
     "templateUrl": "view/user/user.html",
     "controller": "",
-    "dependencies": []
+    "deps": []
 }, {
     "name": "user.board",
     "baseUrl": "/user",
     "url": "/user/board",
     "templateUrl": "view/user/boardUser.html",
     "controller": "BoardUserController",
-    "dependencies": [
+    "deps": [
         "controller/user/BoardUserController"
     ]
 }, {
@@ -20,7 +20,7 @@ export var routes =
     "url": "/user/auth",
     "templateUrl": "view/user/authUser.html",
     "controller": "AuthUserController",
-    "dependencies": [
+    "deps": [
         "controller/user/AuthUserController"
     ]
 }, {
@@ -28,14 +28,14 @@ export var routes =
     "url": "/product",
     "templateUrl": "view/product/product.html",
     "controller": "",
-    "dependencies": []
+    "deps": []
 }, {
     "name": "product.list",
     "baseUrl": "/product",
     "url": "/product/list?search&redirect",
     "templateUrl": "view/product/listProduct.html",
     "controller": "ListProductController",
-    "dependencies": [
+    "deps": [
         "controller/product/ListProductController",
         "service/mock/ProductServiceMock"
     ]
@@ -45,7 +45,7 @@ export var routes =
     "url": "/product/{productId:[0-9]{1,8}|new}?priceInfo", //0-9 numbers in 1-8 digits long match
     "templateUrl": "view/product/editProduct.html",
     "controller": "EditProductController",
-    "dependencies": [
+    "deps": [
         "controller/product/EditProductController",
         "service/mock/ProductServiceMock"
     ]
@@ -55,7 +55,7 @@ export var routes =
     "url": "/product/graph",
     "templateUrl": "view/product/graphProduct.html",
     "controller": "GraphProductController",
-    "dependencies": [
+    "deps": [
         "controller/product/GraphProductController",
         "service/mock/ProductServiceMock"
     ]
@@ -64,14 +64,14 @@ export var routes =
     "url": "/order",
     "templateUrl": "view/order/order.html",
     "controller": "",
-    "dependencies": []
+    "deps": []
 },{
     "name": "order.edit",
     "baseUrl": "/order",
     "url": "/order/{orderId:[0-9]{1,8}|new}?clientId&productId", //0-9 numbers in 1-8 digits long match
     "templateUrl": "view/order/editOrder.html",
     "controller": "EditOrderController",
-    "dependencies": [
+    "deps": [
         "controller/order/EditOrderController",
         "service/mock/ProductServiceMock"
     ]

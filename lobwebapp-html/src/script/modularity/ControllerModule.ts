@@ -1,5 +1,4 @@
 ///<reference path="./../reference.d.ts"/>
-///<amd-dependency path="angular"/>
 ///<amd-dependency path="angularRoute"/>
 ///<amd-dependency path="angularUiRouter"/>
 
@@ -12,6 +11,7 @@ import AppRoutes = require("./AppRoutes");
 export module modularity {
     export class ControllerModule {
         private module: ng.IModule;
+        private $provide: ng.auto.IProvideService;
 
         private stateProviderCfg = ($stateProvider: ng.ui.IStateProvider, $urlRouterProvider: any) => {
             $urlRouterProvider.otherwise("/user/auth");
@@ -21,7 +21,7 @@ export module modularity {
                     url: x.url.replace(x.baseUrl,""),
                     templateUrl: x.templateUrl,
                     controller: x.controller,
-                    resolve: this.loadDependencies(x.dependencies)
+                    resolve: this.loadDependencies(x.deps)
                 });
             });
 
@@ -75,7 +75,7 @@ export module modularity {
         constructor() {
             this.module = angular.module("lwa.controller", ["lwa.service", "ui.router"]);
             this.module.config(["$controllerProvider", "$provide", ($controllerProvider: ng.IControllerProvider, $provide: ng.auto.IProvideService) => {
-                (<any>this.module).lazy = {
+                this.module.lazy = {
                     controller: $controllerProvider.register,
                     service: $provide.service
                 };

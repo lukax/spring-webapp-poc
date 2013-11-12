@@ -80,17 +80,18 @@ require.config({
             "exports": "dcjs",
             init: ApplyCSS
         }
-    },
-	priority: [
-        "angular"
-	]
+    }
 });
+
+require.onError = (err: RequireError) => {
+        window.location.replace("500.html?message=" + err.requireType + " | " + err.requireModules + " | " + err.originalError);
+};
 
 require(["util/Progress"], (progress: any)=> {
    progress.util.Progress.start();
 });
 
-require(["modularity/AppModule", "util/Progress"], (app: any, progress: any) => {
+require(["jquery", "angular", "util/Progress", "modularity/AppModule"], ($: JQueryStatic, angular: ng.IAngularStatic, progress: any, app: any) => {
     new app.modularity.AppModule().bootstrap(document);
     progress.util.Progress.done();
 });

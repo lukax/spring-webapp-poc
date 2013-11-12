@@ -1,6 +1,4 @@
 ///<reference path="./../../../reference.d.ts"/>
-///<amd-dependency path="angular"/>
-///<amd-dependency path="angularMocks"/>
 import i0 = require("script/service/mock/util/AlertServiceMock");
 
 describe("service: AlertService", () => {

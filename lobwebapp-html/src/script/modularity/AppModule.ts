@@ -1,5 +1,4 @@
 ///<reference path="../reference.d.ts"/>
-///<amd-dependency path="angular"/>
 import a = require("./ControllerModule");
 import b = require("./DirectiveModule");
 import c = require("./FilterModule");
