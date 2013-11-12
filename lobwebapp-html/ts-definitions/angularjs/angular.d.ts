@@ -117,6 +117,7 @@ declare module ng {
         // Properties
         name: string;
         requires: string[];
+        lazy: any;
     }
 
     ///////////////////////////////////////////////////////////////////////////

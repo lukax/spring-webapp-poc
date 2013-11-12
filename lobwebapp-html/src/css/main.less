@@ -1,0 +1,73 @@
+@import "./../lib/lesshat/build/lesshat.less";
+@import "./../lib/bootstrap/less/bootstrap.less";
+@import "./../lib/bootstrap/less/theme.less";
+@import "./../lib/nprogress/nprogress.css";
+@import "./../lib/animate.css/animate.css";
+@import "typeahead.less";
+
+/* CONFIG */
+@icon-font-path: "./../lib/bootstrap/fonts/";
+
+
+/* IMPORTANT */
+
+body {
+    background: #fafafa;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: #333;
+}
+
+.modal {
+  display: block;
+  height: 0;
+  overflow: visible;
+}
+
+.alert {
+  padding: 5px;
+  margin-bottom: 1px;
+  border: 0px solid transparent;
+  border-radius: 4px;
+}
+
+.link {
+  cursor: pointer;
+}
+
+#nprogress .bar {
+  z-index: 10000;
+  height: 3px;
+}
+
+#nprogress .spinner {
+  z-index: 10000;
+  top: 5px;
+  right: 5px;
+}
+
+
+/* NAVBAR */
+
+ul.nav li.dropdown:hover > ul.dropdown-menu {
+    display: block;
+}
+ul.nav li.dropdown:hover {
+    background: #ebebeb;
+}
+
+
+/* ANIMATIONS */
+
+.product-list.ng-enter{
+    .animation(fadeInLeft 500ms);
+}
+.product-list.ng-leave{
+    .animation(fadeOut 300ms);
+}
+
+.alert.ng-enter{
+    .animation(pulse 500ms);
+}
+.alert.ng-leave{
+    .animation(fadeOut 500ms);
+}
