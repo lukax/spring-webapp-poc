@@ -10,5 +10,6 @@ module domain {
         group?: string;
         ncm?: number;
         date?: Date;
+        paymentMode?: number;
     }
 }

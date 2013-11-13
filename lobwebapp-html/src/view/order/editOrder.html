@@ -4,10 +4,10 @@
         <div class="col-md-11 input-group">
             <input type="text" class="form-control" id="orderId" readonly value="{{order.id}}">
             <span class="input-group-btn">
-                <a class="btn btn-default" data-ng-href="#/order/{{order.id -1}}" data-ng-disabled="isNewOrder">
+                <a class="btn btn-default" ng-href="#/order/{{order.id -1}}" ng-disabled="isNewOrder">
                     <span class="glyphicon glyphicon-arrow-left"></span>
                 </a>
-                <a class="btn btn-default" data-ng-href="#/order/{{order.id +1}}">
+                <a class="btn btn-default" ng-href="#/order/{{order.id +1}}">
                     <span class="glyphicon glyphicon-arrow-right"></span>
                 </a>
             </span>
@@ -21,10 +21,10 @@
                     <span class="glyphicon glyphicon-search"></span>
                 </button>
             </div>
-            <input type="text" class="form-control" id="clientId" name="clientId" placeholder="ID" autofocus data-ng-model="clientId" required>
+            <input type="text" class="form-control" id="clientId" name="clientId" placeholder="ID" autofocus ng-model="clientId" required>
         </div>
         <div class="col-md-9">
-            <p class="form-control-static">Detalhes do Cliente</p>
+            <p class="form-control-static">{{clientDetails}}</p>
         </div>
     </div>
     <div class="form-group">
@@ -32,38 +32,39 @@
             <label for="productId" class="col-md-1 control-label">Produto</label>
             <div class="col-md-2 input-group">
                 <div class="input-group-btn">
-                    <button type="button" class="btn btn-default" data-toggle="tooltip" title="Buscar Rápida de Produto" data-ng-click="quickSearchProduct()">
+                    <button type="button" class="btn btn-default" data-toggle="tooltip" title="Buscar Rápida de Produto" ng-click="quickSearchProduct()">
                         <span class="glyphicon glyphicon-search"></span>
                     </button>
                 </div>
-                <input type="text" class="form-control" id="productId" name="productId" placeholder="ID" data-ng-model="productId" required>
+                <input type="text" class="form-control" id="productId" name="productId" placeholder="ID" ng-model="productId" required ui-event="{blur: 'fetchProductDetails()'}">
             </div>
         </div>
         <div class="col-md-2 input-group" ng-class="{'has-error': orderDetail.productQuantity.$invalid}">
-            <input type="number" class="form-control" id="productQuantity" name="productQuantity" placeholder="Qt."
-                   data-ng-model="productQuantity" required min="0">
+            <input type="number" class="form-control" id="productQuantity" name="productQuantity" placeholder="Qt." ng-model="productQuantity" required min="0">
             <div class="input-group-btn">
-                <button type="button" class="btn btn-default" data-toggle="tooltip" title="Adicionar produto à lista" data-ng-click="addProduct(productId, productQuantity)">
+                <button type="button" class="btn btn-default" data-toggle="tooltip" title="Adicionar produto à lista" ng-click="addProduct(productId, productQuantity)">
                     <span class="glyphicon glyphicon-plus"></span>
                 </button>
             </div>
         </div>
         <div class="col-md-7">
-            <p class="form-control-static">Detalhes do Produto</p>
+            <p class="form-control-static">{{productDetails}}</p>
         </div>
     </div>
     <div class="form-group">
         <div class="col-md-offset-1 col-md-11">
             <ul class="list-group">
-                <li class="list-group-item" data-ng-repeat="product in order.products">
+                <li class="list-group-item" ng-repeat="product in order.products">
                     {{product.quantity}} Unid, R${{product.quantity * product.price}} - {{product.name}} {{product.description}}
                     <div class="pull-right">
-                        <button type="button" class="close" data-ng-click="removeProduct(product.id)">&times;</button>
+                        <button type="button" class="close" ng-click="removeProduct(product.id)">&times;</button>
                     </div>
                 </li>
             </ul>
         </div>
     </div>
+
+    
     <div class="form-group">
         <label for="total" class="col-md-1 control-label">Total</label>
         <div class="col-md-11 input-group">
@@ -71,44 +72,73 @@
             <input type="text" class="form-control" id="total" value="{{total}}" readonly>
         </div>
     </div>
-    <!--
-    <div class="form-group">
+
+    <div class="form-group" ng-class="{'has-error': orderDetail.inputPayment.$invalid || total > payment}" ng-show="total != 0">
         <label for="total" class="col-md-1 col-md-offset-1 control-label">Dinheiro</label>
         <div class="col-md-10 input-group">
             <span class="input-group-addon">R$</span>
-            <input type="text" class="form-control" id="inputPayment" name="inputPayment" data-ng-model="payment">
-        </div>
-        <label for="total" class="col-md-1 col-md-offset-1 control-label">Troco</label>
-        <div class="col-md-10 input-group">
-            <span class="input-group-addon">R$</span>
-            <input type="text" class="form-control" id="inputExchange" name="inputExchange" data-ng-model="exchange">
-        </div>
-    </div>
-    -->
-    <div class="form-group">
-        <div class="col-md-1 btn-group">
-            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                Status <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu" role="menu">
-                <li><a class="link">Pago</a></li>
-                <li><a class="link">Pagamento Pendente</a></li>
-                <li class="divider"></li>
-                <li><a class="link">Entregue</a></li>
-                <li><a class="link">Entrega Pendente</a></li>
-            </ul>
-        </div>
-        <div class="col-md-8">
-            <div data-ng-repeat="status in statusList">
-                <span class="label label-default">{{status}}</span>
+            <input type="number" class="form-control" id="inputPayment" name="inputPayment" ng-model="payment" required min="0">
+            <div class="input-group-btn">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    <ng-pluralize count="order.paymentMode" offset=2
+                                  when="{'0': 'À Vista',
+                                         '1': 'Cartão',
+                                         '2': 'Cheque'}">
+                    </ng-pluralize>
+                 <span class="caret"></span></button>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a class="link" ng-hide="order.paymentMode == 0" ng-click="order.paymentMode = 0;">À Vista</a></li>
+                    <li><a class="link" ng-hide="order.paymentMode == 1" ng-click="order.paymentMode = 1;">Cartão</a></li>
+                    <li><a class="link" ng-hide="order.paymentMode == 2" ng-click="order.paymentMode = 2;">Cheque</a></li>
+                </ul>
             </div>
         </div>
     </div>
-    <div class="pull-right" data-ng-class="{'btn-group': !isNewOrder}">
+
+    <div class="form-group" ng-show="order.paymentMode == 0 && exchange != 0">
+        <label for="total" class="col-md-1 col-md-offset-1 control-label">Troco</label>
+        <div class="col-md-10 input-group">
+            <span class="input-group-addon">R$</span>
+            <input type="text" class="form-control" id="inputExchange" name="inputExchange" value="{{exchange}}" readonly>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-1 btn-group">
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                <span class="glyphicon glyphicon-plus"></span>
+                Status <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+                <li><a class="link" ng-click="order.status.payment = 1;" ng-if="order.status.payment != 1">Pagamento Confirmado</a></li>
+                <li><a class="link" ng-click="order.status.payment = 0;" ng-if="order.status.payment != 0">Pagamento Pendente</a></li>
+                <li class="divider"></li>
+                <li><a class="link" ng-click="order.status.delivery = 1;" ng-if="order.status.delivery != 1">Entrega Pendente</a></li>
+                <li><a class="link" ng-click="order.status.delivery = 0;" ng-if="order.status.delivery != 0">Entrega Pendente</a></li>
+            </ul>
+        </div>
+        <div class="col-md-8">
+            <span class="label label-primary" ng-if="order.status.payment != -1">
+                <ng-pluralize count="order.status.payment" offset=2
+                              when="{'0': 'Pagamento pendente',
+                                     '1': 'Pagamento confirmado',
+                                     '2': 'Pagamento cancelado'}">
+                </ng-pluralize>
+            </span>
+            <span class="label label-default" ng-if="order.status.delivery != -1">
+                <ng-pluralize count="order.status.delivery" offset=2
+                              when="{'0': 'Entrega pendente',
+                                     '1': 'Entrega confirmada',
+                                     '2': 'Entrega cancelada'}">
+                </ng-pluralize>
+            </span>
+        </div>
+    </div>
+    <div class="pull-right" ng-class="{'btn-group': !isNewOrder}">
         <button class="btn btn-primary" type="submit" data-toggle="tooltip" title="Confirmar mudanças" data-loading-text="Salvando...">
             <span class="glyphicon glyphicon-floppy-disk"></span> Confirmar
         </button>
-        <a class="btn btn-default" data-toggle="tooltip" title="Remover Produto Atual" data-loading-text="Removendo..." data-ng-hide="isNewOrder">
+        <a class="btn btn-default" data-toggle="tooltip" title="Remover Produto Atual" data-loading-text="Removendo..." ng-hide="isNewOrder">
             Remover
         </a>
     </div>
