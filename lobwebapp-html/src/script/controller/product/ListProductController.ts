@@ -27,10 +27,10 @@ export module controller.product {
                 (successData, successStatus) => {
                     this.$scope.products = successData;
                     this.NavigationService.progress.done();
-                    if (this.redirect) this.AlertService.add("Clique em um produto da lista para voltar para a página anterior", "Busca Rápida", "info"); 
+                    if (this.redirect) this.AlertService.add({ content: "Clique em um produto da lista para voltar para a página anterior", title: "Busca Rápida", type: "info" }); 
                 },
                 (errorData, errorStatus) => {
-                    this.AlertService.add("Lista de Produtos não pôde ser carregada", String(errorData), "danger");
+                    this.AlertService.add({ content: "Lista de Produtos não pôde ser carregada", title: String(errorData), type: "danger" });
                     this.NavigationService.progress.done();
                 });
         }

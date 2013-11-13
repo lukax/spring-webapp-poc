@@ -1,6 +1,6 @@
 ///<reference path="./../../../reference.d.ts"/>
 
-export module service.mock.util{
+export module service.mock.util {
     export class AlertServiceMock implements d.service.contract.util.AlertService {
         private alerts: domain.util.Alert[];
 
@@ -10,16 +10,12 @@ export module service.mock.util{
             this.removeOld();
         }
 
-        add(message: string, title?: string, type?: string, time?: Date) {
+        add(alert: domain.util.Alert) {
             if (this.alerts.length >= 3) {
                 this.alerts.splice(0, 1);
             }
-            var alert: domain.util.Alert = {
-                type: type ? String(type) : 'success',
-                title: title,
-                content: message,
-                time: time || new Date()
-            };
+            if (!alert.time) alert.time = new Date();
+            if (!alert.type) alert.type = "success";
             this.alerts.push(alert);
             return alert;
         }
@@ -32,10 +28,6 @@ export module service.mock.util{
                 }
                 return false;
             });
-        }
-
-        removeAll() {
-            this.alerts = [];
         }
 
         list() {

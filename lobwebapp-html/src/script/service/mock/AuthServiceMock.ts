@@ -56,7 +56,7 @@ export module service.mock {
         }
 
         private temporaryUser() {
-            this.user = { id: 0, username: "", password: "", role: null, isLogged: false };
+            this.user = { id: 0, username: "", password: "", roles: [], isLogged: false };
         }
 
     }

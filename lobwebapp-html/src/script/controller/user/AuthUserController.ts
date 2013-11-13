@@ -6,12 +6,12 @@ export module controller.user {
         login: () => void;
     }
 
-    export class AuthUserController implements d.controller.base.Controller{
+    export class AuthUserController implements d.controller.base.Controller {
 
         static $inject = ['$scope', 'AuthService', 'AlertService'];
         constructor(public $scope: AuthUserViewModel,
-                    public AuthService: d.service.contract.AuthService,
-                    public AlertService: d.service.contract.util.AlertService) {
+            public AuthService: d.service.contract.AuthService,
+            public AlertService: d.service.contract.util.AlertService) {
 
             this.processArgs();
             this.populateScope();
@@ -22,19 +22,19 @@ export module controller.user {
                 (successData) => {
                     this.$scope.navigator.$location.url('/product/list');
                     this.$scope.user = successData;
-                    this.AlertService.add('Bem vindo ' + this.$scope.user.username);
+                    this.AlertService.add({ content: 'Bem vindo ' + this.$scope.user.username });
                 },
                 () => {
-                    this.AlertService.add('Usuário ou senha inválido', 'Login falhou', 'warning');
+                    this.AlertService.add({ content: 'Usuário ou senha inválido', title: 'Login falhou', type: 'warning' });
                 });
         }
 
-        processArgs(){
-            
+        processArgs() {
+
         }
 
         populateScope() {
-            this.$scope.user = { id: 0, username: '', password: '', role: '', isLogged:false };
+            this.$scope.user = { id: 0, username: '', password: '', roles: [], isLogged: false };
             this.$scope.login = () => this.login();
         }
     }

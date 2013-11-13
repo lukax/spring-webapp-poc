@@ -32,21 +32,21 @@ export module controller.product {
         saveProduct(product: domain.Product) {
             this.ProductService.save(product,
                 (successData: domain.Product, successStatus) => {
-                    this.AlertService.add("Novo produto " + successData.name + " foi adicionado", "Novo");
+                    this.AlertService.add({ content: "Novo produto " + successData.name + " foi adicionado", title: "Novo" });
                     this.$scope.navigator.$location.url("/product/" + String(successData));
                 },
                 (errorData, errorStatus) => {
-                    this.AlertService.add("Produto não pode ser salvado", String(errorData), "danger");
+                    this.AlertService.add({ content: "Produto não pode ser salvado", title: String(errorData), type: "danger" });
                 });
         }
 
         updateProduct(product: domain.Product) {
             this.ProductService.update(product,
                 (successData, successStatus) => {
-                    this.AlertService.add("Alterações em " + successData.name + " foram bem sucedidas", "Atualização");
+                    this.AlertService.add({ content: "Alterações em " + successData.name + " foram bem sucedidas", title: "Atualização" });
                 },
                 (errorData, errorStatus) => {
-                    this.AlertService.add("Produto não pode ser atualizado", String(errorData), "danger");
+                    this.AlertService.add({ content: "Produto não pode ser atualizado", title: String(errorData), type: "danger" });
                 });
         }
 
@@ -58,11 +58,11 @@ export module controller.product {
         removeProduct(product: domain.Product) {
             this.ProductService.remove(product,
                 (successData, successStatus) => {
-                    this.AlertService.add("Produto removido com sucesso");
+                    this.AlertService.add({ content: "Produto removido com sucesso" });
                     this.newProduct();
                 },
                 (errorData, errorStatus) => {
-                    this.AlertService.add("Produto não pode ser removido", String(errorData), "danger");
+                    this.AlertService.add({ content: "Produto não pode ser removido", title: String(errorData), type: "danger" });
                 });
         }
 
@@ -72,7 +72,7 @@ export module controller.product {
                     this.$scope.product = successData;
                 },
                 (errorData, errorStatus) => {
-                    this.AlertService.add("Produto com o ID especificado não foi encontrado", String(errorData), "warning");
+                    this.AlertService.add({ content: "Produto com o ID especificado não foi encontrado", title: String(errorData), type: "warning" });
                     this.newProduct();
                 });
         }
@@ -127,7 +127,7 @@ export module controller.product {
             } else if (routeProdId == "new") {
                 this.$scope.product = { id: 0, name: "s", description: "", quantity: 0, price: 0, costPrice: 0, group: "", ncm: 0 };
             } else {
-                this.AlertService.add("Produto ID Inválido", "", "warning");
+                this.AlertService.add({ content: "Produto ID Inválido", type: "warning" });
                 this.newProduct();
             }
             if (this.$scope.navigator.params().priceInfo == "true") {

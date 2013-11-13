@@ -43,7 +43,7 @@ export module controller.order {
                         successData.quantity = quantity;
                         this.$scope.order.products.push(successData);
                     }, (errorData: domain.util.Error) => {
-                        this.AlertService.add(errorData.message, "Produto nao encontrado", "warning");
+                        this.AlertService.add({ content: errorData.message, title: "Produto nao encontrado", type: "warning" });
                     });
             }
         }
@@ -78,12 +78,13 @@ export module controller.order {
         }
 
         fetchProductDetails() {
+            console.log("fetched product details");
             if (this.$scope.productId > 0) {
                 this.ProductService.find(this.$scope.productId,
                     (successData: domain.Product) => {
                         this.$scope.productDetails = successData.name + ", " + successData.description;
                     }, (errorData: domain.util.Error) => {
-                        this.AlertService.add(errorData.message, "Produto nao encontrado", "warning");
+                        this.$scope.productDetails = "Produto nao encontrado";
                     });
             }
             else {
@@ -126,6 +127,7 @@ export module controller.order {
         populateScope() {
             this.listenOrderChanges();
             this.listenProductsChanges();
+            this.fetchProductDetails();
             this.$scope.order = { id: 0, client: "", products: [], status: { payment: -1, delivery: -1 }, paymentMode: 0 };
             this.$scope.addProduct = (id: number, quantity: number) => this.addProduct(id, quantity);
             this.$scope.removeProduct = (index: number) => this.removeProduct(index);
