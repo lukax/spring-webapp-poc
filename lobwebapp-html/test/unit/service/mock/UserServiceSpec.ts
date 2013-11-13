@@ -1,4 +1,6 @@
 ///<reference path="./../../../reference.d.ts"/>
+///<amd-dependency path="angular"/>
+///<amd-dependency path="angularMocks"/>
 import i0 = require("script/service/mock/UserServiceMock");
 import _ = require("underscore");
 

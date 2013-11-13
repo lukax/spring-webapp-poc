@@ -6,20 +6,19 @@ var ApplyCSS = ($: JQueryStatic, css: any) => {
 }
 
 require.config({
+    waitSeconds: 10,
     paths: {
         text: "./../lib/requirejs-text/text",
         jquery: "./../lib/jquery/jquery",
         bootstrap: "./../lib/bootstrap/dist/js/bootstrap",
 		angular: "./../lib/angular/angular",
         angularRoute: "./../lib/angular-route/angular-route",
-        //angularMocks: "./../lib/angular-mocks/angular-mocks",
         angularAnimate: "./../lib/angular-animate/angular-animate",
         angularUi: "./../lib/angular-ui/build/angular-ui",
         angularUiUtils: "./../lib/angular-ui-utils/ui-utils",
         angularUiRouter: "./../lib/angular-ui-router/release/angular-ui-router",
         angularUiBootstrap: "./../lib/angular-ui-bootstrap/ui-bootstrap-0.6.0",
         underscore: "./../lib/underscore-amd/underscore",
-        //backbone: "./../lib/backbone-amd/backbone",
         ngAnimateAnimateCss: "./../lib/ngAnimate-animate.css/animate",
         nprogress: "./../lib/nprogress/nprogress",
         dcjs: "./../lib/dcjs/dc",
@@ -29,55 +28,27 @@ require.config({
     },
 	baseUrl: "script",
     shim: {
-        "bootstrap": {
-            deps: [ "jquery" ],
-            "exports": "bootstrap"
-        },
+        "bootstrap": ["jquery"],
         "angular": {
             deps: ["jquery"],
-            "exports": "angular"
+            exports: "angular"
         },
-        "angularRoute": {
-            deps: ["angular"],
-            "exports": "angularRoute"
-        },
-        "angularMocks": {
-            deps: ["angular"],
-            "exports": "angularMocks"
-        },
-        "angularAnimate": {
-            deps: ["angular"],
-            "exports": "angularAnimate"
-        },
-        "angularUi": {
-            deps: ["angular", "jquery"],
-            "exports": "angularUi"
-        },
-        "angularUiUtils": {
-            deps: ["angular"],
-            "exports": "angularUiUtils"
-        },
-        "angularUiRouter": {
-            deps: ["angular"],
-            "exports": "angularUiRouter"
-        },
-        "angularUiBootstrap": {
-            deps: ["angular", "jquery"],
-            "exports": "angularUiBootstrap"
-        },
-        "ngAnimateAnimateCss": {
-            deps: ["angularAnimate"],
-            "exports": "ngAnimateAnimateCss"
-        },
+        "angularRoute": ["angular"],
+        "angularAnimate": ["angular"],
+        "angularUi": ["angular"],
+        "angularUiUtils": ["angular"],
+        "angularUiRouter": ["angular"],
+        "angularUiBootstrap": ["angular"],
+        "ngAnimateAnimateCss": ["angularAnimate"],
         "NProgress": {
             deps: ["jquery"],
-            "exports": "NProgress"
+            exports: "NProgress"
         },
-        "d3js": { "exports": "dcjs" },
-        "crossfilter": { "exports": "crossfilter" },
-        "dcjs": {   //Loading CSS On Demand
+        "d3js": { exports: "d3" },
+        "crossfilter": { exports: "crossfilter" },
+        "dcjs": {
             deps: ["jquery","text!./../lib/dcjs/dc.css","d3js","crossfilter"],
-            "exports": "dcjs",
+            exports: "dc",
             init: ApplyCSS
         }
     }

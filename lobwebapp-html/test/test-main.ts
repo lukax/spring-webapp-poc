@@ -18,38 +18,21 @@ requirejs.config({
         angularRoute: "lib/angular-route/angular-route",
         angularUiRouter: "lib/angular-ui-router/release/angular-ui-router",
         angularMocks: "lib/angular-mocks/angular-mocks",
-        linqjs: "lib/linqjs-amd/linq",
         NProgress: "lib/nprogress/nprogress",
         underscore: "lib/underscore-amd/underscore"
     },
-    priority: [
-        "angular",
-        "angularMocks"
-    ],
     shim: {
-        "bootstrap": {
-            deps: ["jquery"],
-            "exports": "bootstrap"
-        },
+        "bootstrap": ["jquery"],
         "angular": {
             deps: ["jquery"],
-            "exports": "angular"
+            exports: "angular"
         },
-        "angularRoute": {
-            deps: ["angular"],
-            "exports": "angularRoute"
-        },
-        "angularUiRouter": {
-            deps: ["angular"],
-            "exports": "angularUiRouter"
-        },
-        "angularMocks": {
-            deps: ["angular"],
-            "exports": "angularMocks"
-        },
+        "angularRoute":  ["angular"],
+        "angularUiRouter": ["angular"],
+        "angularMocks": ["angular"],
         "NProgress": {
             deps: ["jquery"],
-            "exports": "NProgress"
+            exports: "NProgress"
         }
     },
     deps: tests,

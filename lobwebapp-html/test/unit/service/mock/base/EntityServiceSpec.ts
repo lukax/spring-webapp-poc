@@ -1,4 +1,6 @@
 ///<reference path="./../../../../reference.d.ts"/>
+///<amd-dependency path="angular"/>
+///<amd-dependency path="angularMocks"/>
 declare module "script/service/mock/base/EntityServiceMock" { export = any }
 import svc = require("script/service/mock/base/EntityServiceMock");
 import _ = require("underscore");
