@@ -8,7 +8,7 @@ module domain {
         costPrice?: number;
         price: number;
         group?: string;
-        ncm?: number;
+        ncm?: string;
         date?: Date;
         paymentMode?: number;
     }

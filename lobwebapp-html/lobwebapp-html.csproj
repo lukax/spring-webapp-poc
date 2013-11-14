@@ -56,6 +56,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Include="src\css\.gitignore" />
+    <Content Include="src\css\main.min.css">
+      <DependentUpon>main.less</DependentUpon>
+    </Content>
     <Content Include="src\img\favicon.ico" />
     <Content Include="src\index.html" />
     <Content Include="src\script\.gitignore" />
@@ -122,10 +125,12 @@
     <TypeScriptCompile Include="src\script\controller\product\ListProductController.ts" />
     <TypeScriptCompile Include="src\script\controller\user\AuthUserController.ts" />
     <TypeScriptCompile Include="src\script\controller\user\BoardUserController.ts" />
+    <TypeScriptCompile Include="src\script\directive\ProductDetailDirective.ts" />
     <TypeScriptCompile Include="src\script\directive\LabeledInputDirective.ts" />
     <TypeScriptCompile Include="src\script\domain\base\AbstractEntity.ts" />
     <TypeScriptCompile Include="src\script\domain\Order.ts" />
     <TypeScriptCompile Include="src\script\domain\Product.ts" />
+    <TypeScriptCompile Include="src\script\domain\Client.ts" />
     <TypeScriptCompile Include="src\script\domain\User.ts" />
     <TypeScriptCompile Include="src\script\domain\util\Alert.ts" />
     <TypeScriptCompile Include="src\script\domain\util\Error.ts" />

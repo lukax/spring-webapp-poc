@@ -9,7 +9,7 @@ export module directive {
             product: '=ref',
         };
         public template =
-            '<div>'
+            '<div ng-if="product.id != 0">'
         +       '{{product.quantity}} Unid, R${{product.quantity * product.price}} - {{product.name}} {{product.description}}'
         +   '</div>'
         ;

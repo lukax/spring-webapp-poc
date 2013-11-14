@@ -124,7 +124,7 @@ export module controller.product {
             } else if (routeProdId == 0) {
                 this.newProduct();
             } else if (routeProdId == "new") {
-                this.$scope.product = { id: 0, name: "s", description: "", quantity: 0, price: 0, costPrice: 0, group: "", ncm: 0 };
+                this.$scope.product = { id: 0, name: "s", description: "", quantity: 0, price: 0, costPrice: 0, group: "", ncm: "" };
             } else {
                 this.AlertService.add({ content: "Produto ID Inválido", type: "warning" });
                 this.newProduct();

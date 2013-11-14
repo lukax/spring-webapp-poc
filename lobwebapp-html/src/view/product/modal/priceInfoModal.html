@@ -9,7 +9,7 @@
 				<label for="inputCostPrice" class="control-label">Preço de Custo</label>
 				<div class="input-group">
 					<span class="input-group-addon">R$</span>
-					<input type="text" class="form-control" id="inputCostPrice" name="inputCostPrice" ng-model="product.costPrice" required ng-pattern="pricePattern" autofocus>
+					<input type="text" class="form-control" id="inputCostPrice" name="inputCostPrice" ng-model="product.costPrice" required ng-pattern="/^(?=.*[1-9])\d*(?:\.\d{1,2})?$/" autofocus>
 				</div>
 			</div>
 			<div ng-class="{'has-error': productProfitMargin < 1}">
@@ -23,7 +23,7 @@
 				<label for="inputPrice" class="control-label">Preço de Venda</label>
 				<div class="input-group">
 					<span class="input-group-addon">R$</span>
-					<input type="text" class="form-control" id="inputPrice" name="inputPrice" ng-model="product.price" required ng-pattern="pricePattern">
+					<input type="text" class="form-control" id="inputPrice" name="inputPrice" ng-model="product.price" required ng-pattern="/^(?=.*[1-9])\d*(?:\.\d{1,2})?$/">
 				</div>
 			</div>
 		</div>

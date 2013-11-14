@@ -58,6 +58,14 @@ ul.nav li.dropdown:hover {
 
 /* ANIMATIONS */
 
+.lwa-fade-left.ng-enter, .lwa-fade-left.ng-hide-remove{
+    .animation(fadeInLeft 500ms);
+}
+
+.lwa-fade-left.ng-leave, .lwa-fade-left.ng-hide-add{
+    .animation(fadeOutLeft 300ms);
+}
+
 .product-list.ng-enter{
     .animation(fadeInLeft 500ms);
 }

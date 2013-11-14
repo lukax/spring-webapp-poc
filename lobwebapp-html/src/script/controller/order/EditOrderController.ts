@@ -9,7 +9,7 @@ export module controller.order {
         payment: number;
         exchange: number;
         total: number;
-        isNewOrder: boolean;
+        isOrderNew: boolean;
         addProduct: (id: number, quantity: number) => void;
         removeProduct: (id: number) => void;
         quickSearchProduct: () => void;
@@ -57,7 +57,7 @@ export module controller.order {
         }
 
         quickSearchProduct() {
-            var preparedUrl = "/order/" + (this.isNewOrder() ? "new" : String(this.$scope.order.id));
+            var preparedUrl = "/order/" + (this.isOrderNew() ? "new" : String(this.$scope.order.id));
             this.$scope.navigator.navigateTo("/product/list?redirect=" + preparedUrl);
         }
 
@@ -71,7 +71,7 @@ export module controller.order {
             }, 100);
         }
 
-        isNewOrder() {
+        isOrderNew() {
             return (this.$scope.order.id == 0);
         }
 
@@ -102,7 +102,6 @@ export module controller.order {
         listenOrderChanges() {
             this.$scope.$watch("order", (newValue: domain.Order, oldValue: domain.Order) => {
                 console.log("Object order changed");
-                this.$scope.isNewOrder = this.isNewOrder();
             });
             this.$scope.$watch("payment", (newValue: domain.Order, oldValue: domain.Order) => {
                 if (this.$scope.total > 0) {
@@ -117,6 +116,7 @@ export module controller.order {
 
         listenProductsChanges() {
             this.$scope.$watch("order.products", (newValue: domain.Product[], oldValue: domain.Product[]) => {
+                this.$scope.isOrderNew = this.isOrderNew();
                 console.log("Object order.products changed");
                 this.total();
             }, true);
@@ -135,7 +135,8 @@ export module controller.order {
         }
 
         populateScope() {
-            this.$scope.order = { id: 0, client: null, products: [], status: { payment: -1, delivery: -1 }, paymentMode: 0 };
+            this.$scope.order = { id: 0, client: null, products: [], status: { payment: 0, delivery: -1 }, paymentMode: 0, date: new Date() };
+            this.$scope.payment = 0;
             this.emptyClient();
             this.emptyProduct();
             this.listenOrderChanges();

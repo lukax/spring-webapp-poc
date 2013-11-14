@@ -1,78 +1,114 @@
 <div class="row">
     <div class="col-md-8">
-        <form class="form-horizontal" role="form" name="productDetail" data-ng-submit="saveChanges(product)" novalidate>
+        <form class="form-horizontal" role="form" name="productForm" ng-submit="saveChanges(product)" novalidate>
             <div class="form-group">
                 <label for="inputId" class="col-md-2 control-label">ID</label>
                 <div class="col-md-10 input-group">
-                    <input type="number" class="form-control" id="inputId" name="inputId" readonly data-ng-model="product.id">
+                    <input type="text" class="form-control" id="inputId" name="inputId" readonly ng-model="product.id">
                     <span class="input-group-btn">
-                        <a class="btn btn-default" data-ng-href="#/product/{{product.id -1}}" data-ng-disabled="isNewProduct">
+                        <a class="btn btn-default" ng-href="#/product/{{product.id -1}}" ng-disabled="isNewProduct">
                             <span class="glyphicon glyphicon-arrow-left"></span>
                         </a>
-                        <a class="btn btn-default" data-ng-href="#/product/{{product.id +1}}">
+                        <a class="btn btn-default" ng-href="#/product/{{product.id +1}}">
                             <span class="glyphicon glyphicon-arrow-right"></span>
                         </a>
                     </span>
                 </div>
             </div>
-            <div class="form-group" ng-class="{'has-error': productDetail.inputName.$invalid}">
+            <div class="form-group" ng-class="{'has-error': productForm.name.$invalid}">
                 <label for="inputName" class="col-md-2 control-label">Nome</label>
                 <div class="col-md-10">
                     <input type="text" class="form-control" id="inputName" name="inputName" placeholder="Digite o nome do Produto"
-                           autofocus data-ng-model="product.name" required data-ng-minlength="2">
+                           autofocus ng-model="product.name" required ng-minlength="2">
                 </div>
             </div>
             <div class="form-group">
-                <div ng-class="{'has-error': productDetail.inputPrice.$invalid}">
+                <div ng-class="{'has-error': productForm.inputPrice.$invalid}">
                     <label for="inputPrice" class="col-md-2 control-label">Preço</label>
                     <div class="col-md-7 input-group">
                         <span class="input-group-addon">R$</span>
                         <input type="text" class="form-control" id="inputPrice" name="inputPrice"
-                               data-ng-model="product.price" required data-ng-pattern="/^(?=.*[1-9])\d*(?:\.\d{1,2})?$/">
+                               ng-model="product.price" required ng-pattern="/^(?=.*[1-9])\d*(?:\.\d{1,2})?$/">
                         <div class="input-group-btn">
                             <button type="button" class="btn btn-default dropdown-toggle" id="btnPriceInfoId"
-                                    data-ng-click="priceInfo()" data-toggle="tooltip" title="Detalhar Cálculo de Preço" data-ng-disabled="product.price == 0">
-                                <span class="glyphicon glyphicon-new-window"></span>
+                                    ng-click="togglePriceInfo = !togglePriceInfo" data-toggle="tooltip" title="Detalhar Cálculo de Preço" ng-disabled="product.price == 0">
+                                <span class="glyphicon glyphicon-chevron-down" ng-class="{'glyphicon-chevron-down': !togglePriceInfo, 'glyphicon-chevron-up': togglePriceInfo}"></span>
                             </button>
                         </div>
                     </div>
                 </div>
-                <div ng-class="{'has-error': productDetail.inputQuantity.$invalid}">
-                    <label class="col-md-1 control-label" for="inputQuantity">Qt.</label>
+                <div ng-class="{'has-error': productForm.inputQuantity.$invalid}">
+                    <label class="col-md-1 control-label" for="inputQuantity">Qt</label>
                     <div class="col-md-2">
                         <input type="number" class="form-control" id="inputQuantity" name="inputQuantity"
-                               data-ng-model="product.quantity" required min="0">
+                               ng-model="product.quantity" required min="0">
                     </div>
                 </div>
             </div>
-            <div class="form-group">
-                <div ng-class="{'has-error': productDetail.inputNcm.$invalid}">
-                    <label for="inputNcm" class="col-md-2 control-label">NCM</label>
-                    <div class="col-md-4">
-                        <input type="text" class="form-control" id="inputNcm" name="inputNcm" data-ng-model="product.ncm">
+
+            <div class="lwa-fade-left" ng-show="togglePriceInfo">
+                <div class="form-group">
+                    <div ng-class="{'has-error': priceInfoForm.inputCostPrice.$invalid}">
+                        <label for="inputCostPrice" class="col-md-3 control-label">Custo</label>
+                        <div class="col-md-9 input-group">
+                            <span class="input-group-addon">R$</span>
+                            <input type="text" class="form-control" id="inputCostPrice" name="inputCostPrice" ng-model="product.costPrice" required ng-pattern="/^(?=.*[1-9])\d*(?:\.\d{1,2})?$/" autofocus>
+                        </div>
                     </div>
                 </div>
-                <div ng-class="{'has-error': productDetail.inputGroup.$invalid}">
+
+                <div class="form-group">
+                    <div ng-class="{'has-error': productProfitMargin < 1}">
+                        <label for="inputProfit" class="col-md-3 control-label">Lucro</label>
+                        <div class="col-md-9 input-group">
+                            <input type="text" class="form-control" id="inputProfit" name="inputProfit" readonly ng-model="profitMargin">
+                            <span class="input-group-addon">%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div ng-class="{'has-error': productForm.inputNcm.$invalid}">
+                    <label for="inputNcm" class="col-md-2 control-label">NCM</label>
+                    <div class="col-md-4">
+                        <input type="text" class="form-control" id="inputNcm" name="inputNcm" ng-model="product.ncm">
+                    </div>
+                </div>
+                <div ng-class="{'has-error': productForm.inputGroup.$invalid}">
                     <label for="inputGroup" class="col-md-1 control-label">Grupo</label>
                     <div class="col-md-5">
                         <input type="text" class="form-control" id="inputGroup" name="inputGroup"
-                               data-ng-model="product.group" data-typeahead="productGroup for productGroup in productGroups | limitTo:5">
+                               ng-model="product.group" data-typeahead="productGroup for productGroup in productGroups | limitTo:5">
                     </div>
                 </div>
             </div>
-            <div class="form-group" ng-class="{'has-error': productDetail.inputDescription.$invalid}">
+            <div class="form-group" ng-class="{'has-error': productForm.inputDescription.$invalid}">
                 <label for="inputDescription" class="col-md-2 control-label">Descrição</label>
                 <div class="col-md-10">
                     <textarea class="form-control" id="inputDescription" name="inputDescription"
-                              placeholder="Digite uma Descrição" rows="2" data-ng-model="product.description" required></textarea>
+                              placeholder="Digite uma Descrição" rows="2" ng-model="product.description" required></textarea>
                 </div>
             </div>
-            <div class="pull-right" data-ng-class="{'btn-group': !isNewProduct}">
+            <div class="pull-right" ng-class="{'btn-group': !isNewProduct}">
                 <button class="btn btn-primary" type="submit" data-toggle="tooltip" title="Salvar Alterações do Produto"
-                        data-loading-text="Salvando..." data-ng-disabled="productDetail.inputName.$invalid || productDetail.inputDescription.$invalid" data-ng-hide="readMode">
+                        data-loading-text="Salvando..." ng-hide="readMode"
+                        ng-disabled="productForm.inputName.$invalid || 
+                                     productForm.inputPrice.$invalid ||
+                                     productForm.inputQuantity.$invalid ||
+                                     productForm.inputNcm.$invalid ||
+                                     productForm.inputGroup.$invalid ||
+                                     productForm.inputDescription.$invalid ||
+                                     productForm.inputQuantity.$invalid ||
+                                     productForm.inputName.$pristine && 
+                                     productForm.inputPrice.$pristine &&   
+                                     productForm.inputQuantity.$pristine &&
+                                     productForm.inputNcm.$pristine &&
+                                     productForm.inputGroup.$pristine &&
+                                     productForm.inputDescription.$pristine">
                     <span class="glyphicon glyphicon-floppy-disk"></span> Salvar
                 </button>
-                <a class="btn btn-default" data-toggle="tooltip" title="Remover Produto Atual" data-loading-text="Removendo..." data-ng-click="removeProduct(product)" data-ng-hide="isNewProduct">
+                <a class="btn btn-default" data-toggle="tooltip" title="Remover Produto Atual" data-loading-text="Removendo..." ng-click="removeProduct(product)" ng-hide="isNewProduct">
                     Remover
                 </a>
             </div>
