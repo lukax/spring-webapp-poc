@@ -3,28 +3,25 @@
 export module controller.order {
     interface Status { content: string; type: string; }
     export interface EditOrderViewModel extends d.controller.base.ViewModel {
-        clientId: number;
-        productId: number;
-        productQuantity: number;
+        client: domain.Client;
+        product: domain.Product;
         order: domain.Order;
-        isNewOrder: boolean;
+        payment: number;
+        exchange: number;
         total: number;
+        isNewOrder: boolean;
         addProduct: (id: number, quantity: number) => void;
         removeProduct: (id: number) => void;
         quickSearchProduct: () => void;
-        payment: number;
-        exchange: number;
-        fetchProductDetails: () => void;
-        productDetails: string;
-        clientDetails: string;
+        fetchProduct: () => void;
     }
 
     export class EditOrderController implements d.controller.base.Controller {
 
         static $inject = ["$scope", "ProductService", "$timeout", "AlertService"];
         constructor(public $scope: EditOrderViewModel, public ProductService: d.service.contract.ProductService, public $timeout: ng.ITimeoutService, public AlertService: d.service.contract.util.AlertService) {
-            this.processArgs();
             this.populateScope();
+            this.processArgs();
         }
 
         addProduct(id: number, quantity: number) {
@@ -77,18 +74,26 @@ export module controller.order {
             return (this.$scope.order.id == 0);
         }
 
-        fetchProductDetails() {
-            console.log("fetched product details");
-            if (this.$scope.productId > 0) {
-                this.ProductService.find(this.$scope.productId,
+        emptyProduct() {
+            this.$scope.product = { id: 0, name: "", description: "", quantity: 0, price: 0 };
+        }
+
+        emptyClient() {
+            this.$scope.client = { id: 0, name: "", lastName: "" };
+        }
+
+        fetchProduct() {
+            if (this.$scope.product.id > 0) {
+                this.ProductService.find(this.$scope.product.id,
                     (successData: domain.Product) => {
-                        this.$scope.productDetails = successData.name + ", " + successData.description;
+                        this.$scope.product = successData;
+                        this.$scope.product.quantity = 0;
                     }, (errorData: domain.util.Error) => {
-                        this.$scope.productDetails = "Produto nao encontrado";
+                        this.emptyProduct();
                     });
             }
             else {
-                this.$scope.productDetails = "";
+                this.emptyProduct();
             }
         }
 
@@ -116,23 +121,27 @@ export module controller.order {
         }
 
         processArgs() {
-            this.$scope.productId = this.$scope.navigator.params().productId;
-            this.$scope.clientId = this.$scope.navigator.params().clientId;
+            this.$scope.product.id = this.$scope.navigator.params().productId;
+            this.$scope.client.id = this.$scope.navigator.params().clientId;
             var orderId = this.$scope.navigator.params().orderId;
+
             if (orderId) {
                 //TODO: OrderService to fetch order...
+
             }
+            this.fetchProduct();
         }
 
         populateScope() {
+            this.$scope.order = { id: 0, client: null, products: [], status: { payment: -1, delivery: -1 }, paymentMode: 0 };
+            this.emptyClient();
+            this.emptyProduct();
             this.listenOrderChanges();
             this.listenProductsChanges();
-            this.fetchProductDetails();
-            this.$scope.order = { id: 0, client: "", products: [], status: { payment: -1, delivery: -1 }, paymentMode: 0 };
             this.$scope.addProduct = (id: number, quantity: number) => this.addProduct(id, quantity);
             this.$scope.removeProduct = (index: number) => this.removeProduct(index);
             this.$scope.quickSearchProduct = () => this.quickSearchProduct();
-            this.$scope.fetchProductDetails = () => this.fetchProductDetails();
+            this.$scope.fetchProduct = () => this.fetchProduct();
         }
     }
 }

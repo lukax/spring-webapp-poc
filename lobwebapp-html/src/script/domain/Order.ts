@@ -10,7 +10,7 @@ module domain {
     }
 
     export interface Order extends domain.base.AbstractEntity {
-        client: string;
+        client: domain.Client;
         products: domain.Product[];
         status: OrderStatus;
         date?: Date;

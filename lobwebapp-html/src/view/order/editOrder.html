@@ -21,7 +21,7 @@
                     <span class="glyphicon glyphicon-search"></span>
                 </button>
             </div>
-            <input type="text" class="form-control" id="clientId" name="clientId" placeholder="ID" autofocus ng-model="clientId" required>
+            <input type="number" class="form-control" id="clientId" name="clientId" placeholder="ID" autofocus ng-model="client.id" required min="1">
         </div>
         <div class="col-md-9">
             <p class="form-control-static">{{clientDetails}}</p>
@@ -36,19 +36,19 @@
                         <span class="glyphicon glyphicon-search"></span>
                     </button>
                 </div>
-                <input type="text" class="form-control" id="productId" name="productId" placeholder="ID" ng-model="productId" required ui-event="{blur: 'fetchProductDetails()'}">
+                <input type="number" class="form-control" id="productId" name="productId" placeholder="ID" ng-model="product.id" required min="1" ui-event="{blur: 'fetchProduct()'}">
             </div>
         </div>
         <div class="col-md-2 input-group" ng-class="{'has-error': orderDetail.productQuantity.$invalid}">
-            <input type="number" class="form-control" id="productQuantity" name="productQuantity" placeholder="Qt." ng-model="productQuantity" required min="0">
+            <input type="number" class="form-control" id="productQuantity" name="productQuantity" placeholder="Qt." ng-model="product.quantity" required min="1">
             <div class="input-group-btn">
-                <button type="button" class="btn btn-default" data-toggle="tooltip" title="Adicionar produto à lista" ng-click="addProduct(productId, productQuantity)">
+                <button type="button" class="btn btn-default" data-toggle="tooltip" title="Adicionar produto à lista" ng-click="addProduct(product.id, product.quantity)">
                     <span class="glyphicon glyphicon-plus"></span>
                 </button>
             </div>
         </div>
         <div class="col-md-7">
-            <p class="form-control-static">{{productDetails}}</p>
+            <p class="form-control-static">{{product.name}} {{product.description}}</p>
         </div>
     </div>
     <div class="form-group">
@@ -69,15 +69,15 @@
         <label for="total" class="col-md-1 control-label">Total</label>
         <div class="col-md-11 input-group">
             <span class="input-group-addon">R$</span>
-            <input type="text" class="form-control" id="total" value="{{total}}" readonly>
+            <input type="text" class="form-control" id="total" value="{{total | number:2}}" readonly>
         </div>
     </div>
 
-    <div class="form-group" ng-class="{'has-error': orderDetail.inputPayment.$invalid || total > payment}" ng-show="total != 0">
+    <div class="form-group" ng-class="{'has-error': orderDetail.inputPayment.$invalid || total > payment}" ng-show="total != 0 && order.status.payment != 1">
         <label for="total" class="col-md-1 col-md-offset-1 control-label">Dinheiro</label>
         <div class="col-md-10 input-group">
             <span class="input-group-addon">R$</span>
-            <input type="number" class="form-control" id="inputPayment" name="inputPayment" ng-model="payment" required min="0">
+            <input type="text" class="form-control" id="inputPayment" name="inputPayment" ng-model="payment" required min="0">
             <div class="input-group-btn">
                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                     <ng-pluralize count="order.paymentMode" offset=2
@@ -95,11 +95,11 @@
         </div>
     </div>
 
-    <div class="form-group" ng-show="order.paymentMode == 0 && exchange != 0">
+    <div class="form-group" ng-show="order.paymentMode == 0 && exchange != 0 && order.status.payment != 1">
         <label for="total" class="col-md-1 col-md-offset-1 control-label">Troco</label>
         <div class="col-md-10 input-group">
             <span class="input-group-addon">R$</span>
-            <input type="text" class="form-control" id="inputExchange" name="inputExchange" value="{{exchange}}" readonly>
+            <input type="text" class="form-control" id="inputExchange" name="inputExchange" value="{{exchange | number:2}}" readonly>
         </div>
     </div>
 
@@ -113,7 +113,7 @@
                 <li><a class="link" ng-click="order.status.payment = 1;" ng-if="order.status.payment != 1">Pagamento Confirmado</a></li>
                 <li><a class="link" ng-click="order.status.payment = 0;" ng-if="order.status.payment != 0">Pagamento Pendente</a></li>
                 <li class="divider"></li>
-                <li><a class="link" ng-click="order.status.delivery = 1;" ng-if="order.status.delivery != 1">Entrega Pendente</a></li>
+                <li><a class="link" ng-click="order.status.delivery = 1;" ng-if="order.status.delivery != 1">Entrega Confirmada</a></li>
                 <li><a class="link" ng-click="order.status.delivery = 0;" ng-if="order.status.delivery != 0">Entrega Pendente</a></li>
             </ul>
         </div>
