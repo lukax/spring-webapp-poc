@@ -4,7 +4,6 @@ import a = require("./../../util/StdUtil");
 export module controller.product {
     export interface EditProductViewModel extends d.controller.base.ViewModel {
         product: domain.Product;
-        pricePattern: RegExp;
         profitMargin: number;
         productGroups: string[];
         isNewProduct: boolean;
@@ -138,7 +137,6 @@ export module controller.product {
         populateScope() {
             this.onProduct();
             this.onProfitMargin();
-            this.$scope.pricePattern = /^(?=.*[1-9])\d*(?:\.\d{1,2})?$/;
             this.$scope.saveChanges = (product: domain.Product) => this.saveChanges(product);
             this.$scope.removeProduct = (product: domain.Product) => this.removeProduct(product);
             this.$scope.priceInfo = () => this.priceInfo();
@@ -147,4 +145,4 @@ export module controller.product {
     }
 }
 
-(<any>angular.module("lwa.controller")).lazy.controller("EditProductController", controller.product.EditProductController);
+angular.module("lwa.controller").lazy.controller("EditProductController", controller.product.EditProductController);

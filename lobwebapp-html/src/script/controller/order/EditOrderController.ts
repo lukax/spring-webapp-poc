@@ -43,6 +43,7 @@ export module controller.order {
                         this.AlertService.add({ content: errorData.message, title: "Produto nao encontrado", type: "warning" });
                     });
             }
+            this.emptyProduct();
         }
 
         removeProduct(id: number) {
@@ -86,8 +87,9 @@ export module controller.order {
             if (this.$scope.product.id > 0) {
                 this.ProductService.find(this.$scope.product.id,
                     (successData: domain.Product) => {
+                        var previousQt = this.$scope.product.quantity; 
                         this.$scope.product = successData;
-                        this.$scope.product.quantity = 0;
+                        this.$scope.product.quantity = previousQt;
                     }, (errorData: domain.util.Error) => {
                         this.emptyProduct();
                     });

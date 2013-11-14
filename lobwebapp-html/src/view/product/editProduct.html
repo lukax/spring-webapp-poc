@@ -28,7 +28,7 @@
                     <div class="col-md-7 input-group">
                         <span class="input-group-addon">R$</span>
                         <input type="text" class="form-control" id="inputPrice" name="inputPrice"
-                               data-ng-model="product.price" required data-ng-pattern="pricePattern">
+                               data-ng-model="product.price" required data-ng-pattern="/^(?=.*[1-9])\d*(?:\.\d{1,2})?$/">
                         <div class="input-group-btn">
                             <button type="button" class="btn btn-default dropdown-toggle" id="btnPriceInfoId"
                                     data-ng-click="priceInfo()" data-toggle="tooltip" title="Detalhar Cálculo de Preço" data-ng-disabled="product.price == 0">

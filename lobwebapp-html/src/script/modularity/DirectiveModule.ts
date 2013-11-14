@@ -7,7 +7,8 @@
 ///<amd-dependency path="ngAnimateAnimateCss"/>
 ///<amd-dependency path="angularUiUtils"/>
 
-import b = require('./../directive/LabeledInputDirective');
+import i0 = require('./../directive/LabeledInputDirective');
+import i1 = require('./../directive/ProductDetailDirective');
 
 export module modularity {
     export class DirectiveModule {
@@ -23,7 +24,8 @@ export module modularity {
                 .directive('lwaProgress', this.progress)
                 .directive('lwaHref', ['$location', '$route', this.lwaHref])
                 .directive('lwaCaret', this.lwaCaret)
-                .directive('stdForm', [() => new b.directive.LabeledInputDirective()])
+                .directive('lwaProductDetail', [()=> new i1.directive.ProductDetailDirective()])
+                .directive('stdForm', [() => new i0.directive.LabeledInputDirective()])
             ;
             return this;
         }
