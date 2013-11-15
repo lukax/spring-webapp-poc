@@ -10,6 +10,7 @@ require.config({
     paths: {
         text: "./../lib/requirejs-text/text",
         jquery: "./../lib/jquery/jquery",
+        jqueryMaskedInput: "./../lib/jquery.maskedinput/jquery.maskedinput",
         bootstrap: "./../lib/bootstrap/dist/js/bootstrap",
 		angular: "./../lib/angular/angular",
         angularRoute: "./../lib/angular-route/angular-route",
@@ -28,6 +29,7 @@ require.config({
     },
 	baseUrl: "script",
     shim: {
+        "jqueryMaskedInput": ["jquery"],
         "bootstrap": ["jquery"],
         "angular": {
             deps: ["jquery"],
@@ -36,7 +38,7 @@ require.config({
         "angularRoute": ["angular"],
         "angularAnimate": ["angular"],
         "angularUi": ["angular"],
-        "angularUiUtils": ["angular"],
+        "angularUiUtils": ["jqueryMaskedInput","angular"],
         "angularUiRouter": ["angular"],
         "angularUiBootstrap": ["angular"],
         "ngAnimateAnimateCss": ["angularAnimate"],

@@ -15,7 +15,7 @@
                     </span>
                 </div>
             </div>
-            <div class="form-group" ng-class="{'has-error': productForm.name.$invalid}">
+            <div class="form-group" ng-class="{'has-error': productForm.inputName.$invalid}">
                 <label for="inputName" class="col-md-2 control-label">Nome</label>
                 <div class="col-md-10">
                     <input type="text" class="form-control" id="inputName" name="inputName" placeholder="Digite o nome do Produto"
@@ -72,7 +72,7 @@
                 <div ng-class="{'has-error': productForm.inputNcm.$invalid}">
                     <label for="inputNcm" class="col-md-2 control-label">NCM</label>
                     <div class="col-md-4">
-                        <input type="text" class="form-control" id="inputNcm" name="inputNcm" ng-model="product.ncm">
+                        <input type="text" class="form-control" id="inputNcm" name="inputNcm" ng-model="product.ncm" ui-jq="mask" ui-options="'9999.99.99'">
                     </div>
                 </div>
                 <div ng-class="{'has-error': productForm.inputGroup.$invalid}">
