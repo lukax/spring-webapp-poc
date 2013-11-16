@@ -7,9 +7,8 @@ module domain {
         quantity: number;
         costPrice?: number;
         price: number;
-        group?: string;
+        category?: string;
         ncm?: string;
         date?: Date;
-        paymentMode?: number;
     }
 }

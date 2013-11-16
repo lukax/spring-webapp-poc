@@ -1,10 +1,10 @@
-package com.espindola.lobwebapp.domain.base;
+package com.espindola.lobwebapp.domain.util;
 
 public class ResponseMessage{
 	private String message;
 	private String description;
-	private ResponseDegree degree;
-	public ResponseMessage(String error, String message, ResponseDegree degree) {
+	private ResponseLevel degree;
+	public ResponseMessage(String error, String message, ResponseLevel degree) {
 		this.setDegree(degree);
 		this.setError(error);
 		this.setMessage(message);
@@ -21,10 +21,10 @@ public class ResponseMessage{
 	public void setMessage(String message) {
 		this.description = message;
 	}
-	public ResponseDegree getDegree() {
+	public ResponseLevel getDegree() {
 		return degree;
 	}
-	public void setDegree(ResponseDegree degree) {
+	public void setDegree(ResponseLevel degree) {
 		this.degree = degree;
 	}
 

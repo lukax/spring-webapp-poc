@@ -5,7 +5,7 @@ export module controller.product {
     export interface EditProductViewModel extends d.controller.base.ViewModel {
         product: domain.Product;
         profitMargin: number;
-        productGroups: string[];
+        categories: string[];
         isNewProduct: boolean;
         saveChanges: (product: domain.Product) => void;
         removeProduct: (product: domain.Product) => void;
@@ -76,9 +76,9 @@ export module controller.product {
                 });
         }
 
-        fetchGroups() {
-            this.ProductService.listGroups(
-                (successData) => { this.$scope.productGroups = successData; },
+        fetchCategories() {
+            this.ProductService.listCategory(
+                (successData) => { this.$scope.categories = successData; },
                 (errorData) => { });
         }
 
@@ -124,7 +124,7 @@ export module controller.product {
             } else if (routeProdId == 0) {
                 this.newProduct();
             } else if (routeProdId == "new") {
-                this.$scope.product = { id: 0, name: "s", description: "", quantity: 0, price: 0, costPrice: 0, group: "", ncm: "" };
+                this.$scope.product = { id: 0, name: "s", description: "", quantity: 0, price: 0, costPrice: 0, category: "", ncm: "" };
             } else {
                 this.AlertService.add({ content: "Produto ID Inválido", type: "warning" });
                 this.newProduct();
@@ -140,7 +140,7 @@ export module controller.product {
             this.$scope.saveChanges = (product: domain.Product) => this.saveChanges(product);
             this.$scope.removeProduct = (product: domain.Product) => this.removeProduct(product);
             this.$scope.priceInfo = () => this.priceInfo();
-            this.fetchGroups();
+            this.fetchCategories();
         }
     }
 }

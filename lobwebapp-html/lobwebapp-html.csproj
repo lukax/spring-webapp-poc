@@ -128,6 +128,7 @@
     <TypeScriptCompile Include="src\script\directive\ProductDetailDirective.ts" />
     <TypeScriptCompile Include="src\script\directive\LabeledInputDirective.ts" />
     <TypeScriptCompile Include="src\script\domain\base\AbstractEntity.ts" />
+    <TypeScriptCompile Include="src\script\domain\base\Person.ts" />
     <TypeScriptCompile Include="src\script\domain\Order.ts" />
     <TypeScriptCompile Include="src\script\domain\Product.ts" />
     <TypeScriptCompile Include="src\script\domain\Client.ts" />
@@ -144,12 +145,17 @@
     <TypeScriptCompile Include="src\script\modularity\UtilModule.ts" />
     <TypeScriptCompile Include="src\script\reference.d.ts" />
     <TypeScriptCompile Include="src\script\service\contract\AuthService.ts" />
+    <TypeScriptCompile Include="src\script\service\contract\base\PersonService.ts" />
     <TypeScriptCompile Include="src\script\service\contract\base\EntityService.ts" />
     <TypeScriptCompile Include="src\script\service\contract\ProductService.ts" />
+    <TypeScriptCompile Include="src\script\service\contract\ClientService.ts" />
     <TypeScriptCompile Include="src\script\service\contract\UserService.ts" />
     <TypeScriptCompile Include="src\script\service\contract\util\AlertService.ts" />
     <TypeScriptCompile Include="src\script\service\contract\util\NavigationService.ts" />
+    <TypeScriptCompile Include="src\script\service\impl\base\PersonServiceImpl.ts" />
     <TypeScriptCompile Include="src\script\service\impl\base\EntityServiceImpl.ts" />
+    <TypeScriptCompile Include="src\script\service\impl\UserServiceImpl.ts" />
+    <TypeScriptCompile Include="src\script\service\impl\ClientServiceImpl.ts" />
     <TypeScriptCompile Include="src\script\service\impl\ProductServiceImpl.ts" />
     <TypeScriptCompile Include="src\script\service\impl\util\NavigationServiceImpl.ts" />
     <TypeScriptCompile Include="src\script\service\mock\AuthServiceMock.ts" />

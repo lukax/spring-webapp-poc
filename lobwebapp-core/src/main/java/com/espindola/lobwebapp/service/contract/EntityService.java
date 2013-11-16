@@ -1,4 +1,4 @@
-package com.espindola.lobwebapp.service.contract.base;
+package com.espindola.lobwebapp.service.contract;
 
 import java.util.List;
 
@@ -11,7 +11,7 @@ public interface EntityService<TEntity extends AbstractEntity> {
 	
 	void save(TEntity entity) throws EntityExistsException, EntityInvalidException;
 	void update(TEntity entity) throws EntityNotFoundException, EntityInvalidException;
-	void delete(Long id) throws EntityNotFoundException;
+	void remove(Long id) throws EntityNotFoundException;
 	TEntity find(Long id) throws EntityNotFoundException;
 	TEntity get(TEntity entity) throws EntityNotFoundException, EntityInvalidException;
 	List<TEntity> list();

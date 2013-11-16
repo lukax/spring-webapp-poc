@@ -36,7 +36,7 @@ export module controller.product {
         buildGraphs(products: domain.Product[]){
             var data = crossfilter(products);
             var categoryDimension = data.dimension((d: domain.Product) => {
-                    return d.group;
+                    return d.category;
                 });
             var categoryDimensionPriceGroup = categoryDimension.group().reduceSum((d: domain.Product) => {
                     return d.price * d.quantity;

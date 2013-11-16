@@ -3,7 +3,6 @@ package com.espindola.lobwebapp.controller.base;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,14 +16,14 @@ import com.espindola.lobwebapp.domain.base.AbstractEntity;
 import com.espindola.lobwebapp.exception.EntityExistsException;
 import com.espindola.lobwebapp.exception.EntityInvalidException;
 import com.espindola.lobwebapp.exception.EntityNotFoundException;
-import com.espindola.lobwebapp.service.contract.base.EntityService;
+import com.espindola.lobwebapp.service.contract.EntityService;
 
 @Controller
-public abstract class EntityController<E extends AbstractEntity> {
+public abstract class AbstractEntityController<E extends AbstractEntity> {
 
 	private EntityService<E> service;
 
-	public EntityController(EntityService<E> service) {
+	public AbstractEntityController(EntityService<E> service) {
 		this.service = service;
 	}
 
@@ -56,7 +55,7 @@ public abstract class EntityController<E extends AbstractEntity> {
 	@ResponseStatus(value = HttpStatus.OK)
 	public synchronized void delete(@PathVariable("id") Long id)
 			throws EntityNotFoundException {
-		service.delete(id);
+		service.remove(id);
 	}
 	
 	@RequestMapping(value="/test", method = RequestMethod.GET)

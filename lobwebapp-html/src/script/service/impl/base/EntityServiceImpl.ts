@@ -1,7 +1,7 @@
 ///<reference path="./../../../reference.d.ts"/>
 
 export module service.impl.base {
-    export class AbstractEntityService<T extends domain.base.AbstractEntity> implements d.service.contract.base.EntityService<T> {
+    export class EntityServiceImpl<T extends domain.base.AbstractEntity> implements d.service.contract.base.EntityService<T> {
 
         private rootUrl: string = "http://localhost:8080/lobwebapp-core/rest";
         private http: ng.IHttpService;

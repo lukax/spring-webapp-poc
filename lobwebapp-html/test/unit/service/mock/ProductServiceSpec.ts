@@ -14,7 +14,7 @@ describe('service: ProductService', () => {
 
     it("should retrieve a list of groups", inject((ProductService:d.service.contract.ProductService, $timeout: ng.ITimeoutService) => {
         var spy = jasmine.createSpy('list');
-        ProductService.listGroups(spy, spy);
+        ProductService.listCategory(spy, spy);
         expect(spy).not.toHaveBeenCalled();
         $timeout.flush();
         expect(spy.calls.length).toBe(1);

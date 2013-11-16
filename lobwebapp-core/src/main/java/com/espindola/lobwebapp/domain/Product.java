@@ -1,5 +1,7 @@
 package com.espindola.lobwebapp.domain;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.validation.constraints.Min;
@@ -9,18 +11,30 @@ import javax.validation.constraints.Size;
 import com.espindola.lobwebapp.domain.base.AbstractEntity;
 
 @Entity
-@Table(name = "PT_PRODUCT")
+@Table(name = "PRODUCT")
 public class Product extends AbstractEntity {
-	
+
 	@NotNull
 	@Size(min = 3)
 	private String name;
-	
-	@Min(0)
-	private Double price;
-	
+
 	@NotNull
 	private String description;
+
+	@Min(0)
+	private Integer quantity;
+
+	@Min(0)
+	private Double costPrice;
+
+	@Min(0)
+	private Double price;
+
+	private String category;
+
+	private String ncm;
+
+	private Date date;
 
 	public String getDescription() {
 		return description;
@@ -28,6 +42,46 @@ public class Product extends AbstractEntity {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public int getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
+
+	public String getNcm() {
+		return ncm;
+	}
+
+	public void setNcm(String ncm) {
+		this.ncm = ncm;
+	}
+
+	public String getGroup() {
+		return category;
+	}
+
+	public void setGroup(String group) {
+		this.category = group;
+	}
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
 	}
 
 	public Double getPrice() {
@@ -38,11 +92,12 @@ public class Product extends AbstractEntity {
 		this.price = price;
 	}
 
-	public String getName() {
-		return name;
+	public Double getCostPrice() {
+		return costPrice;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setCostPrice(Double costPrice) {
+		this.costPrice = costPrice;
 	}
+
 }

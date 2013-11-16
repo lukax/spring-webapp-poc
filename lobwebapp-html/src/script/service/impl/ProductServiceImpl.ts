@@ -2,7 +2,7 @@
 import a = require('./base/EntityServiceImpl');
 
 export module service.impl {
-    export class DefaultProductService extends a.service.impl.base.AbstractEntityService<domain.Product> implements d.service.contract.ProductService {
+    export class ProductServiceImpl extends a.service.impl.base.EntityServiceImpl<domain.Product> implements d.service.contract.ProductService {
 
         static $inject = ['$http'];
         constructor($http: ng.IHttpService) {
@@ -14,7 +14,7 @@ export module service.impl {
             errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
         }
 
-        public listGroups(
+        public listCategory(
             successCallback: (data: string[], status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
             errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
         }
