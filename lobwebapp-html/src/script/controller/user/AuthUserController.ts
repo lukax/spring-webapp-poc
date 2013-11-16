@@ -40,4 +40,6 @@ export module controller.user {
     }
 }
 
-(<any>angular.module('lwa.controller')).lazy.controller('AuthUserController', controller.user.AuthUserController);
+export var register = (moduleName: string) => {
+    angular.module(moduleName).lazy.controller('AuthUserController', controller.user.AuthUserController);
+};

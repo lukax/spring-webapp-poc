@@ -61,3 +61,7 @@ export module service.mock {
 
     }
 }
+
+export var register = (moduleName: string) => {
+    angular.module(moduleName).lazy.service("AuthService", service.mock.AuthServiceMock);
+};

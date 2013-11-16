@@ -149,4 +149,7 @@ export module controller.order {
     }
 }
 
-angular.module("lwa.controller").lazy.controller("EditOrderController", controller.order.EditOrderController);
+
+export var register = (moduleName: string) => {
+    angular.module(moduleName).lazy.controller("EditOrderController", controller.order.EditOrderController);
+};

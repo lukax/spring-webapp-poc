@@ -42,10 +42,10 @@ export module controller.product {
         updateProduct(product: domain.Product) {
             this.ProductService.update(product,
                 (successData, successStatus) => {
-                    this.AlertService.add({ content: "Alterações em " + successData.name + " foram bem sucedidas", title: "Atualização" });
+                    this.AlertService.add({ title: "Atualização", content: "Alterações em " + successData.name + " foram bem sucedidas" });
                 },
                 (errorData, errorStatus) => {
-                    this.AlertService.add({ content: "Produto não pode ser atualizado", title: String(errorData), type: "danger" });
+                    this.AlertService.add({ title: "Produto não pode ser atualizado", content: String(errorData), type: "danger" });
                 });
         }
 
@@ -61,7 +61,7 @@ export module controller.product {
                     this.newProduct();
                 },
                 (errorData, errorStatus) => {
-                    this.AlertService.add({ content: "Produto não pode ser removido", title: String(errorData), type: "danger" });
+                    this.AlertService.add({ title: "Produto não pode ser removido", content: String(errorData), type: "danger" });
                 });
         }
 
@@ -71,7 +71,7 @@ export module controller.product {
                     this.$scope.product = successData;
                 },
                 (errorData, errorStatus) => {
-                    this.AlertService.add({ content: "Produto com o ID especificado não foi encontrado", title: String(errorData), type: "warning" });
+                    this.AlertService.add({ title: "Produto com o ID especificado não foi encontrado", content: String(errorData), type: "warning" });
                     this.newProduct();
                 });
         }
@@ -145,4 +145,6 @@ export module controller.product {
     }
 }
 
-angular.module("lwa.controller").lazy.controller("EditProductController", controller.product.EditProductController);
+export var register = (moduleName: string) => {
+    angular.module(moduleName).lazy.controller("EditProductController", controller.product.EditProductController);
+};

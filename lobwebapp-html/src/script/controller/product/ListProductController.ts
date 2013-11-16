@@ -30,7 +30,7 @@ export module controller.product {
                     if (this.redirect) this.AlertService.add({ content: "Clique em um produto da lista para voltar para a página anterior", title: "Busca Rápida", type: "info" }); 
                 },
                 (errorData, errorStatus) => {
-                    this.AlertService.add({ content: "Lista de Produtos não pôde ser carregada", title: String(errorData), type: "danger" });
+                    this.AlertService.add({ content: String(errorData), title: "Lista de Produtos não pôde ser carregada", type: "danger" });
                     this.NavigationService.progress.done();
                 });
         }

@@ -124,4 +124,6 @@ export module controller.product {
     }
 }
 
-(<any>angular.module("lwa.controller")).lazy.controller("GraphProductController", controller.product.GraphProductController);
+export var register = (moduleName: string) => {
+    angular.module(moduleName).lazy.controller("GraphProductController", controller.product.GraphProductController);
+};

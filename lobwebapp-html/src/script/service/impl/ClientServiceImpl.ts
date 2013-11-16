@@ -11,3 +11,7 @@ export module service.impl {
 
     }
 }
+
+export var register = (moduleName: string) => {
+    angular.module(moduleName).lazy.service("ClientService", service.impl.ClientServiceImpl);
+};

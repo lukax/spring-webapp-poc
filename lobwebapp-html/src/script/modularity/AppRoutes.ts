@@ -21,7 +21,8 @@ export var routes =
     "templateUrl": "view/user/authUser.html",
     "controller": "AuthUserController",
     "deps": [
-        "controller/user/AuthUserController"
+        "controller/user/AuthUserController",
+        "service/mock/AuthUserServiceMock"
     ]
 }, {
     "name": "product",

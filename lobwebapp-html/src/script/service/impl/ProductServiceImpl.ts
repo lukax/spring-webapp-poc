@@ -20,3 +20,7 @@ export module service.impl {
         }
     }
 }
+
+export var register = (moduleName: string) => {
+    angular.module(moduleName).lazy.service("ProductService", service.impl.ProductServiceImpl);
+};

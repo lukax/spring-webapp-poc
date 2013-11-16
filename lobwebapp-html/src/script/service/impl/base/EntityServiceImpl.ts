@@ -3,12 +3,10 @@
 export module service.impl.base {
     export class EntityServiceImpl<T extends domain.base.AbstractEntity> implements d.service.contract.base.EntityService<T> {
 
-        private rootUrl: string = "http://localhost:8080/lobwebapp-core/rest";
-        private http: ng.IHttpService;
-
-        constructor(contextUrl: string, $http: ng.IHttpService) {
+        private rootUrl: string = "http://localhost:9000/api/";
+        
+        constructor(contextUrl: string, public $http: ng.IHttpService) {
             this.rootUrl += '/' + contextUrl;
-            this.http = $http;
         }
 
         public save(entity: T,
@@ -48,7 +46,7 @@ export module service.impl.base {
 
 
         public getHttpService() {
-            return this.http;
+            return this.$http;
         }
 
     }
