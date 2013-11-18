@@ -48,6 +48,7 @@
 ///<reference path="./service/impl/UserServiceImpl.ts"/>
 
 ///<reference path="./service/mock/base/EntityServiceMock.ts"/>
+///<reference path="./service/mock/base/PersonServiceMock.ts"/>
 ///<reference path="./service/mock/util/AlertServiceMock.ts"/>
 ///<reference path="./service/mock/AuthServiceMock.ts"/>
 ///<reference path="./service/mock/ProductServiceMock.ts"/>

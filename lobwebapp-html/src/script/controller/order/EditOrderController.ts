@@ -14,12 +14,15 @@ export module controller.order {
         removeProduct: (id: number) => void;
         quickSearchProduct: () => void;
         fetchProduct: () => void;
+        fetchClient: () => void;
     }
 
     export class EditOrderController implements d.controller.base.Controller {
 
-        static $inject = ["$scope", "ProductService", "$timeout", "AlertService"];
-        constructor(public $scope: EditOrderViewModel, public ProductService: d.service.contract.ProductService, public $timeout: ng.ITimeoutService, public AlertService: d.service.contract.util.AlertService) {
+        static $inject = ["$scope", "ProductService", "$timeout", "AlertService", "ClientService"];
+        constructor(public $scope: EditOrderViewModel, public ProductService: d.service.contract.ProductService, public $timeout: ng.ITimeoutService,
+            public AlertService: d.service.contract.util.AlertService, public ClientService: d.service.contract.ClientService) {
+
             this.populateScope();
             this.processArgs();
         }
@@ -80,14 +83,14 @@ export module controller.order {
         }
 
         emptyClient() {
-            this.$scope.client = { id: 0, name: "", lastName: "" };
+            this.$scope.client = { id: 0, firstName: "", lastName: "" };
         }
 
         fetchProduct() {
             if (this.$scope.product.id > 0) {
                 this.ProductService.find(this.$scope.product.id,
                     (successData: domain.Product) => {
-                        var previousQt = this.$scope.product.quantity; 
+                        var previousQt = this.$scope.product.quantity;
                         this.$scope.product = successData;
                         this.$scope.product.quantity = previousQt;
                     }, (errorData: domain.util.Error) => {
@@ -96,6 +99,20 @@ export module controller.order {
             }
             else {
                 this.emptyProduct();
+            }
+        }
+
+        fetchClient() {
+            if (this.$scope.client.id > 0) {
+                this.ClientService.find(this.$scope.client.id,
+                    (successData: domain.Client) => {
+                        this.$scope.client = successData;
+                    }, (errorData: domain.util.Error) => {
+                        this.emptyClient();
+                    });
+            }
+            else {
+                this.emptyClient();
             }
         }
 
@@ -145,6 +162,7 @@ export module controller.order {
             this.$scope.removeProduct = (index: number) => this.removeProduct(index);
             this.$scope.quickSearchProduct = () => this.quickSearchProduct();
             this.$scope.fetchProduct = () => this.fetchProduct();
+            this.$scope.fetchClient = () => this.fetchClient();
         }
     }
 }

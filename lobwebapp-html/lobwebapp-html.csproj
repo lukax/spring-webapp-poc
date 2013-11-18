@@ -160,7 +160,9 @@
     <TypeScriptCompile Include="src\script\service\impl\util\NavigationServiceImpl.ts" />
     <TypeScriptCompile Include="src\script\service\mock\AuthServiceMock.ts" />
     <TypeScriptCompile Include="src\script\service\mock\base\EntityServiceMock.ts" />
+    <TypeScriptCompile Include="src\script\service\mock\base\PersonServiceMock.ts" />
     <TypeScriptCompile Include="src\script\service\mock\ProductServiceMock.ts" />
+    <TypeScriptCompile Include="src\script\service\mock\ClientServiceMock.ts" />
     <TypeScriptCompile Include="src\script\service\mock\UserServiceMock.ts" />
     <TypeScriptCompile Include="src\script\service\mock\util\AlertServiceMock.ts" />
     <TypeScriptCompile Include="src\script\util\DependencyManager.ts" />

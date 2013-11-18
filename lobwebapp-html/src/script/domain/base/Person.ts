@@ -2,7 +2,7 @@
 
 module domain.base {
     export interface Person extends domain.base.AbstractEntity {
-        firstName?: string; 
-        lastName?: string;
+        firstName: string; 
+        lastName: string;
     }
 }

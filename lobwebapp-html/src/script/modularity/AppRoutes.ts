@@ -22,7 +22,7 @@ export var routes =
     "controller": "AuthUserController",
     "deps": [
         "controller/user/AuthUserController",
-        "service/mock/AuthUserServiceMock"
+        "service/mock/AuthServiceMock"
     ]
 }, {
     "name": "product",
@@ -74,6 +74,7 @@ export var routes =
     "controller": "EditOrderController",
     "deps": [
         "controller/order/EditOrderController",
-        "service/mock/ProductServiceMock"
+        "service/mock/ProductServiceMock",
+        "service/mock/ClientServiceMock"
     ]
 }];
