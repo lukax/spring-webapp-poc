@@ -6,5 +6,6 @@ import com.espindola.lobwebapp.domain.Product;
 import com.espindola.lobwebapp.exception.EntityNotFoundException;
 
 public interface ProductService extends EntityService<Product> {
-	List<Product> find(String name) throws EntityNotFoundException;
+	List<Product> findByName(String name) throws EntityNotFoundException;
+	List<String> listCategory();
 }

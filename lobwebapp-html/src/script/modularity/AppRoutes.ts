@@ -17,11 +17,12 @@ export var routes =
 }, {
     "name": "user.auth",
     "baseUrl": "/user",
-    "url": "/user/auth",
+    "url": "/user/auth?error",
     "templateUrl": "view/user/authUser.html",
     "controller": "AuthUserController",
     "deps": [
         "controller/user/AuthUserController",
+        //"service/impl/AuthServiceImpl"
         "service/mock/AuthServiceMock"
     ]
 }, {
@@ -38,6 +39,7 @@ export var routes =
     "controller": "ListProductController",
     "deps": [
         "controller/product/ListProductController",
+        //"service/impl/ProductServiceImpl"
         "service/mock/ProductServiceMock"
     ]
 }, {
@@ -48,6 +50,7 @@ export var routes =
     "controller": "EditProductController",
     "deps": [
         "controller/product/EditProductController",
+        //"service/impl/ProductServiceImpl"
         "service/mock/ProductServiceMock"
     ]
 }, {
@@ -58,6 +61,7 @@ export var routes =
     "controller": "GraphProductController",
     "deps": [
         "controller/product/GraphProductController",
+        //"service/impl/ProductServiceImpl"
         "service/mock/ProductServiceMock"
     ]
 }, {
@@ -74,7 +78,9 @@ export var routes =
     "controller": "EditOrderController",
     "deps": [
         "controller/order/EditOrderController",
+        //"service/impl/ProductServiceImpl",
         "service/mock/ProductServiceMock",
+        //"service/impl/ClientServiceImpl"
         "service/mock/ClientServiceMock"
     ]
 }];

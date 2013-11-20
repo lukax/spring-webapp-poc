@@ -2,6 +2,7 @@ package com.espindola.lobwebapp.controller.base;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
@@ -23,6 +24,7 @@ public abstract class AbstractEntityController<E extends AbstractEntity> {
 
 	private EntityService<E> service;
 
+	@Autowired
 	public AbstractEntityController(EntityService<E> service) {
 		this.service = service;
 	}

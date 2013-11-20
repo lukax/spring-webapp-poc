@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	http://www.springframework.org/schema/security
+	http://www.springframework.org/schema/security/spring-security-3.1.xsd">
+ 
+	<global-method-security secured-annotations="enabled"/>
+	
+	<http auto-config="false" use-expressions="true" entry-point-ref="ajaxAwareLoginUrlAuthenticationEntryPoint" >
+		<form-login
+			login-processing-url="/rest/login" 
+			username-parameter="username"
+			password-parameter="password" 
+			always-use-default-target="false"
+			authentication-success-handler-ref="ajaxAwareUrlAuthenticationSuccessHandler"
+			authentication-failure-handler-ref="ajaxAwareUrlAuthenticationFailureHandler" 
+			/>
+		<remember-me
+			services-ref="xDomainRememberMeServices" key="lobwebapp"
+			/>
+		<logout
+			logout-url="/rest/logout"
+		    invalidate-session="true"
+		    delete-cookies="JSESSIONID"
+		   	/>
+    </http>
+ 	
+	<authentication-manager alias="authenticationManager" >
+	  <authentication-provider>
+	    <user-service id="userService">
+			<user name="admin" password="password" authorities="ROLE_USER,ROLE_ADMIN" />
+			<user name="lucas" password="password" authorities="ROLE_USER" />
+	    </user-service>
+	  </authentication-provider>
+	</authentication-manager>
+ 
+	<beans:bean id="ajaxAwareLoginUrlAuthenticationEntryPoint" class="com.espindola.lobwebapp.controller.util.AjaxAwareLoginUrlAuthenticationEntryPoint">
+		<beans:constructor-arg value="/rest/login" />
+	</beans:bean>
+	<beans:bean id="ajaxAwareUrlAuthenticationSuccessHandler" class="com.espindola.lobwebapp.controller.util.AjaxAwareUrlAuthenticationSuccessHandler"/>
+	<beans:bean id="ajaxAwareUrlAuthenticationFailureHandler" class="com.espindola.lobwebapp.controller.util.AjaxAwareUrlAuthenticationFailureHandler"/>
+	<beans:bean id="xDomainRememberMeServices" class="com.espindola.lobwebapp.controller.util.RememberMeProvider">
+		<beans:constructor-arg ref="userService"></beans:constructor-arg>
+		<beans:property name="alwaysRemember" value="true" />
+        <beans:property name="tokenValiditySeconds" value="604800" /> <!-- 1 week in seconds -->
+	</beans:bean>
+</beans:beans>

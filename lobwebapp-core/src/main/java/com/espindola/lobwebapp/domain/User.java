@@ -1,9 +1,12 @@
 package com.espindola.lobwebapp.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -14,6 +17,7 @@ import com.espindola.lobwebapp.domain.base.Person;
 @Table(name = "USER")
 public class User extends Person {
 
+	@Column(unique = true)
 	@NotNull
 	@Size(min = 4)
 	private String username;
@@ -23,19 +27,8 @@ public class User extends Person {
 	private String password;
 
 	@NotNull
-	@ElementCollection(targetClass = String.class)
-	private List<String> roles;
-
-	@NotNull
-	private Boolean isLogged;
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
+	@ElementCollection(fetch = FetchType.EAGER)
+	private List<String> roles = new ArrayList<String>();
 
 	public String getUsername() {
 		return username;
@@ -45,12 +38,12 @@ public class User extends Person {
 		this.username = username;
 	}
 
-	public Boolean isLogged() {
-		return isLogged;
+	public String getPassword() {
+		return password;
 	}
 
-	public void setLogged(Boolean isLogged) {
-		this.isLogged = isLogged;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public List<String> getRoles() {

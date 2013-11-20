@@ -2,6 +2,7 @@ package com.espindola.lobwebapp.domain;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.validation.constraints.Min;
@@ -30,6 +31,7 @@ public class Product extends AbstractEntity {
 	@Min(0)
 	private Double price;
 
+	@Column(name = "CATEGORY")
 	private String category;
 
 	private String ncm;
@@ -69,11 +71,11 @@ public class Product extends AbstractEntity {
 	}
 
 	public String getGroup() {
-		return category;
+		return getCategory();
 	}
 
 	public void setGroup(String group) {
-		this.category = group;
+		this.setCategory(group);
 	}
 
 	public Date getDate() {
@@ -98,6 +100,14 @@ public class Product extends AbstractEntity {
 
 	public void setCostPrice(Double costPrice) {
 		this.costPrice = costPrice;
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
 	}
 
 }

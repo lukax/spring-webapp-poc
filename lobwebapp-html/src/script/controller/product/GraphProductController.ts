@@ -100,7 +100,7 @@ export module controller.product {
                 .dimension(idDimension)
                 // data table does not use crossfilter group but rather a closure
                 // as a grouping function
-                .group(function (d) { return d.name; })
+                .group(function (d) { return d.category; })
                 // (optional) max number of records to be shown, :default = 25
                 .size(10)
                 // dynamic columns creation using an array of closures

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -31,10 +32,15 @@ public class ProductController extends AbstractEntityController<Product> {
 //	}
 	
 	//@Secured("ROLE_USER")
-	@RequestMapping(method = RequestMethod.GET, headers = {"findByName"})
+	@RequestMapping(method = RequestMethod.GET, value = "/{name}", headers = {"findByName"})
 	@ResponseBody
-	public List<Product> find(String name) throws EntityNotFoundException {
-		return this.service.find(name);
+	public List<Product> find(@PathVariable("name") String name) throws EntityNotFoundException {
+		return this.service.findByName(name);
 	}
 	
+	@RequestMapping(method = RequestMethod.GET, headers = {"listCategory"})
+	@ResponseBody
+	public List<String> listCategory(){
+		return this.service.listCategory();
+	}
 }

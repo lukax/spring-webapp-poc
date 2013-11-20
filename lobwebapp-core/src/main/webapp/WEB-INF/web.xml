@@ -12,7 +12,6 @@
         <param-name>contextConfigLocation</param-name>
         <param-value>
 			/WEB-INF/applicationContext.xml
-  			/WEB-INF/applicationSecurityContext.xml
 		 </param-value>
     </context-param>
 
@@ -39,20 +38,6 @@
         <url-pattern>/rest/*</url-pattern>
     </servlet-mapping>
     
-    <!-- FILTERS -->
-    <!--  ENABLE CORS 
-	<filter>
-	  <filter-name>corsFilter</filter-name>
-	  <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
-	  <init-param>
-	    <param-name>targetBeanName</param-name>
-	    <param-value>corsFilterBean</param-value>
-	  </init-param>
-	</filter>
-	<filter-mapping>
-	  	<filter-name>corsFilter</filter-name>
-	  	<url-pattern>/*</url-pattern>
- 	</filter-mapping>-->
  	<!-- Spring Security -->
 	<filter>
         <filter-name>springSecurityFilterChain</filter-name>

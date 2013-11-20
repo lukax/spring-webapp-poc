@@ -8,11 +8,13 @@ export module controller.user {
 
     export class AuthUserController implements d.controller.base.Controller {
 
-        static $inject = ["$scope", "AuthService", "AlertService"];
+        static $inject = ["$scope", "AuthService", "AlertService", "NavigationService"];
         constructor(public $scope: AuthUserViewModel,
             public AuthService: d.service.contract.AuthService,
-            public AlertService: d.service.contract.util.AlertService) {
+            public AlertService: d.service.contract.util.AlertService,
+            public NavigationService: d.service.contract.util.NavigationService) {
 
+            this.processArgs();
             this.populateScope();
         }
 
@@ -33,7 +35,17 @@ export module controller.user {
         }
 
         processArgs() {
-            
+            var error = this.NavigationService.params().error;
+            var logout = this.NavigationService.params().logout;
+            if (error == "0") {
+                this.AlertService.add({ content: "Login ou senha Inválido", type: "warning" });
+            }
+            else if (error == "1") {
+                this.AlertService.add({ content: "O usuario não possui permissão para acessar esta página", type: "warning" });
+            }
+            if(logout == "true"){
+                this.AlertService.add({ content: "Você fez logout com sucesso" });
+            }
         }
 
         populateScope() {

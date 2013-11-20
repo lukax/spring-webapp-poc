@@ -18,25 +18,18 @@ import com.espindola.lobwebapp.exception.base.PersistenceException;
 @ControllerAdvice //Allows the exception handling to operate on all controllers
 public class ExceptionHandlerAdvice {
 
-	@ExceptionHandler({EntityNotFoundException.class, EntityExistsException.class, EntityInvalidException.class})
+	@ExceptionHandler({EntityNotFoundException.class, EntityExistsException.class})
 	@ResponseBody
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	public ResponseMessage handlePersistenceException(PersistenceException ex) {
 		return new ResponseMessage(ClassUtils.getShortName(ex.getClass()), ex.getMessage(), ResponseLevel.ALERT);
 	}
 
-	@ExceptionHandler(MethodArgumentNotValidException.class)
+	@ExceptionHandler({EntityInvalidException.class})
 	@ResponseBody
 	@ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
 	public ResponseMessage handleMethodArgEx(MethodArgumentNotValidException ex){
-		return new ResponseMessage(ClassUtils.getShortName(ex.getClass()), ex.getMessage(), ResponseLevel.ALERT);
+		return new ResponseMessage(ClassUtils.getShortName(ex.getClass()), ex.getMessage(), ResponseLevel.WARNING);
 	}
-	
-//	@ExceptionHandler(EntityInvalidException.class)
-//	@ResponseBody
-//	@ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
-//	public ErrorMessage handleEntityInvalidRequest(EntityInvalidException ex){
-//		return new ErrorMessage(ClassUtils.getShortName(ex.getClass()), ex.getMessage());
-//	}
 	
 }

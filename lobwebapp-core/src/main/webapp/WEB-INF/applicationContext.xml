@@ -8,7 +8,6 @@
 
 	<import resource="classpath*:infrastructureContext.xml" />
 	<import resource="classpath*:persistenceContext.xml" />
-	<!-- CORS BEAN defined now with annotation	
-	<bean id="corsFilterBean" class="com.espindola.lobwebapp.controller.base.CorsFilter" />-->
+	<import resource="classpath*:securityContext.xml" />
 
 </beans>
