@@ -1,8 +1,8 @@
-package com.espindola.lobwebapp.service.contract.base;
+package com.espindola.lobwebapp.service.contract;
 
 
 import com.espindola.lobwebapp.domain.User;
-import com.espindola.lobwebapp.service.contract.EntityService;
+import com.espindola.lobwebapp.service.contract.base.EntityService;
 
 public interface UserService extends EntityService<User> {
 	User findByUsername(String username);

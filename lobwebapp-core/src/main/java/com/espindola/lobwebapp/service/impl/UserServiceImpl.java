@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.espindola.lobwebapp.domain.User;
 import com.espindola.lobwebapp.repository.contract.UserRepository;
-import com.espindola.lobwebapp.service.contract.base.UserService;
+import com.espindola.lobwebapp.service.contract.UserService;
 import com.espindola.lobwebapp.service.impl.base.AbstractPersonServiceImpl;
 
 @Service

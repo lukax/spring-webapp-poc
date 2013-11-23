@@ -8,10 +8,7 @@ export module service.mock {
         static $inject = ["$timeout", "_"];
         constructor(public $timeout: ng.ITimeoutService, public _: _<domain.User>) {
             super($timeout, _);
-            super.getRepository().push({ id: 1, username: "admin", password: "1234", roles: [], firstName: "Lucas", lastName: "Espindola" });
-            super.getRepository().push({ id: 2, username: "manager", password: "1234", roles: [], firstName: "Viktor", lastName: "Pinto" });
-            super.getRepository().push({ id: 3, username: "employee", password: "1234", roles: [], firstName: "Vinicius", lastName: "Pinto" });
-            super.getRepository().push({ id: 4, username: "client", password: "1234", roles: [], firstName: "Lucas", lastName: "Minezes" });
+            super.getRepository().push({ id: 1, username: "user", password: "password", roles: ["ROLE_USER"], firstName: "Lucas", lastName: "Espindola" });
         }
 
         findByUsername(username: string,

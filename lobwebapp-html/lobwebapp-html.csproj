@@ -132,6 +132,7 @@
     <TypeScriptCompile Include="src\script\domain\Order.ts" />
     <TypeScriptCompile Include="src\script\domain\Product.ts" />
     <TypeScriptCompile Include="src\script\domain\Client.ts" />
+    <TypeScriptCompile Include="src\script\domain\AuthToken.ts" />
     <TypeScriptCompile Include="src\script\domain\User.ts" />
     <TypeScriptCompile Include="src\script\domain\util\Alert.ts" />
     <TypeScriptCompile Include="src\script\domain\util\Error.ts" />
@@ -152,6 +153,7 @@
     <TypeScriptCompile Include="src\script\service\contract\UserService.ts" />
     <TypeScriptCompile Include="src\script\service\contract\util\AlertService.ts" />
     <TypeScriptCompile Include="src\script\service\contract\util\NavigationService.ts" />
+    <TypeScriptCompile Include="src\script\service\impl\AuthServiceImpl.ts" />
     <TypeScriptCompile Include="src\script\service\impl\base\PersonServiceImpl.ts" />
     <TypeScriptCompile Include="src\script\service\impl\base\EntityServiceImpl.ts" />
     <TypeScriptCompile Include="src\script\service\impl\UserServiceImpl.ts" />

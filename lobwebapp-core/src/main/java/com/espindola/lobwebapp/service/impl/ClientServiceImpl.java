@@ -9,12 +9,11 @@ import com.espindola.lobwebapp.service.contract.ClientService;
 import com.espindola.lobwebapp.service.impl.base.AbstractPersonServiceImpl;
 
 @Service
-public class ClientServiceImpl extends AbstractPersonServiceImpl<Client> implements
-		ClientService {
+public class ClientServiceImpl extends AbstractPersonServiceImpl<Client> implements ClientService {
 
 	@Autowired
 	public ClientServiceImpl(ClientRepository repository) {
 		super(repository);
 	}
-
+	
 }

@@ -1,8 +1,8 @@
-package com.espindola.lobwebapp.service.contract;
+package com.espindola.lobwebapp.service.contract.base;
 
 import java.util.List;
 
-import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 import com.espindola.lobwebapp.domain.base.AbstractEntity;
 import com.espindola.lobwebapp.exception.EntityExistsException;
@@ -16,7 +16,7 @@ public interface EntityService<TEntity extends AbstractEntity> {
 	void remove(Long id) throws EntityNotFoundException;
 	TEntity find(Long id) throws EntityNotFoundException;
 	TEntity get(TEntity entity) throws EntityNotFoundException, EntityInvalidException;
-
-	@Secured("ROLE_USER")
+	
+	@PreAuthorize("hasRole('ROLE_USER')")
 	List<TEntity> list();
 }

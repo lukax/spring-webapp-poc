@@ -1,4 +1,4 @@
-package com.espindola.lobwebapp.controller.util;
+package com.espindola.lobwebapp.security;
 
 import java.io.IOException;
 
@@ -17,6 +17,7 @@ public class AjaxAwareLoginUrlAuthenticationEntryPoint extends LoginUrlAuthentic
 		super(loginFormUrl);
 	}
 	
+	// DO NOT REDIRECT TO LOGIN PAGE, INSTEAD SEND UNAUTHORIZED STATUS
 	@Override
 	public void commence(final HttpServletRequest request, final HttpServletResponse response, final AuthenticationException authException) throws IOException, ServletException {
 

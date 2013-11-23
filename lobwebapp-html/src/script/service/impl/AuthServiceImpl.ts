@@ -4,6 +4,7 @@ import a = require("./UserServiceImpl");
 export module service.impl {
     export class AuthServiceImpl implements d.service.contract.AuthService {
         private user: domain.User;
+        private authToken: domain.AuthToken;
 
         static $inject = ["$http", "$rootScope"];
         constructor(public $http: ng.IHttpService, public $rootScope: ng.IRootScopeService) {
@@ -13,11 +14,15 @@ export module service.impl {
         login(user: domain.User,
             successCallback: (data: domain.User, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
             errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
-                var param = "username=" + user.username + "&password=" + user.password;
-                console.log(param);
-                this.$http.post("/api/login", param,  
-                    { headers: {"Content-Type":"application/x-www-form-urlencoded; charset=UTF-8"}}).success(successCallback).error(errorCallback);
-            //TODO: make server return user information after login...
+                var param = "?grant_type=password&client_id=lobwebapp-html&client_secret=supersecretyeah&username=" + user.username + "&password=" + user.password;
+                this.$http.get("/api/oauth/token" + param)
+                    .success((data: domain.AuthToken, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => {
+                        this.authToken = data;
+                        this.$http.defaults.headers.common["Authorization"] = "Bearer " + this.authToken.access_token;
+
+                        //TODO: make server return REAL user information after login...
+                        successCallback({ firstName: "Usuario", isLogged: true, username: "user", password: "password", id:1, roles: ["ROLE_USER"] }, status, headers, config);
+                    }).error(errorCallback);
         }
 
         logout(user: domain.User,

@@ -24,6 +24,7 @@ export module modularity {
             this.module
                 .service("UserService", <Function>c.service.mock.UserServiceMock)
                 .service("AuthService", <Function>d.service.mock.AuthServiceMock)
+                //.service("AuthService", <Function>d.service.impl.AuthServiceImpl)
                 .service("AlertService", <Function>a.service.mock.util.AlertServiceMock)
                 .service("NavigationService", <Function>f.service.impl.util.NavigationServiceImpl)
             ;

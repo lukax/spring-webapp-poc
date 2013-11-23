@@ -1,4 +1,4 @@
-package com.espindola.lobwebapp.controller.util;
+package com.espindola.lobwebapp.security;
 
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 

@@ -18,6 +18,7 @@
 ///<reference path="./domain/base/Person.ts"/>
 ///<reference path="./domain/util/Alert.ts"/>
 ///<reference path="./domain/util/Error.ts"/>
+///<reference path="./domain/AuthToken.ts"/>
 ///<reference path="./domain/Product.ts"/>
 ///<reference path="./domain/User.ts"/>
 ///<reference path="./domain/Order.ts"/>
@@ -46,6 +47,7 @@
 ///<reference path="./service/impl/util/NavigationServiceImpl.ts"/>
 ///<reference path="./service/impl/ProductServiceImpl.ts"/>
 ///<reference path="./service/impl/UserServiceImpl.ts"/>
+///<reference path="./service/impl/AuthServiceImpl.ts"/>
 
 ///<reference path="./service/mock/base/EntityServiceMock.ts"/>
 ///<reference path="./service/mock/base/PersonServiceMock.ts"/>
