@@ -2,10 +2,9 @@
 ///<amd-dependency path="angularRoute"/>
 ///<amd-dependency path="angularUiRouter"/>
 
-import e = require("./../service/mock/AuthServiceMock");
 import f = require("./../controller/MainNavbarController");
-import h = require("./../util/DependencyManager");
 import g = require("./../controller/AlertController");
+import h = require("./../util/DependencyManager");
 import AppRoutes = require("./AppRoutes");
 
 export module modularity {
@@ -31,33 +30,33 @@ export module modularity {
             //$locationProvider.html5Mode(true);
         };
 
-        private userAuthCfg = ($rootScope: ng.IRootScopeService, $location: ng.ILocationService, AuthService: e.service.mock.AuthServiceMock) => {
-            var allowedRoutes = ["/user/auth"];
-            var isAllowedRoute = (route: string) => {
-                return allowedRoutes.some((x) => {
-                    return x === route;
-                });
-            };
-            $rootScope.$on("$stateChangeStart", (event: any, to: string, toParams: any, from: string, fromParams: any) => {
-                // if route requires auth and user is not logged in
-                var from = $location.path();
-                if (!isAllowedRoute(from) && !AuthService.isLoggedIn()) {
-                    // redirect back to login
-                    event.preventDefault();
-                    console.log("State Watcher: user not authenticated, redirecting ...");
-                    $location.path("/user/auth");
-                }else if(from === "/user/auth" && AuthService.isLoggedIn()){
-                    $location.path("/user/board");
-                }
-            });
-        };
+        // private userAuthCfg = ($rootScope: ng.IRootScopeService, $location: ng.ILocationService, AuthService: d.service.contract.AuthService) => {
+        //     var allowedRoutes = ["/user/auth"];
+        //     var isAllowedRoute = (route: string) => {
+        //         return allowedRoutes.some((x) => {
+        //             return x === route;
+        //         });
+        //     };
+        //     $rootScope.$on("$stateChangeStart", (event: any, to: string, toParams: any, from: string, fromParams: any) => {
+        //         // if route requires auth and user is not logged in
+        //         var from = $location.path();
+        //         if (!isAllowedRoute(from) && !AuthService.isLoggedIn()) {
+        //             // redirect back to login
+        //             event.preventDefault();
+        //             console.log("State Watcher: user not authenticated, redirecting ...");
+        //             $location.path("/user/auth");
+        //         }else if(from === "/user/auth" && AuthService.isLoggedIn()){
+        //             $location.path("/user/board");
+        //         }
+        //     });
+        // };
         
         private intercept401Cfg = ($httpProvider) => {
             var logoutUserOn401 = ["$q", "$location", ($q: ng.IQService, $location: ng.ILocationService) => {
                 return{
                     "responseError" : (response) => {
                         if(response.status == 401){
-                            $location.url("/user/auth");
+                            $location.url("/user/auth?error=0");
                             return $q.reject(response);
                         }else{
                             return $q.reject(response);

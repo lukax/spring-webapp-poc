@@ -36,7 +36,7 @@ export module controller.product {
         buildGraphs(products: domain.Product[]){
             var data = crossfilter(products);
             var categoryDimension = data.dimension((d: domain.Product) => {
-                    return d.group;
+                    return d.category;
                 });
             var categoryDimensionPriceGroup = categoryDimension.group().reduceSum((d: domain.Product) => {
                     return d.price * d.quantity;
@@ -100,7 +100,7 @@ export module controller.product {
                 .dimension(idDimension)
                 // data table does not use crossfilter group but rather a closure
                 // as a grouping function
-                .group(function (d) { return d.name; })
+                .group(function (d) { return d.category; })
                 // (optional) max number of records to be shown, :default = 25
                 .size(10)
                 // dynamic columns creation using an array of closures
@@ -124,4 +124,6 @@ export module controller.product {
     }
 }
 
-(<any>angular.module("lwa.controller")).lazy.controller("GraphProductController", controller.product.GraphProductController);
+export var register = (moduleName: string) => {
+    angular.module(moduleName).lazy.controller("GraphProductController", controller.product.GraphProductController);
+};

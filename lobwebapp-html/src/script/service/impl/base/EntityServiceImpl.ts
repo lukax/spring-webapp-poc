@@ -1,54 +1,53 @@
 ///<reference path="./../../../reference.d.ts"/>
 
 export module service.impl.base {
-    export class AbstractEntityService<T extends domain.base.AbstractEntity> implements d.service.contract.base.EntityService<T> {
+    export class EntityServiceImpl<T extends domain.base.AbstractEntity> implements d.service.contract.base.EntityService<T> {
 
-        private rootUrl: string = "http://localhost:8080/lobwebapp-core/rest";
-        private http: ng.IHttpService;
+        private rootUrl: string = "/api/";
+        public url: string;
 
-        constructor(contextUrl: string, $http: ng.IHttpService) {
-            this.rootUrl += '/' + contextUrl;
-            this.http = $http;
+        constructor(contextUrl: string, public $http: ng.IHttpService) {
+            this.url = this.rootUrl + contextUrl;
         }
 
         public save(entity: T,
             successCallback: (data: T, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
             errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
-            this.getHttpService().post(this.rootUrl, entity).success(successCallback).error(errorCallback);
+            this.$http.post(this.url, entity).success(successCallback).error(errorCallback);
         }
 
         public update(entity: T,
             successCallback: (data: T, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
             errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
-            this.getHttpService().put(this.rootUrl, entity).success(successCallback).error(errorCallback);
+            this.$http.put(this.url, entity).success(successCallback).error(errorCallback);
         }
 
         public remove(entity: T,
             successCallback: (data: T, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
             errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
-            this.getHttpService().delete(this.rootUrl, entity).success(successCallback).error(errorCallback);
+            this.$http.delete(this.url, entity).success(successCallback).error(errorCallback);
         }
 
         public find(id: number,
             successCallback: (data: T, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
             errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
-            this.getHttpService().get(this.rootUrl + '/' + id).success(successCallback).error(errorCallback);
+            this.$http.get(this.url + "/" + id).success(successCallback).error(errorCallback);
         }
 
         public list(successCallback: (data: T[], status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
             errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
-            this.getHttpService().get(this.rootUrl).success(successCallback).error(errorCallback);
+            this.$http.get(this.url).success(successCallback).error(errorCallback);
         }
 
         public contains(entity: T,
             successCallback: (data: boolean, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
             errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
-            //TODO: Implement this function
-        }
-
-
-        public getHttpService() {
-            return this.http;
+            this.find(entity.id, (d, s, h, c) => {
+                if (_.isEqual(d, entity))
+                    successCallback(true, s, h, c);
+            }, (d, s, h, c) => {
+                    errorCallback(d, s, h, c);
+                });
         }
 
     }

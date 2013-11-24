@@ -9,11 +9,4 @@ module d.service.contract {
             ): void;
 
     }
-
-    export interface UserRole {
-        admin: string;
-        manager: string;
-        salesman: string;
-        client: string;
-    }
 }

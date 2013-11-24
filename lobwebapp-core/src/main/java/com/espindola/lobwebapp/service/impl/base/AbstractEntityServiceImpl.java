@@ -2,6 +2,8 @@ package com.espindola.lobwebapp.service.impl.base;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.espindola.lobwebapp.domain.base.AbstractEntity;
 import com.espindola.lobwebapp.exception.EntityExistsException;
 import com.espindola.lobwebapp.exception.EntityInvalidException;
@@ -9,12 +11,13 @@ import com.espindola.lobwebapp.exception.EntityNotFoundException;
 import com.espindola.lobwebapp.repository.contract.base.EntityRepository;
 import com.espindola.lobwebapp.service.contract.base.EntityService;
 
-public abstract class AbstractEntityService<TEntity extends AbstractEntity>
+public abstract class AbstractEntityServiceImpl<TEntity extends AbstractEntity>
 		implements EntityService<TEntity> {
 
 	private EntityRepository<TEntity> repository;
 
-	public AbstractEntityService(EntityRepository<TEntity> repository) {
+	@Autowired
+	public AbstractEntityServiceImpl(EntityRepository<TEntity> repository) {
 		this.repository = repository;
 
 	}
@@ -43,7 +46,7 @@ public abstract class AbstractEntityService<TEntity extends AbstractEntity>
 	}
 
 	@Override
-	public void delete(Long id) throws EntityNotFoundException {
+	public void remove(Long id) throws EntityNotFoundException {
 		throw_if_entity_not_exists(id);
 		repository.delete(find(id));
 	}

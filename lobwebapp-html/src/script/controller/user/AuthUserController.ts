@@ -8,10 +8,11 @@ export module controller.user {
 
     export class AuthUserController implements d.controller.base.Controller {
 
-        static $inject = ['$scope', 'AuthService', 'AlertService'];
+        static $inject = ["$scope", "AuthService", "AlertService", "NavigationService"];
         constructor(public $scope: AuthUserViewModel,
             public AuthService: d.service.contract.AuthService,
-            public AlertService: d.service.contract.util.AlertService) {
+            public AlertService: d.service.contract.util.AlertService,
+            public NavigationService: d.service.contract.util.NavigationService) {
 
             this.processArgs();
             this.populateScope();
@@ -20,24 +21,40 @@ export module controller.user {
         login() {
             this.AuthService.login(this.$scope.user,
                 (successData) => {
-                    this.$scope.navigator.$location.url('/product/list');
+                    this.$scope.navigator.$location.url("/product/list");
                     this.$scope.user = successData;
-                    this.AlertService.add({ content: 'Bem vindo ' + this.$scope.user.username });
+                    this.AlertService.add({ content: "Bem vindo " + this.$scope.user.firstName + " " + this.$scope.user.lastName });
                 },
                 () => {
-                    this.AlertService.add({ content: 'Usuário ou senha inválido', title: 'Login falhou', type: 'warning' });
+                    this.AlertService.add({ content: "Usuário ou senha inválido", title: "Login falhou", type: "warning" });
                 });
         }
 
-        processArgs() {
+        temporaryUser() {
+            this.$scope.user = { id: 0, username: "", password: "", isLogged: false, roles: [], firstName: "Visitante", lastName: "" };
+        }
 
+        processArgs() {
+            var error = this.NavigationService.params().error;
+            var logout = this.NavigationService.params().logout;
+            if (error == "0") {
+                this.AlertService.add({ content: "Login ou senha Inválido", type: "warning" });
+            }
+            else if (error == "1") {
+                this.AlertService.add({ content: "O usuario não possui permissão para acessar esta página", type: "warning" });
+            }
+            if(logout == "true"){
+                this.AlertService.add({ content: "Você fez logout com sucesso" });
+            }
         }
 
         populateScope() {
-            this.$scope.user = { id: 0, username: '', password: '', roles: [], isLogged: false };
+            this.temporaryUser();
             this.$scope.login = () => this.login();
         }
     }
 }
 
-(<any>angular.module('lwa.controller')).lazy.controller('AuthUserController', controller.user.AuthUserController);
+export var register = (moduleName: string) => {
+    angular.module(moduleName).lazy.controller("AuthUserController", controller.user.AuthUserController);
+};

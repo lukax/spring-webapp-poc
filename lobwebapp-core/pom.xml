@@ -10,8 +10,22 @@
 	<!-- JBoss repository for Hibernate -->
 	<repositories>
 		<repository>
-			<id>JBoss repository</id>
+			<id>jboss-public</id>
 			<url>http://repository.jboss.org/nexus/content/groups/public/</url>
+		</repository>
+		<repository>
+			<id>spring-milestone</id>
+			<name>Spring Framework Milestone Repository</name>
+			<url>http://maven.springframework.org/milestone/</url>
+		</repository>
+		<repository>
+			<id>spring-release</id>
+			<name>Spring Framework Release Repository</name>
+			<url>http://maven.springframework.org/release/</url>
+		</repository>
+		<repository>
+			<id>java.net</id>
+			<url>http://download.java.net/maven/2/</url>
 		</repository>
 	</repositories>
 	<properties>
@@ -21,7 +35,7 @@
 		<log4j.conf>file:./src/main/resources/log4j.xml</log4j.conf>
 		<java.version>1.7</java.version>
 		<junit.version>4.8.1</junit.version>
-		<spring.version>3.2.3.RELEASE</spring.version>
+		<spring.version>3.2.5.RELEASE</spring.version>
 		<spring-security.version>3.1.4.RELEASE</spring-security.version>
 		<jpa.version>1.0</jpa.version>
 		<jackson.version>1.9.9</jackson.version>
@@ -99,7 +113,6 @@
 			<version>${spring.version}</version>
 		</dependency>
 		<!-- SPRING SECURITY -->
-		<!-- Spring Security -->
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-core</artifactId>
@@ -128,6 +141,11 @@
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
+		<dependency>
+	        <groupId>org.springframework.security.oauth</groupId>
+	        <artifactId>spring-security-oauth2</artifactId>
+	        <version>2.0.0.M2</version>
+    	</dependency>
 		<!--  -->
 		<dependency>
 			<groupId>cglib</groupId>

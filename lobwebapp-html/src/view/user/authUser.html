@@ -1,16 +1,16 @@
-<form class="form-validation" role="form" name="loginForm" data-ng-submit="login()" novalidate>
-    <div class="form-group" ng-class="{'has-error': loginForm.inputUsername.$invalid}">
-        <label for="inputUsername" class="control-label">Usuário</label>
-        <input type="text" class="form-control" id="inputUsername" name="inputUsername"
+<form class="form-validation" role="form" name="loginForm" novalidate ng-submit="login()">
+    <div class="form-group" ng-class="{'has-error': loginForm.username.$invalid}">
+        <label for="username" class="control-label">Usuário</label>
+        <input type="text" class="form-control" id="username" name="username"
                autofocus data-ng-model="user.username" required data-ng-minlength="4">
     </div>
-    <div class="form-group" ng-class="{'has-error': loginForm.inputPassword.$invalid}">
-        <label for="inputPassword" class="control-label">Senha</label>
-        <input type="password" class="form-control" id="inputPassword" name="inputPassword"
+    <div class="form-group" ng-class="{'has-error': loginForm.password.$invalid}">
+        <label for="password" class="control-label">Senha</label>
+        <input type="password" class="form-control" id="password" name="password"
                data-ng-model="user.password" required data-ng-minlength="4">
     </div>
     <button class="btn btn-default" type="submit" data-toggle="tooltip" title="Fazer Login" data-loading-text="Entrando..."
-            data-ng-disabled="loginForm.inputUsername.$invalid || loginForm.inputPassword.$invalid">
+            data-ng-disabled="loginForm.username.$invalid || loginForm.password.$invalid">
         <span class="glyphicon glyphicon-log-in"></span> Entrar
     </button>
 </form>

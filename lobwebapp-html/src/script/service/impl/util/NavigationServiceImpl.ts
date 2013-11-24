@@ -8,7 +8,7 @@ export module service.impl.util {
 
         public progress: d.service.contract.util.Progress;
 
-        static $inject = ['$location', '$stateParams'];
+        static $inject = ["$location", "$stateParams"];
         constructor(public $location: ng.ILocationService, public $stateParams: ng.ui.IStateParams) {
             this.progress = p.util.Progress;
         }
@@ -23,21 +23,21 @@ export module service.impl.util {
 
         navigate(viewId: string, arg?: string) {
             switch (viewId) {
-                case 'product_list':
-                    this.$location.url('/product/list');
+                case "product_list":
+                    this.$location.url("/product/list");
                     break;
-                case 'product_new':
-                    this.$location.url('/product/new');
+                case "product_new":
+                    this.$location.url("/product/new");
                     break;
-                case 'product_view':
-                    this.$location.url('/product/' + arg);
+                case "product_view":
+                    this.$location.url("/product/" + arg);
                     break;
 
-                case 'user_auth':
-                    this.$location.url('/user/auth');
+                case "user_auth":
+                    this.$location.url("/user/auth");
                     break;
-                case 'user_status':
-                    this.$location.url('/user/status');
+                case "user_status":
+                    this.$location.url("/user/status");
                     break;
 
                 default:

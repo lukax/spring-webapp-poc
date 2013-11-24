@@ -15,35 +15,46 @@
 ///<reference path="./controller/MainNavbarController.ts"/>
 
 ///<reference path="./domain/base/AbstractEntity.ts"/>
+///<reference path="./domain/base/Person.ts"/>
 ///<reference path="./domain/util/Alert.ts"/>
 ///<reference path="./domain/util/Error.ts"/>
+///<reference path="./domain/AuthToken.ts"/>
 ///<reference path="./domain/Product.ts"/>
 ///<reference path="./domain/User.ts"/>
 ///<reference path="./domain/Order.ts"/>
+///<reference path="./domain/Client.ts"/>
 
 ///<reference path="./directive/LabeledInputDirective.ts"/>
 
 ///<reference path="./modularity/AppModule.ts"/>
+///<reference path="./modularity/AppRoutes.ts"/>
 ///<reference path="./modularity/ControllerModule.ts"/>
 ///<reference path="./modularity/DirectiveModule.ts"/>
 ///<reference path="./modularity/FilterModule.ts"/>
 ///<reference path="./modularity/ServiceModule.ts"/>
 
 ///<reference path="./service/contract/base/EntityService.ts"/>
+///<reference path="./service/contract/base/PersonService.ts"/>
 ///<reference path="./service/contract/util/AlertService.ts"/>
 ///<reference path="./service/contract/util/NavigationService.ts"/>
 ///<reference path="./service/contract/AuthService.ts"/>
+///<reference path="./service/contract/ClientService.ts"/>
 ///<reference path="./service/contract/ProductService.ts"/>
 ///<reference path="./service/contract/UserService.ts"/>
 
 ///<reference path="./service/impl/base/EntityServiceImpl.ts"/>
+///<reference path="./service/impl/base/PersonServiceImpl.ts"/>
+///<reference path="./service/impl/util/NavigationServiceImpl.ts"/>
 ///<reference path="./service/impl/ProductServiceImpl.ts"/>
+///<reference path="./service/impl/UserServiceImpl.ts"/>
+///<reference path="./service/impl/AuthServiceImpl.ts"/>
 
+///<reference path="./service/mock/base/EntityServiceMock.ts"/>
+///<reference path="./service/mock/base/PersonServiceMock.ts"/>
 ///<reference path="./service/mock/util/AlertServiceMock.ts"/>
 ///<reference path="./service/mock/AuthServiceMock.ts"/>
 ///<reference path="./service/mock/ProductServiceMock.ts"/>
 ///<reference path="./service/mock/UserServiceMock.ts"/>
-///<reference path="./service/mock/base/EntityServiceMock.ts"/>
 
 ///<reference path="./util/StdUtil.ts"/>
 ///<reference path="./util/DependencyManager.ts"/>

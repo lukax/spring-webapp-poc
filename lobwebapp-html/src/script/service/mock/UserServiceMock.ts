@@ -1,16 +1,14 @@
 ///<reference path="./../../reference.d.ts"/>
-import a = require("./base/EntityServiceMock");
+
+import a = require("./base/PersonServiceMock");
 
 export module service.mock {
-    export class UserServiceMock extends a.service.mock.base.EntityServiceMock<domain.User> implements d.service.contract.UserService {
+    export class UserServiceMock extends a.service.mock.base.PersonServiceMock<domain.User> implements d.service.contract.UserService {
 
         static $inject = ["$timeout", "_"];
         constructor(public $timeout: ng.ITimeoutService, public _: _<domain.User>) {
             super($timeout, _);
-            super.getRepository().push({ id: 1, username: "admin", password: "1234", roles: [] });
-            super.getRepository().push({ id: 2, username: "manager", password: "1234", roles: [] });
-            super.getRepository().push({ id: 3, username: "employee", password: "1234", roles: [] });
-            super.getRepository().push({ id: 4, username: "client", password: "1234", roles: [] });
+            super.getRepository().push({ id: 1, username: "user", password: "password", roles: ["ROLE_USER"], firstName: "Lucas", lastName: "Espindola" });
         }
 
         findByUsername(username: string,
@@ -26,3 +24,7 @@ export module service.mock {
         }
     }
 }
+
+export var register = (moduleName: string) => {
+    angular.module(moduleName).lazy.service("UserService", service.mock.UserServiceMock);
+};

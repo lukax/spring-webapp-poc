@@ -56,8 +56,12 @@ export module service.mock {
         }
 
         private temporaryUser() {
-            this.user = { id: 0, username: "", password: "", roles: [], isLogged: false };
+            this.user = { id: 0, username: "", password: "", roles: [], firstName: "", lastName: "" };
         }
 
     }
 }
+
+export var register = (moduleName: string) => {
+    angular.module(moduleName).lazy.service("AuthService", service.mock.AuthServiceMock);
+};

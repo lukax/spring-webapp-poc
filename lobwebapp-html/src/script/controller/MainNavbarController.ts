@@ -9,49 +9,38 @@ export module controller {
 
     export class MainNavbarController implements d.controller.base.Controller {
 
-        static $inject = ['$scope', 'AuthService', 'AlertService', '$rootScope'];
+        static $inject = ["$scope", "AuthService", "AlertService", "$rootScope"];
         constructor(public $scope: MainNavbarViewModel,
             public AuthService: d.service.contract.AuthService,
             public AlertService: d.service.contract.util.AlertService,
             public $rootScope: ng.IRootScopeService) {
 
-            this.processArgs();
             this.populateScope();
         }
 
         logout() {
             this.AuthService.logout(this.$scope.user,
                 (successData) => {
-                    this.AlertService.add({ content: this.$scope.user.username + ' saiu', title: String(successData) });
+                    this.AlertService.add({ title: this.$scope.user.username + " saiu", content: String(successData) });
                     this.$scope.user = successData;
-                    this.$scope.navigator.$location.url('/user/auth');
+                    this.$scope.navigator.$location.url("/user/auth");
                 },
                 (errorData, errorStatus) => {
-                    this.AlertService.add({ content: 'Não foi possível sair', title: String(errorStatus), type: 'warning' });
+                    this.AlertService.add({ title: "Não foi possível sair", content: String(errorStatus), type: "warning" });
                 });
         }
 
-        setupUsername() {
-            this.$scope.$watch('user', (newValue: domain.User, oldValue: domain.User) => {
-                if (newValue.username == '') this.$scope.username = 'Visitante';
-                else this.$scope.username = newValue.username;
-            });
-        }
-
         temporaryUser() {
-            this.$scope.username = 'Visitante';
-            this.$scope.user = { id: 0, username: '', password: '', isLogged: false, roles: [] };
+            this.$scope.user = { id: 0, username: "", password: "", isLogged: false, roles: [], firstName: "Visitante", lastName: "" };
         }
 
         processArgs() {
-
+            
         }
 
         populateScope() {
-            this.$rootScope.$on('USER_CHANGED', (x, users) => { this.$scope.user = users[0]; });
-            this.$scope.logout = () => this.logout();
             this.temporaryUser();
-            this.setupUsername();
+            this.$scope.logout = () => this.logout();
         }
 
     }

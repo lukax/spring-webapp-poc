@@ -48,3 +48,7 @@ export module service.mock.util {
 
     }
 }
+
+export var register = (moduleName: string) => {
+    angular.module(moduleName).lazy.service("AlertService", service.mock.util.AlertServiceMock);
+};
