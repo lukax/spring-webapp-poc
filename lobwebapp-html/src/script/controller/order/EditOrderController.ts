@@ -1,30 +1,57 @@
 ///<reference path="./../../reference.d.ts"/>
 
+import util = require("./../../util/EnumUtil");
+
 export module controller.order {
-    interface Status { content: string; type: string; }
     export interface EditOrderViewModel extends d.controller.base.ViewModel {
-        client: domain.Client;
         product: domain.Product;
         order: domain.Order;
         payment: number;
         exchange: number;
         total: number;
         isOrderNew: boolean;
-        addProduct: (id: number, quantity: number) => void;
-        removeProduct: (id: number) => void;
-        quickSearchProduct: () => void;
-        fetchProduct: () => void;
-        fetchClient: () => void;
+        saveChanges(order: domain.Order): void;
+        addProduct(id: number, quantity: number): void;
+        removeProduct(id: number): void;
+        quickSearchProduct(): void;
+        fetchProduct(id: number): void;
+        fetchClient(id: number): void;
     }
 
     export class EditOrderController implements d.controller.base.Controller {
 
-        static $inject = ["$scope", "ProductService", "$timeout", "AlertService", "ClientService"];
+        static $inject = ["$scope", "ProductService", "$timeout", "AlertService", "ClientService", "OrderService"];
         constructor(public $scope: EditOrderViewModel, public ProductService: d.service.contract.ProductService, public $timeout: ng.ITimeoutService,
-            public AlertService: d.service.contract.util.AlertService, public ClientService: d.service.contract.ClientService) {
+            public AlertService: d.service.contract.util.AlertService, public ClientService: d.service.contract.ClientService, public OrderService: d.service.contract.OrderService) {
 
             this.populateScope();
             this.processArgs();
+        }
+
+        saveChanges(order: domain.Order) {
+            if (this.$scope.order.id == 0) this.saveOrder(order);
+            else this.updateOrder(order); 
+        }
+
+        saveOrder(order: domain.Order) {
+            this.OrderService.save(order,
+                (successData: domain.Order, successStatus) => {
+                    this.AlertService.add({ content: "Novo Pedido " + " foi adicionado", title: "Novo" });
+                    this.$scope.navigator.$location.url("/order/" + String(successData.id));
+                },
+                (errorData, errorStatus) => {
+                    this.AlertService.add({ content: "Pedido não pôde ser salvado", title: String(errorData), type: "danger" });
+                });
+        }
+
+        updateOrder(order: domain.Order) {
+            this.OrderService.update(order, 
+                (successData, successStatus) => {
+                    this.AlertService.add({ content: "Pedido atualizado com sucesso" });
+                },
+                (errorData, errorStatus) => {
+                    this.AlertService.add({ title: "Pedido não pôde ser atualizado", content: String(errorData), type: "danger" });
+                });
         }
 
         addProduct(id: number, quantity: number) {
@@ -43,7 +70,7 @@ export module controller.order {
                         successData.quantity = quantity;
                         this.$scope.order.products.push(successData);
                     }, (errorData: domain.util.Error) => {
-                        this.AlertService.add({ content: errorData.message, title: "Produto nao encontrado", type: "warning" });
+                        this.AlertService.add({ content: errorData.message, title: "Produto não encontrado", type: "warning" });
                     });
             }
             this.emptyProduct();
@@ -57,6 +84,10 @@ export module controller.order {
                 }
                 return false;
             });
+        }
+
+        newOrder() {
+            this.$scope.navigator.$location.url("/order/new");
         }
 
         quickSearchProduct() {
@@ -83,12 +114,12 @@ export module controller.order {
         }
 
         emptyClient() {
-            this.$scope.client = { id: 0, firstName: "", lastName: "" };
+            this.$scope.order.client = { id: 0, firstName: "", lastName: "" };
         }
 
-        fetchProduct() {
-            if (this.$scope.product.id > 0) {
-                this.ProductService.find(this.$scope.product.id,
+        fetchProduct(id: number) {
+            if (id > 0) {
+                this.ProductService.find(id,
                     (successData: domain.Product) => {
                         var previousQt = this.$scope.product.quantity;
                         this.$scope.product = successData;
@@ -102,11 +133,11 @@ export module controller.order {
             }
         }
 
-        fetchClient() {
-            if (this.$scope.client.id > 0) {
-                this.ClientService.find(this.$scope.client.id,
+        fetchClient(id: number) {
+            if (id > 0) {
+                this.ClientService.find(id,
                     (successData: domain.Client) => {
-                        this.$scope.client = successData;
+                        this.$scope.order.client = successData;
                     }, (errorData: domain.util.Error) => {
                         this.emptyClient();
                     });
@@ -118,6 +149,7 @@ export module controller.order {
 
         listenOrderChanges() {
             this.$scope.$watch("order", (newValue: domain.Order, oldValue: domain.Order) => {
+                this.$scope.isOrderNew = this.isOrderNew();
                 console.log("Object order changed");
             });
             this.$scope.$watch("payment", (newValue: domain.Order, oldValue: domain.Order) => {
@@ -133,36 +165,43 @@ export module controller.order {
 
         listenProductsChanges() {
             this.$scope.$watch("order.products", (newValue: domain.Product[], oldValue: domain.Product[]) => {
-                this.$scope.isOrderNew = this.isOrderNew();
+
                 console.log("Object order.products changed");
                 this.total();
             }, true);
         }
 
         processArgs() {
-            this.$scope.product.id = this.$scope.navigator.params().productId;
-            this.$scope.client.id = this.$scope.navigator.params().clientId;
             var orderId = this.$scope.navigator.params().orderId;
-
-            if (orderId) {
-                //TODO: OrderService to fetch order...
-
+            if (orderId > 0) {
+                this.OrderService.find(orderId,
+                    (successData) => {
+                        this.$scope.order = successData;
+                    }, (errorData) => {
+                        this.AlertService.add({ content: "Pedido ID Inválido", type: util.AlertType.WARNING });
+                    });
             }
-            this.fetchProduct();
+
+            this.$scope.product.id = this.$scope.navigator.params().productId;
+            this.$scope.order.client.id = this.$scope.navigator.params().clientId;
         }
 
         populateScope() {
-            this.$scope.order = { id: 0, client: null, products: [], status: { payment: 0, delivery: -1 }, paymentMode: 0, date: new Date() };
-            this.$scope.payment = 0;
-            this.emptyClient();
-            this.emptyProduct();
             this.listenOrderChanges();
             this.listenProductsChanges();
+
+            this.$scope.order = { id: 0, client: null, products: [], status: { payment: util.PaymentStatus.PENDING, delivery: util.DeliveryStatus.PENDING }, paymentMode: util.PaymentMode.MONEY, date: new Date() };
+            this.emptyClient();
+            this.emptyProduct();
+            this.$scope.payment = 0;
+            this.fetchProduct(0);
+
+            this.$scope.saveChanges = (order: domain.Order) => this.saveChanges(order);
             this.$scope.addProduct = (id: number, quantity: number) => this.addProduct(id, quantity);
             this.$scope.removeProduct = (index: number) => this.removeProduct(index);
             this.$scope.quickSearchProduct = () => this.quickSearchProduct();
-            this.$scope.fetchProduct = () => this.fetchProduct();
-            this.$scope.fetchClient = () => this.fetchClient();
+            this.$scope.fetchProduct = (id: number) => this.fetchProduct(id);
+            this.$scope.fetchClient = (id: number) => this.fetchClient(id);
         }
     }
 }

@@ -12,7 +12,7 @@ import javax.validation.constraints.Size;
 import com.espindola.lobwebapp.domain.base.AbstractEntity;
 
 @Entity
-@Table(name = "PRODUCT")
+@Table(name = "PRODUCTS")
 public class Product extends AbstractEntity {
 
 	@NotNull

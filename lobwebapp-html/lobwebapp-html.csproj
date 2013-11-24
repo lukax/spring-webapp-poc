@@ -55,6 +55,8 @@
     <TypeScriptModuleKind>AMD</TypeScriptModuleKind>
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="src\404.html" />
+    <Content Include="src\500.html" />
     <Content Include="src\css\.gitignore" />
     <Content Include="src\css\main.min.css">
       <DependentUpon>main.less</DependentUpon>
@@ -68,6 +70,7 @@
     <Content Include="src\view\alertView.html" />
     <Content Include="src\view\mainNavbarView.html" />
     <Content Include="src\view\order\editOrder.html" />
+    <Content Include="src\view\order\listOrder.html" />
     <Content Include="src\view\order\order.html" />
     <Content Include="src\view\product\editProduct.html" />
     <Content Include="src\view\product\graphProduct.html" />
@@ -120,11 +123,14 @@
     <TypeScriptCompile Include="src\script\controller\base\ViewModel.ts" />
     <TypeScriptCompile Include="src\script\controller\MainNavbarController.ts" />
     <TypeScriptCompile Include="src\script\controller\order\EditOrderController.ts" />
+    <TypeScriptCompile Include="src\script\controller\order\ListOrderController.ts" />
     <TypeScriptCompile Include="src\script\controller\product\EditProductController.ts" />
     <TypeScriptCompile Include="src\script\controller\product\GraphProductController.ts" />
     <TypeScriptCompile Include="src\script\controller\product\ListProductController.ts" />
     <TypeScriptCompile Include="src\script\controller\user\AuthUserController.ts" />
     <TypeScriptCompile Include="src\script\controller\user\BoardUserController.ts" />
+    <TypeScriptCompile Include="src\script\directive\OrderStatusDetailDirective.ts" />
+    <TypeScriptCompile Include="src\script\directive\ClientDetailDirective.ts" />
     <TypeScriptCompile Include="src\script\directive\ProductDetailDirective.ts" />
     <TypeScriptCompile Include="src\script\directive\LabeledInputDirective.ts" />
     <TypeScriptCompile Include="src\script\domain\base\AbstractEntity.ts" />
@@ -148,6 +154,7 @@
     <TypeScriptCompile Include="src\script\service\contract\AuthService.ts" />
     <TypeScriptCompile Include="src\script\service\contract\base\PersonService.ts" />
     <TypeScriptCompile Include="src\script\service\contract\base\EntityService.ts" />
+    <TypeScriptCompile Include="src\script\service\contract\OrderService.ts" />
     <TypeScriptCompile Include="src\script\service\contract\ProductService.ts" />
     <TypeScriptCompile Include="src\script\service\contract\ClientService.ts" />
     <TypeScriptCompile Include="src\script\service\contract\UserService.ts" />
@@ -156,6 +163,7 @@
     <TypeScriptCompile Include="src\script\service\impl\AuthServiceImpl.ts" />
     <TypeScriptCompile Include="src\script\service\impl\base\PersonServiceImpl.ts" />
     <TypeScriptCompile Include="src\script\service\impl\base\EntityServiceImpl.ts" />
+    <TypeScriptCompile Include="src\script\service\impl\OrderServiceImpl.ts" />
     <TypeScriptCompile Include="src\script\service\impl\UserServiceImpl.ts" />
     <TypeScriptCompile Include="src\script\service\impl\ClientServiceImpl.ts" />
     <TypeScriptCompile Include="src\script\service\impl\ProductServiceImpl.ts" />
@@ -163,12 +171,14 @@
     <TypeScriptCompile Include="src\script\service\mock\AuthServiceMock.ts" />
     <TypeScriptCompile Include="src\script\service\mock\base\EntityServiceMock.ts" />
     <TypeScriptCompile Include="src\script\service\mock\base\PersonServiceMock.ts" />
+    <TypeScriptCompile Include="src\script\service\mock\OrderServiceMock.ts" />
     <TypeScriptCompile Include="src\script\service\mock\ProductServiceMock.ts" />
     <TypeScriptCompile Include="src\script\service\mock\ClientServiceMock.ts" />
     <TypeScriptCompile Include="src\script\service\mock\UserServiceMock.ts" />
     <TypeScriptCompile Include="src\script\service\mock\util\AlertServiceMock.ts" />
     <TypeScriptCompile Include="src\script\util\DependencyManager.ts" />
     <TypeScriptCompile Include="src\script\util\Progress.ts" />
+    <TypeScriptCompile Include="src\script\util\EnumUtil.ts" />
     <TypeScriptCompile Include="src\script\util\StdUtil.ts" />
     <TypeScriptCompile Include="test\reference.d.ts" />
     <TypeScriptCompile Include="test\test-main.ts" />

@@ -78,9 +78,22 @@ export var routes =
     "controller": "EditOrderController",
     "deps": [
         "controller/order/EditOrderController",
+        //"service/impl/OrderServiceImpl",
+        "service/mock/OrderServiceMock",
         //"service/impl/ProductServiceImpl",
         "service/mock/ProductServiceMock",
         //"service/impl/ClientServiceImpl"
         "service/mock/ClientServiceMock"
+    ]
+}, {
+    "name": "order.list",
+    "baseUrl": "/order",
+    "url": "/order/list",
+    "templateUrl": "view/order/listOrder.html",
+    "controller": "ListOrderController",
+    "deps": [
+        "controller/order/ListOrderController",
+        //"service/impl/OrderServiceImpl"
+        "service/mock/OrderServiceMock"
     ]
 }];

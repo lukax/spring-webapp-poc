@@ -8,9 +8,10 @@ export module service.mock {
         static $inject = ["$timeout", "_"];
         constructor(public $timeout: ng.ITimeoutService, public _: _<domain.Client>) {
             super($timeout, _);
-            super.getRepository().push({ id: 1, firstName: "Rodrigo", lastName: "Medeiros" });
-            super.getRepository().push({ id: 2, firstName: "Márcio", lastName: "Minezes" });
-            super.getRepository().push({ id: 3, firstName: "Moacyr", lastName: "Coimbra" });
+            super.getRepository().push({ id: 1, firstName: "John", lastName: "Doe" });
+            super.getRepository().push({ id: 2, firstName: "Rodrigo", lastName: "Medeiros" });
+            super.getRepository().push({ id: 3, firstName: "Márcio", lastName: "Minezes" });
+            super.getRepository().push({ id: 4, firstName: "Moacyr", lastName: "Coimbra" });
         }
 
     }

@@ -5,8 +5,8 @@
 
 module domain {
     export interface OrderStatus {
+        payment: number;
         delivery?: number;
-        payment?: number;
     }
 
     export interface Order extends domain.base.AbstractEntity {

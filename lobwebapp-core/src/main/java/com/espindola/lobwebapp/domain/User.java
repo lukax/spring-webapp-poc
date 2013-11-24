@@ -14,7 +14,7 @@ import javax.validation.constraints.Size;
 import com.espindola.lobwebapp.domain.base.Person;
 
 @Entity
-@Table(name = "USER")
+@Table(name = "USERS")
 public class User extends Person {
 
 	@Column(unique = true)

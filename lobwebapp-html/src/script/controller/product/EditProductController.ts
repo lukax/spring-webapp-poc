@@ -6,7 +6,7 @@ export module controller.product {
         product: domain.Product;
         profitMargin: number;
         categories: string[];
-        isNewProduct: boolean;
+        isProductNew: boolean;
         saveChanges: (product: domain.Product) => void;
         removeProduct: (product: domain.Product) => void;
         priceInfo: () => void;
@@ -24,15 +24,16 @@ export module controller.product {
             this.populateScope();
         }
 
-        newProduct() {
-            this.$scope.navigator.$location.url("/product/new");
+        saveChanges(product: domain.Product) {
+            if (this.$scope.product.id == 0) this.saveProduct(product);
+            else this.updateProduct(product);
         }
 
         saveProduct(product: domain.Product) {
             this.ProductService.save(product,
                 (successData: domain.Product, successStatus) => {
                     this.AlertService.add({ content: "Novo produto " + successData.name + " foi adicionado", title: "Novo" });
-                    this.$scope.navigator.$location.url("/product/" + String(successData));
+                    this.$scope.navigator.$location.url("/product/" + String(successData.id));
                 },
                 (errorData, errorStatus) => {
                     this.AlertService.add({ content: "Produto não pode ser salvado", title: String(errorData), type: "danger" });
@@ -47,11 +48,6 @@ export module controller.product {
                 (errorData, errorStatus) => {
                     this.AlertService.add({ title: "Produto não pode ser atualizado", content: String(errorData), type: "danger" });
                 });
-        }
-
-        saveChanges(product: domain.Product) {
-            if (this.$scope.product.id == 0) this.saveProduct(product);
-            else this.updateProduct(product);
         }
 
         removeProduct(product: domain.Product) {
@@ -76,13 +72,17 @@ export module controller.product {
                 });
         }
 
+        newProduct() {
+            this.$scope.navigator.$location.url("/product/new");
+        }
+
         fetchCategories() {
             this.ProductService.listCategory(
                 (successData) => { this.$scope.categories = successData; },
                 (errorData) => { });
         }
 
-        isNewProduct() {
+        isProductNew() {
             return (this.$scope.product && this.$scope.product.id == 0);
         }
 
@@ -113,7 +113,7 @@ export module controller.product {
         onProduct() {
             this.$scope.$watch("product", (newValue: domain.Product, oldValue: domain.Product) => {
                 console.log("EditProductController: product object changed");
-                this.$scope.isNewProduct = this.isNewProduct();
+                this.$scope.isProductNew = this.isProductNew();
             }, true);
         }
 

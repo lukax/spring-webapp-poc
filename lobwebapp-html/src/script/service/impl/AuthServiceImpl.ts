@@ -21,7 +21,7 @@ export module service.impl {
                         this.$http.defaults.headers.common["Authorization"] = "Bearer " + this.authToken.access_token;
 
                         //TODO: make server return REAL user information after login...
-                        successCallback({ firstName: "Usuario", isLogged: true, username: "user", password: "password", id:1, roles: ["ROLE_USER"] }, status, headers, config);
+                        successCallback({ firstName: "Usuario", lastName: "", isLogged: true, username: "user", password: "password", id:1, roles: ["ROLE_USER"] }, status, headers, config);
                     }).error(errorCallback);
         }
 

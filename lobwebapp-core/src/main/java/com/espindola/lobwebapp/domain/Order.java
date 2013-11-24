@@ -1,13 +1,12 @@
 package com.espindola.lobwebapp.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
-import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -15,13 +14,12 @@ import com.espindola.lobwebapp.domain.base.AbstractEntity;
 import com.espindola.lobwebapp.domain.util.OrderStatus;
 
 @Entity
-@Table(name = "ORDER")
+@Table(name = "ORDERS")
 public class Order extends AbstractEntity {
 
 	@NotNull
-	@OneToMany(targetEntity = Product.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinTable(name = "ORDER_PRODUCT", joinColumns = { @JoinColumn(name = "ORDER_ID") }, inverseJoinColumns = { @JoinColumn(name = "PRODUCT_ID") })
-	private List<Product> products;
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private List<Product> products = new ArrayList<Product>();
 
 	@NotNull
 	private OrderStatus status;

@@ -6,4 +6,8 @@ module domain.util {
         title?: string;
         time?: Date;
     }
+
+    export enum AlertType {
+        WARNING
+    }
 }
