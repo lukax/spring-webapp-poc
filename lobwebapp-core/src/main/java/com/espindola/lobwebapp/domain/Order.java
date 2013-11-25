@@ -21,7 +21,7 @@ public class Order extends AbstractEntity {
 
 	@NotNull
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	private Set<Client> clients = new HashSet<Client>();	
+	private Set<Customer> clients = new HashSet<Customer>();	
 	
 	@NotNull
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -60,11 +60,11 @@ public class Order extends AbstractEntity {
 		this.date = date;
 	}
 
-	public Set<Client> getClients() {
+	public Set<Customer> getClients() {
 		return clients;
 	}
 
-	public void setClients(Set<Client> clients) {
+	public void setClients(Set<Customer> clients) {
 		this.clients = clients;
 	}
 

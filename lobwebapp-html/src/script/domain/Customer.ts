@@ -2,7 +2,7 @@
 ///<reference path='./base/Person.ts'/>
 
 module domain {
-    export interface Client extends domain.base.Person {
+    export interface Customer extends domain.base.Person {
 
     }
 }

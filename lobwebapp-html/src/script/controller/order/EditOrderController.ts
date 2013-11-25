@@ -14,14 +14,14 @@ export module controller.order {
         removeProduct(id: number): void;
         quickSearchProduct(): void;
         fetchProduct(id: number): void;
-        fetchClient(id: number): void;
+        fetchCustomer(id: number): void;
     }
 
     export class EditOrderController implements d.controller.base.Controller {
 
-        static $inject = ["$scope", "ProductService", "$timeout", "AlertService", "ClientService", "OrderService"];
+        static $inject = ["$scope", "ProductService", "$timeout", "AlertService", "CustomerService", "OrderService"];
         constructor(public $scope: EditOrderViewModel, public ProductService: d.service.contract.ProductService, public $timeout: ng.ITimeoutService,
-            public AlertService: d.service.contract.util.AlertService, public ClientService: d.service.contract.ClientService, public OrderService: d.service.contract.OrderService) {
+            public AlertService: d.service.contract.util.AlertService, public CustomerService: d.service.contract.CustomerService, public OrderService: d.service.contract.OrderService) {
 
             this.populateScope();
             this.processArgs();
@@ -112,8 +112,8 @@ export module controller.order {
             this.$scope.product = { id: 0, name: "", description: "", quantity: 0, price: 0 };
         }
 
-        emptyClient() {
-            this.$scope.order.client = { id: 0, firstName: "", lastName: "" };
+        emptyCustomer() {
+            this.$scope.order.customer = { id: 0, firstName: "", lastName: "" };
         }
 
         fetchProduct(id: number) {
@@ -132,17 +132,17 @@ export module controller.order {
             }
         }
 
-        fetchClient(id: number) {
+        fetchCustomer(id: number) {
             if (id > 0) {
-                this.ClientService.find(id,
-                    (successData: domain.Client) => {
-                        this.$scope.order.client = successData;
+                this.CustomerService.find(id,
+                    (successData: domain.Customer) => {
+                        this.$scope.order.customer = successData;
                     }, (errorData: domain.util.Error) => {
-                        this.emptyClient();
+                        this.emptyCustomer();
                     });
             }
             else {
-                this.emptyClient();
+                this.emptyCustomer();
             }
         }
 
@@ -182,15 +182,15 @@ export module controller.order {
             }
 
             this.$scope.product.id = this.$scope.navigator.params().productId;
-            this.$scope.order.client.id = this.$scope.navigator.params().clientId;
+            this.$scope.order.customer.id = this.$scope.navigator.params().customerId;
         }
 
         populateScope() {
             this.listenOrderChanges();
             this.listenProductsChanges();
 
-            this.$scope.order = { id: 0, client: null, products: [], status: { payment: util.PaymentStatus.PENDING, delivery: util.DeliveryStatus.PENDING }, paymentMode: util.PaymentMode.MONEY, payment: 0, date: new Date() };
-            this.emptyClient();
+            this.$scope.order = { id: 0, customer: null, products: [], status: { payment: util.PaymentStatus.PENDING, delivery: util.DeliveryStatus.PENDING }, paymentMode: util.PaymentMode.MONEY, payment: 0, date: new Date() };
+            this.emptyCustomer();
             this.emptyProduct();
             this.fetchProduct(0);
 
@@ -199,7 +199,7 @@ export module controller.order {
             this.$scope.removeProduct = (index: number) => this.removeProduct(index);
             this.$scope.quickSearchProduct = () => this.quickSearchProduct();
             this.$scope.fetchProduct = (id: number) => this.fetchProduct(id);
-            this.$scope.fetchClient = (id: number) => this.fetchClient(id);
+            this.$scope.fetchCustomer = (id: number) => this.fetchCustomer(id);
         }
     }
 }
