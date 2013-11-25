@@ -13,6 +13,6 @@ public interface ProductRepository extends EntityRepository<Product> {
 	
 	public List<Product> findByName(String name);
 	
-	@Query(value = "SELECT DISTINCT CATEGORY FROM PRODUCT", nativeQuery = true)
+	@Query(value = "SELECT DISTINCT category FROM Product")
 	public List<String> listCategory();
 }

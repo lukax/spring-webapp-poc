@@ -1,7 +1,7 @@
 package com.espindola.lobwebapp.domain;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
@@ -28,7 +28,7 @@ public class User extends Person {
 
 	@NotNull
 	@ElementCollection(fetch = FetchType.EAGER)
-	private List<String> roles = new ArrayList<String>();
+	private Set<String> roles = new HashSet<String>();
 
 	public String getUsername() {
 		return username;
@@ -46,11 +46,11 @@ public class User extends Person {
 		this.password = password;
 	}
 
-	public List<String> getRoles() {
+	public Set<String> getRoles() {
 		return roles;
 	}
 
-	public void setRoles(List<String> roles) {
+	public void setRoles(Set<String> roles) {
 		this.roles = roles;
 	}
 }

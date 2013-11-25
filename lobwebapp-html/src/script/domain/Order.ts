@@ -14,5 +14,6 @@ module domain {
         products: domain.Product[];
         status: OrderStatus;
         date?: Date;
+        payment?: number;
     }
 }

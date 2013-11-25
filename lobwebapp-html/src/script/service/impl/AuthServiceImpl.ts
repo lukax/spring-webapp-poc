@@ -19,16 +19,22 @@ export module service.impl {
                     .success((data: domain.AuthToken, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => {
                         this.authToken = data;
                         this.$http.defaults.headers.common["Authorization"] = "Bearer " + this.authToken.access_token;
+                        this.user = { firstName: "Usuario", lastName: "", isLogged: true, username: "user", password: "password", id: 1, roles: ["ROLE_USER"] };
 
                         //TODO: make server return REAL user information after login...
-                        successCallback({ firstName: "Usuario", lastName: "", isLogged: true, username: "user", password: "password", id:1, roles: ["ROLE_USER"] }, status, headers, config);
+                        successCallback(this.user, status, headers, config);
                     }).error(errorCallback);
         }
 
         logout(user: domain.User,
             successCallback: (data: domain.User, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
             errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
-            //TODO: implement this
+                delete this.$http.defaults.headers.common["Authorization"];
+                if (this.user.id != 0)
+                    successCallback(this.user, 200, null, null);
+                else
+                    errorCallback({ message: "Nenhum usuário está logado" }, 200, null, null);
+                this.temporaryUser();
         }
 
         isLoggedIn() {
@@ -40,7 +46,7 @@ export module service.impl {
         }
 
         private temporaryUser() {
-            this.user = { id: 0, username: "", password: "", roles: [], firstName: "", lastName: "" };
+            this.user = { id: 0, username: "", password: "", roles: [], firstName: "", lastName: "" , isLogged: false};
         }
 
     }

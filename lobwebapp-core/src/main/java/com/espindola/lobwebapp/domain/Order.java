@@ -1,13 +1,15 @@
 package com.espindola.lobwebapp.domain;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import com.espindola.lobwebapp.domain.base.AbstractEntity;
@@ -19,19 +21,26 @@ public class Order extends AbstractEntity {
 
 	@NotNull
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	private List<Product> products = new ArrayList<Product>();
+	private Set<Client> clients = new HashSet<Client>();	
+	
+	@NotNull
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private Set<Product> products = new HashSet<Product>();
 
 	@NotNull
 	private OrderStatus status;
 
 	@NotNull
-	private String date;
+	private Date date;
+	
+	@Min(0)
+	private Integer payment;
 
-	public List<Product> getProducts() {
+	public Set<Product> getProducts() {
 		return products;
 	}
 
-	public void setProducts(List<Product> products) {
+	public void setProducts(Set<Product> products) {
 		this.products = products;
 	}
 
@@ -43,12 +52,27 @@ public class Order extends AbstractEntity {
 		this.status = status;
 	}
 
-	public String getDate() {
+	public Date getDate() {
 		return date;
 	}
 
-	public void setDate(String date) {
+	public void setDate(Date date) {
 		this.date = date;
 	}
 
+	public Set<Client> getClients() {
+		return clients;
+	}
+
+	public void setClients(Set<Client> clients) {
+		this.clients = clients;
+	}
+
+	public Integer getPayment() {
+		return payment;
+	}
+
+	public void setPayment(Integer payment) {
+		this.payment = payment;
+	}
 }
