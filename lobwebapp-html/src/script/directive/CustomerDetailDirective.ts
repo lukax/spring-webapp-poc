@@ -1,16 +1,16 @@
 ///<reference path="./../reference.d.ts"/>
 
 export module directive {
-    export class ClientDetailDirective implements ng.IDirective {
+    export class CustomerDetailDirective implements ng.IDirective {
 
         public restrict = 'E';
         public replace = true;
         public scope = {
-            client: '=ref',
+            ref: '=',
         };
         public template =
-            '<div ng-if="client.id != 0">'
-        +       '{{client.firstName}} {{client.lastName}}'
+            '<div ng-if="ref.id != 0">'
+            +       '{{ref.firstName}} {{ref.lastName}}'
         +   '</div>'
         ;
 

@@ -22,7 +22,7 @@
 ///<reference path="./domain/Product.ts"/>
 ///<reference path="./domain/User.ts"/>
 ///<reference path="./domain/Order.ts"/>
-///<reference path="./domain/Client.ts"/>
+///<reference path="./domain/Customer.ts"/>
 
 ///<reference path="./directive/LabeledInputDirective.ts"/>
 
@@ -39,7 +39,7 @@
 ///<reference path="./service/contract/util/NavigationService.ts"/>
 ///<reference path="./service/contract/AuthService.ts"/>
 ///<reference path="./service/contract/OrderService.ts"/>
-///<reference path="./service/contract/ClientService.ts"/>
+///<reference path="./service/contract/CustomerService.ts"/>
 ///<reference path="./service/contract/ProductService.ts"/>
 ///<reference path="./service/contract/UserService.ts"/>
 
@@ -48,6 +48,7 @@
 ///<reference path="./service/impl/util/NavigationServiceImpl.ts"/>
 ///<reference path="./service/impl/ProductServiceImpl.ts"/>
 ///<reference path="./service/impl/OrderServiceImpl.ts"/>
+///<reference path="./service/impl/CustomerServiceImpl.ts"/>
 ///<reference path="./service/impl/UserServiceImpl.ts"/>
 ///<reference path="./service/impl/AuthServiceImpl.ts"/>
 
@@ -55,6 +56,7 @@
 ///<reference path="./service/mock/base/PersonServiceMock.ts"/>
 ///<reference path="./service/mock/util/AlertServiceMock.ts"/>
 ///<reference path="./service/mock/AuthServiceMock.ts"/>
+///<reference path="./service/mock/CustomerServiceMock.ts"/>
 ///<reference path="./service/mock/OrderServiceMock.ts"/>
 ///<reference path="./service/mock/ProductServiceMock.ts"/>
 ///<reference path="./service/mock/UserServiceMock.ts"/>

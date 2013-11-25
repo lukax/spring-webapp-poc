@@ -5,15 +5,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.espindola.lobwebapp.controller.base.PersonController;
-import com.espindola.lobwebapp.domain.Client;
-import com.espindola.lobwebapp.service.contract.ClientService;
+import com.espindola.lobwebapp.domain.Customer;
+import com.espindola.lobwebapp.service.contract.CustomerService;
 
 @Controller
-@RequestMapping(value="/client")
-public class ClientController extends PersonController<Client> {
+@RequestMapping(value="/customer")
+public class CustomerController extends PersonController<Customer> {
 
 	@Autowired
-	public ClientController(ClientService service) {
+	public CustomerController(CustomerService service) {
 		super(service);
 
 	}

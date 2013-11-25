@@ -19,18 +19,18 @@
             </div>
         </div>
     </div>
-    <div class="form-group" ng-class="{'has-error': orderForm.clientId.$invalid}">
-        <label for="clientId" class="col-md-1 control-label">Cliente</label>
+    <div class="form-group" ng-class="{'has-error': orderForm.customerId.$invalid}">
+        <label for="customerId" class="col-md-1 control-label">Cliente</label>
         <div class="col-md-2 input-group">
             <div class="input-group-btn">
                 <button type="button" class="btn btn-default" data-toggle="tooltip" title="Buscar Rápida de Cliente" disabled>
                     <span class="glyphicon glyphicon-search"></span>
                 </button>
             </div>
-            <input type="number" class="form-control" id="clientId" name="clientId" placeholder="ID" autofocus ng-model="order.client.id" required min="1" ui-event="{blur: 'fetchClient(order.client.id)'}" ui-keypress="{'enter': 'fetchClient(order.client.id)'}">
+            <input type="number" class="form-control" id="customerId" name="customerId" placeholder="ID" autofocus ng-model="order.customer.id" required min="1" ui-event="{blur: 'fetchCustomer(order.customer.id)'}" ui-keypress="{'enter': 'fetchCustomer(order.customer.id)'}">
         </div>
         <div class="col-md-9">
-            <p class="form-control-static">{{order.client.firstName}} {{order.client.lastName}}</p>
+            <p class="form-control-static">{{order.customer.firstName}} {{order.customer.lastName}}</p>
         </div>
     </div>
     <div class="form-group">
@@ -132,7 +132,7 @@
     </div>
     <div class="pull-right" ng-class="{'btn-group': !isNewOrder}">
         <button class="btn btn-primary" type="submit" data-toggle="tooltip" title="Confirmar mudanças" data-loading-text="Salvando..."
-                ng-disabled="orderForm.clientId.$invalid ||
+                ng-disabled="orderForm.customerId.$invalid ||
                              order.products.length == 0">
             <span class="glyphicon glyphicon-floppy-disk"></span> Salvar
         </button>
