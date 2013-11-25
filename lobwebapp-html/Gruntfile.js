@@ -1,4 +1,3 @@
-// Generated on 2013-08-20 using generator-angular 0.3.1
 'use strict';
 var LIVERELOAD_PORT = 35729;
 var lrSnippet = require('connect-livereload')({ port: LIVERELOAD_PORT });
@@ -7,9 +6,6 @@ var mountFolder = function (connect, dir) {
     return connect.static(require('path').resolve(dir));
 };
 
-// HTML5 REDIRECT
-// var modRewrite = require('connect-modrewrite');
-
 // # Globbing
 // for performance reasons we're only matching one level down:
 // 'test/spec/{,*/}*.js'
@@ -17,10 +13,6 @@ var mountFolder = function (connect, dir) {
 // 'test/spec/**/*.js'
 
 module.exports = function (grunt) {
-    // load all grunt tasks
-    require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
-
-    // configurable paths
     var yeomanConfig = {
         app: 'src',
         dist: 'dist',
@@ -152,25 +144,14 @@ module.exports = function (grunt) {
                     cwd: '<%= yeoman.app %>',
                     dest: '<%= yeoman.dist %>',
                     src: [
-                        '*.{ico,png,txt}',
+                        '*.{ico,png,txt,html}',
                         '.htaccess',
                         'lib/**/*',
-                        'img/**/*.{gif,webp,png}',
-                        'css/fonts/*'
+                        'img/**/*.{gif,webp,png,ico}',
+                        'template/**/*.html',
+                        'view/**/*.html'
                     ]
                 }]
-            },
-            css: {
-                expand: true,
-                cwd: '<%= yeoman.app %>/css',
-                dest: '<%= yeoman.dist %>/css/',
-                src: '**/*.css'
-            },
-            template: {
-                expand: true,
-                cwd: '<%= yeoman.app %>/template',
-                dest: '<%= yeoman.dist %>/template/',
-                src: '**/*.html'
             }
         },
         less: {
@@ -180,6 +161,14 @@ module.exports = function (grunt) {
                 },
                 files: {
                     '<%= yeoman.app %>/css/main.css': '<%= yeoman.app %>/css/main.less'
+                }
+            },
+            dist: {
+                options: {
+                    paths: ['<%= yeoman.app %>/css']
+                },
+                files: {
+                    '<%= yeoman.dist %>/css/main.css': '<%= yeoman.app %>/css/main.less'
                 }
             }
         },
@@ -203,12 +192,6 @@ module.exports = function (grunt) {
             }
         },
         ts: {
-            base: {
-                src: ['<%= yeoman.app%>/script/**/*.ts', '<%= yeoman.test%>/**/*.ts'],
-                options: {
-                    target: 'es5'
-                }
-            },
             dev: {
                 src: ['<%= yeoman.app%>/script/**/*.ts'],        // The source typescript files, http://gruntjs.com/configuring-tasks#files
                 //html: [], // The source html files, https://github.com/basarat/grunt-ts#html-2-typescript-support
@@ -224,20 +207,16 @@ module.exports = function (grunt) {
                     comments: false           // true | false (default)
                 }
             },
+            dist: {
+                src: ['<%= yeoman.app%>/script/**/*.ts'],
+                options: {
+                    target: 'es5'
+                }
+            },
             test: {
                 src: ['<%= yeoman.test%>/**/*.ts'],
                 options: {
                     target: 'es5'
-                }
-            }
-        },
-        requirejs: {
-            compile: {
-                options: {
-                    baseUrl: '<%= yeoman.app %>/script',
-                    mainConfigFile: '<%= yeoman.app %>/script/main.js',
-                    out: '<%= yeoman.dist %>/script/app.min.js',
-                    preserveLicenseComments: false
                 }
             }
         }
@@ -272,31 +251,29 @@ module.exports = function (grunt) {
     });
 
     grunt.registerTask('build', function (target) {
-        if(target === 'requirejs') {
-            return grunt.task.run(['requirejs']);
-        }
         grunt.task.run([
             'clean:dist',
             'less:dist',
             'ts:dist',
             'uglify:dist',
-            'concurrent:dist',
             'copy:dist'
         ]);
     });
 
     grunt.registerTask('default', [
         'shell',
-        'server'
+        'build'
     ]);
-
-    grunt.registerTask('host', [
-        'open',
-        'connect:dist:keepalive'
-    ]);
-
     
-    grunt.loadNpmTasks("grunt-connect-proxy");
     grunt.loadNpmTasks("grunt-karma");
-
+    grunt.loadNpmTasks("grunt-connect-proxy");
+    grunt.loadNpmTasks("grunt-contrib-copy");
+    grunt.loadNpmTasks("grunt-contrib-uglify");
+    grunt.loadNpmTasks("grunt-contrib-connect");
+    grunt.loadNpmTasks("grunt-contrib-clean");
+    grunt.loadNpmTasks("grunt-contrib-watch");
+    grunt.loadNpmTasks("grunt-contrib-less");
+    grunt.loadNpmTasks("grunt-open");
+    grunt.loadNpmTasks("grunt-ts");
+    grunt.loadNpmTasks("grunt-shell");
 };
