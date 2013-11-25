@@ -4,8 +4,8 @@ public class ResponseMessage{
 	private String message;
 	private String error;
 	private ResponseLevel level;
-	public ResponseMessage(String error, String message, ResponseLevel degree) {
-		this.setLevel(degree);
+	public ResponseMessage(String error, String message, ResponseLevel level) {
+		this.setLevel(level);
 		this.setError(error);
 		this.setMessage(message);
 	}

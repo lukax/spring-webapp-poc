@@ -4,10 +4,6 @@ module domain.util {
         content: string;
         type?: string;
         title?: string;
-        time?: Date;
-    }
-
-    export enum AlertType {
-        WARNING
+        date?: Date;
     }
 }

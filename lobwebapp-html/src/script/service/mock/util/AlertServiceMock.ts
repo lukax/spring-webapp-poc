@@ -14,7 +14,7 @@ export module service.mock.util {
             if (this.alerts.length >= 3) {
                 this.alerts.splice(0, 1);
             }
-            if (!alert.time) alert.time = new Date();
+            if (!alert.date) alert.date = new Date();
             if (!alert.type) alert.type = "success";
             this.alerts.push(alert);
             return alert;
@@ -37,7 +37,7 @@ export module service.mock.util {
         private removeOld() {
             this.$timeout(() => {
                 this.alerts.forEach((currAlert, index) => {
-                    var diffInSecs = Math.abs((new Date().getTime() - currAlert.time.getTime()) / 1000);
+                    var diffInSecs = Math.abs((new Date().getTime() - currAlert.date.getTime()) / 1000);
                     if (diffInSecs > 10) {
                         this.alerts.splice(index, 1);
                     }

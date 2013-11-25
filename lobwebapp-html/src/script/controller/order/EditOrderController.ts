@@ -6,7 +6,6 @@ export module controller.order {
     export interface EditOrderViewModel extends d.controller.base.ViewModel {
         product: domain.Product;
         order: domain.Order;
-        payment: number;
         exchange: number;
         total: number;
         isOrderNew: boolean;
@@ -154,7 +153,7 @@ export module controller.order {
             });
             this.$scope.$watch("payment", (newValue: domain.Order, oldValue: domain.Order) => {
                 if (this.$scope.total > 0) {
-                    var sum = this.$scope.payment - this.$scope.total;
+                    var sum = this.$scope.order.payment - this.$scope.total;
                     if (sum > 0) this.$scope.exchange = sum;
                     else this.$scope.exchange = 0;
                 } else {
@@ -190,10 +189,9 @@ export module controller.order {
             this.listenOrderChanges();
             this.listenProductsChanges();
 
-            this.$scope.order = { id: 0, client: null, products: [], status: { payment: util.PaymentStatus.PENDING, delivery: util.DeliveryStatus.PENDING }, paymentMode: util.PaymentMode.MONEY, date: new Date() };
+            this.$scope.order = { id: 0, client: null, products: [], status: { payment: util.PaymentStatus.PENDING, delivery: util.DeliveryStatus.PENDING }, paymentMode: util.PaymentMode.MONEY, payment: 0, date: new Date() };
             this.emptyClient();
             this.emptyProduct();
-            this.$scope.payment = 0;
             this.fetchProduct(0);
 
             this.$scope.saveChanges = (order: domain.Order) => this.saveChanges(order);
