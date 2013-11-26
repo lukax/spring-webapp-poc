@@ -22,8 +22,7 @@ export var routes =
     "controller": "AuthUserController",
     "deps": [
         "controller/user/AuthUserController",
-        //"service/impl/AuthServiceImpl"
-        "service/mock/AuthServiceMock"
+        "service/impl/AuthServiceImpl"
     ]
 }, {
     "name": "product",
@@ -39,8 +38,7 @@ export var routes =
     "controller": "ListProductController",
     "deps": [
         "controller/product/ListProductController",
-        //"service/impl/ProductServiceImpl"
-        "service/mock/ProductServiceMock"
+        "service/impl/ProductServiceImpl"
     ]
 }, {
     "name": "product.edit",
@@ -50,8 +48,7 @@ export var routes =
     "controller": "EditProductController",
     "deps": [
         "controller/product/EditProductController",
-        //"service/impl/ProductServiceImpl"
-        "service/mock/ProductServiceMock"
+        "service/impl/ProductServiceImpl"
     ]
 }, {
     "name": "product.graph",
@@ -61,8 +58,7 @@ export var routes =
     "controller": "GraphProductController",
     "deps": [
         "controller/product/GraphProductController",
-        //"service/impl/ProductServiceImpl"
-        "service/mock/ProductServiceMock"
+        "service/impl/ProductServiceImpl"
     ]
 }, {
     "name": "order",
@@ -78,12 +74,9 @@ export var routes =
     "controller": "EditOrderController",
     "deps": [
         "controller/order/EditOrderController",
-        //"service/impl/OrderServiceImpl",
-        "service/mock/OrderServiceMock",
-        //"service/impl/ProductServiceImpl",
-        "service/mock/ProductServiceMock",
-        //"service/impl/CustomerServiceImpl"
-        "service/mock/CustomerServiceMock"
+        "service/impl/OrderServiceImpl",
+        "service/impl/ProductServiceImpl",
+        "service/impl/CustomerServiceImpl"
     ]
 }, {
     "name": "order.list",
@@ -93,8 +86,7 @@ export var routes =
     "controller": "ListOrderController",
     "deps": [
         "controller/order/ListOrderController",
-        //"service/impl/OrderServiceImpl"
-        "service/mock/OrderServiceMock"
+        "service/impl/OrderServiceImpl"
     ]
 }, {
     "name": "customer",
@@ -110,7 +102,7 @@ export var routes =
     "controller": "EditCustomerController",
     "deps": [
         "controller/customer/EditCustomerController",
-        "service/mock/CustomerServiceMock"
+        "service/impl/CustomerServiceImpl"
     ]
 }, {
     "name": "customer.list",
@@ -120,7 +112,7 @@ export var routes =
     "controller": "ListCustomerController",
     "deps": [
         "controller/customer/ListCustomerController",
-        "service/mock/CustomerServiceMock"
+        "service/impl/CustomerServiceImpl"
     ]
 }
 

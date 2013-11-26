@@ -2,8 +2,7 @@
 
 import a = require("./../service/mock/util/AlertServiceMock");
 import c = require("./../service/mock/UserServiceMock");
-//import d = require("./../service/impl/AuthServiceImpl");
-import d = require("./../service/mock/AuthServiceMock");
+import d = require("./../service/impl/AuthServiceImpl");
 import f = require("./../service/impl/util/NavigationServiceImpl");
 
 export module modularity {
@@ -22,9 +21,7 @@ export module modularity {
         configure() {
             //Global usage services configuration
             this.module
-                .service("UserService", <Function>c.service.mock.UserServiceMock)
-                .service("AuthService", <Function>d.service.mock.AuthServiceMock)
-                //.service("AuthService", <Function>d.service.impl.AuthServiceImpl)
+                .service("AuthService", <Function>d.service.impl.AuthServiceImpl)
                 .service("AlertService", <Function>a.service.mock.util.AlertServiceMock)
                 .service("NavigationService", <Function>f.service.impl.util.NavigationServiceImpl)
             ;

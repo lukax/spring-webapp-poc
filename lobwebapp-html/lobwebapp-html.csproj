@@ -94,8 +94,6 @@
     <Content Include="ts-definitions\angularjs\angular-tests.ts" />
     <Content Include="ts-definitions\angularjs\angular.d.ts" />
     <Content Include="ts-definitions\angularui\angular-ui.d.ts" />
-    <Content Include="ts-definitions\backbone\backbone-tests.ts" />
-    <Content Include="ts-definitions\backbone\backbone.d.ts" />
     <Content Include="ts-definitions\d3\d3-tests.ts" />
     <Content Include="ts-definitions\d3\d3.d.ts" />
     <Content Include="ts-definitions\d3\plugins\d3.superformula-tests.ts" />
