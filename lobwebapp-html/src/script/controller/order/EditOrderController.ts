@@ -1,6 +1,6 @@
 ///<reference path="./../../reference.d.ts"/>
 
-import util = require("./../../util/EnumUtil");
+import enums = require("./../../util/EnumUtil");
 
 export module controller.order {
     export interface EditOrderViewModel extends d.controller.base.ViewModel {
@@ -35,21 +35,34 @@ export module controller.order {
         saveOrder(order: domain.Order) {
             this.OrderService.save(order,
                 (successData: domain.Order, successStatus) => {
-                    this.AlertService.add({ content: "Novo Pedido " + " foi adicionado", title: "Novo" });
+                    this.AlertService.add({ title: "Novo Pedido", content: "Pedido foi adicionado com sucesso" });
                     this.$scope.navigator.$location.url("/order/" + String(successData.id));
                 },
                 (errorData, errorStatus) => {
-                    this.AlertService.add({ content: "Pedido não pôde ser salvado", title: String(errorData), type: "danger" });
+                    this.AlertService.add({ title: "Novo Pedido", content: "Erro pedido não pôde ser salvado", type: enums.AlertType.DANGER });
+                    console.log(errorData);
                 });
         }
 
         updateOrder(order: domain.Order) {
             this.OrderService.update(order, 
                 (successData, successStatus) => {
-                    this.AlertService.add({ content: "Pedido atualizado com sucesso" });
+                    this.AlertService.add({ title: "Editar Pedido", content: "Pedido foi atualizado com sucesso" });
                 },
                 (errorData, errorStatus) => {
-                    this.AlertService.add({ title: "Pedido não pôde ser atualizado", content: String(errorData), type: "danger" });
+                    this.AlertService.add({ title: "Editar Pedido", content: "Erro pedido não pôde ser atualizado", type: enums.AlertType.DANGER });
+                    console.log(errorData);
+                });
+        }
+
+        removeOrder(order: domain.Order) {
+            this.OrderService.remove(order,
+                (successData, successStatus) => {
+                    this.AlertService.add({ title: "Remover Pedido", content: "Pedido foi removido com sucesso" });
+                },
+                (errorData, errorStatus) => {
+                    this.AlertService.add({ title: "Remover Pedido", content: "Erro pedido não pôde ser removido", type: enums.AlertType.DANGER });
+                    console.log(errorData);
                 });
         }
 
@@ -69,7 +82,7 @@ export module controller.order {
                         successData.quantity = quantity;
                         this.$scope.order.products.push(successData);
                     }, (errorData: domain.util.Error) => {
-                        this.AlertService.add({ content: errorData.message, title: "Produto não encontrado", type: "warning" });
+                        this.AlertService.add({ title: "Buscar Produto", content: errorData.message, type: enums.AlertType.WARNING });
                     });
             }
             this.emptyProduct();
@@ -174,7 +187,7 @@ export module controller.order {
                     (successData) => {
                         this.$scope.order = successData;
                     }, (errorData) => {
-                        this.AlertService.add({ content: "Pedido ID Inválido", type: util.AlertType.WARNING });
+                        this.AlertService.add({ content: "Pedido ID Inválido", type: enums.AlertType.WARNING });
                     });
             }
 
@@ -185,7 +198,7 @@ export module controller.order {
         populateScope() {
             this.watchOrder();
 
-            this.$scope.order = { id: 0, customer: null, products: [], status: { payment: util.PaymentStatus.PENDING, delivery: util.DeliveryStatus.PENDING }, paymentMode: util.PaymentMode.MONEY, payment: 0, date: new Date() };
+            this.$scope.order = { id: 0, customer: null, products: [], status: { payment: enums.PaymentStatus.PENDING, delivery: enums.DeliveryStatus.PENDING }, paymentMode: enums.PaymentMode.MONEY, payment: 0, date: new Date() };
             this.emptyCustomer();
             this.emptyProduct();
             this.fetchProduct(0);

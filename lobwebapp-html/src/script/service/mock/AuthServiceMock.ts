@@ -15,11 +15,10 @@ export module service.mock {
             errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
                 this.UserService.findByUsername(user.username,
                     (x: domain.User) => {
-                        if (!x.isLogged && x.password === user.password) {
+                        if (x.password === user.password) {
                             this.user = user;
-                            this.user.isLogged = true;
-                            successCallback(this.user, 200, null, null);
                             this.$rootScope.$broadcast("USER_CHANGED", [this.user]);
+                            successCallback(this.user, 200, null, null);
                         }
                         else {
                             errorCallback({message: "Senha incorreta ou Usuário já fez login"}, 200, null, null);
@@ -29,26 +28,21 @@ export module service.mock {
                     });
         }
 
-        logout(user: domain.User,
+        logout(
             successCallback: (data: domain.User, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
             errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
-                this.UserService.findByUsername(user.username,
-                    (x: domain.User) => {
-                        if (x.isLogged && x.password === user.password) {
-                            x.isLogged = false;
-                            successCallback(x, 200, null, null);
-                            this.temporaryUser();
-                            this.$rootScope.$broadcast("USER_CHANGED", [this.user]);
-                            return;
-                        }
-                        errorCallback({message: "Senha incorreta ou usuário já fez logout"}, 200, null, null);
-                    }, () => {
-                        errorCallback({message: "Usuário não existe"}, 200, null, null);
-                    });
+                if (this.user.id != 0) {
+                    this.temporaryUser();
+                    this.$rootScope.$broadcast("USER_CHANGED", [this.user]);
+                    successCallback(this.user, 200, null, null);
+                }
+                else {
+                    errorCallback({message: "Usuário já está deslogado"}, 200, null, null);
+                }
         }
 
         isLoggedIn() {
-            return this.user.isLogged;
+            return (this.user.id != 0);
         }
 
         currentUser() {

@@ -19,26 +19,27 @@ export module service.impl {
                     .success((data: domain.AuthToken, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => {
                         this.authToken = data;
                         this.$http.defaults.headers.common["Authorization"] = "Bearer " + this.authToken.access_token;
-                        this.user = { name: "Usuario", isLogged: true, username: "user", password: "password", id: 1, roles: ["ROLE_USER"] };
-
+                        this.user = { name: "Usuário", isLogged: true, username: "user", password: "password", id: 1, roles: ["ROLE_USER"] };
+                        this.$rootScope.$broadcast("USER_CHANGED", [this.user]);
                         //TODO: make server return REAL user information after login...
                         successCallback(this.user, status, headers, config);
                     }).error(errorCallback);
         }
 
-        logout(user: domain.User,
+        logout(
             successCallback: (data: domain.User, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
             errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
-                delete this.$http.defaults.headers.common["Authorization"];
-                if (this.user.id != 0)
+                if (this.user.id != 0) {
+                    delete this.$http.defaults.headers.common["Authorization"];
+                    this.temporaryUser();
                     successCallback(this.user, 200, null, null);
+                }
                 else
-                    errorCallback({ message: "Nenhum usuário está logado" }, 200, null, null);
-                this.temporaryUser();
+                    errorCallback({ message: "Usuário já está deslogado" }, 200, null, null);
         }
 
         isLoggedIn() {
-            return this.user.isLogged;
+            return (this.user.id != 0);
         }
 
         currentUser() {
@@ -46,7 +47,7 @@ export module service.impl {
         }
 
         private temporaryUser() {
-            this.user = { id: 0, username: "", password: "", roles: [], name: "" , isLogged: false};
+            this.user = { id: 0, username: "", password: "", roles: [], name: "" };
         }
 
     }

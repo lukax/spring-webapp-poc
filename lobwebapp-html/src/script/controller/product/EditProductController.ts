@@ -1,5 +1,6 @@
 ///<reference path="./../../reference.d.ts"/>
 import a = require("./../../util/StdUtil");
+import enums = require("./../../util/EnumUtil");
 
 export module controller.product {
     export interface EditProductViewModel extends d.controller.base.ViewModel {
@@ -32,32 +33,35 @@ export module controller.product {
         saveProduct(product: domain.Product) {
             this.ProductService.save(product,
                 (successData: domain.Product, successStatus) => {
-                    this.AlertService.add({ content: "Novo produto " + successData.name + " foi adicionado", title: "Novo" });
+                    this.AlertService.add({ title: "Novo Produto", content: product.name + " foi adicionado" });
                     this.$scope.navigator.$location.url("/product/" + String(successData.id));
                 },
                 (errorData, errorStatus) => {
-                    this.AlertService.add({ content: "Produto não pode ser salvado", title: String(errorData), type: "danger" });
+                    this.AlertService.add({ title: "Novo Produto", content: "Erro produto não pôde ser salvado", type: enums.AlertType.DANGER });
+                    console.log(errorData);
                 });
         }
 
         updateProduct(product: domain.Product) {
             this.ProductService.update(product,
                 (successData, successStatus) => {
-                    this.AlertService.add({ title: "Atualização", content: "Alterações em " + successData.name + " foram bem sucedidas" });
+                    this.AlertService.add({ title: "Editar Produto", content: "Alterações em " + product.name + " foram bem sucedidas" });
                 },
                 (errorData, errorStatus) => {
-                    this.AlertService.add({ title: "Produto não pode ser atualizado", content: String(errorData), type: "danger" });
+                    this.AlertService.add({ title: "Editar Produto", content: "Erro alterações no produto não pôde ser salvado", type: enums.AlertType.DANGER });
+                    console.log(errorData);
                 });
         }
 
         removeProduct(product: domain.Product) {
             this.ProductService.remove(product,
                 (successData, successStatus) => {
-                    this.AlertService.add({ content: "Produto removido com sucesso" });
+                    this.AlertService.add({ title: "Remover Produto", content: product.name + " foi removido com sucesso" });
                     this.newProduct();
                 },
                 (errorData, errorStatus) => {
-                    this.AlertService.add({ title: "Produto não pode ser removido", content: String(errorData), type: "danger" });
+                    this.AlertService.add({ title: "Remover Produto", content: "Produto não pôde ser removido", type: enums.AlertType.DANGER });
+                    console.log(errorData);
                 });
         }
 
@@ -67,7 +71,8 @@ export module controller.product {
                     this.$scope.product = successData;
                 },
                 (errorData, errorStatus) => {
-                    this.AlertService.add({ title: "Produto com o ID especificado não foi encontrado", content: String(errorData), type: "warning" });
+                    this.AlertService.add({ title: "Buscar Produto", content: "Erro produto com o ID especificado não foi encontrado", type: enums.AlertType.WARNING });
+                    console.log(errorData);
                     this.newProduct();
                 });
         }

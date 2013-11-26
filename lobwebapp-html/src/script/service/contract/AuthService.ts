@@ -7,7 +7,7 @@ module d.service.contract {
             errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any
             ): void;
 
-        logout(user: domain.User,
+        logout(
             successCallback: (data: domain.User, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
             errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any
             ): void;

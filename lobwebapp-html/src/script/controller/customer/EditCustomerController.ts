@@ -29,32 +29,35 @@ export module controller.customer {
         saveCustomer(customer: domain.Customer) {
             this.CustomerService.save(customer,
                 (successData: domain.Customer, successStatus) => {
-                    this.AlertService.add({ content: "Novo Cliente " + successData.name + " foi adicionado", title: "Novo" });
+                    this.AlertService.add({ title: "Novo Cliente", content: customer.name + " foi adicionado",  });
                     this.$scope.navigator.$location.url("/customer/" + String(successData.id));
                 },
                 (errorData, errorStatus) => {
-                    this.AlertService.add({ content: "Cliente não pode ser salvado", title: String(errorData), type: enums.AlertType.DANGER });
+                    this.AlertService.add({ title: "Novo Cliente", content: "Erro cliente não pôde ser salvado", type: enums.AlertType.DANGER });
+                    console.log(errorData);
                 });
         }
 
         updateCustomer(customer: domain.Customer) {
             this.CustomerService.update(customer,
                 (successData, successStatus) => {
-                    this.AlertService.add({ title: "Atualização", content: "Alterações em " + successData.name + " foram bem sucedidas" });
+                    this.AlertService.add({ title: "Editar Cliente", content: "Alterações em " + customer.name + " foram bem sucedidas" });
                 },
                 (errorData, errorStatus) => {
-                    this.AlertService.add({ title: "Cliente não pode ser atualizado", content: String(errorData), type: enums.AlertType.DANGER });
+                    this.AlertService.add({ title: "Editar Cliente", content: "Erro cliente não pôde ser atualizado", type: enums.AlertType.DANGER });
+                    console.log(errorData);
                 });
         }
 
         removeCustomer(customer: domain.Customer) {
             this.CustomerService.remove(customer,
                 (successData, successStatus) => {
-                    this.AlertService.add({ content: "Cliente removido com sucesso" });
+                    this.AlertService.add({ title: "Remover Cliente", content: customer.name + " foi removido com sucesso" });
                     this.newCustomer();
                 },
                 (errorData, errorStatus) => {
-                    this.AlertService.add({ title: "Cliente não pode ser removido", content: String(errorData), type: enums.AlertType.DANGER });
+                    this.AlertService.add({ title: "Remover Cliente", content: "Erro cliente não pôde ser removido", type: enums.AlertType.DANGER });
+                    console.log(errorData);
                 });
         }
 
@@ -64,7 +67,8 @@ export module controller.customer {
                     this.$scope.customer = successData;
                 },
                 (errorData, errorStatus) => {
-                    this.AlertService.add({ title: "Cliente com o ID especificado não foi encontrado", content: String(errorData), type: enums.AlertType.WARNING });
+                    this.AlertService.add({ title: "Buscar Cliente", content: "Erro cliente com o ID especificado não foi encontrado", type: enums.AlertType.WARNING });
+                    console.log(errorData);
                     this.newCustomer();
                 });
         }
@@ -93,7 +97,7 @@ export module controller.customer {
             } else if (customerId == "new") {
                 this.$scope.customer = { id: 0, name: "" };
             } else {
-                this.AlertService.add({ content: "Cliente ID Inválido", type: enums.AlertType.WARNING });
+                this.AlertService.add({ content: "Erro cliente ID inválido", type: enums.AlertType.WARNING });
                 this.newCustomer();
             }
         }

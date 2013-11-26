@@ -41,9 +41,8 @@
                             Olá <strong>{{user.name}}</strong>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a data-ng-href="#/user/auth" data-ng-hide="user.isLogged">Entrar</a></li>
-                            <li><a data-ng-href="#/user/board" data-ng-hide="!user.isLogged">Painel</a></li>
-                            <li><a data-ng-click="logout()" data-ng-hide="!user.isLogged">Sair</a></li>
+                            <li><a data-ng-href="#/user/auth" data-ng-hide="isUserLogged">Entrar</a></li>
+                            <li><a data-ng-click="logout()" data-ng-hide="!isUserLogged">Sair</a></li>
                         </ul>
                     </li>
                 </ul>

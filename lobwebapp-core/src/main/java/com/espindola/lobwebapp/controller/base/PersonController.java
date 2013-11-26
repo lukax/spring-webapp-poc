@@ -12,7 +12,6 @@ public abstract class PersonController<E extends Person> extends AbstractEntityC
 	@Autowired
 	public PersonController(EntityService<E> service) {
 		super(service);
-		// TODO Auto-generated constructor stub
 	}
 
 }

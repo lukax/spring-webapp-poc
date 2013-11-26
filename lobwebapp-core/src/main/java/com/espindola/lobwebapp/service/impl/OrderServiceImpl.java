@@ -14,7 +14,6 @@ public class OrderServiceImpl extends AbstractEntityServiceImpl<Order> implement
 	@Autowired
 	public OrderServiceImpl(OrderRepository repository) {
 		super(repository);
-		// TODO Auto-generated constructor stub
 	}
 
 }

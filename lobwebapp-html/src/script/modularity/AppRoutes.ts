@@ -6,15 +6,6 @@ export var routes =
     "controller": "",
     "deps": []
 }, {
-    "name": "user.board",
-    "baseUrl": "/user",
-    "url": "/user/board",
-    "templateUrl": "view/user/boardUser.html",
-    "controller": "BoardUserController",
-    "deps": [
-        "controller/user/BoardUserController"
-    ]
-}, {
     "name": "user.auth",
     "baseUrl": "/user",
     "url": "/user/auth?error",

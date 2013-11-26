@@ -10,7 +10,6 @@
 ///<reference path="./controller/product/EditProductController.ts"/>
 ///<reference path="./controller/product/ListProductController.ts"/>
 ///<reference path="./controller/user/AuthUserController.ts"/>
-///<reference path="./controller/user/BoardUserController.ts"/>
 ///<reference path="./controller/MainNavbarController.ts"/>
 
 ///<reference path="./domain/base/AbstractEntity.ts"/>

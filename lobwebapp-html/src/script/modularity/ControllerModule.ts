@@ -41,8 +41,6 @@ export module modularity {
                     event.preventDefault();
                     console.log("State Watcher: user not authenticated, redirecting ...");
                     $location.path("/user/auth");
-                }else if(from === "/user/auth" && AuthService.isLoggedIn()){
-                    $location.path("/user/board");
                 }
             });
         };

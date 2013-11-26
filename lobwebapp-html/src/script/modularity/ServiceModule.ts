@@ -1,7 +1,6 @@
 ///<reference path="../reference.d.ts"/>
 
 import a = require("./../service/mock/util/AlertServiceMock");
-import c = require("./../service/mock/UserServiceMock");
 import d = require("./../service/impl/AuthServiceImpl");
 import f = require("./../service/impl/util/NavigationServiceImpl");
 

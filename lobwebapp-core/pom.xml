@@ -4,10 +4,9 @@
 	<groupId>com.espindola</groupId>
 	<artifactId>lobwebapp-core</artifactId>
 	<packaging>war</packaging>
-	<version>1.0-SNAPSHOT</version>
-	<name>lobwebapp-core Maven Webapp</name>
+	<version>0.1.0</version>
+	<name>lobwebapp-core</name>
 	<url>http://maven.apache.org</url>
-	<!-- JBoss repository for Hibernate -->
 	<repositories>
 		<repository>
 			<id>jboss-public</id>
@@ -33,7 +32,7 @@
 		<source.encoding>UTF-8</source.encoding>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<log4j.conf>file:./src/main/resources/log4j.xml</log4j.conf>
-		<java.version>1.7</java.version>
+		<java.version>1.6</java.version>
 		<junit.version>4.8.1</junit.version>
 		<spring.version>3.2.5.RELEASE</spring.version>
 		<spring-security.version>3.1.4.RELEASE</spring-security.version>
@@ -261,10 +260,8 @@
 			<artifactId>tomcat-extras-juli-adapters</artifactId>
 			<version>${tomcat.version}</version>
 		</dependency>
-		
-		
 	</dependencies>
-	  
+	
 	<build>
     	<finalName>${context.path}</finalName>
     	<resources>  
@@ -350,7 +347,6 @@
 				</dependencies>
 			</plugin>				
 		</plugins>  
-		
 	</build>
 	
 </project>

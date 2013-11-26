@@ -11,7 +11,6 @@ public abstract class AbstractPersonServiceImpl<TPerson extends Person> extends 
 	@Autowired
 	public AbstractPersonServiceImpl(EntityRepository<TPerson> repository) {
 		super(repository);
-		// TODO Auto-generated constructor stub
 	}
 
 }

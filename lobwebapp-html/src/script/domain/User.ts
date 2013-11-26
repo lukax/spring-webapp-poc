@@ -6,6 +6,5 @@ module domain {
         username: string; 
         password: string; 
         roles?: string[];
-        isLogged?: boolean;
     }
 }

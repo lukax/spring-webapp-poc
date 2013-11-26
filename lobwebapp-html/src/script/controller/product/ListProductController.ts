@@ -1,5 +1,7 @@
 ///<reference path="./../../reference.d.ts"/>
 
+import enums = require("./../../util/EnumUtil");
+
 export module controller.product {
     export interface ListProductViewModel extends d.controller.base.ViewModel {
         products: domain.Product[];
@@ -27,10 +29,11 @@ export module controller.product {
                 (successData, successStatus) => {
                     this.$scope.products = successData;
                     this.NavigationService.progress.done();
-                    if (this.redirect) this.AlertService.add({ content: "Clique em um produto da lista para voltar para a página anterior", title: "Busca Rápida", type: "info" }); 
+                    if (this.redirect) this.AlertService.add({ title: "Busca Rápida", content: "Clique em um produto da lista para voltar para a página anterior", type: enums.AlertType.INFO }); 
                 },
                 (errorData, errorStatus) => {
-                    this.AlertService.add({ content: String(errorData), title: "Lista de Produtos não pôde ser carregada", type: "danger" });
+                    this.AlertService.add({ title: "Listar Produtos", content: "Lista de Produtos não pôde ser carregada", type: enums.AlertType.DANGER });
+                    console.log(errorData);
                     this.NavigationService.progress.done();
                 });
         }
