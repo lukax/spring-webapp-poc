@@ -31,7 +31,7 @@ export module controller {
         }
 
         temporaryUser() {
-            this.$scope.user = { id: 0, username: "", password: "", isLogged: false, roles: [], firstName: "Visitante", lastName: "" };
+            this.$scope.user = { id: 0, username: "", password: "", isLogged: false, roles: [], name: "Visitante" };
         }
 
         processArgs() {

@@ -10,7 +10,7 @@ export module directive {
         };
         public template =
             '<div ng-if="ref.id != 0">'
-            +       '{{ref.firstName}} {{ref.lastName}}'
+            +       '{{ref.name}}'
         +   '</div>'
         ;
 

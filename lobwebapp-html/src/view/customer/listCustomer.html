@@ -17,7 +17,7 @@
         <tr ng-repeat="customer in customers | filter:searchText | orderBy:predicate:reverse"
             ng-click="editCustomer(customer.id)" style="cursor: pointer;" class="product-list">
             <td>{{customer.id}}</td>
-            <td>{{customer.firstName}} {{customer.lastName}}</td>
+            <td>{{customer.name}}</td>
         </tr>
     </tbody>
 </table>

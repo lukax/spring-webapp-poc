@@ -29,7 +29,7 @@ export module controller.customer {
         saveCustomer(customer: domain.Customer) {
             this.CustomerService.save(customer,
                 (successData: domain.Customer, successStatus) => {
-                    this.AlertService.add({ content: "Novo Cliente " + successData.firstName + " foi adicionado", title: "Novo" });
+                    this.AlertService.add({ content: "Novo Cliente " + successData.name + " foi adicionado", title: "Novo" });
                     this.$scope.navigator.$location.url("/customer/" + String(successData.id));
                 },
                 (errorData, errorStatus) => {
@@ -40,7 +40,7 @@ export module controller.customer {
         updateCustomer(customer: domain.Customer) {
             this.CustomerService.update(customer,
                 (successData, successStatus) => {
-                    this.AlertService.add({ title: "Atualização", content: "Alterações em " + successData.firstName + " foram bem sucedidas" });
+                    this.AlertService.add({ title: "Atualização", content: "Alterações em " + successData.name + " foram bem sucedidas" });
                 },
                 (errorData, errorStatus) => {
                     this.AlertService.add({ title: "Cliente não pode ser atualizado", content: String(errorData), type: enums.AlertType.DANGER });
@@ -91,7 +91,7 @@ export module controller.customer {
             } else if (customerId == 0) {
                 this.newCustomer();
             } else if (customerId == "new") {
-                this.$scope.customer = { id: 0, firstName: "", lastName: "" };
+                this.$scope.customer = { id: 0, name: "" };
             } else {
                 this.AlertService.add({ content: "Cliente ID Inválido", type: enums.AlertType.WARNING });
                 this.newCustomer();

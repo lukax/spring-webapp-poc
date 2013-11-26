@@ -73,7 +73,7 @@ export var routes =
 },{
     "name": "order.edit",
     "baseUrl": "/order",
-    "url": "/order/{orderId:[0-9]{1,8}|new}?clientId&productId", //0-9 numbers in 1-8 digits long match
+    "url": "/order/{orderId:[0-9]{1,8}|new}?customerId&productId", //0-9 numbers in 1-8 digits long match
     "templateUrl": "view/order/editOrder.html",
     "controller": "EditOrderController",
     "deps": [
@@ -82,8 +82,8 @@ export var routes =
         "service/mock/OrderServiceMock",
         //"service/impl/ProductServiceImpl",
         "service/mock/ProductServiceMock",
-        //"service/impl/ClientServiceImpl"
-        "service/mock/ClientServiceMock"
+        //"service/impl/CustomerServiceImpl"
+        "service/mock/CustomerServiceMock"
     ]
 }, {
     "name": "order.list",
