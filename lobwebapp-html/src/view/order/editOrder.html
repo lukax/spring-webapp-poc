@@ -84,7 +84,7 @@
         <label for="total" class="col-md-1 col-md-offset-1 control-label">Dinheiro</label>
         <div class="col-md-10 input-group">
             <span class="input-group-addon">R$</span>
-            <input type="text" class="form-control" id="inputPayment" name="inputPayment" ng-model="payment" required min="0">
+            <input type="text" class="form-control" id="inputPayment" name="inputPayment" ng-model="order.payment" required min="0">
             <div class="input-group-btn">
                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                     <ng-pluralize count="order.paymentMode" offset=2

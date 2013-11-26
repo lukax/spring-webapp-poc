@@ -113,7 +113,7 @@ export module controller.order {
         }
 
         emptyCustomer() {
-            this.$scope.order.customer = { id: 0, firstName: "", lastName: "" };
+            this.$scope.order.customer = { id: 0, name: "" };
         }
 
         fetchProduct(id: number) {

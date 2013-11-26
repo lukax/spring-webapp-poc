@@ -23,7 +23,7 @@ export module controller.user {
                 (successData) => {
                     this.$scope.navigator.$location.url("/product/list");
                     this.$scope.user = successData;
-                    this.AlertService.add({ content: "Bem vindo " + this.$scope.user.firstName + " " + this.$scope.user.lastName });
+                    this.AlertService.add({ content: "Bem vindo " + this.$scope.user.name });
                 },
                 () => {
                     this.AlertService.add({ content: "Usuário ou senha inválido", title: "Login falhou", type: "warning" });
@@ -31,7 +31,7 @@ export module controller.user {
         }
 
         temporaryUser() {
-            this.$scope.user = { id: 0, username: "", password: "", isLogged: false, roles: [], firstName: "Visitante", lastName: "" };
+            this.$scope.user = { id: 0, username: "", password: "", isLogged: false, roles: [], name: "Visitante" };
         }
 
         processArgs() {

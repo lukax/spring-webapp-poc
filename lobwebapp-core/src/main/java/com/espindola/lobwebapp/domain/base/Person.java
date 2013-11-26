@@ -7,24 +7,14 @@ import javax.validation.constraints.NotNull;
 public class Person extends AbstractEntity {
 
 	@NotNull
-	private String firstName;
+	private String name;
 
-	@NotNull
-	private String lastName;
-
-	public String getLastName() {
-		return lastName;
+	public String getName() {
+		return name;
 	}
 
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public String getFirstName() {
-		return firstName;
-	}
-
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
 }
