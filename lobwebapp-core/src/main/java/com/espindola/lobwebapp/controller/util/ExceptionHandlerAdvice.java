@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.espindola.lobwebapp.domain.util.ResponseLevel;
-import com.espindola.lobwebapp.domain.util.ResponseMessage;
+import com.espindola.lobwebapp.domain.util.ResponseError;
 import com.espindola.lobwebapp.exception.EntityExistsException;
 import com.espindola.lobwebapp.exception.EntityInvalidException;
 import com.espindola.lobwebapp.exception.EntityNotFoundException;
@@ -21,15 +21,15 @@ public class ExceptionHandlerAdvice {
 	@ExceptionHandler({EntityNotFoundException.class, EntityExistsException.class})
 	@ResponseBody
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
-	public ResponseMessage handlePersistenceException(PersistenceException ex) {
-		return new ResponseMessage(ClassUtils.getShortName(ex.getClass()), ex.getMessage(), ResponseLevel.ALERT);
+	public ResponseError handlePersistenceException(PersistenceException ex) {
+		return new ResponseError(ClassUtils.getShortName(ex.getClass()), ex.getMessage(), ResponseLevel.ALERT);
 	}
 
 	@ExceptionHandler({EntityInvalidException.class})
 	@ResponseBody
 	@ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
-	public ResponseMessage handleMethodArgEx(MethodArgumentNotValidException ex){
-		return new ResponseMessage(ClassUtils.getShortName(ex.getClass()), ex.getMessage(), ResponseLevel.WARNING);
+	public ResponseError handleMethodArgEx(MethodArgumentNotValidException ex){
+		return new ResponseError(ClassUtils.getShortName(ex.getClass()), ex.getMessage(), ResponseLevel.WARNING);
 	}
 	
 }

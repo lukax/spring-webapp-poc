@@ -1,19 +1,20 @@
 package com.espindola.lobwebapp.domain.util;
 
-public class ResponseMessage{
+public class ResponseError{
 	private String message;
-	private String error;
+	private String description;
 	private ResponseLevel level;
-	public ResponseMessage(String error, String message, ResponseLevel level) {
+	
+	public ResponseError(String error, String message, ResponseLevel level) {
 		this.setLevel(level);
 		this.setError(error);
 		this.setMessage(message);
 	}
 	public String getError() {
-		return error;
+		return description;
 	}
 	public void setError(String error) {
-		this.error = error;
+		this.description = error;
 	}
 	public String getMessage() {
 		return message;

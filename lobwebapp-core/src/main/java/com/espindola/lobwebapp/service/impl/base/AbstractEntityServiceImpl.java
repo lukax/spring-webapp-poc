@@ -11,57 +11,61 @@ import com.espindola.lobwebapp.exception.EntityNotFoundException;
 import com.espindola.lobwebapp.repository.contract.base.EntityRepository;
 import com.espindola.lobwebapp.service.contract.base.EntityService;
 
-public abstract class AbstractEntityServiceImpl<TEntity extends AbstractEntity>
-		implements EntityService<TEntity> {
+public abstract class AbstractEntityServiceImpl<T extends AbstractEntity> implements EntityService<T> {
 
-	private EntityRepository<TEntity> repository;
+	private EntityRepository<T> repository;
 
 	@Autowired
-	public AbstractEntityServiceImpl(EntityRepository<TEntity> repository) {
+	public AbstractEntityServiceImpl(EntityRepository<T> repository) {
 		this.repository = repository;
 
 	}
 
 	@Override
-	public TEntity find(Long id) throws EntityNotFoundException {
+	public T find(Long id) throws EntityNotFoundException {
 		throw_if_entity_not_exists(id);
 		return repository.findOne(id);
 	}
 
 	@Override
 	// @Transactional Spring JPA is already annotated with this
-	public void save(TEntity entity) throws EntityExistsException, EntityInvalidException {
+	public T save(T entity) throws EntityExistsException, EntityInvalidException {
 		throw_if_entity_is_null(entity);
 		throw_if_entity_exists(entity.getId());
 		if(entity.getId() != 0)
 			throw new EntityInvalidException("Default Id for saving is 0", entity);
-		repository.save(entity);
+		return repository.save(entity);
 	}
 
 	@Override
-	public void update(TEntity entity) throws EntityNotFoundException, EntityInvalidException {
+	public T update(T entity) throws EntityNotFoundException, EntityInvalidException {
 		throw_if_entity_is_null(entity);
 		throw_if_entity_not_exists(entity.getId());
-		repository.save(entity);
+		return repository.save(entity);
 	}
 
 	@Override
-	public void remove(Long id) throws EntityNotFoundException {
+	public T remove(Long id) throws EntityNotFoundException {
 		throw_if_entity_not_exists(id);
+		T retrievedEntity = find(id);
 		repository.delete(find(id));
+		return retrievedEntity;
 	}
 
 	@Override
-	public TEntity get(TEntity entity) throws EntityNotFoundException, EntityInvalidException {
-		return find(entity.getId());
+	public Boolean contains(T entity) throws EntityNotFoundException, EntityInvalidException {
+		T retrievedEntity = find(entity.getId());
+		if(retrievedEntity.equals(entity))
+			return true;
+		return false;
 	}
 
 	@Override
-	public List<TEntity> list() {
+	public List<T> list() {
 		return repository.findAll();
 	}
 
-	protected void throw_if_entity_is_null(TEntity entity) throws EntityInvalidException {
+	protected void throw_if_entity_is_null(T entity) throws EntityInvalidException {
 		String message;
 		if (entity == null) message = "Entity object is null";
 		else if(entity.getId() == null) message = "Id field is null";

@@ -20,51 +20,55 @@ import com.espindola.lobwebapp.exception.EntityNotFoundException;
 import com.espindola.lobwebapp.service.contract.base.EntityService;
 
 @Controller
-public abstract class AbstractEntityController<E extends AbstractEntity> {
+public abstract class AbstractEntityController<T extends AbstractEntity> {
 
-	private EntityService<E> service;
+	private EntityService<T> service;
 
 	@Autowired
-	public AbstractEntityController(EntityService<E> service) {
+	public AbstractEntityController(EntityService<T> service) {
 		this.service = service;
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	@ResponseStatus(value = HttpStatus.OK)
 	@ResponseBody
-	public E find(@PathVariable("id") Long id) throws EntityNotFoundException {
+	public T find(@PathVariable("id") Long id) throws EntityNotFoundException {
 		return service.find(id);	
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
+	@ResponseStatus(value = HttpStatus.OK)
 	@ResponseBody
-	public List<E> list() {
+	public List<T> list() {
 		return service.list();
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
 	@ResponseStatus(value = HttpStatus.OK)
-	public synchronized void save(@Validated @RequestBody E data) throws EntityExistsException, EntityInvalidException {
-		service.save(data);
+	@ResponseBody
+	public synchronized T save(@Validated @RequestBody T data) throws EntityExistsException, EntityInvalidException {
+		return service.save(data);
 	}
 
 	@RequestMapping(method = RequestMethod.PUT)
 	@ResponseStatus(value = HttpStatus.OK)
-	public synchronized void update(@Validated @RequestBody E data) throws EntityInvalidException, EntityNotFoundException {
-		service.update(data);
+	@ResponseBody
+	public synchronized T update(@Validated @RequestBody T data) throws EntityInvalidException, EntityNotFoundException {
+		return service.update(data);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	@ResponseStatus(value = HttpStatus.OK)
-	public synchronized void delete(@PathVariable("id") Long id)
-			throws EntityNotFoundException {
-		service.remove(id);
-	}
-	
-	@RequestMapping(value="/test", method = RequestMethod.GET)
 	@ResponseBody
-	public String testItOut(){
-		return "It Works!";
+	public synchronized T delete(@PathVariable("id") Long id) throws EntityNotFoundException {
+		return service.remove(id);
 	}
 	
+	@RequestMapping(value = "/{id}", method = RequestMethod.TRACE)
+	@ResponseStatus(value = HttpStatus.OK)
+	@ResponseBody
+	public synchronized Boolean contains(@Validated @RequestBody T data) throws EntityNotFoundException, EntityInvalidException {
+		return service.contains(data);
+	}
 	
 }

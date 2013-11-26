@@ -7,14 +7,14 @@ import com.espindola.lobwebapp.exception.EntityExistsException;
 import com.espindola.lobwebapp.exception.EntityInvalidException;
 import com.espindola.lobwebapp.exception.EntityNotFoundException;
 
-public interface EntityService<TEntity extends AbstractEntity> {
+public interface EntityService<T extends AbstractEntity> {
 	
-	void save(TEntity entity) throws EntityExistsException, EntityInvalidException;
-	void update(TEntity entity) throws EntityNotFoundException, EntityInvalidException;
-	void remove(Long id) throws EntityNotFoundException;
-	TEntity find(Long id) throws EntityNotFoundException;
-	TEntity get(TEntity entity) throws EntityNotFoundException, EntityInvalidException;
+	T save(T entity) throws EntityExistsException, EntityInvalidException;
+	T update(T entity) throws EntityNotFoundException, EntityInvalidException;
+	T remove(Long id) throws EntityNotFoundException;
+	T find(Long id) throws EntityNotFoundException;
+	Boolean contains(T entity) throws EntityNotFoundException, EntityInvalidException;
 	
 	//@PreAuthorize("hasRole('ROLE_USER')")
-	List<TEntity> list();
+	List<T> list();
 }
