@@ -96,4 +96,22 @@ export var routes =
         //"service/impl/OrderServiceImpl"
         "service/mock/OrderServiceMock"
     ]
-}];
+}, {
+    "name": "customer",
+    "url": "/customer",
+    "templateUrl": "view/customer/customer.html",
+    "controller": "",
+    "deps": []
+}, {
+    "name": "customer.edit",
+    "baseUrl": "/customer",
+    "url": "/customer/{customerId:[0-9]{1,8}|new}",
+    "templateUrl": "view/customer/editCustomer.html",
+    "controller": "EditCustomerController",
+    "deps": [
+        "controller/customer/EditCustomerController",
+        "service/mock/CustomerServiceMock"
+    ]
+}
+
+];

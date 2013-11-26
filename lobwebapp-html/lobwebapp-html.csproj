@@ -68,6 +68,9 @@
     <Content Include="src\template\typeahead\typeahead-match.html" />
     <Content Include="src\template\typeahead\typeahead-popup.html" />
     <Content Include="src\view\alertView.html" />
+    <Content Include="src\view\customer\editCustomer.html" />
+    <Content Include="src\view\customer\customer.html" />
+    <Content Include="src\view\customer\listCustomer.html" />
     <Content Include="src\view\mainNavbarView.html" />
     <Content Include="src\view\order\editOrder.html" />
     <Content Include="src\view\order\listOrder.html" />
@@ -121,6 +124,8 @@
     <TypeScriptCompile Include="src\script\controller\AlertController.ts" />
     <TypeScriptCompile Include="src\script\controller\base\Controller.ts" />
     <TypeScriptCompile Include="src\script\controller\base\ViewModel.ts" />
+    <TypeScriptCompile Include="src\script\controller\customer\EditCustomerController.ts" />
+    <TypeScriptCompile Include="src\script\controller\customer\ListCustomerController.ts" />
     <TypeScriptCompile Include="src\script\controller\MainNavbarController.ts" />
     <TypeScriptCompile Include="src\script\controller\order\EditOrderController.ts" />
     <TypeScriptCompile Include="src\script\controller\order\ListOrderController.ts" />

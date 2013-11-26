@@ -1,0 +1,111 @@
+///<reference path="./../../reference.d.ts"/>
+
+import util = require("./../../util/EnumUtil");
+
+export module controller.customer {
+    export interface EditCustomerViewModel extends d.controller.base.ViewModel {
+        customer: domain.Customer;
+        isCustomerNew: boolean;
+        saveChanges: (customer: domain.Customer) => void;
+        removeCustomer: (customer: domain.Customer) => void;
+    }
+
+    export class EditCustomerController implements d.controller.base.Controller {
+
+        static $inject = ["$scope", "CustomerService", "AlertService"];
+        constructor(public $scope: EditCustomerViewModel,
+            public CustomerService: d.service.contract.CustomerService,
+            public AlertService: d.service.contract.util.AlertService) {
+
+            this.processArgs();
+            this.populateScope();
+        }
+
+        saveChanges(customer: domain.Customer) {
+            if (this.$scope.customer.id == 0) this.saveCustomer(customer);
+            else this.updateCustomer(customer);
+        }
+
+        saveCustomer(customer: domain.Customer) {
+            this.CustomerService.save(customer,
+                (successData: domain.Customer, successStatus) => {
+                    this.AlertService.add({ content: "Novo Cliente " + successData.firstName + " foi adicionado", title: "Novo" });
+                    this.$scope.navigator.$location.url("/customer/" + String(successData.id));
+                },
+                (errorData, errorStatus) => {
+                    this.AlertService.add({ content: "Cliente não pode ser salvado", title: String(errorData), type: util.AlertType.DANGER });
+                });
+        }
+
+        updateCustomer(customer: domain.Customer) {
+            this.CustomerService.update(customer,
+                (successData, successStatus) => {
+                    this.AlertService.add({ title: "Atualização", content: "Alterações em " + successData.firstName + " foram bem sucedidas" });
+                },
+                (errorData, errorStatus) => {
+                    this.AlertService.add({ title: "Cliente não pode ser atualizado", content: String(errorData), type: util.AlertType.DANGER });
+                });
+        }
+
+        removeCustomer(customer: domain.Customer) {
+            this.CustomerService.remove(customer,
+                (successData, successStatus) => {
+                    this.AlertService.add({ content: "Cliente removido com sucesso" });
+                    this.newCustomer();
+                },
+                (errorData, errorStatus) => {
+                    this.AlertService.add({ title: "Cliente não pode ser removido", content: String(errorData), type: util.AlertType.DANGER });
+                });
+        }
+
+        findCustomer(id: number) {
+            this.CustomerService.find(id,
+                (successData, successStatus) => {
+                    this.$scope.customer = successData;
+                },
+                (errorData, errorStatus) => {
+                    this.AlertService.add({ title: "Cliente com o ID especificado não foi encontrado", content: String(errorData), type: util.AlertType.WARNING });
+                    this.newCustomer();
+                });
+        }
+
+        newCustomer() {
+            this.$scope.navigator.$location.url("/customer/new");
+        }
+
+
+        isCustomerNew() {
+            return (this.$scope.customer && this.$scope.customer.id == 0);
+        }
+
+        watchCustomer() {
+            this.$scope.$watch("customer", (newValue: domain.Customer, oldValue: domain.Customer) => {
+                this.$scope.isCustomerNew = this.isCustomerNew();
+            }, true);
+        }
+
+        processArgs() {
+            var customerId = this.$scope.navigator.params().customerId;
+            if (customerId > 0) {
+                this.findCustomer(Number(customerId));
+            } else if (customerId == 0) {
+                this.newCustomer();
+            } else if (customerId == "new") {
+                this.$scope.customer = { id: 0, firstName: "", lastName: "" };
+            } else {
+                this.AlertService.add({ content: "Cliente ID Inválido", type: util.AlertType.WARNING });
+                this.newCustomer();
+            }
+        }
+
+        populateScope() {
+            this.watchCustomer();
+            this.$scope.saveChanges = (customer: domain.Customer) => this.saveChanges(customer);
+            this.$scope.removeCustomer = (customer: domain.Customer) => this.removeCustomer(customer);
+        }
+    }
+}
+
+export var register = (moduleName: string) => {
+    angular.module(moduleName).lazy.controller("EditCustomerController", controller.customer.EditCustomerController);
+};
