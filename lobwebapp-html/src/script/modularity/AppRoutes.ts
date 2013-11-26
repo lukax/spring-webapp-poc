@@ -112,6 +112,16 @@ export var routes =
         "controller/customer/EditCustomerController",
         "service/mock/CustomerServiceMock"
     ]
+}, {
+    "name": "customer.list",
+    "baseUrl": "/customer",
+    "url": "/customer/list",
+    "templateUrl": "view/customer/listCustomer.html",
+    "controller": "ListCustomerController",
+    "deps": [
+        "controller/customer/ListCustomerController",
+        "service/mock/CustomerServiceMock"
+    ]
 }
 
 ];

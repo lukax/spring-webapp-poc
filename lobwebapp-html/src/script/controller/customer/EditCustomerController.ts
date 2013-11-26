@@ -1,6 +1,6 @@
 ///<reference path="./../../reference.d.ts"/>
 
-import util = require("./../../util/EnumUtil");
+import enums = require("./../../util/EnumUtil");
 
 export module controller.customer {
     export interface EditCustomerViewModel extends d.controller.base.ViewModel {
@@ -33,7 +33,7 @@ export module controller.customer {
                     this.$scope.navigator.$location.url("/customer/" + String(successData.id));
                 },
                 (errorData, errorStatus) => {
-                    this.AlertService.add({ content: "Cliente não pode ser salvado", title: String(errorData), type: util.AlertType.DANGER });
+                    this.AlertService.add({ content: "Cliente não pode ser salvado", title: String(errorData), type: enums.AlertType.DANGER });
                 });
         }
 
@@ -43,7 +43,7 @@ export module controller.customer {
                     this.AlertService.add({ title: "Atualização", content: "Alterações em " + successData.firstName + " foram bem sucedidas" });
                 },
                 (errorData, errorStatus) => {
-                    this.AlertService.add({ title: "Cliente não pode ser atualizado", content: String(errorData), type: util.AlertType.DANGER });
+                    this.AlertService.add({ title: "Cliente não pode ser atualizado", content: String(errorData), type: enums.AlertType.DANGER });
                 });
         }
 
@@ -54,7 +54,7 @@ export module controller.customer {
                     this.newCustomer();
                 },
                 (errorData, errorStatus) => {
-                    this.AlertService.add({ title: "Cliente não pode ser removido", content: String(errorData), type: util.AlertType.DANGER });
+                    this.AlertService.add({ title: "Cliente não pode ser removido", content: String(errorData), type: enums.AlertType.DANGER });
                 });
         }
 
@@ -64,7 +64,7 @@ export module controller.customer {
                     this.$scope.customer = successData;
                 },
                 (errorData, errorStatus) => {
-                    this.AlertService.add({ title: "Cliente com o ID especificado não foi encontrado", content: String(errorData), type: util.AlertType.WARNING });
+                    this.AlertService.add({ title: "Cliente com o ID especificado não foi encontrado", content: String(errorData), type: enums.AlertType.WARNING });
                     this.newCustomer();
                 });
         }
@@ -93,7 +93,7 @@ export module controller.customer {
             } else if (customerId == "new") {
                 this.$scope.customer = { id: 0, firstName: "", lastName: "" };
             } else {
-                this.AlertService.add({ content: "Cliente ID Inválido", type: util.AlertType.WARNING });
+                this.AlertService.add({ content: "Cliente ID Inválido", type: enums.AlertType.WARNING });
                 this.newCustomer();
             }
         }
