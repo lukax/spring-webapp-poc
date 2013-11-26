@@ -102,19 +102,16 @@ export module controller.product {
                 scope: this.$scope
             });
         }
-
-        onProfitMargin() {
-            this.$scope.$watch("product.price + product.costPrice", () => {
-                if (this.$scope.product != null && this.$scope.product.costPrice !== 0)
-                    this.$scope.profitMargin = a.util.Std.round(this.$scope.product.price / this.$scope.product.costPrice, 2);
-            });
-        }
-
-        onProduct() {
+        
+        watchProduct() {
             this.$scope.$watch("product", (newValue: domain.Product, oldValue: domain.Product) => {
                 console.log("EditProductController: product object changed");
                 this.$scope.isProductNew = this.isProductNew();
             }, true);
+            this.$scope.$watch("product.price + product.costPrice", () => {
+                if (this.$scope.product != null && this.$scope.product.costPrice !== 0)
+                    this.$scope.profitMargin = a.util.Std.round(this.$scope.product.price / this.$scope.product.costPrice, 2);
+            });
         }
 
         processArgs() {
@@ -135,8 +132,7 @@ export module controller.product {
         }
 
         populateScope() {
-            this.onProduct();
-            this.onProfitMargin();
+            this.watchProduct();
             this.$scope.saveChanges = (product: domain.Product) => this.saveChanges(product);
             this.$scope.removeProduct = (product: domain.Product) => this.removeProduct(product);
             this.$scope.priceInfo = () => this.priceInfo();

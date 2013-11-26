@@ -146,7 +146,7 @@ export module controller.order {
             }
         }
 
-        listenOrderChanges() {
+        watchOrder() {
             this.$scope.$watch("order", (newValue: domain.Order, oldValue: domain.Order) => {
                 this.$scope.isOrderNew = this.isOrderNew();
                 console.log("Object order changed");
@@ -160,9 +160,6 @@ export module controller.order {
                     this.$scope.exchange = 0;
                 }
             });
-        }
-
-        listenProductsChanges() {
             this.$scope.$watch("order.products", (newValue: domain.Product[], oldValue: domain.Product[]) => {
 
                 console.log("Object order.products changed");
@@ -186,8 +183,7 @@ export module controller.order {
         }
 
         populateScope() {
-            this.listenOrderChanges();
-            this.listenProductsChanges();
+            this.watchOrder();
 
             this.$scope.order = { id: 0, customer: null, products: [], status: { payment: util.PaymentStatus.PENDING, delivery: util.DeliveryStatus.PENDING }, paymentMode: util.PaymentMode.MONEY, payment: 0, date: new Date() };
             this.emptyCustomer();
