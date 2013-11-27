@@ -82,7 +82,7 @@ export module controller.order {
                         successData.quantity = quantity;
                         this.$scope.order.products.push(successData);
                     }, (errorData: domain.util.Error) => {
-                        this.AlertService.add({ title: "Buscar Produto", content: errorData.message, type: enums.AlertType.WARNING });
+                        this.AlertService.add({ title: "Buscar Produto", content: errorData.description, type: enums.AlertType.WARNING });
                     });
             }
             this.emptyProduct();
@@ -198,7 +198,7 @@ export module controller.order {
         populateScope() {
             this.watchOrder();
 
-            this.$scope.order = { id: 0, customer: null, products: [], status: { payment: enums.PaymentStatus.PENDING, delivery: enums.DeliveryStatus.PENDING }, paymentMode: enums.PaymentMode.MONEY, payment: 0, date: new Date() };
+            this.$scope.order = { id: 0, customer: null, products: [], status: [], paymentMode: enums.PaymentMode.MONEY, payment: 0, date: new Date() };
             this.emptyCustomer();
             this.emptyProduct();
             this.fetchProduct(0);

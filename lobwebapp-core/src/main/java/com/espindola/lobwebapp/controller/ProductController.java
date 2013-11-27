@@ -28,14 +28,14 @@ public class ProductController extends AbstractEntityController<Product> {
 		this.service = service;
 	}
 	
-	@RequestMapping(method = RequestMethod.GET, value = "/{name}", headers = {"findByName"})
+	@RequestMapping(value = "/{productName}", method = RequestMethod.HEAD)
 	@ResponseStatus(value = HttpStatus.OK)
 	@ResponseBody
-	public List<Product> find(@PathVariable("name") String name) throws EntityNotFoundException {
-		return this.service.findByName(name);
+	public List<Product> findByName(@PathVariable("productName") String productName) throws EntityNotFoundException {
+		return this.service.findByName(productName);
 	}
 	
-	@RequestMapping(method = RequestMethod.GET, headers = {"listCategory"})
+	@RequestMapping(value = "/category", method = RequestMethod.GET)
 	@ResponseStatus(value = HttpStatus.OK)
 	@ResponseBody
 	public List<String> listCategory(){

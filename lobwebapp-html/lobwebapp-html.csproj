@@ -82,7 +82,6 @@
     <Content Include="src\view\product\modal\priceInfoModal.html" />
     <Content Include="src\view\product\product.html" />
     <Content Include="src\view\user\authUser.html" />
-    <Content Include="src\view\user\boardUser.html" />
     <Content Include="src\view\user\user.html" />
     <Content Include="test\.gitignore" />
     <Content Include="ts-definitions\angularjs\angular-cookies.d.ts" />
@@ -131,7 +130,6 @@
     <TypeScriptCompile Include="src\script\controller\product\GraphProductController.ts" />
     <TypeScriptCompile Include="src\script\controller\product\ListProductController.ts" />
     <TypeScriptCompile Include="src\script\controller\user\AuthUserController.ts" />
-    <TypeScriptCompile Include="src\script\controller\user\BoardUserController.ts" />
     <TypeScriptCompile Include="src\script\directive\OrderStatusDetailDirective.ts" />
     <TypeScriptCompile Include="src\script\directive\CustomerDetailDirective.ts" />
     <TypeScriptCompile Include="src\script\directive\ProductDetailDirective.ts" />

@@ -21,10 +21,10 @@ export module service.mock {
                             successCallback(this.user, 200, null, null);
                         }
                         else {
-                            errorCallback({message: "Senha incorreta ou Usuário já fez login"}, 200, null, null);
+                            errorCallback({ description: "Senha incorreta ou Usuário já fez login"}, 200, null, null);
                         }
                     }, () => {
-                        errorCallback({message: "Usuário não existe"}, 200, null, null);
+                        errorCallback({ description: "Usuário não existe"}, 200, null, null);
                     });
         }
 
@@ -37,7 +37,7 @@ export module service.mock {
                     successCallback(this.user, 200, null, null);
                 }
                 else {
-                    errorCallback({message: "Usuário já está deslogado"}, 200, null, null);
+                    errorCallback({ description: "Usuário já está deslogado"}, 200, null, null);
                 }
         }
 

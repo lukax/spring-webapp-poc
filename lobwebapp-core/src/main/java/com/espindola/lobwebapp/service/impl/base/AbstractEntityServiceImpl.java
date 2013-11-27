@@ -53,11 +53,15 @@ public abstract class AbstractEntityServiceImpl<T extends AbstractEntity> implem
 	}
 
 	@Override
-	public Boolean contains(T entity) throws EntityNotFoundException, EntityInvalidException {
-		T retrievedEntity = find(entity.getId());
-		if(retrievedEntity.equals(entity))
-			return true;
-		return false;
+	public Boolean contains(T entity) throws EntityInvalidException {
+		try {
+			T retrievedEntity = find(entity.getId());		
+			if(retrievedEntity.equals(entity))
+				return true;
+			return false;
+		} catch (EntityNotFoundException e) {
+			return false;
+		}
 	}
 
 	@Override

@@ -29,7 +29,7 @@ public abstract class AbstractEntityController<T extends AbstractEntity> {
 		this.service = service;
 	}
 
-	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/{id:[\\d]+}", method = RequestMethod.GET)
 	@ResponseStatus(value = HttpStatus.OK)
 	@ResponseBody
 	public T find(@PathVariable("id") Long id) throws EntityNotFoundException {
@@ -44,7 +44,7 @@ public abstract class AbstractEntityController<T extends AbstractEntity> {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	@ResponseStatus(value = HttpStatus.OK)
+	@ResponseStatus(value = HttpStatus.CREATED)
 	@ResponseBody
 	public synchronized T save(@Validated @RequestBody T data) throws EntityExistsException, EntityInvalidException {
 		return service.save(data);
@@ -57,18 +57,11 @@ public abstract class AbstractEntityController<T extends AbstractEntity> {
 		return service.update(data);
 	}
 
-	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/{id:[\\d]+}", method = RequestMethod.DELETE)
 	@ResponseStatus(value = HttpStatus.OK)
 	@ResponseBody
 	public synchronized T delete(@PathVariable("id") Long id) throws EntityNotFoundException {
 		return service.remove(id);
-	}
-	
-	@RequestMapping(value = "/{id}", method = RequestMethod.TRACE)
-	@ResponseStatus(value = HttpStatus.OK)
-	@ResponseBody
-	public synchronized Boolean contains(@Validated @RequestBody T data) throws EntityNotFoundException, EntityInvalidException {
-		return service.contains(data);
 	}
 	
 }

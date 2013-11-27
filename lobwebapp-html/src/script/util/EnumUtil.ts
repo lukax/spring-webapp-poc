@@ -1,15 +1,8 @@
 ///<reference path="./../reference.d.ts"/>
 
-export class PaymentStatus {
-    public static PENDING = 0;
-    public static CONFIRMED = 1;
-    public static CANCELLED = 2;
-}
-
-export class DeliveryStatus {
-    public static PENDING = 0;
-    public static CONFIRMED = 1;
-    public static CANCELLED = 2;
+export class OrderStatus {
+    public static DELIVERY_OK = 0;
+    public static PAYMENT_OK = 0;
 }
 
 export class AlertType {

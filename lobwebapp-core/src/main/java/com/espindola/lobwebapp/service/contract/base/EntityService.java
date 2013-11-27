@@ -13,7 +13,7 @@ public interface EntityService<T extends AbstractEntity> {
 	T update(T entity) throws EntityNotFoundException, EntityInvalidException;
 	T remove(Long id) throws EntityNotFoundException;
 	T find(Long id) throws EntityNotFoundException;
-	Boolean contains(T entity) throws EntityNotFoundException, EntityInvalidException;
+	Boolean contains(T entity) throws EntityInvalidException;
 	
 	//@PreAuthorize("hasRole('ROLE_USER')")
 	List<T> list();

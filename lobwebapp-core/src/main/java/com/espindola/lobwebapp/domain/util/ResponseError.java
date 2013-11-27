@@ -1,32 +1,37 @@
 package com.espindola.lobwebapp.domain.util;
 
 public class ResponseError{
-	private String message;
+	private String error;
 	private String description;
 	private ResponseLevel level;
 	
-	public ResponseError(String error, String message, ResponseLevel level) {
+	public ResponseError(String error, String description, ResponseLevel level) {
 		this.setLevel(level);
 		this.setError(error);
-		this.setMessage(message);
+		this.setDescription(description);
 	}
-	public String getError() {
-		return description;
-	}
-	public void setError(String error) {
-		this.description = error;
-	}
-	public String getMessage() {
-		return message;
-	}
-	public void setMessage(String message) {
-		this.message = message;
-	}
+
 	public ResponseLevel getLevel() {
 		return level;
 	}
 	public void setLevel(ResponseLevel degree) {
 		this.level = degree;
+	}
+
+	public String getError() {
+		return error;
+	}
+
+	public void setError(String error) {
+		this.error = error;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 }

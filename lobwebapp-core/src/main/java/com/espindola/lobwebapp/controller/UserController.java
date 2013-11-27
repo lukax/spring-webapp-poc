@@ -26,10 +26,10 @@ public class UserController extends PersonController<User> {
 
 	}
 
-	@RequestMapping(method = RequestMethod.GET, value = "/{username}",  headers = {"findByUsername"})
+	@RequestMapping(value = "/{userUsername}", method = RequestMethod.HEAD)
 	@ResponseStatus(value = HttpStatus.OK)
 	@ResponseBody
-	public User findByUsername(@PathVariable("username") String username){
-		return this.service.findByUsername(username);
+	public User findByUsername(@PathVariable("userUsername") String userUsername){
+		return this.service.findByUsername(userUsername);
 	}
 }

@@ -12,13 +12,13 @@ export module service.impl {
         public findByName(name: string,
             successCallback: (data: domain.Product[], status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
             errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
-            this.$http.get(this.url + '/' + name, { headers: {"findByName": "true"} }).success(successCallback).error(errorCallback);
+            this.$http({ method: "HEAD", url: this.url + '/' + name }).success(successCallback).error(errorCallback);
         }
 
         public listCategory(
             successCallback: (data: string[], status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
             errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
-            this.$http.get(this.url, { headers: {"listCategory": "true"} }).success(successCallback).error(errorCallback);
+            this.$http.get(this.url + "/category").success(successCallback).error(errorCallback);
         }
     }
 }

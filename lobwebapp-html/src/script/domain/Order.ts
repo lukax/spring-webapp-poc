@@ -4,15 +4,10 @@
 ///<reference path='./base/AbstractEntity.ts'/>
 
 module domain {
-    export interface OrderStatus {
-        payment: number;
-        delivery?: number;
-    }
-
     export interface Order extends domain.base.AbstractEntity {
         customer: domain.Customer;
         products: domain.Product[];
-        status: OrderStatus;
+        status: string[];
         date?: Date;
         payment?: number;
     }

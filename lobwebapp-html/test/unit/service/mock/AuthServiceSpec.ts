@@ -16,7 +16,7 @@ describe("service: AuthService", () => {
     });
 
     it("should login an user", (inject((AuthService: d.service.contract.AuthService, $timeout: ng.ITimeoutService, UserService:d.service.contract.UserService) => {
-        UserService.save(<domain.User>{id: 0, username: "user 1", password: "123456", isLogged: false}, ()=> {}, ()=> {});
+        UserService.save(<domain.User>{id: 0, username: "user 1", password: "123456"}, ()=> {}, ()=> {});
         $timeout.flush();
     	var spy = jasmine.createSpy("login");
     	AuthService.login(<domain.User>{username: "user 1", password: "123456"}, spy, spy);
@@ -30,14 +30,11 @@ describe("service: AuthService", () => {
 	})));
 
     it("should logout an user", (inject((AuthService: d.service.contract.AuthService, $timeout: ng.ITimeoutService, UserService:d.service.contract.UserService) => {
-        UserService.save(<domain.User>{id: 0, username: "user 1", password: "123456", isLogged: true}, ()=> {}, ()=> {});
+        UserService.save(<domain.User>{id: 0, username: "user 1", password: "123456"}, ()=> {}, ()=> {});
         $timeout.flush();
         var spy = jasmine.createSpy("logout");
-        AuthService.logout(<domain.User>{username: "user 1", password: "123456"}, spy, spy);
-        expect(spy).not.toHaveBeenCalled();
-        $timeout.flush();
+        AuthService.logout(spy, spy);
         expect(spy.calls.length).toBe(1);
-        expect(spy.mostRecentCall.args[0].username).toBe("user 1");
         expect(AuthService.isLoggedIn()).toBeFalsy();
     })));
 

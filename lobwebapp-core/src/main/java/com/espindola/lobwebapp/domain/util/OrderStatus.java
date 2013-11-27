@@ -1,5 +1,6 @@
 package com.espindola.lobwebapp.domain.util;
 
 public enum OrderStatus {
-	DELIVERY, PAYMENT
+	DELIVERY_OK, 
+	PAYMENT_OK
 }

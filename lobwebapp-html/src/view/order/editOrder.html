@@ -46,7 +46,7 @@
             </div>
         </div>
         <div class="col-md-2 input-group" ng-class="{'has-error': orderForm.productQuantity.$invalid && order.products.length == 0}">
-            <input type="number" class="form-control" id="productQuantity" name="productQuantity" placeholder="Qt" ng-model="product.quantity" required min="1" ui-keypress="{'enter': 'addProduct(product.id, product.quantity)'}">
+            <input type="number" class="form-control" id="productQuantity" name="productQuantity" placeholder="Qt" ng-model="product.quantity" required min="1" ui-keypress="{'enter': 'addProduct(product.id, product.quantity)'}" ng-disabled="!product.id">
             <div class="input-group-btn">
                 <button type="button" class="btn btn-primary" data-toggle="tooltip" title="Adicionar produto à lista" ng-click="addProduct(product.id, product.quantity)" ng-disabled="orderForm.productQuantity.$invalid || orderForm.productId.$invalid">
                     <span class="glyphicon glyphicon-plus"></span>
@@ -84,7 +84,7 @@
         <label for="total" class="col-md-1 col-md-offset-1 control-label">Dinheiro</label>
         <div class="col-md-10 input-group">
             <span class="input-group-addon">R$</span>
-            <input type="text" class="form-control" id="inputPayment" name="inputPayment" ng-model="order.payment" required min="0">
+            <input type="number" class="form-control" id="inputPayment" name="inputPayment" ng-model="order.payment" required min="0">
             <div class="input-group-btn">
                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                     <ng-pluralize count="order.paymentMode" offset=2
@@ -133,6 +133,7 @@
     <div class="pull-right" ng-class="{'btn-group': !isNewOrder}">
         <button class="btn btn-primary" type="submit" data-toggle="tooltip" title="Confirmar mudanças" data-loading-text="Salvando..."
                 ng-disabled="orderForm.customerId.$invalid ||
+                             orderForm.inputPayment.$invalid ||
                              order.products.length == 0">
             <span class="glyphicon glyphicon-floppy-disk"></span> Salvar
         </button>

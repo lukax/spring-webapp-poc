@@ -35,7 +35,7 @@ export module service.impl {
                     successCallback(this.user, 200, null, null);
                 }
                 else
-                    errorCallback({ message: "Usuário já está deslogado" }, 200, null, null);
+                    errorCallback({ description: "Usuário já está deslogado" }, 200, null, null);
         }
 
         isLoggedIn() {
