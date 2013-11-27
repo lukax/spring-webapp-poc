@@ -2,6 +2,7 @@ package com.espindola.lobwebapp.controller.util;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageConversionException;
+import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.util.ClassUtils;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -37,6 +38,13 @@ public class ExceptionHandlerControllerAdvice {
 	@ResponseBody
 	public ResponseError handleEntityInvalidEx(Exception ex){
 		return new ResponseError(ClassUtils.getShortName(ex.getClass()), ex.getMessage(), ResponseLevel.WARNING);
+	}
+	
+	@ExceptionHandler(AuthenticationCredentialsNotFoundException.class)
+	@ResponseStatus(HttpStatus.FORBIDDEN)
+	@ResponseBody
+	public ResponseError handleAuthEx(Exception ex){
+		return new ResponseError(ClassUtils.getShortName(ex.getClass()), ex.getMessage(), ResponseLevel.ALERT);
 	}
 	
 	@ExceptionHandler
