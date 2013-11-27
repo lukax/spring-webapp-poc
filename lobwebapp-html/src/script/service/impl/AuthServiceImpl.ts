@@ -9,6 +9,7 @@ export module service.impl {
         static $inject = ["$http", "$rootScope"];
         constructor(public $http: ng.IHttpService, public $rootScope: ng.IRootScopeService) {
             this.temporaryUser();
+            var $window: ng.IWindowService;
         }
 
         login(user: domain.User,
@@ -19,7 +20,7 @@ export module service.impl {
                     .success((data: domain.AuthToken, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => {
                         this.authToken = data;
                         this.$http.defaults.headers.common["Authorization"] = "Bearer " + this.authToken.access_token;
-                        this.user = { name: "Usu·rio", isLogged: true, username: "user", password: "password", id: 1, roles: ["ROLE_USER"] };
+                        this.user = { name: "Usu√°rio", isLogged: true, username: "user", password: "password", id: 1, roles: ["ROLE_USER"] };
                         this.$rootScope.$broadcast("USER_CHANGED", [this.user]);
                         //TODO: make server return REAL user information after login...
                         successCallback(this.user, status, headers, config);
@@ -35,7 +36,7 @@ export module service.impl {
                     successCallback(this.user, 200, null, null);
                 }
                 else
-                    errorCallback({ description: "Usu·rio j· est· deslogado" }, 200, null, null);
+                    errorCallback({ description: "Usu√°rio j√° est√° deslogado" }, 200, null, null);
         }
 
         isLoggedIn() {

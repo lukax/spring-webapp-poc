@@ -7,8 +7,7 @@ module domain {
     export interface Order extends domain.base.AbstractEntity {
         customer: domain.Customer;
         products: domain.Product[];
-        status: string[];
+        payment: Payment;
         date?: Date;
-        payment?: number;
     }
 }

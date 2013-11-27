@@ -1,8 +1,15 @@
 ///<reference path="./../reference.d.ts"/>
 
-export class OrderStatus {
-    public static DELIVERY_OK = 0;
-    public static PAYMENT_OK = 0;
+export class PaymentStatus {
+    public static OK = "OK";
+    public static PENDING = "PENDING";
+    public static CANCELLED = "CANCELLED";
+}
+
+export class PaymentMode {
+    public static MONEY = "MONEY";
+    public static CREDIT_CARD = "CREDIT_CARD";
+    public static CHECK = "CHECK";
 }
 
 export class AlertType {
@@ -10,10 +17,4 @@ export class AlertType {
     public static DANGER = "danger";
     public static OK = "success";
     public static INFO = "info";
-}
-
-export class PaymentMode {
-    public static MONEY = 0;
-    public static CREDIT_CARD = 1;
-    public static CHECK = 2;
 }

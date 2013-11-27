@@ -39,7 +39,7 @@ export module controller.order {
                     this.$scope.navigator.$location.url("/order/" + String(successData.id));
                 },
                 (errorData, errorStatus) => {
-                    this.AlertService.add({ title: "Novo Pedido", content: "Erro pedido n„o pÙde ser salvado", type: enums.AlertType.DANGER });
+                    this.AlertService.add({ title: "Novo Pedido", content: "Erro pedido n√£o p√¥de ser salvado", type: enums.AlertType.DANGER });
                     console.log(errorData);
                 });
         }
@@ -50,7 +50,7 @@ export module controller.order {
                     this.AlertService.add({ title: "Editar Pedido", content: "Pedido foi atualizado com sucesso" });
                 },
                 (errorData, errorStatus) => {
-                    this.AlertService.add({ title: "Editar Pedido", content: "Erro pedido n„o pÙde ser atualizado", type: enums.AlertType.DANGER });
+                    this.AlertService.add({ title: "Editar Pedido", content: "Erro pedido n√£o p√¥de ser atualizado", type: enums.AlertType.DANGER });
                     console.log(errorData);
                 });
         }
@@ -61,7 +61,7 @@ export module controller.order {
                     this.AlertService.add({ title: "Remover Pedido", content: "Pedido foi removido com sucesso" });
                 },
                 (errorData, errorStatus) => {
-                    this.AlertService.add({ title: "Remover Pedido", content: "Erro pedido n„o pÙde ser removido", type: enums.AlertType.DANGER });
+                    this.AlertService.add({ title: "Remover Pedido", content: "Erro pedido n√£o p√¥de ser removido", type: enums.AlertType.DANGER });
                     console.log(errorData);
                 });
         }
@@ -166,7 +166,7 @@ export module controller.order {
             });
             this.$scope.$watch("payment", (newValue: domain.Order, oldValue: domain.Order) => {
                 if (this.$scope.total > 0) {
-                    var sum = this.$scope.order.payment - this.$scope.total;
+                    var sum = this.$scope.order.payment.quantity - this.$scope.total;
                     if (sum > 0) this.$scope.exchange = sum;
                     else this.$scope.exchange = 0;
                 } else {
@@ -187,7 +187,7 @@ export module controller.order {
                     (successData) => {
                         this.$scope.order = successData;
                     }, (errorData) => {
-                        this.AlertService.add({ content: "Pedido ID Inv·lido", type: enums.AlertType.WARNING });
+                        this.AlertService.add({ content: "Pedido ID Inv√°lido", type: enums.AlertType.WARNING });
                     });
             }
 
@@ -198,7 +198,7 @@ export module controller.order {
         populateScope() {
             this.watchOrder();
 
-            this.$scope.order = { id: 0, customer: null, products: [], status: [], paymentMode: enums.PaymentMode.MONEY, payment: 0, date: new Date() };
+            this.$scope.order = { id: 0, customer: null, products: [], payment: { id:0, quantity: 0, status: enums.PaymentStatus.PENDING, mode: enums.PaymentMode.MONEY }, date: new Date() };
             this.emptyCustomer();
             this.emptyProduct();
             this.fetchProduct(0);

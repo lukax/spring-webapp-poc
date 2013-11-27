@@ -22,8 +22,6 @@
 ///<reference path="./domain/Order.ts"/>
 ///<reference path="./domain/Customer.ts"/>
 
-///<reference path="./directive/LabeledInputDirective.ts"/>
-
 ///<reference path="./modularity/AppModule.ts"/>
 ///<reference path="./modularity/AppRoutes.ts"/>
 ///<reference path="./modularity/ControllerModule.ts"/>

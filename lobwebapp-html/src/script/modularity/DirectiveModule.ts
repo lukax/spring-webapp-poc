@@ -7,10 +7,9 @@
 ///<amd-dependency path="ngAnimateAnimateCss"/>
 ///<amd-dependency path="angularUiUtils"/>
 
-import i0 = require('./../directive/LabeledInputDirective');
 import i1 = require('./../directive/ProductDetailDirective');
 import i2 = require('./../directive/CustomerDetailDirective');
-import i3 = require('./../directive/OrderStatusDetailDirective');
+import i3 = require('./../directive/PaymentDetailDirective');
 
 export module modularity {
     export class DirectiveModule {
@@ -28,8 +27,7 @@ export module modularity {
                 .directive('lwaCaret', this.lwaCaret)
                 .directive('productDetail', [() => new i1.directive.ProductDetailDirective()])
                 .directive('customerDetail', [() => new i2.directive.CustomerDetailDirective()])
-                .directive('orderStatusDetail', [() => new i3.directive.OrderStatusDetailDirective()])
-                .directive('stdForm', [() => new i0.directive.LabeledInputDirective()])
+                .directive('paymentDetail', [() => new i3.directive.PaymentDetailDirective()])
             ;
             return this;
         }

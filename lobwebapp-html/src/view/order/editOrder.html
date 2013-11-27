@@ -80,24 +80,24 @@
             <input type="text" class="form-control" id="total" value="{{total | number:2}}" readonly>
         </div>
     </div>
-    <div class="form-group lwa-fade-left" ng-class="{'has-error': orderForm.inputPayment.$invalid || total > payment}" ng-show="total != 0 && order.status.payment != 1">
+    <div class="form-group lwa-fade-left" ng-class="{'has-error': orderForm.inputPayment.$invalid || total > payment}" ng-show="total != 0 && order.payment.status != 'OK'">
         <label for="total" class="col-md-1 col-md-offset-1 control-label">Dinheiro</label>
         <div class="col-md-10 input-group">
             <span class="input-group-addon">R$</span>
-            <input type="number" class="form-control" id="inputPayment" name="inputPayment" ng-model="order.payment" required min="0">
+            <input type="number" class="form-control" id="inputPayment" name="inputPayment" ng-model="order.payment.quantity" required min="0">
             <div class="input-group-btn">
                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                    <ng-pluralize count="order.paymentMode" offset=2
-                                  when="{'0': 'À Vista',
-                                         '1': 'Cartão',
-                                         '2': 'Cheque'}">
+                    <ng-pluralize count="order.payment.mode"
+                                  when="{'MONEY': 'À Vista',
+                                         'CREDIT_CARD': 'Cartão',
+                                         'CHECK': 'Cheque'}">
                     </ng-pluralize>
                     <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu" role="menu">
-                    <li><a class="link" ng-hide="order.paymentMode == 0" ng-click="order.paymentMode = 0;">À Vista</a></li>
-                    <li><a class="link" ng-hide="order.paymentMode == 1" ng-click="order.paymentMode = 1;">Cartão</a></li>
-                    <li><a class="link" ng-hide="order.paymentMode == 2" ng-click="order.paymentMode = 2;">Cheque</a></li>
+                    <li><a class="link" ng-hide="order.payment.mode == 'MONEY'" ng-click="order.payment.mode = 'MONEY';">Dinheiro</a></li>
+                    <li><a class="link" ng-hide="order.payment.mode == 'CREDIT_CARD'" ng-click="order.payment.mode = 'CREDIT_CARD';">Cartão</a></li>
+                    <li><a class="link" ng-hide="order.payment.mode == 'CHECK'" ng-click="order.payment.mode = 'CHECK';">Cheque</a></li>
                 </ul>
             </div>
         </div>
@@ -116,18 +116,13 @@
             </button>
             <ul class="dropdown-menu" role="menu">
                 <li role="presentation" class="dropdown-header">Pagamento</li>
-                <li><a class="link" ng-click="order.status.payment = 1;" ng-if="order.status.payment != 1">Confirmado</a></li>
-                <li><a class="link" ng-click="order.status.payment = 0;" ng-if="order.status.payment != 0">Pendente</a></li>
-                <li><a class="link" ng-click="order.status.payment = 2;" ng-if="order.status.payment != 2">Cancelado</a></li>
-                <li class="divider"></li>
-                <li role="presentation" class="dropdown-header">Entrega</li>
-                <li><a class="link" ng-click="order.status.delivery = 1;" ng-if="order.status.delivery != 1">Confirmada</a></li>
-                <li><a class="link" ng-click="order.status.delivery = 0;" ng-if="order.status.delivery != 0">Pendente</a></li>
-                <li><a class="link" ng-click="order.status.delivery = 2;" ng-if="order.status.delivery != 2">Cancelada</a></li>
+                <li><a class="link" ng-click="order.payment.status = 'OK';" ng-if="order.status.payment != 'OK'">Confirmado</a></li>
+                <li><a class="link" ng-click="order.payment.status = 'PENDING';" ng-if="order.status.payment != 'PENDING'">Pendente</a></li>
+                <li><a class="link" ng-click="order.payment.status = 'CANCELLED';" ng-if="order.status.payment != 'CANCELLED'">Cancelado</a></li>
             </ul>
         </div>
         <div class="col-md-8 form-control-static">
-            <order-status-detail ref="order.status"></order-status-detail>
+            <payment-detail ref="order.payment"></payment-detail>
         </div>
     </div>
     <div class="pull-right" ng-class="{'btn-group': !isNewOrder}">

@@ -130,12 +130,12 @@
     <TypeScriptCompile Include="src\script\controller\product\GraphProductController.ts" />
     <TypeScriptCompile Include="src\script\controller\product\ListProductController.ts" />
     <TypeScriptCompile Include="src\script\controller\user\AuthUserController.ts" />
-    <TypeScriptCompile Include="src\script\directive\OrderStatusDetailDirective.ts" />
+    <TypeScriptCompile Include="src\script\directive\PaymentDetailDirective.ts" />
     <TypeScriptCompile Include="src\script\directive\CustomerDetailDirective.ts" />
     <TypeScriptCompile Include="src\script\directive\ProductDetailDirective.ts" />
-    <TypeScriptCompile Include="src\script\directive\LabeledInputDirective.ts" />
     <TypeScriptCompile Include="src\script\domain\base\AbstractEntity.ts" />
     <TypeScriptCompile Include="src\script\domain\base\Person.ts" />
+    <TypeScriptCompile Include="src\script\domain\Payment.ts" />
     <TypeScriptCompile Include="src\script\domain\Order.ts" />
     <TypeScriptCompile Include="src\script\domain\Product.ts" />
     <TypeScriptCompile Include="src\script\domain\Customer.ts" />
