@@ -25,8 +25,8 @@ describe("service: AuthService", () => {
         expect(spy.calls.length).toBe(1);
         expect(spy.mostRecentCall.args[0].username).toBe("user 1");
         expect(AuthService.isLoggedIn()).toBeTruthy();
-        expect(AuthService.currentUser().username).toEqual("user 1");
-        expect(AuthService.currentUser().password).toEqual("123456");
+        expect(AuthService.getUser().username).toEqual("user 1");
+        expect(AuthService.getUser().password).toEqual("123456");
 	})));
 
     it("should logout an user", (inject((AuthService: d.service.contract.AuthService, $timeout: ng.ITimeoutService, UserService:d.service.contract.UserService) => {

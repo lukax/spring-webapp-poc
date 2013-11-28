@@ -8,7 +8,7 @@ export var routes =
 }, {
     "name": "user.auth",
     "baseUrl": "/user",
-    "url": "/user/auth?error",
+    "url": "/user/auth?logout&error",
     "templateUrl": "view/user/authUser.html",
     "controller": "AuthUserController",
     "deps": [

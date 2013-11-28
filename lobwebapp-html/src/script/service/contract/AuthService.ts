@@ -12,7 +12,7 @@ module d.service.contract {
             errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any
             ): void;
 
-        currentUser(): domain.User;
+        getUser(): domain.User;
         isLoggedIn(): boolean;
     }
 }

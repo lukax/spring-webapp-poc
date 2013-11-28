@@ -41,9 +41,9 @@ public class ExceptionHandlerControllerAdvice {
 	}
 	
 	@ExceptionHandler(AuthenticationCredentialsNotFoundException.class)
-	@ResponseStatus(HttpStatus.FORBIDDEN)
+	@ResponseStatus(HttpStatus.UNAUTHORIZED)
 	@ResponseBody
-	public ResponseError handleAuthEx(Exception ex){
+	public ResponseError handleAuthenticationEx(Exception ex){
 		return new ResponseError(ClassUtils.getShortName(ex.getClass()), ex.getMessage(), ResponseLevel.ALERT);
 	}
 	

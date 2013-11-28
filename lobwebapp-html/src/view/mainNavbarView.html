@@ -42,7 +42,7 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li><a data-ng-href="#/user/auth" data-ng-hide="isUserLogged">Entrar</a></li>
-                            <li><a data-ng-click="logout()" data-ng-hide="!isUserLogged">Sair</a></li>
+                            <li><a data-ng-href="#/user/auth?logout=true" data-ng-hide="!isUserLogged">Sair</a></li>
                         </ul>
                     </li>
                 </ul>

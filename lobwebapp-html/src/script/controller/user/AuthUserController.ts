@@ -24,16 +24,22 @@ export module controller.user {
             this.AuthService.login(this.$scope.user,
                 (successData) => {
                     this.$scope.navigator.$location.url("/product/list");
-                    this.$scope.user = successData;
-                    this.AlertService.add({ title: "Login", content: "Bem vindo " + this.$scope.user.name });
+                    this.AlertService.add({ title: "Login", content: "Bem vindo " + successData.name });
                 },
                 () => {
                     this.AlertService.add({ title: "Login", content: "Usuário ou senha inválido", type: enums.AlertType.WARNING });
                 });
         }
 
-        temporaryUser() {
-            this.$scope.user = { id: 0, username: "", password: "", roles: [], name: "" };
+        logout() {
+            this.AuthService.logout(
+                (successData) => {
+                    this.AlertService.add({ title: "Logout", content: successData.name + " saiu" });
+                    this.$scope.user = successData;
+                },
+                (errorData, errorStatus) => {
+                    this.AlertService.add({ title: "Logout", content: String(errorData.description), type: enums.AlertType.WARNING });
+                });
         }
 
         processArgs() {
@@ -45,13 +51,13 @@ export module controller.user {
             else if (error == "1") {
                 this.AlertService.add({ content: "Usuário não possui permissão para acessar esta página", type: enums.AlertType.WARNING });
             }
-            if(logout == "true"){
-                this.AlertService.add({ content: "Você fez logout com sucesso" });
+            if (logout == "true") {
+                this.logout();
             }
         }
 
         populateScope() {
-            this.temporaryUser();
+            this.$scope.user = { id: 0, username: "", password: "", roles: [], name: "" };
             this.$scope.login = () => this.login();
         }
     }
