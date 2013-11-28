@@ -21,12 +21,16 @@ public class Product extends AbstractEntity {
 	@NotNull
 	private String description;
 
+	@NotNull
 	@Min(0)
 	private Integer quantity;
 
+	private String unit;
+	
 	@Min(0)
 	private Double costPrice;
 
+	@NotNull
 	@Min(0)
 	private Double price;
 
@@ -34,15 +38,7 @@ public class Product extends AbstractEntity {
 
 	private String ncm;
 
-	private Date date;
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
+	private Date registerDate;
 
 	public String getName() {
 		return name;
@@ -52,44 +48,28 @@ public class Product extends AbstractEntity {
 		this.name = name;
 	}
 
-	public int getQuantity() {
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public Integer getQuantity() {
 		return quantity;
 	}
 
-	public void setQuantity(int quantity) {
+	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
 	}
 
-	public String getNcm() {
-		return ncm;
+	public String getUnit() {
+		return unit;
 	}
 
-	public void setNcm(String ncm) {
-		this.ncm = ncm;
-	}
-
-	public String getGroup() {
-		return getCategory();
-	}
-
-	public void setGroup(String group) {
-		this.setCategory(group);
-	}
-
-	public Date getDate() {
-		return date;
-	}
-
-	public void setDate(Date date) {
-		this.date = date;
-	}
-
-	public Double getPrice() {
-		return price;
-	}
-
-	public void setPrice(Double price) {
-		this.price = price;
+	public void setUnit(String unit) {
+		this.unit = unit;
 	}
 
 	public Double getCostPrice() {
@@ -100,12 +80,36 @@ public class Product extends AbstractEntity {
 		this.costPrice = costPrice;
 	}
 
+	public Double getPrice() {
+		return price;
+	}
+
+	public void setPrice(Double price) {
+		this.price = price;
+	}
+
 	public String getCategory() {
 		return category;
 	}
 
 	public void setCategory(String category) {
 		this.category = category;
+	}
+
+	public String getNcm() {
+		return ncm;
+	}
+
+	public void setNcm(String ncm) {
+		this.ncm = ncm;
+	}
+
+	public Date getRegisterDate() {
+		return registerDate;
+	}
+
+	public void setRegisterDate(Date registerDate) {
+		this.registerDate = registerDate;
 	}
 
 }

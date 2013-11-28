@@ -8,6 +8,6 @@ module domain {
         customer: domain.Customer;
         products: domain.Product[];
         payment: Payment;
-        date?: Date;
+        date: Date;
     }
 }

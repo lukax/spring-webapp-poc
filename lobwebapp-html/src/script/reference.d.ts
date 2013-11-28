@@ -58,7 +58,6 @@
 ///<reference path="./service/mock/ProductServiceMock.ts"/>
 ///<reference path="./service/mock/UserServiceMock.ts"/>
 
-///<reference path="./util/StdUtil.ts"/>
 ///<reference path="./util/DependencyManager.ts"/>
 ///<reference path="./util/Progress.ts"/>
 ///<reference path="./util/EnumUtil.ts"/>

@@ -26,7 +26,6 @@ public class User extends Person {
 	@Size(min = 4)
 	private String password;
 
-	@NotNull
 	@ElementCollection(fetch = FetchType.EAGER)
 	private Set<String> roles = new HashSet<String>();
 
@@ -53,4 +52,5 @@ public class User extends Person {
 	public void setRoles(Set<String> roles) {
 		this.roles = roles;
 	}
+
 }

@@ -1,5 +1,5 @@
 ///<reference path="./../../reference.d.ts"/>
-import a = require("./../../util/StdUtil");
+
 import enums = require("./../../util/EnumUtil");
 
 export module controller.product {
@@ -10,14 +10,12 @@ export module controller.product {
         isProductNew: boolean;
         saveChanges: (product: domain.Product) => void;
         removeProduct: (product: domain.Product) => void;
-        priceInfo: () => void;
     }
 
     export class EditProductController implements d.controller.base.Controller {
 
-        static $inject = ["$scope", "$modal", "ProductService", "AlertService"];
+        static $inject = ["$scope", "ProductService", "AlertService"];
         constructor(public $scope: EditProductViewModel,
-            public $modal: any,
             public ProductService: d.service.contract.ProductService,
             public AlertService: d.service.contract.util.AlertService) {
 
@@ -91,23 +89,6 @@ export module controller.product {
             return (this.$scope.product && this.$scope.product.id == 0);
         }
 
-        priceInfo() {
-            this.priceInfoModal();
-        }
-
-        private priceInfoModalInstance;
-        priceInfoModal() {
-            if(this.priceInfoModalInstance){
-                this.priceInfoModalInstance.close();
-                this.priceInfoModalInstance = null;
-                return;
-            }
-            this.priceInfoModalInstance = this.$modal.open({
-                templateUrl: "view/product/modal/priceInfoModal.html",
-                scope: this.$scope
-            });
-        }
-        
         watchProduct() {
             this.$scope.$watch("product", (newValue: domain.Product, oldValue: domain.Product) => {
                 console.log("EditProductController: product object changed");
@@ -115,7 +96,7 @@ export module controller.product {
             }, true);
             this.$scope.$watch("product.price + product.costPrice", () => {
                 if (this.$scope.product != null && this.$scope.product.costPrice !== 0)
-                    this.$scope.profitMargin = a.util.Std.round(this.$scope.product.price / this.$scope.product.costPrice, 2);
+                    this.$scope.profitMargin = this.$scope.product.price / this.$scope.product.costPrice;
             });
         }
 
@@ -126,13 +107,10 @@ export module controller.product {
             } else if (routeProdId == 0) {
                 this.newProduct();
             } else if (routeProdId == "new") {
-                this.$scope.product = { id: 0, name: "s", description: "", quantity: 0, price: 0, costPrice: 0, category: "", ncm: "" };
+                this.$scope.product = { id: 0, name: "", description: "", quantity: 0, price: 0, costPrice: 0, category: "", ncm: "" };
             } else {
                 this.AlertService.add({ content: "Produto ID Inválido", type: "warning" });
                 this.newProduct();
-            }
-            if (this.$scope.navigator.params().priceInfo == "true") {
-                this.priceInfoModal();
             }
         }
 
@@ -140,7 +118,6 @@ export module controller.product {
             this.watchProduct();
             this.$scope.saveChanges = (product: domain.Product) => this.saveChanges(product);
             this.$scope.removeProduct = (product: domain.Product) => this.removeProduct(product);
-            this.$scope.priceInfo = () => this.priceInfo();
             this.fetchCategories();
         }
     }

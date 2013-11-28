@@ -15,7 +15,7 @@ export module modularity {
         private stateProviderCfg = ($stateProvider: ng.ui.IStateProvider, $urlRouterProvider: any) => {
             $urlRouterProvider.otherwise("/user/auth");
 
-            AppRoutes.routes.forEach((x: any)=> {
+            AppRoutes.routes.forEach((x)=> {
                 $stateProvider.state(x.name, {
                     url: x.url.replace(x.baseUrl,""),
                     templateUrl: x.templateUrl,

@@ -13,8 +13,7 @@
             <th><a class="link" ng-click="predicate = 'name'; reverse = !reverse">Nome</a></th>
             <th><a class="link" ng-click="predicate = 'quantity'; reverse = !reverse">Qt</a></th>
             <th><a class="link" ng-click="predicate = 'price'; reverse = !reverse">Preço</a></th>
-            <th><a class="link" ng-click="predicate = 'description'; reverse = !reverse">Descrição</b></a></th>
-            <!-- <th><a class="link" ng-click="predicate = 'group'; reverse = !reverse">Grupo</a></th> -->
+            <th><a class="link" ng-click="predicate = 'category'; reverse = !reverse">Categoria</a></th>
         </tr>
     </thead>
     <tbody>
@@ -22,10 +21,9 @@
             ng-click="editProduct(prod.id)" style="cursor: pointer;" class="product-list">
             <td>{{prod.id}}</td>
             <td>{{prod.name}}</td>
-            <td>{{prod.quantity}}</td>
-            <td>{{prod.price | number:2}}</td>
-            <td>{{prod.description}}</td>
-            <!-- <td>{{prod.group}}</td> -->
+            <td>{{prod.quantity}}, {{prod.unit}}</td>
+            <td>R$ {{prod.price | number:2}}</td>
+            <td>{{prod.category}}</td>
         </tr>
     </tbody>
 </table>

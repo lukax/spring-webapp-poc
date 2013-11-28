@@ -125,14 +125,14 @@
             <payment-detail ref="order.payment"></payment-detail>
         </div>
     </div>
-    <div class="pull-right" ng-class="{'btn-group': !isNewOrder}">
+    <div class="pull-right" ng-class="{'btn-group': !isOrderNew}">
         <button class="btn btn-primary" type="submit" data-toggle="tooltip" title="Confirmar mudanças" data-loading-text="Salvando..."
                 ng-disabled="orderForm.customerId.$invalid ||
                              orderForm.inputPayment.$invalid ||
                              order.products.length == 0">
             <span class="glyphicon glyphicon-floppy-disk"></span> Salvar
         </button>
-        <a class="btn btn-default" data-toggle="tooltip" title="Remover Produto Atual" data-loading-text="Removendo..." ng-hide="isNewOrder" ng-click="removeOrder(order)">
+        <a class="btn btn-default" data-toggle="tooltip" title="Remover Produto Atual" data-loading-text="Removendo..." ng-hide="isOrderNew" ng-click="removeOrder(order)">
             Remover
         </a>
     </div>

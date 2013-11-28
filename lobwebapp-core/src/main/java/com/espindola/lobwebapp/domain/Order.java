@@ -34,6 +34,14 @@ public class Order extends AbstractEntity {
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Payment payment;
 
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
+
 	public Set<Product> getProducts() {
 		return products;
 	}
@@ -50,14 +58,6 @@ public class Order extends AbstractEntity {
 		this.date = date;
 	}
 
-	public Customer getCustomer() {
-		return customer;
-	}
-
-	public void setCustomer(Customer customer) {
-		this.customer = customer;
-	}
-
 	public Payment getPayment() {
 		return payment;
 	}
@@ -65,5 +65,7 @@ public class Order extends AbstractEntity {
 	public void setPayment(Payment payment) {
 		this.payment = payment;
 	}
+
+
 }
 

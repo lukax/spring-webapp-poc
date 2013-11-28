@@ -6,7 +6,7 @@
                 <div class="col-md-10 input-group">
                     <input type="text" class="form-control" id="inputId" name="inputId" readonly ng-model="product.id">
                     <span class="input-group-btn">
-                        <a class="btn btn-default" ng-href="#/product/{{product.id -1}}" ng-disabled="isNewProduct">
+                        <a class="btn btn-default" ng-href="#/product/{{product.id -1}}" ng-disabled="isProductNew">
                             <span class="glyphicon glyphicon-arrow-left"></span>
                         </a>
                         <a class="btn btn-default" ng-href="#/product/{{product.id +1}}">
@@ -61,7 +61,7 @@
                     <div ng-class="{'has-error': productProfitMargin < 1}">
                         <label for="inputProfit" class="col-md-3 control-label">Lucro</label>
                         <div class="col-md-9 input-group">
-                            <input type="text" class="form-control" id="inputProfit" name="inputProfit" readonly ng-model="profitMargin">
+                            <input type="text" class="form-control" id="inputProfit" name="inputProfit" readonly value="{{ profitMargin | number:2 }}">
                             <span class="input-group-addon">%</span>
                         </div>
                     </div>
@@ -90,25 +90,25 @@
                               placeholder="Digite uma Descrição" rows="2" ng-model="product.description" required></textarea>
                 </div>
             </div>
-            <div class="pull-right" ng-class="{'btn-group': !isNewProduct}">
+            <div class="pull-right" ng-class="{'btn-group': !isProductNew}">
                 <button class="btn btn-primary" type="submit" data-toggle="tooltip" title="Salvar Alterações do Produto"
                         data-loading-text="Salvando..." ng-hide="readMode"
-                        ng-disabled="productForm.inputName.$invalid || 
+                        ng-disabled="productForm.inputName.$invalid ||
                                      productForm.inputPrice.$invalid ||
                                      productForm.inputQuantity.$invalid ||
                                      productForm.inputNcm.$invalid ||
                                      productForm.inputGroup.$invalid ||
                                      productForm.inputDescription.$invalid ||
                                      productForm.inputQuantity.$invalid ||
-                                     productForm.inputName.$pristine && 
-                                     productForm.inputPrice.$pristine &&   
+                                     productForm.inputName.$pristine &&
+                                     productForm.inputPrice.$pristine &&
                                      productForm.inputQuantity.$pristine &&
                                      productForm.inputNcm.$pristine &&
                                      productForm.inputGroup.$pristine &&
                                      productForm.inputDescription.$pristine">
                     <span class="glyphicon glyphicon-floppy-disk"></span> Salvar
                 </button>
-                <a class="btn btn-default" data-toggle="tooltip" title="Remover Produto Atual" data-loading-text="Removendo..." ng-click="removeProduct(product)" ng-hide="isNewProduct">
+                <a class="btn btn-default" data-toggle="tooltip" title="Remover Produto Atual" data-loading-text="Removendo..." ng-click="removeProduct(product)" ng-hide="isProductNew">
                     Remover
                 </a>
             </div>

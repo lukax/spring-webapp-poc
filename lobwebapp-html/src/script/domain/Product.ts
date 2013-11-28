@@ -5,6 +5,7 @@ module domain {
         name: string;
         description: string;
         quantity: number;
+        unit?: string;
         costPrice?: number;
         price: number;
         category?: string;
