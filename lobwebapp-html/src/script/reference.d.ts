@@ -15,6 +15,7 @@
 ///<reference path="./domain/base/AbstractEntity.ts"/>
 ///<reference path="./domain/base/Person.ts"/>
 ///<reference path="./domain/util/Alert.ts"/>
+///<reference path="./domain/util/Pageable.ts"/>
 ///<reference path="./domain/util/Error.ts"/>
 ///<reference path="./domain/AuthToken.ts"/>
 ///<reference path="./domain/Product.ts"/>

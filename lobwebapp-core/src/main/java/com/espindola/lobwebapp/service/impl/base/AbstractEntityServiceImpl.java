@@ -3,6 +3,8 @@ package com.espindola.lobwebapp.service.impl.base;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import com.espindola.lobwebapp.domain.base.AbstractEntity;
 import com.espindola.lobwebapp.exception.EntityExistsException;
@@ -53,7 +55,7 @@ public abstract class AbstractEntityServiceImpl<T extends AbstractEntity> implem
 	}
 
 	@Override
-	public Boolean contains(T entity) throws EntityInvalidException {
+	public Boolean exists(T entity) throws EntityInvalidException {
 		try {
 			T retrievedEntity = find(entity.getId());		
 			if(retrievedEntity.equals(entity))
@@ -65,8 +67,13 @@ public abstract class AbstractEntityServiceImpl<T extends AbstractEntity> implem
 	}
 
 	@Override
-	public List<T> list() {
+	public List<T> findAll() {
 		return repository.findAll();
+	}
+	
+	@Override
+	public Page<T> findAll(Pageable p) {
+		return repository.findAll(p);
 	}
 
 	protected void throw_if_entity_is_null(T entity) throws EntityInvalidException {

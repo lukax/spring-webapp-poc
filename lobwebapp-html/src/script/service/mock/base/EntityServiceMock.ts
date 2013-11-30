@@ -86,13 +86,19 @@ export module service.mock.base {
 
         public list(
             successCallback: (data: T[], status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
-            errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
+            errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
+            pageable?: domain.util.Pageable) {
                 this.$timeout(() => {
-                    successCallback(angular.copy(this.getRepository()), 200, null, null);
+                    var repo = this.getRepository();
+                    if (pageable) {
+                        repo.splice(0, pageable.page);
+                        repo.splice(pageable.page + pageable.size, repo.length - 1);
+                    }
+                    successCallback(repo, 200, null, null);
                 }, 1000);
         }
 
-        public contains(entity: T,
+        public exists(entity: T,
             successCallback: (data: boolean, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
             errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
                 this.$timeout(() => {
@@ -111,7 +117,7 @@ export module service.mock.base {
         }
 
         public getRepository() {
-            return this.repository;
+            return angular.copy(this.repository);
         }
     }
 }

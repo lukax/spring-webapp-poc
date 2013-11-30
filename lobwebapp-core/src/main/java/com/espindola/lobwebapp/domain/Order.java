@@ -20,11 +20,11 @@ import com.espindola.lobwebapp.domain.base.AbstractEntity;
 public class Order extends AbstractEntity {
 
 	@NotNull
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.EAGER)
 	private Customer customer;	
 	
 	@NotNull
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(fetch = FetchType.EAGER)
 	private Set<Product> products = new HashSet<Product>();
 
 	@NotNull

@@ -22,4 +22,18 @@ public abstract class AbstractEntity {
 	public void setId(Long id) {
 		this.id = id;
 	}
+	
+	@Override
+	public int hashCode() {
+		return this.getId().intValue();
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if(obj instanceof AbstractEntity){
+			AbstractEntity entity = (AbstractEntity)obj;
+			return entity.getId() == this.getId();
+		}
+		return false;
+	}
 }

@@ -78,8 +78,6 @@
     <Content Include="src\view\product\editProduct.html" />
     <Content Include="src\view\product\graphProduct.html" />
     <Content Include="src\view\product\listProduct.html" />
-    <Content Include="src\view\product\modal\findProductModal.html" />
-    <Content Include="src\view\product\modal\priceInfoModal.html" />
     <Content Include="src\view\product\product.html" />
     <Content Include="src\view\user\authUser.html" />
     <Content Include="src\view\user\user.html" />
@@ -142,6 +140,7 @@
     <TypeScriptCompile Include="src\script\domain\AuthToken.ts" />
     <TypeScriptCompile Include="src\script\domain\User.ts" />
     <TypeScriptCompile Include="src\script\domain\util\Alert.ts" />
+    <TypeScriptCompile Include="src\script\domain\util\Pageable.ts" />
     <TypeScriptCompile Include="src\script\domain\util\Error.ts" />
     <TypeScriptCompile Include="src\script\main.ts" />
     <TypeScriptCompile Include="src\script\modularity\AppModule.ts" />
@@ -180,7 +179,6 @@
     <TypeScriptCompile Include="src\script\util\DependencyManager.ts" />
     <TypeScriptCompile Include="src\script\util\Progress.ts" />
     <TypeScriptCompile Include="src\script\util\EnumUtil.ts" />
-    <TypeScriptCompile Include="src\script\util\StdUtil.ts" />
     <TypeScriptCompile Include="test\reference.d.ts" />
     <TypeScriptCompile Include="test\test-main.ts" />
     <TypeScriptCompile Include="test\unit\controller\ListProductControllerSpec.ts" />

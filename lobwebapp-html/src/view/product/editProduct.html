@@ -75,10 +75,10 @@
                         <input type="text" class="form-control" id="inputNcm" name="inputNcm" ng-model="product.ncm" ui-jq="mask" ui-options="'9999.99.99'">
                     </div>
                 </div>
-                <div ng-class="{'has-error': productForm.inputGroup.$invalid}">
-                    <label for="inputGroup" class="col-md-1 control-label">Grupo</label>
+                <div ng-class="{'has-error': productForm.inputCategory.$invalid}">
+                    <label for="inputCategory" class="col-md-1 control-label">Grupo</label>
                     <div class="col-md-5">
-                        <input type="text" class="form-control" id="inputGroup" name="inputGroup"
+                        <input type="text" class="form-control" id="inputCategory" name="inputCategory"
                                ng-model="product.category" data-typeahead="category for category in categories | limitTo:5">
                     </div>
                 </div>
@@ -97,14 +97,14 @@
                                      productForm.inputPrice.$invalid ||
                                      productForm.inputQuantity.$invalid ||
                                      productForm.inputNcm.$invalid ||
-                                     productForm.inputGroup.$invalid ||
+                                     productForm.inputCategory.$invalid ||
                                      productForm.inputDescription.$invalid ||
                                      productForm.inputQuantity.$invalid ||
                                      productForm.inputName.$pristine &&
                                      productForm.inputPrice.$pristine &&
                                      productForm.inputQuantity.$pristine &&
                                      productForm.inputNcm.$pristine &&
-                                     productForm.inputGroup.$pristine &&
+                                     productForm.inputCategory.$pristine &&
                                      productForm.inputDescription.$pristine">
                     <span class="glyphicon glyphicon-floppy-disk"></span> Salvar
                 </button>

@@ -1,5 +1,6 @@
 package com.espindola.lobwebapp.controller.util;
 
+import org.hibernate.TypeMismatchException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageConversionException;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
@@ -19,38 +20,38 @@ import com.espindola.lobwebapp.exception.EntityNotFoundException;
 @ControllerAdvice //Allows the exception handling to operate on all controllers
 public class ExceptionHandlerControllerAdvice {
 
-	@ExceptionHandler(EntityExistsException.class)
+	@ExceptionHandler({EntityExistsException.class, IllegalArgumentException.class, TypeMismatchException.class})
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ResponseBody
-	public ResponseError handleEntityExistsEx(EntityExistsException ex) {
+	public ResponseError handleBadRequest(Exception ex) {
 		return new ResponseError(ClassUtils.getShortName(ex.getClass()), ex.getMessage(), ResponseLevel.ALERT);
 	}
 	
 	@ExceptionHandler({EntityNotFoundException.class, HttpRequestMethodNotSupportedException.class})
 	@ResponseStatus(HttpStatus.NOT_FOUND)
 	@ResponseBody
-	public ResponseError handleNotFoundEx(Exception ex) {
+	public ResponseError handleNotFound(Exception ex) {
 		return new ResponseError(ClassUtils.getShortName(ex.getClass()), ex.getMessage(), ResponseLevel.ALERT);
 	}
 
 	@ExceptionHandler({ EntityInvalidException.class, HttpMessageConversionException.class})
 	@ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
 	@ResponseBody
-	public ResponseError handleEntityInvalidEx(Exception ex){
+	public ResponseError handleEntityInvalid(Exception ex){
 		return new ResponseError(ClassUtils.getShortName(ex.getClass()), ex.getMessage(), ResponseLevel.WARNING);
 	}
 	
 	@ExceptionHandler(AuthenticationCredentialsNotFoundException.class)
 	@ResponseStatus(HttpStatus.UNAUTHORIZED)
 	@ResponseBody
-	public ResponseError handleAuthenticationEx(Exception ex){
+	public ResponseError handleAuthentication(Exception ex){
 		return new ResponseError(ClassUtils.getShortName(ex.getClass()), ex.getMessage(), ResponseLevel.ALERT);
 	}
 	
 	@ExceptionHandler
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 	@ResponseBody
-	public ResponseError handleOtherEx(Exception ex){
+	public ResponseError handleOther(Exception ex){
 		return new ResponseError(ClassUtils.getShortName(ex.getClass()), ex.getMessage(), ResponseLevel.WARNING);
 	}
 }

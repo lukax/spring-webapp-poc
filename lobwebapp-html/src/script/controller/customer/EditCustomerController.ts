@@ -79,13 +79,14 @@ export module controller.customer {
 
 
         isCustomerNew() {
-            return (this.$scope.customer && this.$scope.customer.id == 0);
+            return (this.$scope.customer.id == 0);
         }
 
         watchCustomer() {
-            this.$scope.$watch("customer", (newValue: domain.Customer, oldValue: domain.Customer) => {
+            this.$scope.$watch("customer.id", (newValue: number, oldValue: number) => {
+                console.log("Object customer.id changed");
                 this.$scope.isCustomerNew = this.isCustomerNew();
-            }, true);
+            });
         }
 
         processArgs() {

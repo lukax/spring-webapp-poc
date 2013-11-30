@@ -6,12 +6,16 @@ export module controller.product {
     export interface ListProductViewModel extends d.controller.base.ViewModel {
         products: domain.Product[];
         searchText: string;
-        editProduct: (id: number) => void;
-        listProduct: () => void;
+        editProduct(id: number): void;
+        listProduct(page: number, searchText: string): void;
+        searchProduct(name: string): void;
+        currentPage: number;
+        totalPages: number;
     }
 
     export class ListProductController implements d.controller.base.Controller{
-        private redirect: string;
+        private redirectString: string;
+        private defaultPageSize: number = 50;
 
         static $inject = ["$scope", "ProductService", "AlertService", "NavigationService"];
         constructor(public $scope: ListProductViewModel,
@@ -23,35 +27,54 @@ export module controller.product {
             this.populateScope();
         }
 
-        listProduct() {
+        listProduct(page: number, searchText: string) {
+            this.$scope.currentPage = page;
             this.NavigationService.progress.start();
-            this.ProductService.list(
-                (successData, successStatus) => {
-                    this.$scope.products = successData;
-                    this.NavigationService.progress.done();
-                    if (this.redirect) this.AlertService.add({ title: "Busca Rápida", content: "Clique em um produto da lista para voltar para a página anterior", type: enums.AlertType.INFO }); 
-                },
-                (errorData, errorStatus) => {
-                    this.AlertService.add({ title: "Listar Produtos", content: "Lista de Produtos não pôde ser carregada", type: enums.AlertType.DANGER });
-                    console.log(errorData);
-                    this.NavigationService.progress.done();
-                });
+            if (searchText == "" || searchText == null) {
+                this.ProductService.list(
+                    (successData, successStatus, headers) => {
+                        this.$scope.totalPages = Number(headers("pages_total"));
+                        this.$scope.products = successData;
+                        this.NavigationService.progress.done();
+                        if (this.redirectString) this.AlertService.add({ title: "Busca Rápida", content: "Clique em um produto da lista para voltar para a página anterior", type: enums.AlertType.INFO });
+                    },
+                    (errorData, errorStatus) => {
+                        this.AlertService.add({ title: "Listar Produtos", content: "Lista de Produtos não pôde ser carregada", type: enums.AlertType.DANGER });
+                        console.log(errorData);
+                        this.NavigationService.progress.done();
+                    },
+                    { page: page, size: this.defaultPageSize });
+            } else {
+                this.ProductService.findByName(searchText,
+                    (successData, successStatus, headers) => {
+                        this.$scope.totalPages = Number(headers("pages_total"));
+                        this.$scope.products = successData;
+                        this.NavigationService.progress.done();
+                    },
+                    (errorData, errorStatus) => {
+                        this.AlertService.add({ title: "Listar Produtos", content: "Lista de Produtos não pôde ser carregada", type: enums.AlertType.DANGER });
+                        console.log(errorData);
+                        this.NavigationService.progress.done();
+                    },
+                    { page: page, size: this.defaultPageSize });
+            }
         }
 
         editProduct(id: number) {
-            if (this.redirect) this.NavigationService.navigateTo(this.redirect + "?productId=" + id);
+            if (this.redirectString) this.NavigationService.navigateTo(this.redirectString + "?productId=" + id);
             else this.NavigationService.navigateTo("/product/"+id);
         }
 
         processArgs() {
             this.$scope.searchText = this.NavigationService.params().search;
-            this.redirect = this.NavigationService.params().redirect;
-            this.listProduct();
+            this.redirectString = this.NavigationService.params().redirect;
+            this.listProduct(0, "");
         }
 
         populateScope() {
-            this.$scope.editProduct = (id: number) => this.editProduct(id);
-            this.$scope.listProduct = () => this.listProduct();
+            this.$scope.totalPages = 14; //TODO get total pages from server
+            this.$scope.editProduct = (id) => this.editProduct(id);
+            this.$scope.listProduct = (page, searchName) => this.listProduct(page, searchName);
         }
 
     }

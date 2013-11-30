@@ -25,7 +25,7 @@ export module service.impl.base {
         public remove(entity: T,
             successCallback: (data: T, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
             errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
-                this.$http.delete(this.url, entity).success(successCallback).error(errorCallback);
+                this.$http.delete(this.url + "/" + entity.id).success(successCallback).error(errorCallback);
         }
 
         public find(id: number,
@@ -34,21 +34,32 @@ export module service.impl.base {
                 this.$http.get(this.url + "/" + id).success(successCallback).error(errorCallback);
         }
 
-        public list(successCallback: (data: T[], status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
-            errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
-                this.$http.get(this.url).success(successCallback).error(errorCallback);
+        public list(
+            successCallback: (data: T[], status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
+            errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
+            pageable?: domain.util.Pageable) {
+                if (pageable)
+                    this.$http.get(this.url + "/" + this.pageableToUrl(pageable)).success(successCallback).error(errorCallback);
+                else
+                    this.$http.get(this.url).success(successCallback).error(errorCallback);
         }
 
-        public contains(entity: T,
+        public exists(entity: T,
             successCallback: (data: boolean, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
             errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
                 this.find(entity.id, (d, s, h, c) => {
                     if (_.isEqual(d, entity))
                         successCallback(true, s, h, c);
+                    else
+                        successCallback(false, s, h, c);
                 }, (d, s, h, c) => {
                         errorCallback(d, s, h, c);
                     });
             
+        }
+
+        public pageableToUrl(p: domain.util.Pageable) {
+            return "?page=" + p.page + "&size=" + p.size;
         }
 
     }

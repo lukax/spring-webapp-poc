@@ -21,7 +21,8 @@ export module service.mock {
 
         findByName(name: string,
             successCallback: (data: domain.Product[], status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
-            errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
+            errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
+            pageable: domain.util.Pageable) {
                 this.$timeout(()=> {
                     var items = this.getRepository().filter(function (element) {
                         return element.name.toLowerCase() == name.toLowerCase();
@@ -43,6 +44,7 @@ export module service.mock {
                     else errorCallback({ description: "Nenhum Grupo Encontrado"}, 404, null, null);
                 }, 100);
         }
+
     }
 }
 

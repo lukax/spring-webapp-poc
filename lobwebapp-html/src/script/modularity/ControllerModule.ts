@@ -52,7 +52,11 @@ export module modularity {
                         if(response.status == 401){
                             $location.url("/user/auth?error=0");
                             return $q.reject(response);
-                        }else{
+                        }
+                        if (response.status == 500) {
+                            return $q.reject(response);
+                        }
+                        else {
                             return $q.reject(response);
                         }
                     }

@@ -11,15 +11,18 @@ export module service.impl {
 
         public findByName(name: string,
             successCallback: (data: domain.Product[], status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
-            errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
-            this.$http({ method: "HEAD", url: this.url + '/' + name }).success(successCallback).error(errorCallback);
+            errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
+            pageable: domain.util.Pageable) {
+                var header = "%" + name + "%";
+                this.$http.get(this.url + this.pageableToUrl(pageable), { headers: { product_name: header } }).success(successCallback).error(errorCallback);
         }
 
         public listCategory(
             successCallback: (data: string[], status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
             errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
-            this.$http.get(this.url + "/category").success(successCallback).error(errorCallback);
+                this.$http.get(this.url + "/category").success(successCallback).error(errorCallback);
         }
+
     }
 }
 

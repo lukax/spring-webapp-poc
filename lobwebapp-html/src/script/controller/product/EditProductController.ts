@@ -8,18 +8,19 @@ export module controller.product {
         profitMargin: number;
         categories: string[];
         isProductNew: boolean;
-        saveChanges: (product: domain.Product) => void;
-        removeProduct: (product: domain.Product) => void;
+        saveChanges(product: domain.Product): void;
+        removeProduct(product: domain.Product): void;
     }
 
     export class EditProductController implements d.controller.base.Controller {
+        allCategories: string[];
 
-        static $inject = ["$scope", "ProductService", "AlertService"];
+        static $inject = ["$scope", "ProductService", "AlertService", "$filter"];
         constructor(public $scope: EditProductViewModel,
             public ProductService: d.service.contract.ProductService,
-            public AlertService: d.service.contract.util.AlertService) {
+            public AlertService: d.service.contract.util.AlertService,
+            public $filter: ng.IFilterService) {
 
-            this.processArgs();
             this.populateScope();
         }
 
@@ -81,7 +82,10 @@ export module controller.product {
 
         fetchCategories() {
             this.ProductService.listCategory(
-                (successData) => { this.$scope.categories = successData; },
+                (successData) => {
+                    this.$scope.categories = [];
+                    this.allCategories = successData;
+                },
                 (errorData) => { });
         }
 
@@ -90,24 +94,26 @@ export module controller.product {
         }
 
         watchProduct() {
-            this.$scope.$watch("product", (newValue: domain.Product, oldValue: domain.Product) => {
-                console.log("EditProductController: product object changed");
+            this.$scope.$watch("product.id", (newValue: number, oldValue: number) => {
+                console.log("Object product.id changed");
                 this.$scope.isProductNew = this.isProductNew();
-            }, true);
+            });
             this.$scope.$watch("product.price + product.costPrice", () => {
                 if (this.$scope.product != null && this.$scope.product.costPrice !== 0)
                     this.$scope.profitMargin = this.$scope.product.price / this.$scope.product.costPrice;
             });
+            this.$scope.$watch("product.category", (newValue: string, oldValue: string) => {
+                this.$scope.categories = this.$filter("filter")(this.allCategories, this.$scope.product.category);
+            });
+            
         }
 
         processArgs() {
             var routeProdId = this.$scope.navigator.params().productId;
             if (routeProdId > 0) {
                 this.findProduct(Number(routeProdId));
-            } else if (routeProdId == 0) {
-                this.newProduct();
-            } else if (routeProdId == "new") {
-                this.$scope.product = { id: 0, name: "", description: "", quantity: 0, price: 0, costPrice: 0, category: "", ncm: "" };
+            } else if (routeProdId == 0 || routeProdId == "new") {
+                
             } else {
                 this.AlertService.add({ content: "Produto ID Inválido", type: "warning" });
                 this.newProduct();
@@ -115,10 +121,12 @@ export module controller.product {
         }
 
         populateScope() {
+            this.$scope.product = { id: 0, name: "", description: "", quantity: 0, price: 0, costPrice: 0, category: "", ncm: "" };
+            this.processArgs();
             this.watchProduct();
-            this.$scope.saveChanges = (product: domain.Product) => this.saveChanges(product);
-            this.$scope.removeProduct = (product: domain.Product) => this.removeProduct(product);
             this.fetchCategories();
+            this.$scope.saveChanges = (product) => this.saveChanges(product);
+            this.$scope.removeProduct = (product) => this.removeProduct(product);
         }
     }
 }
