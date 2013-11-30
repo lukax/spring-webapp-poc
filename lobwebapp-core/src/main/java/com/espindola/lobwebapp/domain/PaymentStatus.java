@@ -1,4 +1,4 @@
-package com.espindola.lobwebapp.domain.util;
+package com.espindola.lobwebapp.domain;
 
 public enum PaymentStatus {
 	OK,

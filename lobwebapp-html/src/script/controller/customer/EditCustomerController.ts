@@ -79,7 +79,7 @@ export module controller.customer {
 
 
         isCustomerNew() {
-            return (this.$scope.customer.id == 0);
+            return (this.$scope.customer != null && this.$scope.customer.id == 0);
         }
 
         watchCustomer() {

@@ -4,6 +4,8 @@ import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -18,7 +20,6 @@ public class Product extends AbstractEntity {
 	@Size(min = 3)
 	private String name;
 
-	@NotNull
 	private String description;
 
 	@NotNull
@@ -38,6 +39,7 @@ public class Product extends AbstractEntity {
 
 	private String ncm;
 
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date registerDate;
 
 	public String getName() {

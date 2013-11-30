@@ -13,6 +13,7 @@ module d.service.contract {
             ): void;
 
         getUser(): domain.User;
-        isLoggedIn(): boolean;
+
+        isLoggedIn(): void;
     }
 }

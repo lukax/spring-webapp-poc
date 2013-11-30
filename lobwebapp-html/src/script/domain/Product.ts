@@ -3,11 +3,11 @@
 module domain {
     export interface Product extends domain.base.AbstractEntity {
         name: string;
-        description: string;
+        price: number;
         quantity: number;
+        description?: string;
         unit?: string;
         costPrice?: number;
-        price: number;
         category?: string;
         ncm?: string;
         date?: Date;

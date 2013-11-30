@@ -19,7 +19,7 @@ export module service.impl.base {
         public update(entity: T,
             successCallback: (data: T, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
             errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
-                this.$http.put(this.url, entity).success(successCallback).error(errorCallback);
+                this.$http.put(this.url + "/" + entity.id, entity).success(successCallback).error(errorCallback);
         }
 
         public remove(entity: T,
@@ -39,7 +39,7 @@ export module service.impl.base {
             errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
             pageable?: domain.util.Pageable) {
                 if (pageable)
-                    this.$http.get(this.url + "/" + this.pageableToUrl(pageable)).success(successCallback).error(errorCallback);
+                    this.$http.get(this.url + "/" + this.getPageableUri(pageable)).success(successCallback).error(errorCallback);
                 else
                     this.$http.get(this.url).success(successCallback).error(errorCallback);
         }
@@ -58,7 +58,7 @@ export module service.impl.base {
             
         }
 
-        public pageableToUrl(p: domain.util.Pageable) {
+        public getPageableUri(p: domain.util.Pageable) {
             return "?page=" + p.page + "&size=" + p.size;
         }
 

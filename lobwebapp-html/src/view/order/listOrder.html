@@ -1,29 +1,31 @@
-<div class="input-group">
-    <input type="search" ng-model="searchText" id="inputSearch" placeholder="Procurar" class="form-control" autofocus>
-    <div class="input-group-btn">
-        <label class="btn btn-default" for="inputSearch" data-ng-click="listCustomer()">
-            <span class="glyphicon glyphicon-refresh"></span>
-        </label>
+<div class="row">
+    <div class="input-group">
+        <input type="search" ng-model="searchText" id="inputSearch" placeholder="Procurar" class="form-control" autofocus>
+        <div class="input-group-btn">
+            <label class="btn btn-primary" for="inputSearch" data-ng-click="listCustomer()">
+                <span class="glyphicon glyphicon-refresh"></span>
+            </label>
+        </div>
     </div>
+    <table class="table table-striped table-condensed table-hover">
+        <thead>
+            <tr ng-init="reverse = false">
+                <th><a class="link" ng-click="predicate = 'id'; reverse = !reverse">ID</a></th>
+                <th><a class="link" ng-click="predicate = 'customer'; reverse = !reverse">Cliente</a></th>
+                <th><a class="link" ng-click="predicate = 'productQt'; reverse = !reverse">Produtos</a></th>
+                <th><a class="link" ng-click="predicate = 'status'; reverse = !reverse">Pagamento</a></th>
+                <th><a class="link" ng-click="predicate = 'date'; reverse = !reverse">Data</a></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="order in orders | filter:searchText | orderBy:predicate:reverse"
+                ng-click="editOrder(order.id)" style="cursor: pointer;" class="product-list">
+                <td>{{order.id}}</td>
+                <td><customer-detail ref="order.customer"></customer-detail></td>
+                <td>{{order.products.length}}</td>
+                <td><payment-detail ref="order.payment"></payment-detail></td>
+                <td>{{order.date | date}}</td>
+            </tr>
+        </tbody>
+    </table>
 </div>
-<table class="table table-striped table-condensed table-hover">
-    <thead>
-        <tr ng-init="reverse = false">
-            <th><a class="link" ng-click="predicate = 'id'; reverse = !reverse">ID</a></th>
-            <th><a class="link" ng-click="predicate = 'customer'; reverse = !reverse">Cliente</a></th>
-            <th><a class="link" ng-click="predicate = 'productQt'; reverse = !reverse">Produtos</a></th>
-            <th><a class="link" ng-click="predicate = 'status'; reverse = !reverse">Pagamento</a></th>
-            <th><a class="link" ng-click="predicate = 'date'; reverse = !reverse">Data</a></th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr ng-repeat="order in orders | filter:searchText | orderBy:predicate:reverse"
-            ng-click="editOrder(order.id)" style="cursor: pointer;" class="product-list">
-            <td>{{order.id}}</td>
-            <td><customer-detail ref="order.customer"></customer-detail></td>
-            <td>{{order.products.length}}</td>
-            <td><payment-detail ref="order.payment"></payment-detail></td>
-            <td>{{order.date | date}}</td>
-        </tr>
-    </tbody>
-</table>

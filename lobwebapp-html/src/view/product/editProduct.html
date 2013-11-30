@@ -5,14 +5,6 @@
                 <label for="inputId" class="col-md-2 control-label">ID</label>
                 <div class="col-md-10 input-group">
                     <input type="text" class="form-control" id="inputId" name="inputId" readonly ng-model="product.id">
-                    <span class="input-group-btn">
-                        <a class="btn btn-default" ng-href="#/product/{{product.id -1}}" ng-disabled="isProductNew">
-                            <span class="glyphicon glyphicon-arrow-left"></span>
-                        </a>
-                        <a class="btn btn-default" ng-href="#/product/{{product.id +1}}">
-                            <span class="glyphicon glyphicon-arrow-right"></span>
-                        </a>
-                    </span>
                 </div>
             </div>
             <div class="form-group" ng-class="{'has-error': productForm.inputName.$invalid}">

@@ -1,4 +1,5 @@
-package com.espindola.lobwebapp.domain.util;
+package com.espindola.lobwebapp.controller.util;
+
 
 public class ResponseError{
 	private String error;

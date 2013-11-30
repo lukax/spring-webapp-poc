@@ -1,4 +1,4 @@
-package com.espindola.lobwebapp.domain.util;
+package com.espindola.lobwebapp.domain;
 
 public class AuthToken {
 	private String authKey;

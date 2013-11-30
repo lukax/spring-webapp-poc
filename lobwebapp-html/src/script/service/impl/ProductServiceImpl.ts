@@ -14,7 +14,7 @@ export module service.impl {
             errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
             pageable: domain.util.Pageable) {
                 var header = "%" + name + "%";
-                this.$http.get(this.url + this.pageableToUrl(pageable), { headers: { product_name: header } }).success(successCallback).error(errorCallback);
+                this.$http.get(this.url + this.getPageableUri(pageable), { headers: { product_name: header } }).success(successCallback).error(errorCallback);
         }
 
         public listCategory(

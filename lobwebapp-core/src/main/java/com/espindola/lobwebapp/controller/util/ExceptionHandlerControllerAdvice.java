@@ -11,47 +11,50 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-import com.espindola.lobwebapp.domain.util.ResponseLevel;
-import com.espindola.lobwebapp.domain.util.ResponseError;
-import com.espindola.lobwebapp.exception.EntityExistsException;
-import com.espindola.lobwebapp.exception.EntityInvalidException;
-import com.espindola.lobwebapp.exception.EntityNotFoundException;
+import com.espindola.lobwebapp.exception.AlreadyExistsException;
+import com.espindola.lobwebapp.exception.InvalidArgumentException;
+import com.espindola.lobwebapp.exception.NotFoundException;
 
 @ControllerAdvice //Allows the exception handling to operate on all controllers
 public class ExceptionHandlerControllerAdvice {
 
-	@ExceptionHandler({EntityExistsException.class, IllegalArgumentException.class, TypeMismatchException.class})
+	@ExceptionHandler({AlreadyExistsException.class, IllegalArgumentException.class, TypeMismatchException.class})
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ResponseBody
 	public ResponseError handleBadRequest(Exception ex) {
-		return new ResponseError(ClassUtils.getShortName(ex.getClass()), ex.getMessage(), ResponseLevel.ALERT);
+		return this.buildResponse(ex, ResponseLevel.ALERT);
 	}
 	
-	@ExceptionHandler({EntityNotFoundException.class, HttpRequestMethodNotSupportedException.class})
+	@ExceptionHandler({NotFoundException.class, HttpRequestMethodNotSupportedException.class})
 	@ResponseStatus(HttpStatus.NOT_FOUND)
 	@ResponseBody
 	public ResponseError handleNotFound(Exception ex) {
-		return new ResponseError(ClassUtils.getShortName(ex.getClass()), ex.getMessage(), ResponseLevel.ALERT);
+		return this.buildResponse(ex, ResponseLevel.ALERT);
 	}
 
-	@ExceptionHandler({ EntityInvalidException.class, HttpMessageConversionException.class})
+	@ExceptionHandler({InvalidArgumentException.class, HttpMessageConversionException.class})
 	@ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
 	@ResponseBody
 	public ResponseError handleEntityInvalid(Exception ex){
-		return new ResponseError(ClassUtils.getShortName(ex.getClass()), ex.getMessage(), ResponseLevel.WARNING);
+		return this.buildResponse(ex, ResponseLevel.WARNING);
 	}
 	
 	@ExceptionHandler(AuthenticationCredentialsNotFoundException.class)
 	@ResponseStatus(HttpStatus.UNAUTHORIZED)
 	@ResponseBody
 	public ResponseError handleAuthentication(Exception ex){
-		return new ResponseError(ClassUtils.getShortName(ex.getClass()), ex.getMessage(), ResponseLevel.ALERT);
+		return this.buildResponse(ex, ResponseLevel.ALERT);
 	}
 	
 	@ExceptionHandler
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 	@ResponseBody
 	public ResponseError handleOther(Exception ex){
-		return new ResponseError(ClassUtils.getShortName(ex.getClass()), ex.getMessage(), ResponseLevel.WARNING);
+		return this.buildResponse(ex, ResponseLevel.WARNING);
 	}
+	
+	private ResponseError buildResponse(Exception ex, ResponseLevel responseLevel){
+		return new ResponseError(ClassUtils.getShortName(ex.getClass()), ex.getMessage(), responseLevel);
+	}
+	
 }

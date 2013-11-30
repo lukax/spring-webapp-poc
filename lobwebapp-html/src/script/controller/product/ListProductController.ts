@@ -23,7 +23,6 @@ export module controller.product {
                     public AlertService: d.service.contract.util.AlertService,
                     public NavigationService:d.service.contract.util.NavigationService) {
 
-            this.processArgs();
             this.populateScope();
         }
 
@@ -72,9 +71,10 @@ export module controller.product {
         }
 
         populateScope() {
-            this.$scope.totalPages = 14; //TODO get total pages from server
+            this.$scope.totalPages = 1;
             this.$scope.editProduct = (id) => this.editProduct(id);
             this.$scope.listProduct = (page, searchName) => this.listProduct(page, searchName);
+            this.processArgs();
         }
 
     }

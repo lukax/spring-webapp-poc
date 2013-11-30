@@ -23,7 +23,7 @@ export module controller.user {
         login() {
             this.AuthService.login(this.$scope.user,
                 (successData) => {
-                    this.$scope.navigator.$location.url("/product/list");
+                    this.NavigationService.navigateTo("/product/list");
                     this.AlertService.add({ title: "Login", content: "Bem vindo " + successData.name });
                 },
                 () => {
@@ -45,12 +45,20 @@ export module controller.user {
         processArgs() {
             var error = this.NavigationService.params().error;
             var logout = this.NavigationService.params().logout;
-            if (error == "0") {
-                this.AlertService.add({ content: "Login ou senha Inválido", type: enums.AlertType.WARNING });
+            switch (error) {
+                case "0":
+                    this.AlertService.add({ content: "Login ou senha Inválido", type: enums.AlertType.WARNING });
+                    break;
+                case "1":
+                    this.AlertService.add({ content: "Usuário não possui permissão para acessar esta página", type: enums.AlertType.WARNING });
+                    break;
+                default:
+                    if (this.AuthService.isLoggedIn()) {
+                        this.NavigationService.navigateTo("/product/list");
+                    }
+                    break;
             }
-            else if (error == "1") {
-                this.AlertService.add({ content: "Usuário não possui permissão para acessar esta página", type: enums.AlertType.WARNING });
-            }
+
             if (logout == "true") {
                 this.logout();
             }
@@ -59,7 +67,9 @@ export module controller.user {
         populateScope() {
             this.$scope.user = { id: 0, username: "", password: "", roles: [], name: "" };
             this.$scope.login = () => this.login();
+
         }
+
     }
 }
 

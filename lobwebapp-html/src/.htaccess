@@ -15,11 +15,11 @@
 # Enable cross-origin AJAX requests.
 # http://code.google.com/p/html5security/wiki/CrossOriginRequestSecurity
 # http://enable-cors.org/
-
- <IfModule mod_headers.c>
-    Header set Access-Control-Allow-Origin "*"
- </IfModule>
-
+#
+# <IfModule mod_headers.c>
+#    Header set Access-Control-Allow-Origin "*"
+# </IfModule>
+#
 # ------------------------------------------------------------------------------
 # | CORS-enabled images                                                        |
 # ------------------------------------------------------------------------------
@@ -256,16 +256,25 @@ AddDefaultCharset utf-8
 #    RewriteRule ^ http://www.%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
 # </IfModule>
 
-#-------------------------------------------------------------------------------------------------- ANGULARJS HTML5
-#
+#-------------------------------------------------------------------------------
+# ANGULARJS HTML5 REWRITE
+#-------------------------------------------------------------------------------
+
 #<ifModule mod_rewrite.c>
-#    RewriteEngine On
 #    RewriteCond %{REQUEST_FILENAME} !-f
 #    RewriteCond %{REQUEST_FILENAME} !-d
 #    RewriteCond %{REQUEST_URI} !index
 #    RewriteCond %{REQUEST_URI} !.*\.(css¦js|html|png) #Add extra extensions needed.
 #    RewriteRule (.*) index.html [L]
 #</ifModule>
+
+#-------------------------------------------------------------------------------
+# API SERVER REWRITE
+#-------------------------------------------------------------------------------
+
+<IfModule mod_rewrite.c>
+	RewriteRule ^/api/(.+) http://localhost:8080/lobwebapp-core/$1 [R,L]
+</ifModule>
 
 # ##############################################################################
 # # SECURITY                                                                   #

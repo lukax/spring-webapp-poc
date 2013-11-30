@@ -11,6 +11,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
 import com.espindola.lobwebapp.domain.base.AbstractEntity;
@@ -28,6 +30,7 @@ public class Order extends AbstractEntity {
 	private Set<Product> products = new HashSet<Product>();
 
 	@NotNull
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date date;
 	
 	@NotNull

@@ -3,14 +3,6 @@
         <label for="orderId" class="col-md-1 control-label">ID</label>
         <div class="col-md-9 input-group">
             <input type="text" class="form-control" id="orderId" readonly value="{{order.id}}">
-            <span class="input-group-btn">
-                <a class="btn btn-default" ng-href="#/order/{{order.id -1}}" ng-disabled="isOrderNew">
-                    <span class="glyphicon glyphicon-arrow-left"></span>
-                </a>
-                <a class="btn btn-default" ng-href="#/order/{{order.id +1}}">
-                    <span class="glyphicon glyphicon-arrow-right"></span>
-                </a>
-            </span>
         </div>
         <div class="col-md-2 input-group">
             <input type="text" class="form-control" ng-model="order.date" datepicker-popup="dd/MM/yy" required>

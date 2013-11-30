@@ -1,10 +1,11 @@
 package com.espindola.lobwebapp.exception;
 
-public class EntityExistsException extends AlreadyExistsException {
+
+public class AlreadyExistsException extends LobWebAppException {
 
 	private static final long serialVersionUID = 1L;
 
-	public EntityExistsException(String message) {
+	public AlreadyExistsException(String message) {
 		super(message);
 	}
 }

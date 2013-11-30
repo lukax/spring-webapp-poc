@@ -2,17 +2,16 @@ package com.espindola.lobwebapp.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
@@ -32,14 +31,13 @@ public class ProductController extends AbstractEntityController<Product> {
 		this.service = service;
 	}
 	
-	@RequestMapping(method = RequestMethod.GET, params = {"page", "size"}, headers = {"product_name"})
+	@RequestMapping(method = RequestMethod.GET, params = {"page_index", "page_size"}, headers = {"product_name"})
 	@ResponseStatus(value = HttpStatus.OK)
 	@ResponseBody
-	public ResponseEntity<List<Product>> findByNameLike(@RequestHeader("product_name") String productName, @RequestParam("page") Integer page, @RequestParam("size") Integer size) {
-		Page<Product> products = this.service.findByNameLike(productName, new PageRequest(page, size));
-		HttpHeaders headers = new HttpHeaders();
-		headers.add("pages_total", ""+products.getTotalPages());
-		return new ResponseEntity<List<Product>>(products.getContent(), headers, HttpStatus.OK);
+	public List<Product> findByNameLike(HttpServletResponse response, @RequestHeader("product_name") String productName, @RequestHeader("page_index") Integer pageIndex, @RequestHeader("page_size") Integer pageSize) {
+		Page<Product> products = this.service.findByNameLike(productName, new PageRequest(pageIndex, pageSize));
+		super.pageSetup(products, response);
+		return products.getContent();
 	}
 	
 	@RequestMapping(value = "/category", method = RequestMethod.GET)

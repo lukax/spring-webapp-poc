@@ -3,13 +3,12 @@ import a = require("./UserServiceImpl");
 
 export module service.impl {
     export class AuthServiceImpl implements d.service.contract.AuthService {
-        private isAuthenticated: boolean = false;
         private defaultUser: domain.User = { id: 1, name: "Usuário", isLogged: true, username: "user", password: "", roles: ["ROLE_USER"] };
         private emptyUser: domain.User = { id: 0, username: "", password: "", roles: [], name: "" };
 
         static $inject = ["$http", "$rootScope"];
         constructor(public $http: ng.IHttpService, public $rootScope: ng.IRootScopeService) {
-            this.restoreAuthenticationState();
+
         }
 
         public login(user: domain.User,
@@ -42,16 +41,25 @@ export module service.impl {
         }
 
         public isLoggedIn() {
-            return this.isAuthenticated;
-        }
-
-        private restoreAuthenticationState() {
             var token = this.getToken();
             if (token != null) {
                 this.authorize(token);
-                this.isAuthenticated = true;
+                return true;
             }
+            return false;
         }
+
+/*        private refreshAccess(authToken: domain.AuthToken, callback: (data: boolean) => void){
+            this.$http.get("/api/oauth/token?grant_type=refresh_token&client_id=lobwebapp-html&client_secret=supersecretyeah&refresh_token=" + authToken.refresh_token)
+                        .success((data: domain.AuthToken, status)=>{
+                                this.setToken(data);
+                                this.authorize(data);
+
+                                callback(true);
+                            }).error(()=>{
+                                callback(false);    
+                            });
+        }*/
 
         private authorize(authToken: domain.AuthToken) {
             var key = authToken.token_type + " " + authToken.access_token;
@@ -84,7 +92,7 @@ export module service.impl {
             try {
                 retrievedToken = angular.fromJson((<any>localStorage).AUTHSERVICE_TOKEN);
             }
-            catch (Exception) { }
+            catch (Exception) { return null; }
             return retrievedToken;
         }
 

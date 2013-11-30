@@ -6,8 +6,6 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import com.espindola.lobwebapp.domain.base.AbstractEntity;
-import com.espindola.lobwebapp.domain.util.PaymentMode;
-import com.espindola.lobwebapp.domain.util.PaymentStatus;
 
 @Entity
 @Table(name = "PAYMENTS")

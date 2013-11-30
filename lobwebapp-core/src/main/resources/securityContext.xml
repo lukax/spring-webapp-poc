@@ -12,6 +12,11 @@
 	http://www.springframework.org/schema/context 
 	http://www.springframework.org/schema/context/spring-context-3.1.xsd">
 	
+	<sec:global-method-security pre-post-annotations="enabled">
+		<!--you could also wire in the expression handler up at the layer of the http filters. See https://jira.springsource.org/browse/SEC-1452 -->
+		<sec:expression-handler ref="oauthExpressionHandler" />
+	</sec:global-method-security>
+	
 	<http pattern="/oauth/token" create-session="stateless" authentication-manager-ref="clientAuthenticationManager"
 		xmlns="http://www.springframework.org/schema/security">
 		<intercept-url pattern="/oauth/token" access="IS_AUTHENTICATED_FULLY" />
@@ -113,11 +118,6 @@
 		<oauth:client client-id="lobwebapp-html" authorized-grant-types="password,authorization_code,refresh_token,implicit"
 				secret="supersecretyeah" authorities="ROLE_USER" />
 	</oauth:client-details-service>
-
-	<sec:global-method-security pre-post-annotations="enabled">
-		<!--you could also wire in the expression handler up at the layer of the http filters. See https://jira.springsource.org/browse/SEC-1452 -->
-		<sec:expression-handler ref="oauthExpressionHandler" />
-	</sec:global-method-security>
 
 	<oauth:expression-handler id="oauthExpressionHandler" />
 

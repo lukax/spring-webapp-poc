@@ -48,8 +48,9 @@ export module controller.product {
                     return d.quantity;
             });
 
-            var lastProductId = _.last(products).id;
-            
+            var lastProduct = _.last(products);
+            if(!lastProduct) lastProduct = { id: 0, name: "", quantity: 0, price: 0 };
+
             var categoryByPrice = dc.rowChart("#dc-category-price", "1");
             categoryByPrice
                 .width(900)
@@ -90,7 +91,7 @@ export module controller.product {
                 // (optional) whether chart should render titles, :default = false
                 .renderTitle(true)
                 .xUnits(d3.scale.ordinal())
-                .x(d3.scale.linear().domain([0, lastProductId+1]))
+                .x(d3.scale.linear().domain([0, lastProduct.id + 1]))
                 // .round(d3.time.month.round)
                 // .xAxis().tickFormat();
                 ;
