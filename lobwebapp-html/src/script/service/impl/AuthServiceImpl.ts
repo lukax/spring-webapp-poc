@@ -13,7 +13,7 @@ export module service.impl {
 
         public login(user: domain.User,
             successCallback: (data: domain.User, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
-            errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
+            errorCallback: (error: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
                 var param = "?grant_type=password&client_id=lobwebapp-html&client_secret=supersecretyeah&username=" + user.username + "&password=" + user.password;
                 this.$http.get("/api/oauth/token" + param)
                     .success((data: domain.AuthToken, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => {
@@ -37,7 +37,7 @@ export module service.impl {
                     successCallback(previousUser, 200, null, null);
                 }
                 else
-                    errorCallback({ description: "Usuário já está deslogado" }, 200, null, null);
+                    errorCallback({ message: "Usuário já está deslogado" }, 200, null, null);
         }
 
         public isLoggedIn() {
@@ -75,7 +75,7 @@ export module service.impl {
         public getUser(): domain.User {
             var retrievedUser = null;
             try {
-                retrievedUser = <domain.User>angular.fromJson((<any>localStorage).AUTHSERVICE_USER);
+                retrievedUser = (angular.fromJson((<any>localStorage).AUTHSERVICE_USER));
             }
             catch (Exception) {  }
             if (retrievedUser == null) return this.emptyUser;

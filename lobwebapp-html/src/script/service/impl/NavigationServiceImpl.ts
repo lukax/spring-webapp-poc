@@ -1,7 +1,7 @@
-///<reference path="./../../../reference.d.ts"/>
+///<reference path="./../../reference.d.ts"/>
 
 import svcu = d.service.contract.util;
-import p = require("./../../../util/Progress");
+import p = require("./../../util/Progress");
 
 export module service.impl.util {
     export class NavigationServiceImpl implements d.service.contract.util.NavigationService {

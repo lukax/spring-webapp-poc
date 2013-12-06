@@ -82,7 +82,7 @@ export module controller.order {
                         successData.quantity = quantity;
                         this.$scope.order.products.push(successData);
                     }, (errorData: domain.util.Error) => {
-                        this.AlertService.add({ title: "Buscar Produto", content: errorData.description, type: enums.AlertType.WARNING });
+                        this.AlertService.add({ title: "Buscar Produto", content: errorData.message, type: enums.AlertType.WARNING });
                     });
             }
             this.emptyProduct();

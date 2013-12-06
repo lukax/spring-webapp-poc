@@ -1,4 +1,4 @@
-///<reference path="./../../../reference.d.ts"/>
+///<reference path="./../../reference.d.ts"/>
 
 module d.service.contract.util {
     export interface NavigationService {
@@ -9,8 +9,8 @@ module d.service.contract.util {
     }
 
     export interface Progress {
-        start: () => void;
-        set: (percent: number) => void;
-        done: () => void;
+        start(): void;
+        set(percent: number): void;
+        done(): void;
     }
 }

@@ -32,7 +32,7 @@ export module controller.product {
             if (searchText == "" || searchText == null) {
                 this.ProductService.list(
                     (successData, successStatus, headers) => {
-                        this.$scope.totalPages = Number(headers("pages_total"));
+                        this.$scope.totalPages = Number(headers("page_total"));
                         this.$scope.products = successData;
                         this.NavigationService.progress.done();
                         if (this.redirectString) this.AlertService.add({ title: "Busca Rápida", content: "Clique em um produto da lista para voltar para a página anterior", type: enums.AlertType.INFO });
@@ -42,11 +42,11 @@ export module controller.product {
                         console.log(errorData);
                         this.NavigationService.progress.done();
                     },
-                    { page: page, size: this.defaultPageSize });
+                    { page_index: page, page_size: this.defaultPageSize });
             } else {
                 this.ProductService.findByName(searchText,
                     (successData, successStatus, headers) => {
-                        this.$scope.totalPages = Number(headers("pages_total"));
+                        this.$scope.totalPages = Number(headers("page_total"));
                         this.$scope.products = successData;
                         this.NavigationService.progress.done();
                     },
@@ -55,7 +55,7 @@ export module controller.product {
                         console.log(errorData);
                         this.NavigationService.progress.done();
                     },
-                    { page: page, size: this.defaultPageSize });
+                    { page_index: page, page_size: this.defaultPageSize });
             }
         }
 

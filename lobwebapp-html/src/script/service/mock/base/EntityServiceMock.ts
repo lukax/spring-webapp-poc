@@ -12,7 +12,7 @@ export module service.mock.base {
             successCallback: (data: T, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
             errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
                 this.$timeout(() => {
-                    if (entity.id != 0) errorCallback({ description: "ID Inválido"}, 403, null, null);
+                    if (entity.id != 0) errorCallback({ message: "ID Inválido"}, 403, null, null);
                     var storId = 0;
                     this.getRepository().forEach(
                         (item: T) => {
@@ -29,7 +29,7 @@ export module service.mock.base {
             successCallback: (data: T, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
             errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
                 this.$timeout(() => {
-                    if (entity.id == 0) errorCallback({ description: "ID Inválido"}, 403, null, null);
+                    if (entity.id == 0) errorCallback({ message: "ID Inválido"}, 403, null, null);
                     var success = false;
                     this.getRepository().some(
                         (item: T, index: number) => {
@@ -41,7 +41,7 @@ export module service.mock.base {
                             }
                             else return false;
                         });
-                    if (!success) errorCallback({ description: "ID Inexistente"}, 404, null, null);
+                    if (!success) errorCallback({ message: "ID Inexistente"}, 404, null, null);
                 }, 100);
         }
 
@@ -60,7 +60,7 @@ export module service.mock.base {
                             }
                             else return false;
                         });
-                    if (!success) errorCallback({ description: "ID Inexistente"}, 404, null, null);
+                    if (!success) errorCallback({ message: "ID Inexistente"}, 404, null, null);
                 }, 100);
         }
 
@@ -80,7 +80,7 @@ export module service.mock.base {
                             return false;
                         });
                     if (success) successCallback(retrievedEntity, 200, null, null);
-                    else errorCallback({ description: "ID Inexistente" }, 404, null, null);
+                    else errorCallback({ message: "ID Inexistente" }, 404, null, null);
                 }, 100);
         }
 
@@ -91,8 +91,8 @@ export module service.mock.base {
                 this.$timeout(() => {
                     var repo = this.getRepository();
                     if (pageable) {
-                        repo.splice(0, pageable.page);
-                        repo.splice(pageable.page + pageable.size, repo.length - 1);
+                        repo.splice(0, pageable.page_index);
+                        repo.splice(pageable.page_index + pageable.page_size, repo.length - 1);
                     }
                     successCallback(repo, 200, null, null);
                 }, 1000);
@@ -112,7 +112,7 @@ export module service.mock.base {
                     });
 
                     if(success) successCallback(true, 200, null, null);
-                    else errorCallback({ description: "Entidade Inexistente"}, 200, null, null);
+                    else errorCallback({ message: "Entidade Inexistente"}, 200, null, null);
                 }, 100);
         }
 

@@ -7,7 +7,7 @@ export module service.impl.base {
         public url: string;
 
         constructor(contextUrl: string, public $http: ng.IHttpService) {
-            this.url = this.rootUrl + contextUrl;
+            this.url = this.rootUrl + contextUrl + "/";
         }
 
         public save(entity: T,
@@ -19,19 +19,19 @@ export module service.impl.base {
         public update(entity: T,
             successCallback: (data: T, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
             errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
-                this.$http.put(this.url + "/" + entity.id, entity).success(successCallback).error(errorCallback);
+                this.$http.put(this.url + entity.id, entity).success(successCallback).error(errorCallback);
         }
 
         public remove(entity: T,
             successCallback: (data: T, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
             errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
-                this.$http.delete(this.url + "/" + entity.id).success(successCallback).error(errorCallback);
+                this.$http.delete(this.url + entity.id).success(successCallback).error(errorCallback);
         }
 
         public find(id: number,
             successCallback: (data: T, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
             errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
-                this.$http.get(this.url + "/" + id).success(successCallback).error(errorCallback);
+                this.$http.get(this.url + id).success(successCallback).error(errorCallback);
         }
 
         public list(
@@ -39,7 +39,7 @@ export module service.impl.base {
             errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
             pageable?: domain.util.Pageable) {
                 if (pageable)
-                    this.$http.get(this.url + "/" + this.getPageableUri(pageable)).success(successCallback).error(errorCallback);
+                    this.$http({ method: "GET", url: this.url, headers: pageable }).success(successCallback).error(errorCallback);
                 else
                     this.$http.get(this.url).success(successCallback).error(errorCallback);
         }
@@ -59,7 +59,7 @@ export module service.impl.base {
         }
 
         public getPageableUri(p: domain.util.Pageable) {
-            return "?page=" + p.page + "&size=" + p.size;
+            return "?page=" + p.page_index + "&size=" + p.page_size;
         }
 
     }

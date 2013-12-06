@@ -4,7 +4,6 @@ import org.hibernate.TypeMismatchException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageConversionException;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
-import org.springframework.util.ClassUtils;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -22,39 +21,39 @@ public class ExceptionHandlerControllerAdvice {
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ResponseBody
 	public ResponseError handleBadRequest(Exception ex) {
-		return this.buildResponse(ex, ResponseLevel.ALERT);
+		return this.buildResponse(ex);
 	}
 	
 	@ExceptionHandler({NotFoundException.class, HttpRequestMethodNotSupportedException.class})
 	@ResponseStatus(HttpStatus.NOT_FOUND)
 	@ResponseBody
 	public ResponseError handleNotFound(Exception ex) {
-		return this.buildResponse(ex, ResponseLevel.ALERT);
+		return this.buildResponse(ex);
 	}
 
 	@ExceptionHandler({InvalidArgumentException.class, HttpMessageConversionException.class})
 	@ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
 	@ResponseBody
 	public ResponseError handleEntityInvalid(Exception ex){
-		return this.buildResponse(ex, ResponseLevel.WARNING);
+		return this.buildResponse(ex);
 	}
 	
 	@ExceptionHandler(AuthenticationCredentialsNotFoundException.class)
 	@ResponseStatus(HttpStatus.UNAUTHORIZED)
 	@ResponseBody
 	public ResponseError handleAuthentication(Exception ex){
-		return this.buildResponse(ex, ResponseLevel.ALERT);
+		return this.buildResponse(ex);
 	}
 	
 	@ExceptionHandler
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 	@ResponseBody
 	public ResponseError handleOther(Exception ex){
-		return this.buildResponse(ex, ResponseLevel.WARNING);
+		return this.buildResponse(ex);
 	}
 	
-	private ResponseError buildResponse(Exception ex, ResponseLevel responseLevel){
-		return new ResponseError(ClassUtils.getShortName(ex.getClass()), ex.getMessage(), responseLevel);
+	private ResponseError buildResponse(Exception ex){
+		return new ResponseError(ex.getMessage());
 	}
 	
 }

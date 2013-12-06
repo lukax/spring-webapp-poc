@@ -10,5 +10,5 @@ public class LobWebAppException extends RuntimeException {
 	public LobWebAppException(String message){
 		super(message);
 	}
-
+	
 }

@@ -28,7 +28,7 @@ export module service.mock {
                         return element.name.toLowerCase() == name.toLowerCase();
                     });
                     if (items.length !== 0) successCallback(items, 200, null, null);
-                    else errorCallback({ description: "Nome Inexistente"}, 404, null, null);
+                    else errorCallback({ message: "Nome Inexistente"}, 404, null, null);
                 }, 100);
         }
 
@@ -41,7 +41,7 @@ export module service.mock {
                         if (categories.indexOf(item.category) === -1) categories.push(item.category);
                     });
                     if (categories.length > 0) successCallback(categories, 200, null, null);
-                    else errorCallback({ description: "Nenhum Grupo Encontrado"}, 404, null, null);
+                    else errorCallback({ message: "Nenhum Grupo Encontrado"}, 404, null, null);
                 }, 100);
         }
 

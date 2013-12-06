@@ -18,7 +18,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import com.espindola.lobwebapp.controller.util.HeaderKey;
 import com.espindola.lobwebapp.domain.base.AbstractEntity;
+import com.espindola.lobwebapp.event.LobWebAppEventPublisher;
+import com.espindola.lobwebapp.event.PageReturnEvent;
 import com.espindola.lobwebapp.exception.EntityExistsException;
 import com.espindola.lobwebapp.exception.EntityInvalidException;
 import com.espindola.lobwebapp.exception.EntityNotFoundException;
@@ -26,7 +29,9 @@ import com.espindola.lobwebapp.service.contract.base.EntityService;
 
 @Controller
 public abstract class AbstractEntityController<T extends AbstractEntity> {
-
+	
+	@Autowired
+	protected LobWebAppEventPublisher eventPublisher;
 	private EntityService<T> service;
 
 	@Autowired
@@ -48,12 +53,12 @@ public abstract class AbstractEntityController<T extends AbstractEntity> {
 		return service.findAll();
 	}
 	
-	@RequestMapping(method = RequestMethod.GET, headers = {"page_index", "page_size"})
+	@RequestMapping(method = RequestMethod.GET, headers = {HeaderKey.PAGE_INDEX, HeaderKey.PAGE_SIZE})
 	@ResponseStatus(value = HttpStatus.OK)
 	@ResponseBody
-	public List<T> findAll(HttpServletResponse response, @RequestHeader("page_index") Integer pageIndex, @RequestHeader("page_size") Integer pageSize) {
+	public List<T> findAll(HttpServletResponse response, @RequestHeader(HeaderKey.PAGE_INDEX) Integer pageIndex, @RequestHeader(HeaderKey.PAGE_SIZE) Integer pageSize) {
 		Page<T> entities = service.findAll(new PageRequest(pageIndex, pageSize));
-		this.pageSetup(entities, response);
+		eventPublisher.publishEvent(new PageReturnEvent(entities, response));
 		return entities.getContent();
 	}
 
@@ -76,10 +81,6 @@ public abstract class AbstractEntityController<T extends AbstractEntity> {
 	@ResponseBody
 	public T remove(@PathVariable("id") Long id) throws EntityNotFoundException {
 		return service.remove(id);
-	}
-	
-	protected void pageSetup(Page<T> page, HttpServletResponse response){
-		response.addHeader("page_total", ""+page.getTotalPages());
 	}
 	
 }

@@ -4,7 +4,7 @@
 import NProgress = require("NProgress");
 
 export module util{
-    export class Progress{
+    export class Progress implements d.service.contract.util.Progress {
         static cfg: boolean = false;
 
         public static start(){

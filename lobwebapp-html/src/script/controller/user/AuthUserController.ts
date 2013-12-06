@@ -38,7 +38,7 @@ export module controller.user {
                     this.$scope.user = successData;
                 },
                 (errorData, errorStatus) => {
-                    this.AlertService.add({ title: "Logout", content: String(errorData.description), type: enums.AlertType.WARNING });
+                    this.AlertService.add({ title: "Logout", content: String(errorData.message), type: enums.AlertType.WARNING });
                 });
         }
 

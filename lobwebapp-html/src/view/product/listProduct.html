@@ -35,8 +35,8 @@
         </li>
         <li class="disabled"><a class="link">{{currentPage+1}} de {{totalPages}}</a></li>
         <li ng-class="{disabled: currentPage == totalPages-1, enabled: currentPage != totalPages-1}">
-            <a class="link" ng-click="listProduct(totalPages-1, searchText)">&raquo;</a>
             <a class="link" ng-click="listProduct(currentPage+1, searchText)">&rarr;</a>
+            <a class="link" ng-click="listProduct(totalPages-1, searchText)">&raquo;</a>
         </li>
     </ul>
 </div>
