@@ -18,7 +18,7 @@ import com.espindola.lobwebapp.service.impl.base.AbstractEntityServiceImpl;
 public class ProductServiceImpl extends AbstractEntityServiceImpl<Product> implements ProductService {
 
 	private ProductRepository repository;
-
+	
 	@Autowired
 	public ProductServiceImpl(ProductRepository repository) {
 		super(repository);

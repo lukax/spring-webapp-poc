@@ -2,17 +2,24 @@ package com.espindola.lobwebapp.domain;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 import com.espindola.lobwebapp.domain.base.AbstractEntity;
 
 @Entity
-@Table(name = "TB_STOCK")
+@Table(name = "TB_PRODUCT_STOCK")
 public class Stock extends AbstractEntity {
 	
+	@NotNull
+	@Min(0)
 	private Long productId;
 	
+	@NotNull
+	@Min(0)
 	private Integer quantity;
 
+	@NotNull
 	private String unit;
 
 	public String getUnit() {
