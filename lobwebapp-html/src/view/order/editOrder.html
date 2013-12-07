@@ -72,7 +72,7 @@
             <input type="text" class="form-control" id="total" value="{{total | number:2}}" readonly>
         </div>
     </div>
-    <div class="form-group lwa-fade-left" ng-class="{'has-error': orderForm.inputPayment.$invalid || total > payment}" ng-show="total != 0 && order.payment.status != 'OK'">
+    <div class="form-group lwa-fade-left" ng-class="{'has-error': orderForm.inputPayment.$invalid || total > payment}" ng-show="total != 0 && order.payment.status != 'OK' && order.payment.status != 'CANCELLED'">
         <label for="total" class="col-md-1 col-md-offset-1 control-label">Dinheiro</label>
         <div class="col-md-10 input-group">
             <span class="input-group-addon">R$</span>

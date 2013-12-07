@@ -45,6 +45,7 @@ export module controller.order {
         }
 
         updateOrder(order: domain.Order) {
+            debugger;
             this.OrderService.update(order, 
                 (successData, successStatus) => {
                     this.AlertService.add({ title: "Editar Pedido", content: "Pedido foi atualizado com sucesso" });

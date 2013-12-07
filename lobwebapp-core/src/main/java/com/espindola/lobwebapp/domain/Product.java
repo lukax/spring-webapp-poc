@@ -13,7 +13,7 @@ import javax.validation.constraints.Size;
 import com.espindola.lobwebapp.domain.base.AbstractEntity;
 
 @Entity
-@Table(name = "PRODUCTS")
+@Table(name = "TB_PRODUCT")
 public class Product extends AbstractEntity {
 
 	@NotNull
@@ -21,12 +21,6 @@ public class Product extends AbstractEntity {
 	private String name;
 
 	private String description;
-
-	@NotNull
-	@Min(0)
-	private Integer quantity;
-
-	private String unit;
 	
 	@Min(0)
 	private Double costPrice;
@@ -56,22 +50,6 @@ public class Product extends AbstractEntity {
 
 	public void setDescription(String description) {
 		this.description = description;
-	}
-
-	public Integer getQuantity() {
-		return quantity;
-	}
-
-	public void setQuantity(Integer quantity) {
-		this.quantity = quantity;
-	}
-
-	public String getUnit() {
-		return unit;
-	}
-
-	public void setUnit(String unit) {
-		this.unit = unit;
 	}
 
 	public Double getCostPrice() {

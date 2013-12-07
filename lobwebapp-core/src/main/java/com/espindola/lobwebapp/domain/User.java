@@ -3,10 +3,12 @@ package com.espindola.lobwebapp.domain;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -14,7 +16,7 @@ import javax.validation.constraints.Size;
 import com.espindola.lobwebapp.domain.base.Person;
 
 @Entity
-@Table(name = "USERS")
+@Table(name = "TB_USER")
 public class User extends Person {
 
 	@Column(unique = true)
@@ -27,6 +29,10 @@ public class User extends Person {
 	private String password;
 
 	@ElementCollection(fetch = FetchType.EAGER)
+	@CollectionTable(
+	        name="TB_USER_ROLES",
+	        joinColumns= @JoinColumn(name="USER_ID")
+	  )
 	private Set<String> roles = new HashSet<String>();
 
 	public String getUsername() {
