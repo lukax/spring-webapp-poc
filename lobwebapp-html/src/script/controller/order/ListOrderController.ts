@@ -16,8 +16,8 @@ export module controller.order {
         static $inject = ["$scope", "OrderService", "AlertService", "NavigationService"];
         constructor(public $scope: ListOrderViewModel,
                     public OrderService: d.service.contract.OrderService,
-                    public AlertService: d.service.contract.util.AlertService,
-                    public NavigationService:d.service.contract.util.NavigationService) {
+                    public AlertService: d.service.contract.AlertService,
+                    public NavigationService:d.service.contract.NavigationService) {
 
             this.processArgs();
             this.populateScope();

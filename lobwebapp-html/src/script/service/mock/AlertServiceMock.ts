@@ -1,7 +1,7 @@
 ///<reference path="./../../reference.d.ts"/>
 
-export module service.mock.util {
-    export class AlertServiceMock implements d.service.contract.util.AlertService {
+export module service.mock {
+    export class AlertServiceMock implements d.service.contract.AlertService {
         private alerts: domain.util.Alert[];
 
         static $inject = ['$timeout'];
@@ -50,5 +50,5 @@ export module service.mock.util {
 }
 
 export var register = (moduleName: string) => {
-    angular.module(moduleName).lazy.service("AlertService", service.mock.util.AlertServiceMock);
+    angular.module(moduleName).lazy.service("AlertService", service.mock.AlertServiceMock);
 };

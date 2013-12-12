@@ -21,8 +21,8 @@ export module modularity {
             //Global usage services configuration
             this.module
                 .service("AuthService", <Function>d.service.impl.AuthServiceImpl)
-                .service("AlertService", <Function>a.service.mock.util.AlertServiceMock)
-                .service("NavigationService", <Function>f.service.impl.util.NavigationServiceImpl)
+                .service("AlertService", <Function>a.service.mock.AlertServiceMock)
+                .service("NavigationService", <Function>f.service.impl.NavigationServiceImpl)
             ;
             return this;
         }

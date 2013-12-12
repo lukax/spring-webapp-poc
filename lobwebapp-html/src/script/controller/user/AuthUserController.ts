@@ -13,8 +13,8 @@ export module controller.user {
         static $inject = ["$scope", "AuthService", "AlertService", "NavigationService"];
         constructor(public $scope: AuthUserViewModel,
             public AuthService: d.service.contract.AuthService,
-            public AlertService: d.service.contract.util.AlertService,
-            public NavigationService: d.service.contract.util.NavigationService) {
+            public AlertService: d.service.contract.AlertService,
+            public NavigationService: d.service.contract.NavigationService) {
 
             this.processArgs();
             this.populateScope();

@@ -13,7 +13,7 @@ export module controller.product {
         static $inject = ["$scope", "ProductService", "AlertService", "_"];
         constructor(public $scope: GraphProductViewModel,
                     public ProductService: d.service.contract.ProductService,
-                    public AlertService: d.service.contract.util.AlertService,
+                    public AlertService: d.service.contract.AlertService,
                     public _: _<any>) {
 
             this.processArgs();

@@ -21,7 +21,7 @@ export module controller.order {
 
         static $inject = ["$scope", "ProductService", "$timeout", "AlertService", "CustomerService", "OrderService"];
         constructor(public $scope: EditOrderViewModel, public ProductService: d.service.contract.ProductService, public $timeout: ng.ITimeoutService,
-            public AlertService: d.service.contract.util.AlertService, public CustomerService: d.service.contract.CustomerService, public OrderService: d.service.contract.OrderService) {
+            public AlertService: d.service.contract.AlertService, public CustomerService: d.service.contract.CustomerService, public OrderService: d.service.contract.OrderService) {
 
             this.populateScope();
             this.processArgs();

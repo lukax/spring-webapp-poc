@@ -20,8 +20,8 @@ export module controller.product {
         static $inject = ["$scope", "ProductService", "AlertService", "NavigationService"];
         constructor(public $scope: ListProductViewModel,
                     public ProductService: d.service.contract.ProductService,
-                    public AlertService: d.service.contract.util.AlertService,
-                    public NavigationService:d.service.contract.util.NavigationService) {
+                    public AlertService: d.service.contract.AlertService,
+                    public NavigationService:d.service.contract.NavigationService) {
 
             this.populateScope();
         }

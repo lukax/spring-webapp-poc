@@ -65,7 +65,7 @@ export module modularity {
             $httpProvider.interceptors.push(logoutUserOn401);
         }
 
-        private rootscopeVariables = ($rootScope: d.controller.base.ViewModel, NavigationService: d.service.contract.util.NavigationService) => {
+        private rootscopeVariables = ($rootScope: d.controller.base.ViewModel, NavigationService: d.service.contract.NavigationService) => {
             $rootScope.navigator = NavigationService;
         }
 

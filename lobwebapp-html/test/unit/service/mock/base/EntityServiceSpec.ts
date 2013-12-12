@@ -1,7 +1,6 @@
 ///<reference path="./../../../../reference.d.ts"/>
 ///<amd-dependency path="angular"/>
 ///<amd-dependency path="angularMocks"/>
-declare module "script/service/mock/base/EntityServiceMock" { export = any }
 import svc = require("script/service/mock/base/EntityServiceMock");
 import _ = require("underscore");
 
@@ -13,7 +12,7 @@ describe('service: EntityService', () => {
         module('lwa.service');
     });
 
-    it("should retrieve a list of entity", inject((EntityService:d.service.contract.base.EntityService, $timeout: ng.ITimeoutService) => {
+    it("should retrieve a list of entity", inject((EntityService: d.service.contract.base.EntityService<domain.base.AbstractEntity>, $timeout: ng.ITimeoutService) => {
         var spy = jasmine.createSpy('list');
         EntityService.list(spy, spy);
         expect(spy).not.toHaveBeenCalled();
@@ -76,7 +75,7 @@ describe('service: EntityService', () => {
         EntityService.save({id: 0}, ()=>{}, ()=>{});
         $timeout.flush();
         var spy = jasmine.createSpy('entity');
-        EntityService.contains({id: 1}, spy, spy);
+        EntityService.exists({id: 1}, spy, spy);
         expect(spy).not.toHaveBeenCalled();
         $timeout.flush();
         expect(spy.calls.length).toBe(1);

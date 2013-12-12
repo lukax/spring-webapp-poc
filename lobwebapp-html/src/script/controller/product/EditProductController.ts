@@ -18,7 +18,7 @@ export module controller.product {
         static $inject = ["$scope", "ProductService", "AlertService", "$filter"];
         constructor(public $scope: EditProductViewModel,
             public ProductService: d.service.contract.ProductService,
-            public AlertService: d.service.contract.util.AlertService,
+            public AlertService: d.service.contract.AlertService,
             public $filter: ng.IFilterService) {
 
             this.populateScope();
