@@ -4,22 +4,23 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CollectionTable;
-import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import com.espindola.lobwebapp.domain.base.Person;
 
 @Entity
-@Table(name = "TB_USER")
+@Table(name = "TB_USER", uniqueConstraints = {
+		@UniqueConstraint(columnNames = "USERNAME")
+})
 public class User extends Person {
 
-	@Column(unique = true)
 	@NotNull
 	@Size(min = 4)
 	private String username;
@@ -30,7 +31,7 @@ public class User extends Person {
 
 	@ElementCollection(fetch = FetchType.EAGER)
 	@CollectionTable(
-	        name="TB_USER_ROLES",
+	        name="TB_USER_ROLE",
 	        joinColumns= @JoinColumn(name="USER_ID")
 	  )
 	private Set<String> roles = new HashSet<String>();

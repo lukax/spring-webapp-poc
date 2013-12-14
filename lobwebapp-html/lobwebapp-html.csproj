@@ -133,6 +133,7 @@
     <TypeScriptCompile Include="src\script\directive\ProductDetailDirective.ts" />
     <TypeScriptCompile Include="src\script\domain\base\AbstractEntity.ts" />
     <TypeScriptCompile Include="src\script\domain\base\Person.ts" />
+    <TypeScriptCompile Include="src\script\domain\OrderItem.ts" />
     <TypeScriptCompile Include="src\script\domain\Payment.ts" />
     <TypeScriptCompile Include="src\script\domain\Order.ts" />
     <TypeScriptCompile Include="src\script\domain\Product.ts" />

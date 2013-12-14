@@ -1,8 +1,8 @@
 package com.espindola.lobwebapp.domain;
 
 public class AuthToken {
+	
 	private String authKey;
-
 	
 	public String getAuthKey() {
 		return authKey;

@@ -15,7 +15,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
 import com.espindola.lobwebapp.domain.base.AbstractEntity;
@@ -26,14 +25,14 @@ public class Order extends AbstractEntity {
 
 	@NotNull
 	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "CUSTOMER_ID")
 	private Customer customer;	
 	
 	@NotNull
 	@ElementCollection(fetch= FetchType.EAGER)
 	@CollectionTable(
-	        name="TB_ORDER_ITEMS",
-	        joinColumns= @JoinColumn(name = "ORDER_ID"),
-	        uniqueConstraints = @UniqueConstraint(columnNames = {"PRODUCT_ID"})
+	        name="TB_ORDER_ITEM",
+	        joinColumns= @JoinColumn(name = "ORDER_ID")
 	  )
 	private Set<OrderItem> items = new HashSet<OrderItem>();
 
@@ -43,6 +42,7 @@ public class Order extends AbstractEntity {
 	
 	@NotNull
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name = "PAYMENT_ID")
 	private Payment payment;
 
 	public Customer getCustomer() {

@@ -1,24 +1,31 @@
 package com.espindola.lobwebapp.domain;
 
-import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 @Embeddable
 public class OrderItem {
 
-	@Column(name = "PRODUCT_ID")
-	private Long productId;
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "PRODUCT_ID")
+	private Product product;
 	
+	@NotNull
+	@Min(0)
 	private Integer quantity;
-
-	public Long getProductId() {
-		return productId;
-	}
-
-	public void setProductId(Long productId) {
-		this.productId = productId;
-	}
 	
+	public Product getProduct() {
+		return product;
+	}
+
+	public void setProduct(Product product) {
+		this.product = product;
+	}
+
 	public Integer getQuantity() {
 		return quantity;
 	}

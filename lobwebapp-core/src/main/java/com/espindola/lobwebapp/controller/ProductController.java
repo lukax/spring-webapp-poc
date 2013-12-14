@@ -24,20 +24,17 @@ import com.espindola.lobwebapp.event.PageReturnEvent;
 import com.espindola.lobwebapp.exception.EntityInvalidException;
 import com.espindola.lobwebapp.exception.EntityNotFoundException;
 import com.espindola.lobwebapp.service.contract.ProductService;
-import com.espindola.lobwebapp.service.contract.StockService;
 
 @Controller
 @RequestMapping(value="/product")
 public class ProductController extends AbstractEntityController<Product> {
 	
 	private ProductService productService;
-	private StockService stockService;
 	
 	@Autowired
-	public ProductController(ProductService service, StockService stockService) {
+	public ProductController(ProductService service) {
 		super(service);
 		this.productService = service;
-		this.stockService = stockService;
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, headers = {HeaderKey.PRODUCT_NAME})
@@ -60,6 +57,6 @@ public class ProductController extends AbstractEntityController<Product> {
 	@ResponseStatus(value = HttpStatus.OK)
 	@ResponseBody
 	public List<Stock> getStock(@PathVariable("productId") Long productId) throws EntityInvalidException, EntityNotFoundException {
-		return this.stockService.findByProductId(productId);
+		return super.find(productId).getStocks();
 	}
 }

@@ -1,19 +1,28 @@
 package com.espindola.lobwebapp.domain;
 
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 import com.espindola.lobwebapp.domain.base.AbstractEntity;
 
 @Entity
-@Table(name = "TB_PRODUCT")
+@Table(name = "TB_PRODUCT", uniqueConstraints = {
+		@UniqueConstraint(columnNames = "NAME")
+	})
 public class Product extends AbstractEntity {
 
 	@NotNull
@@ -35,6 +44,10 @@ public class Product extends AbstractEntity {
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date registerDate;
+	
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "product")
+	@JsonIgnore
+	private List<Stock> stocks;
 
 	public String getName() {
 		return name;
@@ -90,6 +103,14 @@ public class Product extends AbstractEntity {
 
 	public void setRegisterDate(Date registerDate) {
 		this.registerDate = registerDate;
+	}
+
+	public List<Stock> getStocks() {
+		return stocks;
+	}
+
+	public void setStocks(List<Stock> stocks) {
+		this.stocks = stocks;
 	}
 
 }
