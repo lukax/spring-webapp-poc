@@ -10,8 +10,8 @@ export module controller.order {
         total: number;
         isOrderNew: boolean;
         saveChanges(order: domain.Order): void;
-        addProduct(id: number, quantity: number): void;
-        removeProduct(id: number): void;
+        addItem(productId: number, quantity: number): void;
+        removeItem(item: domain.OrderItem): void;
         quickSearchProduct(): void;
         fetchProduct(id: number): void;
         fetchCustomer(id: number): void;
@@ -20,8 +20,12 @@ export module controller.order {
     export class EditOrderController implements d.controller.base.Controller {
 
         static $inject = ["$scope", "ProductService", "$timeout", "AlertService", "CustomerService", "OrderService"];
-        constructor(public $scope: EditOrderViewModel, public ProductService: d.service.contract.ProductService, public $timeout: ng.ITimeoutService,
-            public AlertService: d.service.contract.util.AlertService, public CustomerService: d.service.contract.CustomerService, public OrderService: d.service.contract.OrderService) {
+        constructor(public $scope: EditOrderViewModel,
+            public ProductService: d.service.contract.ProductService,
+            public $timeout: ng.ITimeoutService,
+            public AlertService: d.service.contract.AlertService,
+            public CustomerService: d.service.contract.CustomerService,
+            public OrderService: d.service.contract.OrderService) {
 
             this.populateScope();
             this.processArgs();
@@ -29,7 +33,7 @@ export module controller.order {
 
         saveChanges(order: domain.Order) {
             if (this.$scope.order.id == 0) this.saveOrder(order);
-            else this.updateOrder(order); 
+            else this.updateOrder(order);
         }
 
         saveOrder(order: domain.Order) {
@@ -45,12 +49,12 @@ export module controller.order {
         }
 
         updateOrder(order: domain.Order) {
-            this.OrderService.update(order, 
+            this.OrderService.update(order,
                 (successData, successStatus) => {
-                    this.AlertService.add({ title: "Editar Pedido", content: "Pedido foi atualizado com sucesso" });
+                    this.AlertService.add({ title: "Atualizar Pedido", content: "Pedido foi atualizado com sucesso" });
                 },
                 (errorData, errorStatus) => {
-                    this.AlertService.add({ title: "Editar Pedido", content: "Erro pedido não pôde ser atualizado", type: enums.AlertType.DANGER });
+                    this.AlertService.add({ title: "Atualizar Pedido", content: "Erro pedido não pôde ser atualizado", type: enums.AlertType.DANGER });
                     console.log(errorData);
                 });
         }
@@ -66,36 +70,27 @@ export module controller.order {
                 });
         }
 
-        addProduct(id: number, quantity: number) {
-            var exists = false;
-            this.$scope.order.products.some((x: domain.Product) => {
-                if (x.id == id) {
+        addItem(productId: number, quantity: number) {
+            var exists = this.$scope.order.items.some((x) => {
+                if (x.product.id == productId) {
                     x.quantity += quantity;
-                    exists = true;
                     return true;
                 }
                 return false;
             });
             if (!exists) {
-                this.ProductService.find(id,
-                    (successData: domain.Product) => {
-                        successData.quantity = quantity;
-                        this.$scope.order.products.push(successData);
-                    }, (errorData: domain.util.Error) => {
+                this.ProductService.find(productId,
+                    (successData) => {
+                        this.$scope.order.items.push({ product: successData, quantity: quantity });
+                    }, (errorData) => {
                         this.AlertService.add({ title: "Buscar Produto", content: errorData.message, type: enums.AlertType.WARNING });
                     });
             }
             this.emptyProduct();
         }
 
-        removeProduct(id: number) {
-            this.$scope.order.products.some((x: domain.Product, index: number) => {
-                if (x.id == id) {
-                    this.$scope.order.products.splice(index, 1);
-                    return true;
-                }
-                return false;
-            });
+        removeItem(orderItem: domain.OrderItem) {
+            this.$scope.order.items = _.without(this.$scope.order.items, orderItem);
         }
 
         newOrder() {
@@ -110,8 +105,8 @@ export module controller.order {
         total() {
             this.$timeout(() => { //TODO: Fix this ugly hack
                 var sum: number = 0;
-                this.$scope.order.products.forEach((x: domain.Product) => {
-                    sum += x.quantity * x.price;
+                this.$scope.order.items.forEach((x) => {
+                    sum += x.quantity * x.product.price;
                 });
                 this.$scope.total = sum;
             }, 100);
@@ -133,10 +128,9 @@ export module controller.order {
             if (id > 0) {
                 this.ProductService.find(id,
                     (successData: domain.Product) => {
-                        var previousQt = this.$scope.product.quantity;
                         this.$scope.product = successData;
-                        this.$scope.product.quantity = previousQt;
                     }, (errorData: domain.util.Error) => {
+                        this.AlertService.add({ title: "Buscar Cliente", content: errorData.message, type: enums.AlertType.WARNING });
                         this.emptyProduct();
                     });
             }
@@ -151,6 +145,7 @@ export module controller.order {
                     (successData: domain.Customer) => {
                         this.$scope.order.customer = successData;
                     }, (errorData: domain.util.Error) => {
+                        this.AlertService.add({ title: "Buscar Produto", content: errorData.message, type: enums.AlertType.WARNING });
                         this.emptyCustomer();
                     });
             }
@@ -173,8 +168,8 @@ export module controller.order {
                     this.$scope.exchange = 0;
                 }
             });
-            this.$scope.$watch("order.products", (newValue: domain.Product[], oldValue: domain.Product[]) => {
-                console.log("Object order.products changed");
+            this.$scope.$watch("order.items", (newValue: domain.Product[], oldValue: domain.Product[]) => {
+                console.log("Object order.items changed");
                 this.total();
             }, true);
         }
@@ -197,17 +192,16 @@ export module controller.order {
         populateScope() {
             this.watchOrder();
 
-            this.$scope.order = { id: 0, customer: null, products: [], payment: { id:0, quantity: 0, status: enums.PaymentStatus.PENDING, mode: enums.PaymentMode.MONEY }, date: new Date() };
+            this.$scope.order = { id: 0, customer: null, items: [], payment: { id: 0, quantity: 0, status: enums.PaymentStatus.PENDING, mode: enums.PaymentMode.MONEY }, date: new Date() };
             this.emptyCustomer();
             this.emptyProduct();
-            this.fetchProduct(0);
 
             this.$scope.saveChanges = (order: domain.Order) => this.saveChanges(order);
-            this.$scope.addProduct = (id: number, quantity: number) => this.addProduct(id, quantity);
-            this.$scope.removeProduct = (index: number) => this.removeProduct(index);
+            this.$scope.addItem = (id: number, quantity: number) => this.addItem(id, quantity);
+            this.$scope.removeItem = (item: domain.OrderItem) => this.removeItem(item);
             this.$scope.quickSearchProduct = () => this.quickSearchProduct();
             this.$scope.fetchProduct = (id: number) => this.fetchProduct(id);
-            this.$scope.fetchCustomer = (id: number) => this.fetchCustomer(id);
+            this.$scope.fetchCustomer = (id: number, $event?: any) => this.fetchCustomer(id);
         }
     }
 }

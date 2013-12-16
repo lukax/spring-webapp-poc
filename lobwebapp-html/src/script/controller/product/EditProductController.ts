@@ -18,7 +18,7 @@ export module controller.product {
         static $inject = ["$scope", "ProductService", "AlertService", "$filter"];
         constructor(public $scope: EditProductViewModel,
             public ProductService: d.service.contract.ProductService,
-            public AlertService: d.service.contract.util.AlertService,
+            public AlertService: d.service.contract.AlertService,
             public $filter: ng.IFilterService) {
 
             this.populateScope();
@@ -44,10 +44,10 @@ export module controller.product {
         updateProduct(product: domain.Product) {
             this.ProductService.update(product,
                 (successData, successStatus) => {
-                    this.AlertService.add({ title: "Editar Produto", content: "Alterações em " + product.name + " foram bem sucedidas" });
+                    this.AlertService.add({ title: "Atualizar Produto", content: "Alterações em " + product.name + " foram bem sucedidas" });
                 },
                 (errorData, errorStatus) => {
-                    this.AlertService.add({ title: "Editar Produto", content: "Erro alterações no produto não pôde ser salvado", type: enums.AlertType.DANGER });
+                    this.AlertService.add({ title: "Atualizar Produto", content: "Erro alterações no produto não pôde ser salvado", type: enums.AlertType.DANGER });
                     console.log(errorData);
                 });
         }
@@ -95,11 +95,10 @@ export module controller.product {
 
         watchProduct() {
             this.$scope.$watch("product.id", (newValue: number, oldValue: number) => {
-                console.log("Object product.id changed");
                 this.$scope.isProductNew = this.isProductNew();
             });
             this.$scope.$watch("product.price + product.costPrice", () => {
-                if (this.$scope.product != null && this.$scope.product.costPrice !== 0)
+                if (this.$scope.product != null && this.$scope.product.costPrice != 0)
                     this.$scope.profitMargin = this.$scope.product.price / this.$scope.product.costPrice;
             });
             this.$scope.$watch("product.category", (newValue: string, oldValue: string) => {
@@ -121,7 +120,7 @@ export module controller.product {
         }
 
         populateScope() {
-            this.$scope.product = { id: 0, name: "", description: "", quantity: 0, price: 0, costPrice: 0, category: "", ncm: "" };
+            this.$scope.product = { id: 0, name: "", description: "", price: 0, costPrice: 0, category: "", ncm: "" };
             this.processArgs();
             this.watchProduct();
             this.fetchCategories();

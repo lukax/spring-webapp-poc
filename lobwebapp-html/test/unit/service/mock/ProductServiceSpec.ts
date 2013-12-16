@@ -25,7 +25,7 @@ describe('service: ProductService', () => {
         ProductService.save(<domain.Product>{id: 0, name: "product 1"},()=> {}, ()=>{});
         $timeout.flush();
         var spy = jasmine.createSpy('list');
-        ProductService.findByName("product 1", spy, spy);
+        ProductService.findByName("product 1", spy, spy, <any>{});
         expect(spy).not.toHaveBeenCalled();
         $timeout.flush();
         expect(spy.calls.length).toBe(1);

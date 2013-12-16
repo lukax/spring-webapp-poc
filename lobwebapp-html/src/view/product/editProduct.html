@@ -29,13 +29,13 @@
                         </div>
                     </div>
                 </div>
-                <div ng-class="{'has-error': productForm.inputQuantity.$invalid}">
+                <!--<div ng-class="{'has-error': productForm.inputQuantity.$invalid}">
                     <label class="col-md-1 control-label" for="inputQuantity">Qt</label>
                     <div class="col-md-2">
                         <input type="number" class="form-control" id="inputQuantity" name="inputQuantity"
                                ng-model="product.quantity" required min="0">
                     </div>
-                </div>
+                </div>-->
             </div>
 
             <div class="lwa-fade-left" ng-show="togglePriceInfo">
@@ -79,7 +79,7 @@
                 <label for="inputDescription" class="col-md-2 control-label">Descrição</label>
                 <div class="col-md-10">
                     <textarea class="form-control" id="inputDescription" name="inputDescription"
-                              placeholder="Digite uma Descrição" rows="2" ng-model="product.description" required></textarea>
+                              placeholder="Digite uma Descrição" rows="2" ng-model="product.description"></textarea>
                 </div>
             </div>
             <div class="pull-right" ng-class="{'btn-group': !isProductNew}">

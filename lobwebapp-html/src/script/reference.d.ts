@@ -23,6 +23,7 @@
 ///<reference path="./domain/Order.ts"/>
 ///<reference path="./domain/Payment.ts"/>
 ///<reference path="./domain/Customer.ts"/>
+///<reference path="./domain/Stock.ts"/>
 
 ///<reference path="./modularity/AppModule.ts"/>
 ///<reference path="./modularity/AppRoutes.ts"/>

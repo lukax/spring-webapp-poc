@@ -18,7 +18,7 @@ require.config({
         angularUi: "./../lib/angular-ui/build/angular-ui",
         angularUiUtils: "./../lib/angular-ui-utils/ui-utils",
         angularUiRouter: "./../lib/angular-ui-router/release/angular-ui-router",
-        angularUiBootstrap: "./../lib/angular-ui-bootstrap/ui-bootstrap-0.6.0",
+        angularUiBootstrap: "./../lib/angular-ui-bootstrap-bower/ui-bootstrap",
         underscore: "./../lib/underscore-amd/underscore",
         ngAnimateAnimateCss: "./../lib/ngAnimate-animate.css/animate",
         nprogress: "./../lib/nprogress/nprogress",
@@ -29,12 +29,12 @@ require.config({
     },
 	baseUrl: "script",
     shim: {
-        "jqueryMaskedInput": ["jquery"],
-        "bootstrap": ["jquery"],
         "angular": {
-            deps: ["jquery"],
+            deps: ["jquery", "underscore"],
             exports: "angular"
         },
+        "jqueryMaskedInput": ["jquery"],
+        "bootstrap": ["jquery"],
         "angularRoute": ["angular"],
         "angularAnimate": ["angular"],
         "angularUi": ["angular"],
@@ -56,15 +56,15 @@ require.config({
     }
 });
 
-require.onError = (err: RequireError) => {
-        window.location.replace("500.html?message=" + err.requireType + " | " + err.requireModules + " | " + err.originalError);
-};
+//require.onError = (err: RequireError) => {
+//        window.location.replace("500.html?message=" + err.requireType + " | " + err.requireModules + " | " + err.originalError);
+//};
 
 require(["util/Progress"], (progress: any)=> {
    progress.util.Progress.start();
 });
 
-require(["jquery", "angular", "util/Progress", "modularity/AppModule"], ($: JQueryStatic, angular: ng.IAngularStatic, progress: any, app: any) => {
+require(["angular", "util/Progress", "modularity/AppModule"], (angular: ng.IAngularStatic, progress: any, app: any) => {
     new app.modularity.AppModule().bootstrap(document);
     progress.util.Progress.done();
 });

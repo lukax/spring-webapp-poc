@@ -10,10 +10,8 @@ export module modularity {
         }
 
         configure() {
-            //Global usage filters configuration
             this.module
                 .filter('sum', this.sum);
-                //.filter('round', this.round)
             ;
             return this;
         }
@@ -28,17 +26,5 @@ export module modularity {
                 return sum;
             }
         }
-
-        // private round = () => {
-        //     return (input: number, inputDecimals: number) => {
-        //         var out = input;
-        //         var outDecimals = 2; // Padrão duas casas na conversão
-        //         if (inputDecimals) outDecimals = inputDecimals;
-        //         if (isNaN(out) || isNaN(outDecimals)) return 0;
-
-        //         out = a.util.Std.round(out, outDecimals);
-        //         return out;
-        //     }
-        // }
     }
 }

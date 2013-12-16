@@ -6,7 +6,7 @@ import javax.persistence.Table;
 import com.espindola.lobwebapp.domain.base.Person;
 
 @Entity
-@Table(name = "CUSTOMERS")
+@Table(name = "TB_CUSTOMER")
 public class Customer extends Person {
 
 }

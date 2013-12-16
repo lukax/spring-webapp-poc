@@ -4,7 +4,7 @@ export module service.mock.base {
     export class EntityServiceMock<T extends domain.base.AbstractEntity> implements d.service.contract.base.EntityService<T> {
         private repository: T[];
 
-        constructor(public $timeout: ng.ITimeoutService, public _: _<T>) {
+        constructor(public $timeout: ng.ITimeoutService) {
             this.repository = new Array<T>();
         }
 

@@ -15,9 +15,9 @@ export module controller.customer {
 
         static $inject = ["$scope", "CustomerService", "AlertService", "NavigationService"];
         constructor(public $scope: ListCustomerViewModel,
-                    public CustomerService: d.service.contract.CustomerService,
-                    public AlertService: d.service.contract.util.AlertService,
-                    public NavigationService:d.service.contract.util.NavigationService) {
+            public CustomerService: d.service.contract.CustomerService,
+            public AlertService: d.service.contract.AlertService,
+            public NavigationService:d.service.contract.NavigationService) {
 
             this.processArgs();
             this.populateScope();

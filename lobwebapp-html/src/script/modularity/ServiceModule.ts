@@ -9,7 +9,7 @@ export module modularity {
         private module: ng.IModule;
 
         constructor() {
-            this.module = angular.module("lwa.service", ["lwa.util"]);
+            this.module = angular.module("lwa.service", []);
             this.module.config(["$provide", ($provide: ng.auto.IProvideService) => {
                 this.module.lazy = {
                     service: $provide.service
@@ -21,8 +21,8 @@ export module modularity {
             //Global usage services configuration
             this.module
                 .service("AuthService", <Function>d.service.impl.AuthServiceImpl)
-                .service("AlertService", <Function>a.service.mock.util.AlertServiceMock)
-                .service("NavigationService", <Function>f.service.impl.util.NavigationServiceImpl)
+                .service("AlertService", <Function>a.service.mock.AlertServiceMock)
+                .service("NavigationService", <Function>f.service.impl.NavigationServiceImpl)
             ;
             return this;
         }

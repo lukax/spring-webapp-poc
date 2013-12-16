@@ -15,7 +15,7 @@ export module controller.customer {
         static $inject = ["$scope", "CustomerService", "AlertService"];
         constructor(public $scope: EditCustomerViewModel,
             public CustomerService: d.service.contract.CustomerService,
-            public AlertService: d.service.contract.util.AlertService) {
+            public AlertService: d.service.contract.AlertService) {
 
             this.processArgs();
             this.populateScope();
@@ -41,10 +41,10 @@ export module controller.customer {
         updateCustomer(customer: domain.Customer) {
             this.CustomerService.update(customer,
                 (successData, successStatus) => {
-                    this.AlertService.add({ title: "Editar Cliente", content: "Alterações em " + customer.name + " foram bem sucedidas" });
+                    this.AlertService.add({ title: "Atualizar Cliente", content: "Alterações em " + customer.name + " foram bem sucedidas" });
                 },
                 (errorData, errorStatus) => {
-                    this.AlertService.add({ title: "Editar Cliente", content: "Erro cliente não pôde ser atualizado", type: enums.AlertType.DANGER });
+                    this.AlertService.add({ title: "Atualizar Cliente", content: "Erro cliente não pôde ser atualizado", type: enums.AlertType.DANGER });
                     console.log(errorData);
                 });
         }

@@ -5,10 +5,12 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.CollectionTable;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -18,16 +20,21 @@ import javax.validation.constraints.NotNull;
 import com.espindola.lobwebapp.domain.base.AbstractEntity;
 
 @Entity
-@Table(name = "ORDERS")
+@Table(name = "TB_ORDER")
 public class Order extends AbstractEntity {
 
 	@NotNull
 	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "CUSTOMER_ID")
 	private Customer customer;	
 	
 	@NotNull
-	@OneToMany(fetch = FetchType.EAGER)
-	private Set<Product> products = new HashSet<Product>();
+	@ElementCollection(fetch= FetchType.EAGER)
+	@CollectionTable(
+	        name="TB_ORDER_ITEM",
+	        joinColumns= @JoinColumn(name = "ORDER_ID")
+	  )
+	private Set<OrderItem> items = new HashSet<OrderItem>();
 
 	@NotNull
 	@Temporal(TemporalType.TIMESTAMP)
@@ -35,6 +42,7 @@ public class Order extends AbstractEntity {
 	
 	@NotNull
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name = "PAYMENT_ID")
 	private Payment payment;
 
 	public Customer getCustomer() {
@@ -43,14 +51,6 @@ public class Order extends AbstractEntity {
 
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
-	}
-
-	public Set<Product> getProducts() {
-		return products;
-	}
-
-	public void setProducts(Set<Product> products) {
-		this.products = products;
 	}
 
 	public Date getDate() {
@@ -69,6 +69,12 @@ public class Order extends AbstractEntity {
 		this.payment = payment;
 	}
 
+	public Set<OrderItem> getItems() {
+		return items;
+	}
+
+	public void setItems(Set<OrderItem> items) {
+		this.items = items;
+	}
 
 }
-
