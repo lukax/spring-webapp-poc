@@ -84,7 +84,6 @@ export module controller.customer {
 
         watchCustomer() {
             this.$scope.$watch("customer.id", (newValue: number, oldValue: number) => {
-                console.log("Object customer.id changed");
                 this.$scope.isCustomerNew = this.isCustomerNew();
             });
         }

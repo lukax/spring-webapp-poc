@@ -156,7 +156,6 @@ export module controller.order {
 
         watchOrder() {
             this.$scope.$watch("order.id", (newValue: number, oldValue: number) => {
-                console.log("Object order.id changed");
                 this.$scope.isOrderNew = this.isOrderNew();
             });
             this.$scope.$watch("payment", (newValue: domain.Order, oldValue: domain.Order) => {
@@ -169,7 +168,6 @@ export module controller.order {
                 }
             });
             this.$scope.$watch("order.items", (newValue: domain.Product[], oldValue: domain.Product[]) => {
-                console.log("Object order.items changed");
                 this.total();
             }, true);
         }
