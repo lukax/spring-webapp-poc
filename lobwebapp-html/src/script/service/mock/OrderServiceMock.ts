@@ -5,9 +5,10 @@ import a = require("./base/EntityServiceMock");
 export module service.mock {
     export class OrderServiceMock extends a.service.mock.base.EntityServiceMock<domain.Order> implements d.service.contract.OrderService {
 
-        static $inject = ["$timeout", "_"];
-        constructor(public $timeout: ng.ITimeoutService, public _: _<domain.Order>) {
-            super($timeout, _);
+        static $inject = ["$timeout"];
+        constructor(public $timeout: ng.ITimeoutService) {
+            super($timeout);
+
             super.getRepository().push({
                 id: 1, customer: { id: 1, name: "John Doe" }, date: new Date(13, 11, 1), payment: { id: 1, quantity: 3400, mode: "CREDIT_CARD", status: "OK" },
                 products: [

@@ -16,7 +16,7 @@ export module modularity {
         private module: ng.IModule;
 
         constructor() {
-            this.module = angular.module('lwa.directive', ['ngRoute','ngAnimate','ngAnimate-animate.css', 'ui.directives', 'ui.bootstrap', 'ui.utils']);
+            this.module = angular.module('lwa.directive', ['ngRoute','ngAnimate', 'ui.bootstrap', 'ui.utils']);
         }
 
         configure() {

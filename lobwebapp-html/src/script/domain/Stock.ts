@@ -2,7 +2,7 @@
 
 module domain {
     export interface Stock extends domain.base.AbstractEntity {
-        productId: number;
+        product: domain.Product;
         quantity: number;
         unit: string;
     }

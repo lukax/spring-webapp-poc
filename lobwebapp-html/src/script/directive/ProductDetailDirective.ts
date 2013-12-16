@@ -6,11 +6,13 @@ export module directive {
         public restrict = 'E';
         public replace = true;
         public scope = {
-            ref: '=',
+            product: '=',
+            quantity: '='
         };
         public template =
-            '<div ng-if="ref.id != 0">'
-            +       '{{ref.quantity}} Unid, R${{ref.quantity * ref.price}} - {{ref.name}} {{ref.description}}'
+            '<div ng-if="product.id != 0">' +
+                '<label ng-if="quantity">{{quantity}} Unid, R${{quantity * product.price}} - </label>' +
+                ' {{product.name}} {{product.description}}'
         +   '</div>'
         ;
 

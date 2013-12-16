@@ -5,7 +5,6 @@ import p = require("./../../util/Progress");
 
 export module service.impl {
     export class NavigationServiceImpl implements d.service.contract.NavigationService {
-
         public progress: d.service.contract.Progress;
 
         static $inject = ["$location", "$stateParams"];

@@ -5,9 +5,10 @@ import a = require("./base/PersonServiceMock");
 export module service.mock {
     export class UserServiceMock extends a.service.mock.base.PersonServiceMock<domain.User> implements d.service.contract.UserService {
 
-        static $inject = ["$timeout", "_"];
-        constructor(public $timeout: ng.ITimeoutService, public _: _<domain.User>) {
-            super($timeout, _);
+        static $inject = ["$timeout"];
+        constructor(public $timeout: ng.ITimeoutService) {
+            super($timeout);
+
             super.getRepository().push({ id: 1, username: "user", password: "password", roles: ["ROLE_USER"], name: "Lucas Espindola" });
         }
 

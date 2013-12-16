@@ -9,7 +9,7 @@ export module modularity {
         private module: ng.IModule;
 
         constructor() {
-            this.module = angular.module("lwa.service", ["lwa.util"]);
+            this.module = angular.module("lwa.service", []);
             this.module.config(["$provide", ($provide: ng.auto.IProvideService) => {
                 this.module.lazy = {
                     service: $provide.service

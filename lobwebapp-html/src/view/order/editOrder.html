@@ -19,7 +19,7 @@
                     <span class="glyphicon glyphicon-search"></span>
                 </button>
             </div>
-            <input type="number" class="form-control" id="customerId" name="customerId" placeholder="ID" autofocus ng-model="order.customer.id" required min="1" ui-event="{blur: 'fetchCustomer(order.customer.id)'}" ui-keypress="{'enter': 'fetchCustomer(order.customer.id)'}">
+            <input type="number" class="form-control" id="customerId" name="customerId" placeholder="ID" autofocus ng-model="order.customer.id" required min="1" ui-keyup="{'enter': 'fetchCustomer(order.customer.id)'}"  ui-event="{blur: 'fetchCustomer(order.customer.id)'}">
         </div>
         <div class="col-md-9">
             <p class="form-control-static">{{order.customer.name}}</p>
@@ -34,31 +34,31 @@
                         <span class="glyphicon glyphicon-search"></span>
                     </button>
                 </div>
-                <input type="number" class="form-control" id="productId" name="productId" placeholder="ID" ng-model="product.id" required min="1" ui-event="{blur: 'fetchProduct(product.id)'}" ui-keypress="{'enter': 'fetchProduct(product.id)'}">
+                <input type="number" class="form-control" id="productId" name="productId" placeholder="ID" ng-model="product.id" ui-keyup="{'enter': 'fetchProduct(product.id)'}" ui-event="{'blur': 'fetchProduct(product.id)'}">
             </div>
         </div>
         <div class="col-md-2 input-group" ng-class="{'has-error': orderForm.productQuantity.$invalid && order.products.length == 0}">
-            <input type="number" class="form-control" id="productQuantity" name="productQuantity" placeholder="Qt" ng-model="product.quantity" required min="1" ui-keypress="{'enter': 'addProduct(product.id, product.quantity)'}" ng-disabled="!product.id">
+            <input type="number" class="form-control" id="productQuantity" name="productQuantity" placeholder="Qt" ng-model="product.quantity" required min="1" ui-keyup="{'enter': 'addItem(product.id, product.quantity)'}" ng-disabled="!product.id">
             <div class="input-group-btn">
-                <button type="button" class="btn btn-primary" data-toggle="tooltip" title="Adicionar produto à lista" ng-click="addProduct(product.id, product.quantity)" ng-disabled="orderForm.productQuantity.$invalid || orderForm.productId.$invalid">
+                <button type="button" class="btn btn-primary" data-toggle="tooltip" title="Adicionar produto à lista" ng-click="addItem(product.id, product.quantity)" ng-disabled="orderForm.productQuantity.$invalid || orderForm.productId.$invalid">
                     <span class="glyphicon glyphicon-plus"></span>
                 </button>
             </div>
         </div>
         <div class="col-md-7">
             <p class="form-control-static">
-                <product-detail ref="product"></product-detail>
+                <product-detail product="product"></product-detail>
             </p>
         </div>
     </div>
     <div class="form-group">
         <div class="col-md-offset-1 col-md-11">
             <ul class="list-group">
-                <li class="list-group-item lwa-fade-left" ng-repeat="prod in order.products">
+                <li class="list-group-item lwa-fade-left" ng-repeat="item in order.items">
                     <div class="row">
-                        <product-detail class="col-md-11" ref="prod"></product-detail>
+                        <product-detail class="col-md-11" product="item.product" quantity="item.quantity"></product-detail>
                         <div class="pull-right col-md-1">
-                            <button type="button" class="close" ng-click="removeProduct(prod.id)">&times;</button>
+                            <button type="button" class="close" ng-click="removeItem(item)">&times;</button>
                         </div>
                     </div>
                 </li>

@@ -9,7 +9,7 @@ module domain {
     }
 
     export interface OrderItem {
-        productId: number;
+        product: domain.Product;
         quantity: number;
     }
 }
