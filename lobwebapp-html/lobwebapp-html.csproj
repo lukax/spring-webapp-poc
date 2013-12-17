@@ -121,6 +121,7 @@
   <ItemGroup>
     <TypeScriptCompile Include="src\script\controller\AlertController.ts" />
     <TypeScriptCompile Include="src\script\controller\base\Controller.ts" />
+    <TypeScriptCompile Include="src\script\controller\base\AbstractEditEntityController.ts" />
     <TypeScriptCompile Include="src\script\controller\base\ViewModel.ts" />
     <TypeScriptCompile Include="src\script\controller\customer\EditCustomerController.ts" />
     <TypeScriptCompile Include="src\script\controller\customer\ListCustomerController.ts" />

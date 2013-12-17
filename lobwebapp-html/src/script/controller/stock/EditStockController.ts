@@ -8,7 +8,8 @@ export module controller.stock {
         isStockNew: boolean;
         saveChanges: (stock: domain.Stock) => void;
         removeStock: (stock: domain.Stock) => void;
-        findProduct: (productId: number) => void;
+        fetchProduct: (productId: number) => void;
+        quickSearchProduct: () => void;
     }
 
     export class EditStockController implements d.controller.base.Controller {
@@ -67,7 +68,7 @@ export module controller.stock {
                 });
         }
 
-        findProduct(id: number) {
+        fetchProduct(id: number) {
             this.ProductService.find(id,
                 (successData, successStatus) => {
                     this.$scope.stock.product = successData;
@@ -77,10 +78,18 @@ export module controller.stock {
                 });
         }
 
+        quickSearchProduct() {
+            var preparedUrl = "/stock/" + (this.isStockNew() ? "new" : String(this.$scope.stock.id));
+            this.$scope.navigator.navigateTo("/product/list?redirect=" + preparedUrl);
+        }
+
         newStock() {
             this.$scope.navigator.$location.url("/stock/new");
         }
 
+        emptyStock() {
+            this.$scope.stock = { id: 0, product: null, quantity: 0, unit: "" };
+        }
 
         isStockNew() {
             return (this.$scope.stock != null && this.$scope.stock.id == 0);
@@ -100,12 +109,12 @@ export module controller.stock {
             } else if (stockId == 0) {
                 this.newStock();
             } else if (stockId == "new") {
-                this.$scope.stock = { id: 0, product: null, quantity: 0, unit: "" };
+                this.emptyStock();
+                if (productId > 0) {
+                    this.fetchProduct(Number(productId));
+                }
             } else {
                 this.newStock();
-            }
-            if (productId > 0) {
-                this.findProduct(Number(productId));
             }
         }
 
@@ -113,7 +122,8 @@ export module controller.stock {
             this.watchStock();
             this.$scope.saveChanges = (stock) => this.saveChanges(stock);
             this.$scope.removeStock = (stock) => this.removeStock(stock);
-            this.$scope.findProduct = (productId) => this.findProduct(productId);
+            this.$scope.fetchProduct = (productId) => this.fetchProduct(productId);
+            this.$scope.quickSearchProduct = () => this.quickSearchProduct();
         }
     }
 }

@@ -4,7 +4,8 @@ import enums = require("./../../util/EnumUtil");
 
 export module controller.order {
     export interface EditOrderViewModel extends d.controller.base.ViewModel {
-        product: domain.Product;
+        currentProduct: domain.Product;
+        currentCustomer: domain.Customer;
         order: domain.Order;
         exchange: number;
         total: number;
@@ -13,6 +14,7 @@ export module controller.order {
         addItem(productId: number, quantity: number): void;
         removeItem(item: domain.OrderItem): void;
         quickSearchProduct(): void;
+        quickSearchCustomer(): void;
         fetchProduct(id: number): void;
         fetchCustomer(id: number): void;
     }
@@ -97,11 +99,16 @@ export module controller.order {
             this.$scope.navigator.$location.url("/order/new");
         }
 
+        quickSearchCustomer() {
+            var preparedUrl = "/order/" + (this.isOrderNew() ? "new" : String(this.$scope.order.id));
+            this.$scope.navigator.navigateTo("/customer/list?redirect=" + preparedUrl);
+        }
+
         quickSearchProduct() {
             var preparedUrl = "/order/" + (this.isOrderNew() ? "new" : String(this.$scope.order.id));
             this.$scope.navigator.navigateTo("/product/list?redirect=" + preparedUrl);
         }
-
+        
         total() {
             this.$timeout(() => { //TODO: Fix this ugly hack
                 var sum: number = 0;
@@ -116,26 +123,30 @@ export module controller.order {
             return (this.$scope.order.id == 0);
         }
 
+        emptyOrder() {
+            this.$scope.order = { id: 0, customer: null, items: [], payment: { id: 0, quantity: 0, status: enums.PaymentStatus.PENDING, mode: enums.PaymentMode.MONEY }, date: new Date() };
+        }
+
         emptyProduct() {
-            this.$scope.product = { id: 0, name: "", description: "", quantity: 0, price: 0 };
+            this.$scope.currentProduct = { id: 0, name: "", description: "", quantity: 0, price: 0 };
         }
 
         emptyCustomer() {
-            this.$scope.order.customer = { id: 0, name: "" };
+            this.$scope.currentCustomer = { id: 0, name: "" };
         }
 
-        fetchProduct(id: number) {
+        fetchOrder(id: number) {
             if (id > 0) {
-                this.ProductService.find(id,
-                    (successData: domain.Product) => {
-                        this.$scope.product = successData;
-                    }, (errorData: domain.util.Error) => {
-                        this.AlertService.add({ title: "Buscar Cliente", content: errorData.message, type: enums.AlertType.WARNING });
-                        this.emptyProduct();
+                this.OrderService.find(id,
+                    (successData) => {
+                        this.$scope.order = successData;
+                        this.$scope.currentCustomer = successData.customer;
+                    }, (errorData) => {
+                        this.AlertService.add({ content: "Pedido ID Inválido", type: enums.AlertType.WARNING });
+                        this.newOrder();
                     });
-            }
-            else {
-                this.emptyProduct();
+            } else {
+                this.newOrder();
             }
         }
 
@@ -143,7 +154,7 @@ export module controller.order {
             if (id > 0) {
                 this.CustomerService.find(id,
                     (successData: domain.Customer) => {
-                        this.$scope.order.customer = successData;
+                        this.$scope.currentCustomer = successData;
                     }, (errorData: domain.util.Error) => {
                         this.AlertService.add({ title: "Buscar Produto", content: errorData.message, type: enums.AlertType.WARNING });
                         this.emptyCustomer();
@@ -154,6 +165,21 @@ export module controller.order {
             }
         }
 
+        fetchProduct(id: number) {
+            if (id > 0) {
+                this.ProductService.find(id,
+                    (successData: domain.Product) => {
+                        this.$scope.currentProduct = successData;
+                    }, (errorData: domain.util.Error) => {
+                        this.AlertService.add({ title: "Buscar Cliente", content: errorData.message, type: enums.AlertType.WARNING });
+                        this.emptyProduct();
+                    });
+            }
+            else {
+                this.emptyProduct();
+            }
+        }
+        
         watchOrder() {
             this.$scope.$watch("order.id", (newValue: number, oldValue: number) => {
                 this.$scope.isOrderNew = this.isOrderNew();
@@ -167,36 +193,32 @@ export module controller.order {
                     this.$scope.exchange = 0;
                 }
             });
-            this.$scope.$watch("order.items", (newValue: domain.Product[], oldValue: domain.Product[]) => {
+            this.$scope.$watchCollection("order.items", (newValue: domain.Product[], oldValue: domain.Product[]) => {
                 this.total();
-            }, true);
+            });
         }
 
         processArgs() {
             var orderId = this.$scope.navigator.params().orderId;
-            if (orderId > 0) {
-                this.OrderService.find(orderId,
-                    (successData) => {
-                        this.$scope.order = successData;
-                    }, (errorData) => {
-                        this.AlertService.add({ content: "Pedido ID Inválido", type: enums.AlertType.WARNING });
-                    });
-            }
+            var customerId = this.$scope.navigator.params().customerId;
+            var productId = this.$scope.navigator.params().productId;
 
-            this.$scope.product.id = this.$scope.navigator.params().productId;
-            this.$scope.order.customer.id = this.$scope.navigator.params().customerId;
+            this.fetchOrder(orderId);
+            this.fetchProduct(productId);
+            this.fetchCustomer(customerId);
         }
 
         populateScope() {
-            this.watchOrder();
-
-            this.$scope.order = { id: 0, customer: null, items: [], payment: { id: 0, quantity: 0, status: enums.PaymentStatus.PENDING, mode: enums.PaymentMode.MONEY }, date: new Date() };
+            this.emptyOrder();
             this.emptyCustomer();
             this.emptyProduct();
+
+            this.watchOrder();
 
             this.$scope.saveChanges = (order: domain.Order) => this.saveChanges(order);
             this.$scope.addItem = (id: number, quantity: number) => this.addItem(id, quantity);
             this.$scope.removeItem = (item: domain.OrderItem) => this.removeItem(item);
+            this.$scope.quickSearchCustomer = () => this.quickSearchCustomer();
             this.$scope.quickSearchProduct = () => this.quickSearchProduct();
             this.$scope.fetchProduct = (id: number) => this.fetchProduct(id);
             this.$scope.fetchCustomer = (id: number, $event?: any) => this.fetchCustomer(id);

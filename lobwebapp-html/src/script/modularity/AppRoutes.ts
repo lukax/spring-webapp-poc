@@ -86,7 +86,7 @@ export var routes: AppRoute[] =
         }, {
             name: "order.list",
             baseUrl: "/order",
-            url: "/order/list",
+            url: "/order/list?search&redirect",
             templateUrl: "view/order/listOrder.html",
             controller: "ListOrderController",
             deps: [
@@ -113,7 +113,7 @@ export var routes: AppRoute[] =
         }, {
             name: "customer.list",
             baseUrl: "/customer",
-            url: "/customer/list",
+            url: "/customer/list?search&redirect",
             templateUrl: "view/customer/listCustomer.html",
             controller: "ListCustomerController",
             deps: [
@@ -141,7 +141,7 @@ export var routes: AppRoute[] =
         }, {
             name: "stock.list",
             baseUrl: "/stock",
-            url: "/stock/list",
+            url: "/stock/list?search&redirect",
             templateUrl: "view/stock/listStock.html",
             controller: "ListStockController",
             deps: [
