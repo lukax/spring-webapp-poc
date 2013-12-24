@@ -21,6 +21,12 @@ public class Stock extends AbstractEntity {
 	@NotNull
 	@Min(0)
 	private Integer quantity;
+	
+	@Min(0)
+	private Integer minQuantity;
+	
+	@Min(0)
+	private Integer maxQuantity;
 
 	@NotNull
 	private String unit;
@@ -48,6 +54,22 @@ public class Stock extends AbstractEntity {
 
 	public void setProduct(Product product) {
 		this.product = product;
+	}
+
+	public Integer getMinQuantity() {
+		return minQuantity;
+	}
+
+	public void setMinQuantity(Integer minQuantity) {
+		this.minQuantity = minQuantity;
+	}
+
+	public Integer getMaxQuantity() {
+		return maxQuantity;
+	}
+
+	public void setMaxQuantity(Integer maxQuantity) {
+		this.maxQuantity = maxQuantity;
 	}
 
 }

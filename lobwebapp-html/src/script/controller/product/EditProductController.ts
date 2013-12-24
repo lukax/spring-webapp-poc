@@ -64,22 +64,31 @@ export module controller.product {
                 });
         }
 
-        findProduct(id: number) {
-            this.ProductService.find(id,
-                (successData, successStatus) => {
-                    this.$scope.product = successData;
-                },
-                (errorData, errorStatus) => {
-                    this.AlertService.add({ title: "Buscar Produto", content: "Erro produto com o ID especificado não foi encontrado", type: enums.AlertType.WARNING });
-                    console.log(errorData);
-                    this.newProduct();
-                });
+        fetchProduct(id: number) {
+            if (id > 0) {
+                this.ProductService.find(id,
+                    (successData, successStatus) => {
+                        this.$scope.product = successData;
+                    },
+                    (errorData, errorStatus) => {
+                        this.AlertService.add({ title: "Buscar Produto", content: "Erro produto com o ID especificado não foi encontrado", type: enums.AlertType.WARNING });
+                        console.log(errorData);
+                        this.newProduct();
+                    });
+            }
+            else {
+                this.newProduct();
+            }
         }
 
         newProduct() {
             this.$scope.navigator.$location.url("/product/new");
         }
 
+        emptyProduct() {
+            this.$scope.product = { id: 0, name: "", description: "", price: 0, costPrice: 0, category: "", ncm: "" };
+        }
+        
         fetchCategories() {
             this.ProductService.listCategory(
                 (successData) => {
@@ -110,7 +119,7 @@ export module controller.product {
         processArgs() {
             var routeProdId = this.$scope.navigator.params().productId;
             if (routeProdId > 0) {
-                this.findProduct(Number(routeProdId));
+                this.fetchProduct(Number(routeProdId));
             } else if (routeProdId == 0 || routeProdId == "new") {
                 
             } else {
@@ -120,7 +129,8 @@ export module controller.product {
         }
 
         populateScope() {
-            this.$scope.product = { id: 0, name: "", description: "", price: 0, costPrice: 0, category: "", ncm: "" };
+            this.emptyProduct();
+
             this.processArgs();
             this.watchProduct();
             this.fetchCategories();

@@ -86,7 +86,7 @@ export var routes: AppRoute[] =
         }, {
             name: "order.list",
             baseUrl: "/order",
-            url: "/order/list",
+            url: "/order/list?search&redirect",
             templateUrl: "view/order/listOrder.html",
             controller: "ListOrderController",
             deps: [
@@ -113,12 +113,40 @@ export var routes: AppRoute[] =
         }, {
             name: "customer.list",
             baseUrl: "/customer",
-            url: "/customer/list",
+            url: "/customer/list?search&redirect",
             templateUrl: "view/customer/listCustomer.html",
             controller: "ListCustomerController",
             deps: [
                 "controller/customer/ListCustomerController",
                 "service/impl/CustomerServiceImpl"
+            ]
+        }, {
+            name: "stock",
+            url: "/stock",
+            abstract: true,
+            templateUrl: "view/stock/stock.html",
+            controller: "",
+            deps: []
+        }, {
+            name: "stock.edit",
+            baseUrl: "/stock",
+            url: "/stock/{stockId:[0-9]{1,8}|new}?productId",
+            templateUrl: "view/stock/editStock.html",
+            controller: "EditStockController",
+            deps: [
+                "controller/stock/EditStockController",
+                "service/impl/StockServiceImpl",
+                "service/impl/ProductServiceImpl"
+            ]
+        }, {
+            name: "stock.list",
+            baseUrl: "/stock",
+            url: "/stock/list?search&redirect",
+            templateUrl: "view/stock/listStock.html",
+            controller: "ListStockController",
+            deps: [
+                "controller/stock/ListStockController",
+                "service/impl/StockServiceImpl"
             ]
         }
     ];

@@ -76,9 +76,12 @@
     <Content Include="src\view\order\listOrder.html" />
     <Content Include="src\view\order\order.html" />
     <Content Include="src\view\product\editProduct.html" />
+    <Content Include="src\view\stock\editStock.html" />
     <Content Include="src\view\product\graphProduct.html" />
     <Content Include="src\view\product\listProduct.html" />
     <Content Include="src\view\product\product.html" />
+    <Content Include="src\view\stock\listStock.html" />
+    <Content Include="src\view\stock\stock.html" />
     <Content Include="src\view\user\authUser.html" />
     <Content Include="src\view\user\user.html" />
     <Content Include="test\.gitignore" />
@@ -118,6 +121,7 @@
   <ItemGroup>
     <TypeScriptCompile Include="src\script\controller\AlertController.ts" />
     <TypeScriptCompile Include="src\script\controller\base\Controller.ts" />
+    <TypeScriptCompile Include="src\script\controller\base\AbstractEditEntityController.ts" />
     <TypeScriptCompile Include="src\script\controller\base\ViewModel.ts" />
     <TypeScriptCompile Include="src\script\controller\customer\EditCustomerController.ts" />
     <TypeScriptCompile Include="src\script\controller\customer\ListCustomerController.ts" />
@@ -127,18 +131,20 @@
     <TypeScriptCompile Include="src\script\controller\product\EditProductController.ts" />
     <TypeScriptCompile Include="src\script\controller\product\GraphProductController.ts" />
     <TypeScriptCompile Include="src\script\controller\product\ListProductController.ts" />
+    <TypeScriptCompile Include="src\script\controller\stock\EditStockController.ts" />
+    <TypeScriptCompile Include="src\script\controller\stock\ListStockController.ts" />
     <TypeScriptCompile Include="src\script\controller\user\AuthUserController.ts" />
     <TypeScriptCompile Include="src\script\directive\PaymentDetailDirective.ts" />
     <TypeScriptCompile Include="src\script\directive\CustomerDetailDirective.ts" />
     <TypeScriptCompile Include="src\script\directive\ProductDetailDirective.ts" />
     <TypeScriptCompile Include="src\script\domain\base\AbstractEntity.ts" />
     <TypeScriptCompile Include="src\script\domain\base\Person.ts" />
-    <TypeScriptCompile Include="src\script\domain\OrderItem.ts" />
     <TypeScriptCompile Include="src\script\domain\Payment.ts" />
     <TypeScriptCompile Include="src\script\domain\Order.ts" />
     <TypeScriptCompile Include="src\script\domain\Product.ts" />
     <TypeScriptCompile Include="src\script\domain\Customer.ts" />
     <TypeScriptCompile Include="src\script\domain\AuthToken.ts" />
+    <TypeScriptCompile Include="src\script\domain\Stock.ts" />
     <TypeScriptCompile Include="src\script\domain\User.ts" />
     <TypeScriptCompile Include="src\script\domain\util\Alert.ts" />
     <TypeScriptCompile Include="src\script\domain\util\Pageable.ts" />
@@ -150,7 +156,6 @@
     <TypeScriptCompile Include="src\script\modularity\DirectiveModule.ts" />
     <TypeScriptCompile Include="src\script\modularity\FilterModule.ts" />
     <TypeScriptCompile Include="src\script\modularity\ServiceModule.ts" />
-    <TypeScriptCompile Include="src\script\modularity\UtilModule.ts" />
     <TypeScriptCompile Include="src\script\reference.d.ts" />
     <TypeScriptCompile Include="src\script\service\contract\AlertService.ts" />
     <TypeScriptCompile Include="src\script\service\contract\AuthService.ts" />
@@ -160,10 +165,12 @@
     <TypeScriptCompile Include="src\script\service\contract\OrderService.ts" />
     <TypeScriptCompile Include="src\script\service\contract\ProductService.ts" />
     <TypeScriptCompile Include="src\script\service\contract\CustomerService.ts" />
+    <TypeScriptCompile Include="src\script\service\contract\StockService.ts" />
     <TypeScriptCompile Include="src\script\service\contract\UserService.ts" />
     <TypeScriptCompile Include="src\script\service\impl\AuthServiceImpl.ts" />
     <TypeScriptCompile Include="src\script\service\impl\base\PersonServiceImpl.ts" />
     <TypeScriptCompile Include="src\script\service\impl\base\EntityServiceImpl.ts" />
+    <TypeScriptCompile Include="src\script\service\impl\StockServiceImpl.ts" />
     <TypeScriptCompile Include="src\script\service\impl\NavigationServiceImpl.ts" />
     <TypeScriptCompile Include="src\script\service\impl\OrderServiceImpl.ts" />
     <TypeScriptCompile Include="src\script\service\impl\UserServiceImpl.ts" />
