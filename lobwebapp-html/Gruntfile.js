@@ -74,13 +74,13 @@ module.exports = function (grunt) {
             proxies: [
                 {
                     context: '/api',
-                    host: 'localhost',
-                    port: 8080,
-                    https: false,
-                    changeOrigin: false,
-                    xforward: false,
+                    host: 'lobwebapp.herokuapp.com',
+                    port: 443,
+                    https: true,
+                    changeOrigin: true,
+                    xforward: true,
                     rewrite: {
-                        '^/api': '/lobwebapp-core'
+                        '^/api': '/'
                     }
                 }
             ],
