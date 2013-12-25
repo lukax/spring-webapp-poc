@@ -2,22 +2,22 @@
     <div class="col-md-2">
         <div class="list-group">
             <a class="list-group-item link active">Detalhes</a>
-            <a class="list-group-item link" ng-href="#/stock/list?search={{product.name}}">Estoque</a>
+            <a class="list-group-item link" ng-href="#/stock/list?search={{entity.name}}">Estoque</a>
         </div>
     </div>
     <div class="col-md-10">
-        <form class="form-horizontal" role="form" name="productForm" ng-submit="saveChanges(product)" novalidate>
+        <form class="form-horizontal" role="form" name="productForm" ng-submit="saveChanges(entity)" novalidate>
             <div class="form-group">
                 <label for="inputId" class="col-md-1 control-label">ID</label>
                 <div class="col-md-11">
-                    <input type="text" class="form-control" id="inputId" name="inputId" readonly ng-model="product.id">
+                    <input type="text" class="form-control" id="inputId" name="inputId" readonly ng-model="entity.id">
                 </div>
             </div>
             <div class="form-group" ng-class="{'has-error': productForm.inputName.$invalid}">
                 <label for="inputName" class="col-md-1 control-label">Nome</label>
                 <div class="col-md-11">
                     <input type="text" class="form-control" id="inputName" name="inputName" placeholder="Digite o nome do Produto"
-                           autofocus ng-model="product.name" required ng-minlength="2">
+                           autofocus ng-model="entity.name" required ng-minlength="2">
                 </div>
             </div>
             <div class="form-group">
@@ -26,10 +26,10 @@
                     <div class="col-md-7 input-group">
                         <span class="input-group-addon">R$</span>
                         <input type="text" class="form-control" id="inputPrice" name="inputPrice"
-                               ng-model="product.price" required ng-pattern="/^(?=.*[1-9])\d*(?:\.\d{1,2})?$/">
+                               ng-model="entity.price" required ng-pattern="/^(?=.*[1-9])\d*(?:\.\d{1,2})?$/">
                         <div class="input-group-btn">
                             <button type="button" class="btn btn-default dropdown-toggle" id="btnPriceInfoId"
-                                    ng-click="togglePriceInfo = !togglePriceInfo" data-toggle="tooltip" title="Detalhar Cálculo de Preço" ng-disabled="product.price == 0">
+                                    ng-click="togglePriceInfo = !togglePriceInfo" ui-jq="tooltip" title="Detalhar Cálculo de Preço" ng-disabled="entity.price == 0">
                                 <span class="glyphicon glyphicon-chevron-down" ng-class="{'glyphicon-chevron-down': !togglePriceInfo, 'glyphicon-chevron-up': togglePriceInfo}"></span>
                             </button>
                         </div>
@@ -39,11 +39,11 @@
 
             <div class="lwa-fade-left" ng-show="togglePriceInfo">
                 <div class="form-group">
-                    <div ng-class="{'has-error': priceInfoForm.inputCostPrice.$invalid}">
+                    <div ng-class="{'has-error': productForm.inputCostPrice.$invalid}">
                         <label for="inputCostPrice" class="col-md-3 control-label">Custo</label>
                         <div class="col-md-9 input-group">
                             <span class="input-group-addon">R$</span>
-                            <input type="text" class="form-control" id="inputCostPrice" name="inputCostPrice" ng-model="product.costPrice" required ng-pattern="/^(?=.*[1-9])\d*(?:\.\d{1,2})?$/" autofocus>
+                            <input type="text" class="form-control" id="inputCostPrice" name="inputCostPrice" ng-model="entity.costPrice" required ng-pattern="/^(?=.*[1-9])\d*(?:\.\d{1,2})?$/">
                         </div>
                     </div>
                 </div>
@@ -63,27 +63,26 @@
                 <div ng-class="{'has-error': productForm.inputNcm.$invalid}">
                     <label for="inputNcm" class="col-md-1 control-label">NCM</label>
                     <div class="col-md-4">
-                        <input type="text" class="form-control" id="inputNcm" name="inputNcm" ng-model="product.ncm" ui-jq="mask" ui-options="'9999.99.99'">
+                        <input type="text" class="form-control" id="inputNcm" name="inputNcm" ng-model="entity.ncm" ui-jq="mask" ui-options="'9999.99.99'">
                     </div>
                 </div>
                 <div ng-class="{'has-error': productForm.inputCategory.$invalid}">
                     <label for="inputCategory" class="col-md-1 control-label">Grupo</label>
                     <div class="col-md-6">
                         <input type="text" class="form-control" id="inputCategory" name="inputCategory"
-                               ng-model="product.category" data-typeahead="category for category in categories | limitTo:5">
+                               ng-model="entity.category" data-typeahead="category for category in categories | limitTo:5">
                     </div>
                 </div>
             </div>
             <div class="form-group" ng-class="{'has-error': productForm.inputDescription.$invalid}">
                 <div class="col-md-offset-1 col-md-11">
                     <textarea class="form-control" id="inputDescription" name="inputDescription"
-                              placeholder="Digite uma Descrição" rows="2" ng-model="product.description"></textarea>
+                              placeholder="Digite uma Descrição" rows="2" ng-model="entity.description"></textarea>
                 </div>
             </div>
-            <div class="pull-right" ng-class="{'btn-group': !isProductNew}">
-                <button class="btn btn-primary" type="submit" data-toggle="tooltip" title="Salvar Alterações do Produto"
-                        data-loading-text="Salvando..." ng-hide="readMode"
-                        ng-disabled="productForm.inputName.$invalid ||
+
+            <save-changes save-disabled="readMode ||
+                                     productForm.inputName.$invalid ||
                                      productForm.inputPrice.$invalid ||
                                      productForm.inputQuantity.$invalid ||
                                      productForm.inputNcm.$invalid ||
@@ -95,13 +94,8 @@
                                      productForm.inputQuantity.$pristine &&
                                      productForm.inputNcm.$pristine &&
                                      productForm.inputCategory.$pristine &&
-                                     productForm.inputDescription.$pristine">
-                    <span class="glyphicon glyphicon-floppy-disk"></span> Salvar
-                </button>
-                <a class="btn btn-default" data-toggle="tooltip" title="Remover Produto Atual" data-loading-text="Removendo..." ng-click="removeProduct(product)" ng-hide="isProductNew">
-                    Remover
-                </a>
-            </div>
+                                     productForm.inputDescription.$pristine" 
+                  remove-disabled="isEntityNew || readMode" remove="removeProduct(entity)"></save-changes>
 
         </form>
     </div>

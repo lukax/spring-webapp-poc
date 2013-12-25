@@ -1,77 +1,34 @@
 ///<reference path="./../../reference.d.ts"/>
 
+import i0 = require("./../base/AbstractEditEntityController");
 import enums = require("./../../util/EnumUtil");
 
 export module controller.stock {
-    export interface EditStockViewModel extends d.controller.base.ViewModel {
-        stock: domain.Stock;
-        isStockNew: boolean;
+    export interface EditStockViewModel extends i0.controller.base.EditEntityViewModel<domain.Stock> {
         saveChanges: (stock: domain.Stock) => void;
         removeStock: (stock: domain.Stock) => void;
         fetchProduct: (productId: number) => void;
         quickSearchProduct: () => void;
     }
 
-    export class EditStockController implements d.controller.base.Controller {
+    export class EditStockController extends i0.controller.base.AbstractEditEntityController<domain.Stock> {
 
-        static $inject = ["$scope", "StockService", "ProductService"];
+        static $inject = ["$scope", "StockService", "ProductService", "AlertService"];
         constructor(public $scope: EditStockViewModel,
-            public StockService: d.service.contract.StockService,
-            public ProductService: d.service.contract.ProductService) {
-
-            this.processArgs();
+                    public StockService: d.service.contract.StockService,
+                    public ProductService: d.service.contract.ProductService,
+                    public AlertService: d.service.contract.AlertService) {
+            super($scope, "stock", StockService, AlertService);
             this.populateScope();
-        }
-
-        saveChanges(stock: domain.Stock) {
-            if (this.$scope.stock.id == 0) this.saveStock(stock);
-            else this.updateStock(stock);
-        }
-
-        saveStock(stock: domain.Stock) {
-            this.StockService.save(stock,
-                (successData: domain.Stock, successStatus) => {
-                    this.$scope.navigator.$location.url("/stock/" + String(successData.id));
-                },
-                (errorData, errorStatus) => {
-                    console.log(errorData);
-                });
-        }
-
-        updateStock(stock: domain.Stock) {
-            this.StockService.update(stock,
-                (successData, successStatus) => {
-                },
-                (errorData, errorStatus) => {
-                    console.log(errorData);
-                });
-        }
-
-        removeStock(stock: domain.Stock) {
-            this.StockService.remove(stock,
-                (successData, successStatus) => {
-                    this.newStock();
-                },
-                (errorData, errorStatus) => {
-                    console.log(errorData);
-                });
-        }
-
-        findStock(id: number) {
-            this.StockService.find(id,
-                (successData, successStatus) => {
-                    this.$scope.stock = successData;
-                },
-                (errorData, errorStatus) => {
-                    console.log(errorData);
-                    this.newStock();
-                });
+            this.processArgs();
         }
 
         fetchProduct(id: number) {
+            this.lock();
             this.ProductService.find(id,
                 (successData, successStatus) => {
-                    this.$scope.stock.product = successData;
+                    this.$scope.entity.product = successData;
+                    this.unlock();
                 },
                 (errorData, errorStatus) => {
                     console.log(errorData);
@@ -79,49 +36,34 @@ export module controller.stock {
         }
 
         quickSearchProduct() {
-            var preparedUrl = "/stock/" + (this.isStockNew() ? "new" : String(this.$scope.stock.id));
+            var preparedUrl = "/stock/" + (this.$scope.isEntityNew ? "new" : String(this.$scope.entity.id));
             this.$scope.navigator.navigateTo("/product/list?redirect=" + preparedUrl);
         }
 
-        newStock() {
-            this.$scope.navigator.$location.url("/stock/new");
-        }
-
         emptyStock() {
-            this.$scope.stock = { id: 0, product: null, quantity: 0, unit: "" };
-        }
-
-        isStockNew() {
-            return (this.$scope.stock != null && this.$scope.stock.id == 0);
-        }
-
-        watchStock() {
-            this.$scope.$watch("stock.id", (newValue: number, oldValue: number) => {
-                this.$scope.isStockNew = this.isStockNew();
-            });
+            this.$scope.entity = { id: 0, product: null, quantity: 0, unit: "" };
         }
 
         processArgs() {
             var stockId = this.$scope.navigator.params().stockId;
             var productId = this.$scope.navigator.params().productId;
             if (stockId > 0) {
-                this.findStock(Number(stockId));
+                this.findEntity(Number(stockId));
             } else if (stockId == 0) {
-                this.newStock();
+                this.newEntity();
             } else if (stockId == "new") {
                 this.emptyStock();
                 if (productId > 0) {
                     this.fetchProduct(Number(productId));
                 }
             } else {
-                this.newStock();
+                this.newEntity();
             }
         }
 
         populateScope() {
-            this.watchStock();
             this.$scope.saveChanges = (stock) => this.saveChanges(stock);
-            this.$scope.removeStock = (stock) => this.removeStock(stock);
+            this.$scope.removeStock = (stock) => this.removeEntity(stock);
             this.$scope.fetchProduct = (productId) => this.fetchProduct(productId);
             this.$scope.quickSearchProduct = () => this.quickSearchProduct();
         }

@@ -1,111 +1,42 @@
 ///<reference path="./../../reference.d.ts"/>
 
+import i0 = require("./../base/AbstractEditEntityController");
 import enums = require("./../../util/EnumUtil");
 
 export module controller.customer {
-    export interface EditCustomerViewModel extends d.controller.base.ViewModel {
-        customer: domain.Customer;
-        isCustomerNew: boolean;
+    export interface EditCustomerViewModel extends i0.controller.base.EditEntityViewModel<domain.Customer> {
         saveChanges: (customer: domain.Customer) => void;
         removeCustomer: (customer: domain.Customer) => void;
     }
 
-    export class EditCustomerController implements d.controller.base.Controller {
+    export class EditCustomerController extends i0.controller.base.AbstractEditEntityController<domain.Customer> {
 
         static $inject = ["$scope", "CustomerService", "AlertService"];
         constructor(public $scope: EditCustomerViewModel,
-            public CustomerService: d.service.contract.CustomerService,
-            public AlertService: d.service.contract.AlertService) {
-
+                    public CustomerService: d.service.contract.CustomerService,
+                    public AlertService: d.service.contract.AlertService) {
+            super($scope, "customer", CustomerService, AlertService);
             this.processArgs();
             this.populateScope();
-        }
-
-        saveChanges(customer: domain.Customer) {
-            if (this.$scope.customer.id == 0) this.saveCustomer(customer);
-            else this.updateCustomer(customer);
-        }
-
-        saveCustomer(customer: domain.Customer) {
-            this.CustomerService.save(customer,
-                (successData: domain.Customer, successStatus) => {
-                    this.AlertService.add({ title: "Novo Cliente", content: customer.name + " foi adicionado",  });
-                    this.$scope.navigator.$location.url("/customer/" + String(successData.id));
-                },
-                (errorData, errorStatus) => {
-                    this.AlertService.add({ title: "Novo Cliente", content: "Erro cliente não pôde ser salvado", type: enums.AlertType.DANGER });
-                    console.log(errorData);
-                });
-        }
-
-        updateCustomer(customer: domain.Customer) {
-            this.CustomerService.update(customer,
-                (successData, successStatus) => {
-                    this.AlertService.add({ title: "Atualizar Cliente", content: "Alterações em " + customer.name + " foram bem sucedidas" });
-                },
-                (errorData, errorStatus) => {
-                    this.AlertService.add({ title: "Atualizar Cliente", content: "Erro cliente não pôde ser atualizado", type: enums.AlertType.DANGER });
-                    console.log(errorData);
-                });
-        }
-
-        removeCustomer(customer: domain.Customer) {
-            this.CustomerService.remove(customer,
-                (successData, successStatus) => {
-                    this.AlertService.add({ title: "Remover Cliente", content: customer.name + " foi removido com sucesso" });
-                    this.newCustomer();
-                },
-                (errorData, errorStatus) => {
-                    this.AlertService.add({ title: "Remover Cliente", content: "Erro cliente não pôde ser removido", type: enums.AlertType.DANGER });
-                    console.log(errorData);
-                });
-        }
-
-        findCustomer(id: number) {
-            this.CustomerService.find(id,
-                (successData, successStatus) => {
-                    this.$scope.customer = successData;
-                },
-                (errorData, errorStatus) => {
-                    this.AlertService.add({ title: "Buscar Cliente", content: "Erro cliente com o ID especificado não foi encontrado", type: enums.AlertType.WARNING });
-                    console.log(errorData);
-                    this.newCustomer();
-                });
-        }
-
-        newCustomer() {
-            this.$scope.navigator.$location.url("/customer/new");
-        }
-
-
-        isCustomerNew() {
-            return (this.$scope.customer != null && this.$scope.customer.id == 0);
-        }
-
-        watchCustomer() {
-            this.$scope.$watch("customer.id", (newValue: number, oldValue: number) => {
-                this.$scope.isCustomerNew = this.isCustomerNew();
-            });
         }
 
         processArgs() {
             var customerId = this.$scope.navigator.params().customerId;
             if (customerId > 0) {
-                this.findCustomer(Number(customerId));
+                this.findEntity(Number(customerId));
             } else if (customerId == 0) {
-                this.newCustomer();
+                this.newEntity();
             } else if (customerId == "new") {
-                this.$scope.customer = { id: 0, name: "" };
+                this.$scope.entity = { id: 0, name: "" };
             } else {
                 this.AlertService.add({ content: "Erro cliente ID inválido", type: enums.AlertType.WARNING });
-                this.newCustomer();
+                this.newEntity();
             }
         }
 
         populateScope() {
-            this.watchCustomer();
             this.$scope.saveChanges = (customer: domain.Customer) => this.saveChanges(customer);
-            this.$scope.removeCustomer = (customer: domain.Customer) => this.removeCustomer(customer);
+            this.$scope.removeCustomer = (customer: domain.Customer) => this.removeEntity(customer);
         }
     }
 }

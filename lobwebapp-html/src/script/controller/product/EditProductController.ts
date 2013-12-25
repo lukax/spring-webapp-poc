@@ -1,117 +1,67 @@
 ///<reference path="./../../reference.d.ts"/>
 
+import i0 = require("./../base/AbstractEditEntityController");
 import enums = require("./../../util/EnumUtil");
 
 export module controller.product {
-    export interface EditProductViewModel extends d.controller.base.ViewModel {
-        product: domain.Product;
+    export interface EditProductViewModel extends i0.controller.base.EditEntityViewModel<domain.Product> {  
         profitMargin: number;
         categories: string[];
-        isProductNew: boolean;
         saveChanges(product: domain.Product): void;
         removeProduct(product: domain.Product): void;
     }
 
-    export class EditProductController implements d.controller.base.Controller {
+    export class EditProductController extends i0.controller.base.AbstractEditEntityController<domain.Product> {
         allCategories: string[];
 
         static $inject = ["$scope", "ProductService", "AlertService", "$filter"];
         constructor(public $scope: EditProductViewModel,
-            public ProductService: d.service.contract.ProductService,
-            public AlertService: d.service.contract.AlertService,
-            public $filter: ng.IFilterService) {
-
+                    public ProductService: d.service.contract.ProductService,
+                    public AlertService: d.service.contract.AlertService,
+                    public $filter: ng.IFilterService) {
+            super($scope, "product", ProductService, AlertService);
             this.populateScope();
-        }
-
-        saveChanges(product: domain.Product) {
-            if (this.$scope.product.id == 0) this.saveProduct(product);
-            else this.updateProduct(product);
-        }
-
-        saveProduct(product: domain.Product) {
-            this.ProductService.save(product,
-                (successData: domain.Product, successStatus) => {
-                    this.AlertService.add({ title: "Novo Produto", content: product.name + " foi adicionado" });
-                    this.$scope.navigator.$location.url("/product/" + String(successData.id));
-                },
-                (errorData, errorStatus) => {
-                    this.AlertService.add({ title: "Novo Produto", content: "Erro produto não pôde ser salvado", type: enums.AlertType.DANGER });
-                    console.log(errorData);
-                });
-        }
-
-        updateProduct(product: domain.Product) {
-            this.ProductService.update(product,
-                (successData, successStatus) => {
-                    this.AlertService.add({ title: "Atualizar Produto", content: "Alterações em " + product.name + " foram bem sucedidas" });
-                },
-                (errorData, errorStatus) => {
-                    this.AlertService.add({ title: "Atualizar Produto", content: "Erro alterações no produto não pôde ser salvado", type: enums.AlertType.DANGER });
-                    console.log(errorData);
-                });
-        }
-
-        removeProduct(product: domain.Product) {
-            this.ProductService.remove(product,
-                (successData, successStatus) => {
-                    this.AlertService.add({ title: "Remover Produto", content: product.name + " foi removido com sucesso" });
-                    this.newProduct();
-                },
-                (errorData, errorStatus) => {
-                    this.AlertService.add({ title: "Remover Produto", content: "Produto não pôde ser removido", type: enums.AlertType.DANGER });
-                    console.log(errorData);
-                });
+            this.processArgs();
         }
 
         fetchProduct(id: number) {
-            if (id > 0) {
-                this.ProductService.find(id,
-                    (successData, successStatus) => {
-                        this.$scope.product = successData;
-                    },
-                    (errorData, errorStatus) => {
-                        this.AlertService.add({ title: "Buscar Produto", content: "Erro produto com o ID especificado não foi encontrado", type: enums.AlertType.WARNING });
-                        console.log(errorData);
-                        this.newProduct();
-                    });
-            }
-            else {
-                this.newProduct();
-            }
-        }
-
-        newProduct() {
-            this.$scope.navigator.$location.url("/product/new");
+            this.lock();
+            this.ProductService.find(id,
+                (successData, successStatus) => {
+                    this.$scope.entity = successData;
+                    this.unlock();
+                },
+                (errorData, errorStatus) => {
+                    this.AlertService.add({ title: "Buscar Produto", content: "Erro produto com o ID especificado não foi encontrado", type: enums.AlertType.WARNING });
+                    console.log(errorData);
+                    this.newEntity();
+                });
         }
 
         emptyProduct() {
-            this.$scope.product = { id: 0, name: "", description: "", price: 0, costPrice: 0, category: "", ncm: "" };
+            this.$scope.entity = { id: 0, name: "", description: "", price: 0, costPrice: 0, category: "", ncm: "" };
         }
         
         fetchCategories() {
+            this.lock();
             this.ProductService.listCategory(
                 (successData) => {
                     this.$scope.categories = [];
                     this.allCategories = successData;
+                    this.unlock();
                 },
-                (errorData) => { });
-        }
-
-        isProductNew() {
-            return (this.$scope.product && this.$scope.product.id == 0);
+                (errorData) => {
+                    this.unlock();
+                });
         }
 
         watchProduct() {
-            this.$scope.$watch("product.id", (newValue: number, oldValue: number) => {
-                this.$scope.isProductNew = this.isProductNew();
+            this.$scope.$watch("entity.price + entity.costPrice", () => {
+                if (!this.$scope.isEntityNew && this.$scope.entity.costPrice != 0)
+                    this.$scope.profitMargin = this.$scope.entity.price / this.$scope.entity.costPrice;
             });
-            this.$scope.$watch("product.price + product.costPrice", () => {
-                if (this.$scope.product != null && this.$scope.product.costPrice != 0)
-                    this.$scope.profitMargin = this.$scope.product.price / this.$scope.product.costPrice;
-            });
-            this.$scope.$watch("product.category", (newValue: string, oldValue: string) => {
-                this.$scope.categories = this.$filter("filter")(this.allCategories, this.$scope.product.category);
+            this.$scope.$watch("entity.category", (newValue: string, oldValue: string) => {
+                this.$scope.categories = this.$filter("filter")(this.allCategories, this.$scope.entity.category);
             });
             
         }
@@ -124,7 +74,7 @@ export module controller.product {
                 
             } else {
                 this.AlertService.add({ content: "Produto ID Inválido", type: "warning" });
-                this.newProduct();
+                this.newEntity();
             }
         }
 
@@ -134,8 +84,8 @@ export module controller.product {
             this.processArgs();
             this.watchProduct();
             this.fetchCategories();
-            this.$scope.saveChanges = (product) => this.saveChanges(product);
-            this.$scope.removeProduct = (product) => this.removeProduct(product);
+            this.$scope.saveChanges = (entity) => this.saveChanges(entity);
+            this.$scope.removeProduct = (entity) => this.removeEntity(entity);
         }
     }
 }

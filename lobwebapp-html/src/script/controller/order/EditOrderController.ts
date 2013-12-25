@@ -1,17 +1,16 @@
 ///<reference path="./../../reference.d.ts"/>
 
+import i0 = require("./../base/AbstractEditEntityController");
 import enums = require("./../../util/EnumUtil");
 
 export module controller.order {
-    export interface EditOrderViewModel extends d.controller.base.ViewModel {
-        currentProduct: domain.Product;
-        currentCustomer: domain.Customer;
-        order: domain.Order;
+    export interface EditOrderViewModel extends i0.controller.base.EditEntityViewModel<domain.Order> {
+        item: domain.OrderItem;
+        customer: domain.Customer;
         exchange: number;
         total: number;
-        isOrderNew: boolean;
         saveChanges(order: domain.Order): void;
-        addItem(productId: number, quantity: number): void;
+        addItem(item: domain.OrderItem): void;
         removeItem(item: domain.OrderItem): void;
         quickSearchProduct(): void;
         quickSearchCustomer(): void;
@@ -19,174 +18,116 @@ export module controller.order {
         fetchCustomer(id: number): void;
     }
 
-    export class EditOrderController implements d.controller.base.Controller {
+    export class EditOrderController extends i0.controller.base.AbstractEditEntityController<domain.Order> {
 
         static $inject = ["$scope", "ProductService", "$timeout", "AlertService", "CustomerService", "OrderService"];
         constructor(public $scope: EditOrderViewModel,
-            public ProductService: d.service.contract.ProductService,
-            public $timeout: ng.ITimeoutService,
-            public AlertService: d.service.contract.AlertService,
-            public CustomerService: d.service.contract.CustomerService,
-            public OrderService: d.service.contract.OrderService) {
-
+                    public ProductService: d.service.contract.ProductService,
+                    public $timeout: ng.ITimeoutService,
+                    public AlertService: d.service.contract.AlertService,
+                    public CustomerService: d.service.contract.CustomerService,
+                    public OrderService: d.service.contract.OrderService) {
+            super($scope, "order", OrderService, AlertService);
             this.populateScope();
             this.processArgs();
         }
 
-        saveChanges(order: domain.Order) {
-            if (this.$scope.order.id == 0) this.saveOrder(order);
-            else this.updateOrder(order);
-        }
-
-        saveOrder(order: domain.Order) {
-            this.OrderService.save(order,
-                (successData: domain.Order, successStatus) => {
-                    this.AlertService.add({ title: "Novo Pedido", content: "Pedido foi adicionado com sucesso" });
-                    this.$scope.navigator.$location.url("/order/" + String(successData.id));
-                },
-                (errorData, errorStatus) => {
-                    this.AlertService.add({ title: "Novo Pedido", content: "Erro pedido não pôde ser salvado", type: enums.AlertType.DANGER });
-                    console.log(errorData);
-                });
-        }
-
-        updateOrder(order: domain.Order) {
-            this.OrderService.update(order,
-                (successData, successStatus) => {
-                    this.AlertService.add({ title: "Atualizar Pedido", content: "Pedido foi atualizado com sucesso" });
-                },
-                (errorData, errorStatus) => {
-                    this.AlertService.add({ title: "Atualizar Pedido", content: "Erro pedido não pôde ser atualizado", type: enums.AlertType.DANGER });
-                    console.log(errorData);
-                });
-        }
-
-        removeOrder(order: domain.Order) {
-            this.OrderService.remove(order,
-                (successData, successStatus) => {
-                    this.AlertService.add({ title: "Remover Pedido", content: "Pedido foi removido com sucesso" });
-                },
-                (errorData, errorStatus) => {
-                    this.AlertService.add({ title: "Remover Pedido", content: "Erro pedido não pôde ser removido", type: enums.AlertType.DANGER });
-                    console.log(errorData);
-                });
-        }
-
-        addItem(productId: number, quantity: number) {
-            var exists = this.$scope.order.items.some((x) => {
-                if (x.product.id == productId) {
-                    x.quantity += quantity;
+        addItem(item: domain.OrderItem) {
+            var exists = this.$scope.entity.items.some((x) => {
+                if (x.product.id == item.product.id) {
+                    x.quantity += item.quantity;
                     return true;
                 }
                 return false;
             });
             if (!exists) {
-                this.ProductService.find(productId,
-                    (successData) => {
-                        this.$scope.order.items.push({ product: successData, quantity: quantity });
-                    }, (errorData) => {
-                        this.AlertService.add({ title: "Buscar Produto", content: errorData.message, type: enums.AlertType.WARNING });
-                    });
+                this.$scope.entity.items.push(this.$scope.item);        
             }
-            this.emptyProduct();
+            this.emptyItem();
         }
 
         removeItem(orderItem: domain.OrderItem) {
-            this.$scope.order.items = _.without(this.$scope.order.items, orderItem);
-        }
-
-        newOrder() {
-            this.$scope.navigator.$location.url("/order/new");
+            this.$scope.entity.items = _.without(this.$scope.entity.items, orderItem);
         }
 
         quickSearchCustomer() {
-            var preparedUrl = "/order/" + (this.isOrderNew() ? "new" : String(this.$scope.order.id));
+            var preparedUrl = "/order/" + (this.isEntityNew() ? "new" : String(this.$scope.entity.id));
             this.$scope.navigator.navigateTo("/customer/list?redirect=" + preparedUrl);
         }
 
         quickSearchProduct() {
-            var preparedUrl = "/order/" + (this.isOrderNew() ? "new" : String(this.$scope.order.id));
+            var preparedUrl = "/order/" + (this.isEntityNew() ? "new" : String(this.$scope.entity.id));
             this.$scope.navigator.navigateTo("/product/list?redirect=" + preparedUrl);
         }
         
         total() {
             this.$timeout(() => { //TODO: Fix this ugly hack
                 var sum: number = 0;
-                this.$scope.order.items.forEach((x) => {
+                this.$scope.entity.items.forEach((x) => {
                     sum += x.quantity * x.product.price;
                 });
                 this.$scope.total = sum;
             }, 100);
         }
 
-        isOrderNew() {
-            return (this.$scope.order.id == 0);
-        }
-
         emptyOrder() {
-            this.$scope.order = { id: 0, customer: null, items: [], payment: { id: 0, quantity: 0, status: enums.PaymentStatus.PENDING, mode: enums.PaymentMode.MONEY }, date: new Date() };
+            this.$scope.entity = { id: 0, customer: null, items: [], payment: { id: 0, quantity: 0, status: enums.PaymentStatus.PENDING, mode: enums.PaymentMode.MONEY }, date: new Date() };
         }
 
-        emptyProduct() {
-            this.$scope.currentProduct = { id: 0, name: "", description: "", quantity: 0, price: 0 };
+        emptyItem() {
+            this.$scope.item = {product: { id: 0, name: "", description: "", quantity: 0, price: 0 }, quantity: 0};
         }
 
         emptyCustomer() {
-            this.$scope.currentCustomer = { id: 0, name: "" };
+            this.$scope.customer = { id: 0, name: "" };
         }
 
         fetchOrder(id: number) {
-            if (id > 0) {
-                this.OrderService.find(id,
-                    (successData) => {
-                        this.$scope.order = successData;
-                        this.$scope.currentCustomer = successData.customer;
-                    }, (errorData) => {
-                        this.AlertService.add({ content: "Pedido ID Inválido", type: enums.AlertType.WARNING });
-                        this.newOrder();
-                    });
-            } else {
-                this.newOrder();
-            }
+            this.lock();
+            this.OrderService.find(id,
+                (successData) => {
+                    this.$scope.entity = successData;
+                    this.$scope.customer = successData.customer;
+                    this.unlock();
+                }, (errorData) => {
+                    this.AlertService.add({ content: "Pedido ID Inválido", type: enums.AlertType.WARNING });
+                    super.newEntity();
+                });
+            
         }
 
         fetchCustomer(id: number) {
-            if (id > 0) {
-                this.CustomerService.find(id,
-                    (successData: domain.Customer) => {
-                        this.$scope.currentCustomer = successData;
-                    }, (errorData: domain.util.Error) => {
-                        this.AlertService.add({ title: "Buscar Produto", content: errorData.message, type: enums.AlertType.WARNING });
-                        this.emptyCustomer();
-                    });
-            }
-            else {
-                this.emptyCustomer();
-            }
+            this.lock();
+            this.CustomerService.find(id,
+                (successData: domain.Customer) => {
+                    this.$scope.customer = successData;
+                    this.$scope.entity.customer = successData;
+                    this.unlock();
+                }, (errorData: domain.util.Error) => {
+                    this.AlertService.add({ title: "Buscar Cliente", content: errorData.message, type: enums.AlertType.WARNING });
+                    this.emptyCustomer();
+                    this.unlock();
+                });
+            
         }
 
         fetchProduct(id: number) {
-            if (id > 0) {
-                this.ProductService.find(id,
-                    (successData: domain.Product) => {
-                        this.$scope.currentProduct = successData;
-                    }, (errorData: domain.util.Error) => {
-                        this.AlertService.add({ title: "Buscar Cliente", content: errorData.message, type: enums.AlertType.WARNING });
-                        this.emptyProduct();
-                    });
-            }
-            else {
-                this.emptyProduct();
-            }
+            this.lock();
+            this.ProductService.find(id,
+                (successData: domain.Product) => {
+                    this.$scope.item.product = successData;
+                    this.unlock();
+                }, (errorData: domain.util.Error) => {
+                    this.AlertService.add({ title: "Buscar Produto", content: errorData.message, type: enums.AlertType.WARNING });
+                    this.emptyItem();
+                    this.unlock();
+                });
         }
         
         watchOrder() {
-            this.$scope.$watch("order.id", (newValue: number, oldValue: number) => {
-                this.$scope.isOrderNew = this.isOrderNew();
-            });
             this.$scope.$watch("payment", (newValue: domain.Order, oldValue: domain.Order) => {
                 if (this.$scope.total > 0) {
-                    var sum = this.$scope.order.payment.quantity - this.$scope.total;
+                    var sum = this.$scope.entity.payment.quantity - this.$scope.total;
                     if (sum > 0) this.$scope.exchange = sum;
                     else this.$scope.exchange = 0;
                 } else {
@@ -203,25 +144,25 @@ export module controller.order {
             var customerId = this.$scope.navigator.params().customerId;
             var productId = this.$scope.navigator.params().productId;
 
-            this.fetchOrder(orderId);
-            this.fetchProduct(productId);
-            this.fetchCustomer(customerId);
+            if(orderId > 0) this.fetchOrder(orderId);
+            if(customerId > 0) this.fetchProduct(productId);
+            if(productId > 0) this.fetchCustomer(customerId);
         }
 
         populateScope() {
             this.emptyOrder();
             this.emptyCustomer();
-            this.emptyProduct();
+            this.emptyItem();
 
             this.watchOrder();
 
-            this.$scope.saveChanges = (order: domain.Order) => this.saveChanges(order);
-            this.$scope.addItem = (id: number, quantity: number) => this.addItem(id, quantity);
-            this.$scope.removeItem = (item: domain.OrderItem) => this.removeItem(item);
+            this.$scope.saveChanges = (order) => this.saveChanges(order);
+            this.$scope.addItem = (item) => this.addItem(item);
+            this.$scope.removeItem = (item) => this.removeItem(item);
             this.$scope.quickSearchCustomer = () => this.quickSearchCustomer();
             this.$scope.quickSearchProduct = () => this.quickSearchProduct();
-            this.$scope.fetchProduct = (id: number) => this.fetchProduct(id);
-            this.$scope.fetchCustomer = (id: number, $event?: any) => this.fetchCustomer(id);
+            this.$scope.fetchProduct = (id) => this.fetchProduct(id);
+            this.$scope.fetchCustomer = (id) => this.fetchCustomer(id);
         }
     }
 }
