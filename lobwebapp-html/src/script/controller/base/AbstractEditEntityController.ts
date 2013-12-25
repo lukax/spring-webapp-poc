@@ -82,10 +82,12 @@ export module controller.base{
 
 		lock(){
 			this.$scope.readMode = true;
+		    this.$scope.navigator.progress.start();
 		}
 
 		unlock(){
 			this.$scope.readMode = false;
+			this.$scope.navigator.progress.done();
 		}
 
 		isEntityNew() {
