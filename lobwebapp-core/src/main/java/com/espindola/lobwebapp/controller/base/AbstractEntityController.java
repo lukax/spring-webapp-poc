@@ -65,22 +65,22 @@ public abstract class AbstractEntityController<T extends AbstractEntity> {
 	@RequestMapping(method = RequestMethod.POST)
 	@ResponseStatus(value = HttpStatus.CREATED)
 	@ResponseBody
-	public T save(@Validated @RequestBody T data) throws EntityExistsException, EntityInvalidException {
-		return service.save(data);
+	public void save(@Validated @RequestBody T data) throws EntityExistsException, EntityInvalidException {
+		service.save(data);
 	}
 
 	@RequestMapping(value = "/{id:[\\d]+}", method = RequestMethod.PUT)
 	@ResponseStatus(value = HttpStatus.OK)
 	@ResponseBody
-	public T update(@Validated @RequestBody T data) throws EntityInvalidException, EntityNotFoundException {
-		return service.update(data);
+	public void update(@Validated @RequestBody T data) throws EntityInvalidException, EntityNotFoundException {
+		service.update(data);
 	}
 
 	@RequestMapping(value = "/{id:[\\d]+}", method = RequestMethod.DELETE)
 	@ResponseStatus(value = HttpStatus.OK)
 	@ResponseBody
-	public T remove(@PathVariable("id") Long id) throws EntityNotFoundException {
-		return service.remove(id);
+	public void remove(@PathVariable("id") Long id) throws EntityNotFoundException {
+		service.remove(id);
 	}
 	
 }
