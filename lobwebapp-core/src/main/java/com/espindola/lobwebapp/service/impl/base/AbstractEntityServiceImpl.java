@@ -30,7 +30,6 @@ public abstract class AbstractEntityServiceImpl<T extends AbstractEntity> implem
 	}
 
 	@Override
-	// @Transactional Spring JPA is already annotated with this
 	public T save(T entity) throws EntityExistsException, EntityInvalidException {
 		throw_if_entity_is_null(entity);
 		throw_if_entity_exists(entity.getId());

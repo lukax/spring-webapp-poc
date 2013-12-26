@@ -1,60 +1,42 @@
-<form class="form-horizontal form-validation" role="form" name="orderForm" novalidate ng-submit="saveChanges(order)">
+<form class="form-horizontal form-validation" role="form" name="orderForm" novalidate ng-submit="saveChanges(entity)">
+    
     <div class="form-group">
         <label for="orderId" class="col-md-1 control-label">ID</label>
         <div class="col-md-9">
-            <input type="text" class="form-control" id="orderId" readonly value="{{order.id}}">
+            <input type="text" class="form-control" id="orderId" readonly value="{{entity.id}}">
         </div>
         <div class="col-md-2 input-group">
-            <input type="text" class="form-control" ng-model="order.date" datepicker-popup="dd/MM/yy" required>
+            <input type="text" class="form-control" ng-model="entity.date" datepicker-popup="dd/MM/yy" required>
             <div class="input-group-addon">
                 <span class="glyphicon glyphicon-calendar"></span>
             </div>
         </div>
     </div>
-    <div class="form-group" ng-class="{'has-error': orderForm.customerId.$invalid}">
-        <label for="customerId" class="col-md-1 control-label">Cliente</label>
-        <div class="col-md-2 input-group">
+
+    <quick-search error="customer.id <= 0" label="'Cliente'" entity-id="customer.id" fetch="fetchCustomer(customer.id)" quickSearch="quickSearchCustomer()">
+        <p class="form-control-static">{{customer.name}}</p>
+    </quick-search>
+
+    <quick-search error="item.product.id <= 0 && entity.items.length == 0" label="'Produtos'" entity-id="item.product.id" fetch="fetchProduct(item.product.id)" quickSearch="quickSearchProduct()">
+        <div class="col-md-3 input-group" ng-class="{'has-error': orderForm.productQuantity.$invalid && entity.products.length == 0}">
+            <input type="number" required min="1" class="form-control" id="productQuantity" name="productQuantity" placeholder="Qt" ng-model="item.quantity" ui-keyup="{'enter': 'addItem(item)'}" ng-disabled="!item.product.id">
             <div class="input-group-btn">
-                <button type="button" class="btn btn-default" data-toggle="tooltip" title="Buscar Rápida de Cliente" ng-click="quickSearchCustomer()">
-                    <span class="glyphicon glyphicon-search"></span>
-                </button>
-            </div>
-            <input type="number" class="form-control" id="customerId" name="customerId" placeholder="ID" autofocus ng-model="currentCustomer.id" required min="1" ui-keyup="{'enter': 'fetchCustomer(currentCustomer.id)'}" ui-event="{blur: 'fetchCustomer(currentCustomer.id)'}">
-        </div>
-        <div class="col-md-9">
-            <p class="form-control-static">{{currentCustomer.name}}</p>
-        </div>
-    </div>
-    <div class="form-group">
-        <div ng-class="{'has-error': orderForm.productId.$invalid && order.products.length == 0}">
-            <label for="productId" class="col-md-1 control-label">Produtos</label>
-            <div class="col-md-2 input-group">
-                <div class="input-group-btn">
-                    <button type="button" class="btn btn-default" data-toggle="tooltip" title="Buscar Rápida de Produto" ng-click="quickSearchProduct()">
-                        <span class="glyphicon glyphicon-search"></span>
-                    </button>
-                </div>
-                <input type="number" class="form-control" id="productId" name="productId" placeholder="ID" ng-model="currentProduct.id" ui-keyup="{'enter': 'fetchProduct(currentProduct.id)'}" ui-event="{'blur': 'fetchProduct(currentProduct.id)'}">
-            </div>
-        </div>
-        <div class="col-md-2 input-group" ng-class="{'has-error': orderForm.productQuantity.$invalid && order.products.length == 0}">
-            <input type="number" class="form-control" id="productQuantity" name="productQuantity" placeholder="Qt" ng-model="currentProduct.quantity" required min="1" ui-keyup="{'enter': 'addItem(currentProduct.id, currentProduct.quantity)'}" ng-disabled="!currentProduct.id">
-            <div class="input-group-btn">
-                <button type="button" class="btn btn-primary" data-toggle="tooltip" title="Adicionar produto à lista" ng-click="addItem(currentProduct.id, currentProduct.quantity)" ng-disabled="orderForm.productQuantity.$invalid || orderForm.productId.$invalid">
+                <button type="button" class="btn btn-primary" data-toggle="tooltip" title="Adicionar produto à lista" ng-click="addItem(item)" ng-disabled="orderForm.productQuantity.$invalid || orderForm.productId.$invalid || readMode">
                     <span class="glyphicon glyphicon-plus"></span>
                 </button>
             </div>
         </div>
-        <div class="col-md-7">
+        <div class="col-md-9">
             <p class="form-control-static">
-                <product-detail product="product"></product-detail>
+                <product-detail product="item.product"></product-detail>
             </p>
         </div>
-    </div>
+    </quick-search>
+        
     <div class="form-group">
         <div class="col-md-offset-1 col-md-11">
             <ul class="list-group">
-                <li class="list-group-item lwa-fade-left" ng-repeat="item in order.items">
+                <li class="list-group-item lwa-fade-left" ng-repeat="item in entity.items">
                     <div class="row">
                         <product-detail class="col-md-11" product="item.product" quantity="item.quantity"></product-detail>
                         <div class="pull-right col-md-1">
@@ -65,6 +47,7 @@
             </ul>
         </div>
     </div>
+    
     <div class="form-group">
         <label for="total" class="col-md-1 control-label">Total</label>
         <div class="col-md-11 input-group">
@@ -72,14 +55,15 @@
             <input type="text" class="form-control" id="total" value="{{total | number:2}}" readonly>
         </div>
     </div>
-    <div class="form-group lwa-fade-left" ng-class="{'has-error': orderForm.inputPayment.$invalid || total > payment}" ng-show="total != 0 && order.payment.status != 'OK' && order.payment.status != 'CANCELLED'">
+    
+    <div class="form-group lwa-fade-left" ng-class="{'has-error': orderForm.inputPayment.$invalid || total > payment}" ng-show="total != 0 && entity.payment.status != 'OK' && entity.payment.status != 'CANCELLED'">
         <label for="total" class="col-md-1 col-md-offset-1 control-label">Dinheiro</label>
         <div class="col-md-10 input-group">
             <span class="input-group-addon">R$</span>
-            <input type="number" class="form-control" id="inputPayment" name="inputPayment" ng-model="order.payment.quantity" required min="0">
+            <input type="number" class="form-control" id="inputPayment" name="inputPayment" ng-model="entity.payment.quantity" required min="0">
             <div class="input-group-btn">
                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                    <ng-pluralize count="order.payment.mode"
+                    <ng-pluralize count="entity.payment.mode"
                                   when="{'MONEY': 'À Vista',
                                          'CREDIT_CARD': 'Cartão',
                                          'CHECK': 'Cheque'}">
@@ -87,20 +71,22 @@
                     <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu" role="menu">
-                    <li><a class="link" ng-hide="order.payment.mode == 'MONEY'" ng-click="order.payment.mode = 'MONEY';">Dinheiro</a></li>
-                    <li><a class="link" ng-hide="order.payment.mode == 'CREDIT_CARD'" ng-click="order.payment.mode = 'CREDIT_CARD';">Cartão</a></li>
-                    <li><a class="link" ng-hide="order.payment.mode == 'CHECK'" ng-click="order.payment.mode = 'CHECK';">Cheque</a></li>
+                    <li><a class="link" ng-hide="entity.payment.mode == 'MONEY'" ng-click="entity.payment.mode = 'MONEY';">Dinheiro</a></li>
+                    <li><a class="link" ng-hide="entity.payment.mode == 'CREDIT_CARD'" ng-click="entity.payment.mode = 'CREDIT_CARD';">Cartão</a></li>
+                    <li><a class="link" ng-hide="entity.payment.mode == 'CHECK'" ng-click="entity.payment.mode = 'CHECK';">Cheque</a></li>
                 </ul>
             </div>
         </div>
     </div>
-    <div class="form-group lwa-fade-left" ng-show="order.paymentMode == 0 && exchange != 0 && order.status.payment == 0">
+    
+    <div class="form-group lwa-fade-left" ng-show="entity.paymentMode == 0 && exchange != 0 && entity.status.payment == 0">
         <label for="total" class="col-md-1 col-md-offset-1 control-label">Troco</label>
         <div class="col-md-10 input-group">
             <span class="input-group-addon">R$</span>
             <input type="text" class="form-control" id="inputExchange" name="inputExchange" value="{{exchange | number:2}}" readonly>
         </div>
     </div>
+    
     <div class="form-group">
         <div class="col-md-1 btn-group">
             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
@@ -108,24 +94,19 @@
             </button>
             <ul class="dropdown-menu" role="menu">
                 <li role="presentation" class="dropdown-header">Pagamento</li>
-                <li><a class="link" ng-click="order.payment.status = 'OK';" ng-if="order.status.payment != 'OK'">Confirmado</a></li>
-                <li><a class="link" ng-click="order.payment.status = 'PENDING';" ng-if="order.status.payment != 'PENDING'">Pendente</a></li>
-                <li><a class="link" ng-click="order.payment.status = 'CANCELLED';" ng-if="order.status.payment != 'CANCELLED'">Cancelado</a></li>
+                <li><a class="link" ng-click="entity.payment.status = 'OK';" ng-if="entity.status.payment != 'OK'">Confirmado</a></li>
+                <li><a class="link" ng-click="entity.payment.status = 'PENDING';" ng-if="entity.status.payment != 'PENDING'">Pendente</a></li>
+                <li><a class="link" ng-click="entity.payment.status = 'CANCELLED';" ng-if="entity.status.payment != 'CANCELLED'">Cancelado</a></li>
             </ul>
         </div>
         <div class="col-md-8 form-control-static">
-            <payment-detail ref="order.payment"></payment-detail>
+            <payment-detail ref="entity.payment"></payment-detail>
         </div>
     </div>
-    <div class="pull-right" ng-class="{'btn-group': !isOrderNew}">
-        <button class="btn btn-primary" type="submit" data-toggle="tooltip" title="Confirmar mudanças" data-loading-text="Salvando..."
-                ng-disabled="orderForm.customerId.$invalid ||
-                             orderForm.inputPayment.$invalid ||
-                             order.products.length == 0">
-            <span class="glyphicon glyphicon-floppy-disk"></span> Salvar
-        </button>
-        <a class="btn btn-default" data-toggle="tooltip" title="Remover Produto Atual" data-loading-text="Removendo..." ng-hide="isOrderNew" ng-click="removeOrder(order)">
-            Remover
-        </a>
-    </div>
+
+    <save-changes save-disabled="readMode ||
+                                 orderForm.inputPayment.$invalid ||
+                                 entity.products.length == 0" 
+                  remove-disabled="isEntityNew || readMode" remove="removeOrder(entity)"></save-changes>
+
 </form>

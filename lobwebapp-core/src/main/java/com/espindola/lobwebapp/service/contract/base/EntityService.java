@@ -11,7 +11,7 @@ import com.espindola.lobwebapp.exception.EntityExistsException;
 import com.espindola.lobwebapp.exception.EntityInvalidException;
 import com.espindola.lobwebapp.exception.EntityNotFoundException;
 
-//@PreAuthorize("hasRole('ROLE_USER')")
+@PreAuthorize("hasRole('ROLE_USER')")
 public interface EntityService<T extends AbstractEntity> {
 	
 	T save(T entity) throws EntityExistsException, EntityInvalidException;

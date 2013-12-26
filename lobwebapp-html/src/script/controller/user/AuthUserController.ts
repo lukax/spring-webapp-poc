@@ -5,6 +5,7 @@ import enums = require("./../../util/EnumUtil");
 export module controller.user {
     export interface AuthUserViewModel extends d.controller.base.ViewModel {
         user: domain.User;
+        lock: boolean;
         login: () => void;
     }
 
@@ -12,35 +13,48 @@ export module controller.user {
 
         static $inject = ["$scope", "AuthService", "AlertService", "NavigationService"];
         constructor(public $scope: AuthUserViewModel,
-            public AuthService: d.service.contract.AuthService,
-            public AlertService: d.service.contract.AlertService,
-            public NavigationService: d.service.contract.NavigationService) {
-
-            this.processArgs();
+                    public AuthService: d.service.contract.AuthService,
+                    public AlertService: d.service.contract.AlertService,
+                    public NavigationService: d.service.contract.NavigationService) {
             this.populateScope();
+            this.processArgs();
         }
 
         login() {
+            this.lock();
             this.AuthService.login(this.$scope.user,
                 (successData) => {
                     this.NavigationService.navigateTo("/product/list");
                     this.AlertService.add({ title: "Login", content: "Bem vindo " + successData.name });
+                    this.unlock();
                 },
                 () => {
                     this.AlertService.add({ title: "Login", content: "Usuário ou senha inválido", type: enums.AlertType.WARNING });
+                    this.unlock();
                 });
         }
 
         logout() {
+            this.lock();
             this.AuthService.logout(
                 (successData) => {
                     this.AlertService.add({ title: "Logout", content: successData.name + " saiu" });
                     this.$scope.user = successData;
+                    this.unlock();
                 },
                 (errorData, errorStatus) => {
                     this.AlertService.add({ title: "Logout", content: String(errorData.message), type: enums.AlertType.WARNING });
+                    this.unlock();
                 });
         }
+        
+		lock(){
+			this.$scope.lock = true;
+		}
+
+		unlock(){
+			this.$scope.lock = false;
+		}
 
         processArgs() {
             var error = this.NavigationService.params().error;
@@ -48,9 +62,11 @@ export module controller.user {
             switch (error) {
                 case "0":
                     this.AlertService.add({ content: "Login ou senha Inválido", type: enums.AlertType.WARNING });
+                    this.AuthService.logout(()=>{}, ()=>{});
                     break;
                 case "1":
                     this.AlertService.add({ content: "Usuário não possui permissão para acessar esta página", type: enums.AlertType.WARNING });
+                    this.AuthService.logout(()=>{}, ()=>{});
                     break;
                 default:
                     if (this.AuthService.isLoggedIn()) {

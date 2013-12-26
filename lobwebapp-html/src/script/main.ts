@@ -30,7 +30,7 @@ require.config({
 	baseUrl: "script",
     shim: {
         "angular": {
-            deps: ["jquery", "underscore"],
+            deps: ["jquery", "bootstrap", "underscore"],
             exports: "angular"
         },
         "jqueryMaskedInput": ["jquery"],

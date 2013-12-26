@@ -2,6 +2,7 @@ package com.espindola.lobwebapp.controller.base;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import com.espindola.lobwebapp.controller.util.HeaderKey;
 import com.espindola.lobwebapp.domain.base.AbstractEntity;
@@ -65,22 +68,24 @@ public abstract class AbstractEntityController<T extends AbstractEntity> {
 	@RequestMapping(method = RequestMethod.POST)
 	@ResponseStatus(value = HttpStatus.CREATED)
 	@ResponseBody
-	public T save(@Validated @RequestBody T data) throws EntityExistsException, EntityInvalidException {
-		return service.save(data);
+	public void save(@Validated @RequestBody T data, UriComponentsBuilder cp, HttpServletRequest request, HttpServletResponse response) throws EntityExistsException, EntityInvalidException {
+		T entity = service.save(data);
+		UriComponents build = cp.path(request.getPathInfo() + "/{id}").buildAndExpand(entity.getId());
+		response.setHeader("Location", build.toUriString());;
 	}
 
 	@RequestMapping(value = "/{id:[\\d]+}", method = RequestMethod.PUT)
 	@ResponseStatus(value = HttpStatus.OK)
 	@ResponseBody
-	public T update(@Validated @RequestBody T data) throws EntityInvalidException, EntityNotFoundException {
-		return service.update(data);
+	public void update(@Validated @RequestBody T data) throws EntityInvalidException, EntityNotFoundException {
+		service.update(data);
 	}
 
 	@RequestMapping(value = "/{id:[\\d]+}", method = RequestMethod.DELETE)
 	@ResponseStatus(value = HttpStatus.OK)
 	@ResponseBody
-	public T remove(@PathVariable("id") Long id) throws EntityNotFoundException {
-		return service.remove(id);
+	public void remove(@PathVariable("id") Long id) throws EntityNotFoundException {
+		service.remove(id);
 	}
 	
 }
