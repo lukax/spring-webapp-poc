@@ -26,12 +26,13 @@ export module controller.base{
         saveEntity(entity: T) {
             this.lock();
             this.EntityService.save(entity,
-                (successData, successStatus) => {
-                    this.$scope.navigator.$location.url("/" + this.contextUrl + "/" + String(successData.id));
+                (successData, successStatus, successHeaders) => {
+                    this.$scope.navigator.$location.url((successHeaders("Location").split('http://lobwebapp.herokuapp.com'))[1]);
                 },
                 (errorData, errorStatus) => {
                     console.log(errorData);
                     this.AlertService.add({ title: "Erro", content: "item não pôde ser salvado", type: enums.AlertType.DANGER });
+                    this.unlock();
                 });
         }
 
@@ -44,6 +45,7 @@ export module controller.base{
                 (errorData, errorStatus) => {
                     console.log(errorData);
                     this.AlertService.add({ title: "Erro", content: "item não pôde ser atualizado", type: enums.AlertType.DANGER });
+                    this.unlock();
                 });
         }
 
@@ -56,6 +58,7 @@ export module controller.base{
                 (errorData, errorStatus) => {
                     console.log(errorData);
                     this.AlertService.add({ title: "Erro", content: "item não pôde ser removido", type: enums.AlertType.DANGER });
+                    this.unlock();
                 });
         }
 
@@ -68,8 +71,8 @@ export module controller.base{
                 },
                 (errorData, errorStatus) => {
                     console.log(errorData);
-                    this.newEntity();
                     this.AlertService.add({ title: "Erro", content: "item não pôde ser encontrado", type: enums.AlertType.DANGER });
+                    this.newEntity();
                 });
         }
 
@@ -79,10 +82,12 @@ export module controller.base{
 
 		lock(){
 			this.$scope.readMode = true;
+		    this.$scope.navigator.progress.start();
 		}
 
 		unlock(){
 			this.$scope.readMode = false;
+			this.$scope.navigator.progress.done();
 		}
 
 		isEntityNew() {

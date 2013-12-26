@@ -79,7 +79,7 @@ module.exports = function (grunt) {
                     https: false,
                     changeOrigin: false,
                     xforward: false,
-                    rewrite: {
+                    rewrite: {                        
                         '^/api': '/lobwebapp-core'
                     }
                 }

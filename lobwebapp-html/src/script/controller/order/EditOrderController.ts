@@ -90,13 +90,14 @@ export module controller.order {
                     this.$scope.customer = successData.customer;
                     this.unlock();
                 }, (errorData) => {
-                    this.AlertService.add({ content: "Pedido ID Inválido", type: enums.AlertType.WARNING });
+                    this.AlertService.add({ title: "Buscar Pedido", content: "Não foi possível achar um pedido com o ID informado", type: enums.AlertType.WARNING });
                     super.newEntity();
                 });
             
         }
 
         fetchCustomer(id: number) {
+            if(id <= 0) return;
             this.lock();
             this.CustomerService.find(id,
                 (successData: domain.Customer) => {
@@ -104,7 +105,7 @@ export module controller.order {
                     this.$scope.entity.customer = successData;
                     this.unlock();
                 }, (errorData: domain.util.Error) => {
-                    this.AlertService.add({ title: "Buscar Cliente", content: errorData.message, type: enums.AlertType.WARNING });
+                    this.AlertService.add({ title: "Buscar Cliente", content: "Não foi possível achar um cliente com o ID informado", type: enums.AlertType.WARNING });
                     this.emptyCustomer();
                     this.unlock();
                 });
@@ -112,13 +113,14 @@ export module controller.order {
         }
 
         fetchProduct(id: number) {
+            if(id <= 0) return;
             this.lock();
             this.ProductService.find(id,
                 (successData: domain.Product) => {
                     this.$scope.item.product = successData;
                     this.unlock();
                 }, (errorData: domain.util.Error) => {
-                    this.AlertService.add({ title: "Buscar Produto", content: errorData.message, type: enums.AlertType.WARNING });
+                    this.AlertService.add({ title: "Buscar Produto", content: "Não foi possível achar um produto com o ID informado", type: enums.AlertType.WARNING });
                     this.emptyItem();
                     this.unlock();
                 });
