@@ -105,7 +105,6 @@
     </div>
 
     <save-changes save-disabled="readMode ||
-                                 orderForm.customerId.$invalid ||
                                  orderForm.inputPayment.$invalid ||
                                  entity.products.length == 0" 
                   remove-disabled="isEntityNew || readMode" remove="removeOrder(entity)"></save-changes>

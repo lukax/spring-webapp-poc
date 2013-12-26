@@ -26,8 +26,8 @@ export module controller.base{
         saveEntity(entity: T) {
             this.lock();
             this.EntityService.save(entity,
-                (successData, successStatus) => {
-                    this.$scope.navigator.$location.url("/" + this.contextUrl + "/" + String(successData.id));
+                (successData, successStatus, successHeaders) => {
+                    this.$scope.navigator.$location.url((successHeaders("Location").split('http://lobwebapp.herokuapp.com'))[1]);
                 },
                 (errorData, errorStatus) => {
                     console.log(errorData);

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.espindola.lobwebapp.domain.Product;
 import com.espindola.lobwebapp.exception.EntityNotFoundException;
@@ -15,6 +16,7 @@ import com.espindola.lobwebapp.service.contract.ProductService;
 import com.espindola.lobwebapp.service.impl.base.AbstractEntityServiceImpl;
 
 @Service
+@Transactional
 public class ProductServiceImpl extends AbstractEntityServiceImpl<Product> implements ProductService {
 
 	private ProductRepository repository;

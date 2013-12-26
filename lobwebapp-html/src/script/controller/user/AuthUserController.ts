@@ -62,9 +62,11 @@ export module controller.user {
             switch (error) {
                 case "0":
                     this.AlertService.add({ content: "Login ou senha Inválido", type: enums.AlertType.WARNING });
+                    this.AuthService.logout(()=>{}, ()=>{});
                     break;
                 case "1":
                     this.AlertService.add({ content: "Usuário não possui permissão para acessar esta página", type: enums.AlertType.WARNING });
+                    this.AuthService.logout(()=>{}, ()=>{});
                     break;
                 default:
                     if (this.AuthService.isLoggedIn()) {

@@ -9,6 +9,7 @@ export module controller.product {
         categories: string[];
         saveChanges(product: domain.Product): void;
         removeProduct(product: domain.Product): void;
+        canSave: boolean;
     }
 
     export class EditProductController extends i0.controller.base.AbstractEditEntityController<domain.Product> {
@@ -57,7 +58,7 @@ export module controller.product {
 
         watchProduct() {
             this.$scope.$watch("entity.price + entity.costPrice", () => {
-                if (!this.$scope.isEntityNew && this.$scope.entity.costPrice != 0)
+                if (this.$scope.entity.costPrice != 0)
                     this.$scope.profitMargin = this.$scope.entity.price / this.$scope.entity.costPrice;
             });
             this.$scope.$watch("entity.category", (newValue: string, oldValue: string) => {
