@@ -25,9 +25,8 @@ import com.espindola.lobwebapp.controller.util.HeaderKey;
 import com.espindola.lobwebapp.domain.base.AbstractEntity;
 import com.espindola.lobwebapp.event.LobWebAppEventPublisher;
 import com.espindola.lobwebapp.event.PageReturnEvent;
-import com.espindola.lobwebapp.exception.EntityExistsException;
-import com.espindola.lobwebapp.exception.EntityInvalidException;
-import com.espindola.lobwebapp.exception.EntityNotFoundException;
+import com.espindola.lobwebapp.exception.invalidArgument.InvalidArgumentException;
+import com.espindola.lobwebapp.exception.notFound.NotFoundException;
 import com.espindola.lobwebapp.service.contract.base.EntityService;
 
 @Controller
@@ -45,7 +44,7 @@ public abstract class AbstractEntityController<T extends AbstractEntity> {
 	@RequestMapping(value = "/{id:[\\d]+}", method = RequestMethod.GET)
 	@ResponseStatus(value = HttpStatus.OK)
 	@ResponseBody
-	public T find(@PathVariable("id") Long id) throws EntityNotFoundException {
+	public T find(@PathVariable("id") Long id) throws NotFoundException {
 		return service.find(id);	
 	}
 
@@ -68,23 +67,24 @@ public abstract class AbstractEntityController<T extends AbstractEntity> {
 	@RequestMapping(method = RequestMethod.POST)
 	@ResponseStatus(value = HttpStatus.CREATED)
 	@ResponseBody
-	public void save(@Validated @RequestBody T data, UriComponentsBuilder cp, HttpServletRequest request, HttpServletResponse response) throws EntityExistsException, EntityInvalidException {
+	public void save(@Validated @RequestBody T data, UriComponentsBuilder cp, HttpServletRequest request, HttpServletResponse response) throws NotFoundException, InvalidArgumentException {
 		T entity = service.save(data);
 		UriComponents build = cp.path(request.getPathInfo() + "/{id}").buildAndExpand(entity.getId());
-		response.setHeader("Location", build.toUriString());;
+		response.setHeader("Location", build.toUriString());
+		response.setHeader("Entity-Id", entity.getId().toString());
 	}
 
 	@RequestMapping(value = "/{id:[\\d]+}", method = RequestMethod.PUT)
 	@ResponseStatus(value = HttpStatus.OK)
 	@ResponseBody
-	public void update(@Validated @RequestBody T data) throws EntityInvalidException, EntityNotFoundException {
+	public void update(@Validated @RequestBody T data) throws InvalidArgumentException, NotFoundException {
 		service.update(data);
 	}
 
 	@RequestMapping(value = "/{id:[\\d]+}", method = RequestMethod.DELETE)
 	@ResponseStatus(value = HttpStatus.OK)
 	@ResponseBody
-	public void remove(@PathVariable("id") Long id) throws EntityNotFoundException {
+	public void remove(@PathVariable("id") Long id) throws NotFoundException {
 		service.remove(id);
 	}
 	

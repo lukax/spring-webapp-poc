@@ -7,9 +7,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import com.espindola.lobwebapp.domain.base.AbstractEntity;
-import com.espindola.lobwebapp.exception.EntityExistsException;
-import com.espindola.lobwebapp.exception.EntityInvalidException;
-import com.espindola.lobwebapp.exception.EntityNotFoundException;
+import com.espindola.lobwebapp.exception.alreadyExists.AlreadyExistsException;
+import com.espindola.lobwebapp.exception.invalidArgument.InvalidArgumentException;
+import com.espindola.lobwebapp.exception.notFound.NotFoundException;
 import com.espindola.lobwebapp.repository.contract.base.EntityRepository;
 import com.espindola.lobwebapp.service.contract.base.EntityService;
 
@@ -24,29 +24,29 @@ public abstract class AbstractEntityServiceImpl<T extends AbstractEntity> implem
 	}
 
 	@Override
-	public T find(Long id) throws EntityNotFoundException {
+	public T find(Long id) throws NotFoundException {
 		throw_if_entity_not_exists(id);
 		return repository.findOne(id);
 	}
 
 	@Override
-	public T save(T entity) throws EntityExistsException, EntityInvalidException {
+	public T save(T entity) throws AlreadyExistsException, InvalidArgumentException {
 		throw_if_entity_is_null(entity);
 		throw_if_entity_exists(entity.getId());
 		if(entity.getId() != 0)
-			throw new EntityInvalidException("Default Id for saving is 0", entity);
+			throw new AlreadyExistsException();
 		return repository.save(entity);
 	}
 
 	@Override
-	public T update(T entity) throws EntityNotFoundException, EntityInvalidException {
+	public T update(T entity) throws NotFoundException, InvalidArgumentException {
 		throw_if_entity_is_null(entity);
 		throw_if_entity_not_exists(entity.getId());
 		return repository.save(entity);
 	}
 
 	@Override
-	public T remove(Long id) throws EntityNotFoundException {
+	public T remove(Long id) throws NotFoundException {
 		throw_if_entity_not_exists(id);
 		T retrievedEntity = find(id);
 		repository.delete(find(id));
@@ -54,13 +54,13 @@ public abstract class AbstractEntityServiceImpl<T extends AbstractEntity> implem
 	}
 
 	@Override
-	public Boolean exists(T entity) throws EntityInvalidException {
+	public Boolean exists(T entity) throws InvalidArgumentException {
 		try {
 			T retrievedEntity = find(entity.getId());		
 			if(retrievedEntity.equals(entity))
 				return true;
 			return false;
-		} catch (EntityNotFoundException e) {
+		} catch (NotFoundException e) {
 			return false;
 		}
 	}
@@ -75,20 +75,17 @@ public abstract class AbstractEntityServiceImpl<T extends AbstractEntity> implem
 		return repository.findAll(p);
 	}
 
-	protected void throw_if_entity_is_null(T entity) throws EntityInvalidException {
-		String message;
-		if (entity == null) message = "Entity object is null";
-		else if(entity.getId() == null) message = "Id field is null";
-		else return;
-		throw new EntityInvalidException(message);
+	protected void throw_if_entity_is_null(T entity) throws InvalidArgumentException {
+		if (entity == null || entity.getId() == null)
+		throw new InvalidArgumentException();
 	}
-	protected void throw_if_entity_exists(Long id) throws EntityExistsException {
+	protected void throw_if_entity_exists(Long id) throws AlreadyExistsException {
 		if (repository.exists(id))
-			throw new EntityExistsException("Entity exists in repository");
+			throw new AlreadyExistsException();
 	}
-	protected void throw_if_entity_not_exists(Long id) throws EntityNotFoundException {
+	protected void throw_if_entity_not_exists(Long id) throws NotFoundException {
 		if(!repository.exists(id))
-			throw new EntityNotFoundException("Entity not found in repository");
+			throw new NotFoundException();
 	}
 	
 }

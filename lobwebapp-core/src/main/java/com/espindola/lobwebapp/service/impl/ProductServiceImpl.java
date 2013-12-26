@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.espindola.lobwebapp.domain.Product;
-import com.espindola.lobwebapp.exception.EntityNotFoundException;
+import com.espindola.lobwebapp.exception.notFound.NotFoundException;
 import com.espindola.lobwebapp.repository.contract.ProductRepository;
 import com.espindola.lobwebapp.service.contract.ProductService;
 import com.espindola.lobwebapp.service.impl.base.AbstractEntityServiceImpl;
@@ -28,7 +28,7 @@ public class ProductServiceImpl extends AbstractEntityServiceImpl<Product> imple
 	}
 
 	@Override
-	public List<Product> findByName(String name) throws EntityNotFoundException {
+	public List<Product> findByName(String name) throws NotFoundException {
 		return this.repository.findByName(name);
 	}
 

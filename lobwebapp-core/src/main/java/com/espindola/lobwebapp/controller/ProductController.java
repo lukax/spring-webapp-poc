@@ -21,8 +21,8 @@ import com.espindola.lobwebapp.controller.util.HeaderKey;
 import com.espindola.lobwebapp.domain.Product;
 import com.espindola.lobwebapp.domain.Stock;
 import com.espindola.lobwebapp.event.PageReturnEvent;
-import com.espindola.lobwebapp.exception.EntityInvalidException;
-import com.espindola.lobwebapp.exception.EntityNotFoundException;
+import com.espindola.lobwebapp.exception.invalidArgument.InvalidArgumentException;
+import com.espindola.lobwebapp.exception.notFound.NotFoundException;
 import com.espindola.lobwebapp.service.contract.ProductService;
 
 @Controller
@@ -56,7 +56,7 @@ public class ProductController extends AbstractEntityController<Product> {
 	@RequestMapping(value = "/{productId:[\\d]+}/stock", method = RequestMethod.GET)
 	@ResponseStatus(value = HttpStatus.OK)
 	@ResponseBody
-	public List<Stock> getStock(@PathVariable("productId") Long productId) throws EntityInvalidException, EntityNotFoundException {
+	public List<Stock> getStock(@PathVariable("productId") Long productId) throws InvalidArgumentException, NotFoundException {
 		return super.find(productId).getStocks();
 	}
 }
