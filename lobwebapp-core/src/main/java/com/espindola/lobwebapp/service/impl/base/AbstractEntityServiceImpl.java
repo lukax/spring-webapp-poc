@@ -25,44 +25,30 @@ public abstract class AbstractEntityServiceImpl<T extends AbstractEntity> implem
 
 	@Override
 	public T find(Long id) throws NotFoundException {
-		throw_if_entity_not_exists(id);
+		throwIfNotFound(id);
 		return repository.findOne(id);
 	}
 
 	@Override
 	public T save(T entity) throws AlreadyExistsException, InvalidArgumentException {
-		throw_if_entity_is_null(entity);
-		throw_if_entity_exists(entity.getId());
-		if(entity.getId() != 0)
-			throw new AlreadyExistsException();
+		throwIfInvalid(entity);
+		throwIfAlreadyExists(entity);
 		return repository.save(entity);
 	}
 
 	@Override
 	public T update(T entity) throws NotFoundException, InvalidArgumentException {
-		throw_if_entity_is_null(entity);
-		throw_if_entity_not_exists(entity.getId());
+		throwIfInvalid(entity);
+		throwIfNotFound(entity.getId());
 		return repository.save(entity);
 	}
 
 	@Override
 	public T remove(Long id) throws NotFoundException {
-		throw_if_entity_not_exists(id);
-		T retrievedEntity = find(id);
-		repository.delete(find(id));
-		return retrievedEntity;
-	}
-
-	@Override
-	public Boolean exists(T entity) throws InvalidArgumentException {
-		try {
-			T retrievedEntity = find(entity.getId());		
-			if(retrievedEntity.equals(entity))
-				return true;
-			return false;
-		} catch (NotFoundException e) {
-			return false;
-		}
+		throwIfNotFound(id);
+		T entity = repository.findOne(id);
+		repository.delete(id);
+		return entity;
 	}
 
 	@Override
@@ -74,18 +60,9 @@ public abstract class AbstractEntityServiceImpl<T extends AbstractEntity> implem
 	public Page<T> findAll(Pageable p) {
 		return repository.findAll(p);
 	}
-
-	protected void throw_if_entity_is_null(T entity) throws InvalidArgumentException {
-		if (entity == null || entity.getId() == null)
-		throw new InvalidArgumentException();
-	}
-	protected void throw_if_entity_exists(Long id) throws AlreadyExistsException {
-		if (repository.exists(id))
-			throw new AlreadyExistsException();
-	}
-	protected void throw_if_entity_not_exists(Long id) throws NotFoundException {
-		if(!repository.exists(id))
-			throw new NotFoundException();
-	}
+	
+	protected abstract void throwIfAlreadyExists(T entity) throws AlreadyExistsException;
+	protected abstract void throwIfInvalid(T entity) throws InvalidArgumentException;
+	protected abstract void throwIfNotFound(Long id) throws NotFoundException;
 	
 }

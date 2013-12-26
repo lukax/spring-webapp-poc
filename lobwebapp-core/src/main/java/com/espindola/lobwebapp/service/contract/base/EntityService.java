@@ -17,7 +17,6 @@ public interface EntityService<T extends AbstractEntity> {
 	T update(T entity) throws NotFoundException, InvalidArgumentException;
 	T remove(Long id) throws NotFoundException;
 	T find(Long id) throws NotFoundException;
-	Boolean exists(T entity) throws NotFoundException;
 	List<T> findAll();
 	Page<T> findAll(Pageable p);
 }

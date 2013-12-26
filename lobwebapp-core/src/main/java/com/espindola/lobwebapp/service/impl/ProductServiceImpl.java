@@ -10,7 +10,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.espindola.lobwebapp.domain.Product;
+import com.espindola.lobwebapp.exception.alreadyExists.AlreadyExistsException;
+import com.espindola.lobwebapp.exception.alreadyExists.ProductExistsException;
+import com.espindola.lobwebapp.exception.invalidArgument.InvalidArgumentException;
 import com.espindola.lobwebapp.exception.notFound.NotFoundException;
+import com.espindola.lobwebapp.exception.notFound.ProductNotFoundException;
 import com.espindola.lobwebapp.repository.contract.ProductRepository;
 import com.espindola.lobwebapp.service.contract.ProductService;
 import com.espindola.lobwebapp.service.impl.base.AbstractEntityServiceImpl;
@@ -29,18 +33,18 @@ public class ProductServiceImpl extends AbstractEntityServiceImpl<Product> imple
 
 	@Override
 	public List<Product> findByName(String name) throws NotFoundException {
-		return this.repository.findByName(name);
+		return repository.findByName(name);
 	}
 
 	@Override
 	public List<String> findAllCategory() {
-		return this.repository.findAllCategory();
+		return repository.findAllCategory();
 	}
 	
 	@Override
 	public List<String> findCategoryByName(String name) {
 		String compareName = name.toLowerCase();
-		List<String> current = this.repository.findAllCategory();
+		List<String> current = repository.findAllCategory();
 		List<String> filtered = new ArrayList<String>();
 		for(String x : current){
 			if(x != null && x.toLowerCase().contains(compareName)){
@@ -52,7 +56,25 @@ public class ProductServiceImpl extends AbstractEntityServiceImpl<Product> imple
 	
 	@Override
 	public Page<Product> findByNameLike(String name, Pageable pageable) {
-		return this.repository.findByNameLike(name, pageable);
+		return repository.findByNameLike(name, pageable);
+	}
+
+
+	@Override
+	protected void throwIfInvalid(Product entity) throws InvalidArgumentException {
+		//TODO: Business logic
+	}
+	
+	@Override
+	protected void throwIfAlreadyExists(Product entity) throws AlreadyExistsException {
+		if(repository.exists(entity.getId()))
+			throw new ProductExistsException(entity);
+	}
+
+	@Override
+	protected void throwIfNotFound(Long id) throws NotFoundException {
+		if(!repository.exists(id))
+			throw new ProductNotFoundException(id);
 	}
 	
 }

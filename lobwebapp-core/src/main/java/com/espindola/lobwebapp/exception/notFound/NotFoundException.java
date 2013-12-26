@@ -8,6 +8,11 @@ public class NotFoundException extends LobWebAppException {
 	private static final long serialVersionUID = 1L;
 
 	public NotFoundException() {
-		super(MessageKey.NOTFOUND_EXCEPTION, new Object[] {});
+		super(MessageKey.NOTFOUND_EXCEPTION, new String[] {});
 	}
+
+	protected NotFoundException(MessageKey messageKey, String[] messageArgs){
+			super(messageKey, messageArgs);
+	}
+	
 }

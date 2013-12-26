@@ -7,6 +7,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.espindola.lobwebapp.domain.Stock;
+import com.espindola.lobwebapp.exception.alreadyExists.AlreadyExistsException;
+import com.espindola.lobwebapp.exception.alreadyExists.StockExistsException;
+import com.espindola.lobwebapp.exception.invalidArgument.InvalidArgumentException;
+import com.espindola.lobwebapp.exception.notFound.NotFoundException;
+import com.espindola.lobwebapp.exception.notFound.StockNotFoundException;
 import com.espindola.lobwebapp.repository.contract.StockRepository;
 import com.espindola.lobwebapp.service.contract.StockService;
 import com.espindola.lobwebapp.service.impl.base.AbstractEntityServiceImpl;
@@ -26,5 +31,22 @@ public class StockServiceImpl extends AbstractEntityServiceImpl<Stock> implement
 	@Override
 	public List<Stock> findByProductId(Long productId) {
 		return this.repository.findByProductId(productId);
+	}
+	
+	@Override
+	protected void throwIfInvalid(Stock entity) throws InvalidArgumentException {
+		//TODO: Business logic
+	}
+	
+	@Override
+	protected void throwIfAlreadyExists(Stock entity) throws AlreadyExistsException {
+		if(repository.exists(entity.getId()))
+			throw new StockExistsException(entity);
+	}
+
+	@Override
+	protected void throwIfNotFound(Long id) throws NotFoundException {
+		if(!repository.exists(id))
+			throw new StockNotFoundException(id);
 	}
 }

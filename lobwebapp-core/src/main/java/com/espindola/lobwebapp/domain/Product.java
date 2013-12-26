@@ -113,4 +113,12 @@ public class Product extends AbstractEntity {
 		this.stocks = stocks;
 	}
 
+	@Override
+	public String toString() {
+		return "[" + 
+				getId() + ", " + 
+				getName() + ", " + 
+				getPrice() + 
+				"]";
+	}
 }
