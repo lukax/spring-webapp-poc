@@ -15,7 +15,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
 
 import com.espindola.lobwebapp.domain.base.AbstractEntity;
 
@@ -23,12 +22,10 @@ import com.espindola.lobwebapp.domain.base.AbstractEntity;
 @Table(name = "TB_ORDER")
 public class Order extends AbstractEntity {
 
-	@NotNull
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "CUSTOMER_ID")
 	private Customer customer;	
 	
-	@NotNull
 	@ElementCollection(fetch= FetchType.EAGER)
 	@CollectionTable(
 	        name="TB_ORDER_ITEM",
@@ -36,11 +33,9 @@ public class Order extends AbstractEntity {
 	  )
 	private Set<OrderItem> items = new HashSet<OrderItem>();
 
-	@NotNull
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date date;
 	
-	@NotNull
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "PAYMENT_ID")
 	private Payment payment;

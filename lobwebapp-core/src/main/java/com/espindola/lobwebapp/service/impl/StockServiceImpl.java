@@ -36,6 +36,7 @@ public class StockServiceImpl extends AbstractEntityServiceImpl<Stock> implement
 	@Override
 	protected void throwIfInvalid(Stock entity) throws InvalidArgumentException {
 		//TODO: Business logic
+		//TODO: Check if stock.product exists
 	}
 	
 	@Override

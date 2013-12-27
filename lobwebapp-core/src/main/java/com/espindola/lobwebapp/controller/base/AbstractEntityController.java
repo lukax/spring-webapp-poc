@@ -12,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -27,9 +29,9 @@ import com.espindola.lobwebapp.domain.base.AbstractEntity;
 import com.espindola.lobwebapp.event.LobWebAppEventPublisher;
 import com.espindola.lobwebapp.event.PageReturnEvent;
 import com.espindola.lobwebapp.exception.invalidArgument.InvalidArgumentException;
-import com.espindola.lobwebapp.exception.invalidArgument.ProductInvalidException;
 import com.espindola.lobwebapp.exception.notFound.NotFoundException;
 import com.espindola.lobwebapp.service.contract.base.EntityService;
+import com.espindola.lobwebapp.validation.base.AbstractEntityValidator;
 
 @Controller
 public abstract class AbstractEntityController<T extends AbstractEntity> {
@@ -37,10 +39,17 @@ public abstract class AbstractEntityController<T extends AbstractEntity> {
 	@Autowired
 	protected LobWebAppEventPublisher eventPublisher;
 	private EntityService<T> service;
+	private AbstractEntityValidator<T> validator;
 
 	@Autowired
-	public AbstractEntityController(EntityService<T> service) {
+	public AbstractEntityController(EntityService<T> service, AbstractEntityValidator<T> validator) {
 		this.service = service;
+		this.validator = validator;
+	}
+	
+	@InitBinder
+	protected void initBinder(WebDataBinder dataBinder){
+		dataBinder.setValidator(validator);
 	}
 
 	@RequestMapping(value = "/{id:[\\d]+}", method = RequestMethod.GET)
@@ -70,8 +79,7 @@ public abstract class AbstractEntityController<T extends AbstractEntity> {
 	@ResponseStatus(value = HttpStatus.CREATED)
 	@ResponseBody
 	public void save(@Validated @RequestBody T data, BindingResult bindingResult, UriComponentsBuilder cp, HttpServletRequest request, HttpServletResponse response) throws NotFoundException, InvalidArgumentException {
-		if(bindingResult.hasErrors())
-			throw new ProductInvalidException(bindingResult.getAllErrors());
+		validationResult(bindingResult);
 		
 		T entity = service.save(data);
 		UriComponents build = cp.path(request.getPathInfo() + "/{id}").buildAndExpand(entity.getId());
@@ -82,7 +90,9 @@ public abstract class AbstractEntityController<T extends AbstractEntity> {
 	@RequestMapping(value = "/{id:[\\d]+}", method = RequestMethod.PUT)
 	@ResponseStatus(value = HttpStatus.OK)
 	@ResponseBody
-	public void update(@Validated @RequestBody T data) throws InvalidArgumentException, NotFoundException {
+	public void update(@Validated @RequestBody T data, BindingResult bindingResult) throws InvalidArgumentException, NotFoundException {
+		validationResult(bindingResult);
+
 		service.update(data);
 	}
 
@@ -93,4 +103,5 @@ public abstract class AbstractEntityController<T extends AbstractEntity> {
 		service.remove(id);
 	}
 	
+	protected abstract void validationResult(BindingResult bindingResult) throws InvalidArgumentException;
 }

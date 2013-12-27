@@ -5,51 +5,61 @@ import java.util.regex.Pattern;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
-import org.springframework.validation.Validator;
 
 import com.espindola.lobwebapp.domain.Product;
 import com.espindola.lobwebapp.l10n.MessageKey;
+import com.espindola.lobwebapp.validation.base.AbstractEntityValidator;
 
 @Component
-public class ProductValidator implements Validator {
-
+public class ProductValidator extends AbstractEntityValidator<Product> {
+	
 	@Override
-	public boolean supports(Class<?> clazz) {
-		return Product.class.isAssignableFrom(clazz);
+	protected void validateEntity(Product t, Errors e) {
+		
+		validateName(t, e);
+		
+		validateCostPrice(t, e);
+		
+		validatePrice(t, e);
+		
+		validateCategory(t, e);
+		
+		validateNcm(t, e);
+		
 	}
 
-	@Override
-	public void validate(Object target, Errors errors) {
-		Product t = (Product)target;
-		String defaultMessage = "message not found";
+	private void validateNcm(Product t, Errors e) {
+		if(t.getNcm() != null && t.getNcm() != "" && !verifyNcm(t.getNcm()))
+			e.rejectValue("ncm", MessageKey.PRODUCTNCMINVALID_VALIDATION.getMessageKey());
+	}
 
-		if(t.getId() == null || t.getId() < 0)
-			errors.rejectValue("id", 
-					MessageKey.PRODUCTIDINVALID_VALIDATION.getMessageKey(), 
-					new Object[] { t.getId() }, defaultMessage);
-		
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", MessageKey.PRODUCTNAMEINVALID_VALIDATION.getMessageKey(), new Object[] { 3, 100 });
-		if(t.getName().length() < 5 || t.getName().length() > 100)
-			errors.rejectValue("name", 
-					MessageKey.PRODUCTNAMEINVALID_VALIDATION.getMessageKey(), 
-					new Object[] { 5, 100 }, defaultMessage);
-		
-		if(t.getCostPrice() != null && t.getCostPrice() < 0)
-			errors.rejectValue("costPrice", MessageKey.PRODUCTCOSTPRICEINVALID_VALIDATION.getMessageKey());
-		
-		if(t.getPrice() == null || t.getPrice() <= 0)
-			errors.rejectValue("price", MessageKey.PRODUCTPRICEINVALID_VALIDATION.getMessageKey());
-		
+	private void validateCategory(Product t, Errors e) {
 		if(t.getCategory() != null && t.getCategory() != "" && (t.getCategory().length() < 5 || t.getCategory().length() > 20))
-			errors.rejectValue("category", 
+			e.rejectValue("category", 
 					MessageKey.PRODUCTCATEGORYINVALID_VALIDATION.getMessageKey(),
 					new Object[] {5, 20}, defaultMessage);
-		
-		if(t.getNcm() != null && t.getNcm() != "" && !verifyNcm(t.getNcm()))
-			errors.rejectValue("ncm", MessageKey.PRODUCTNCMINVALID_VALIDATION.getMessageKey());
+	}
+
+	private void validatePrice(Product t, Errors e) {
+		if(t.getPrice() == null || t.getPrice() <= 0)
+			e.rejectValue("price", MessageKey.PRODUCTPRICEINVALID_VALIDATION.getMessageKey());
+	}
+
+	private void validateCostPrice(Product t, Errors e) {
+		if(t.getCostPrice() != null && t.getCostPrice() < 0)
+			e.rejectValue("costPrice", MessageKey.PRODUCTCOSTPRICEINVALID_VALIDATION.getMessageKey());
+	}
+
+	private void validateName(Product t, Errors e) {
+		ValidationUtils.rejectIfEmptyOrWhitespace(e, "name", MessageKey.PRODUCTNAMEINVALID_VALIDATION.getMessageKey(), new Object[] { 3, 100 });
+		if(t.getName() == null || t.getName().length() < 5 || t.getName().length() > 100)
+			e.rejectValue("name", 
+					MessageKey.PRODUCTNAMEINVALID_VALIDATION.getMessageKey(), 
+					new Object[] { 5, 100 }, defaultMessage);
 	}
 	
 	private boolean verifyNcm(String ncm){
 		return Pattern.compile("^\\d\\d\\d\\d.\\d\\d.\\d\\d$").matcher(ncm).matches();
 	}
+
 }
