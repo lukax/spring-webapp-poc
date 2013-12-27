@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,6 +27,7 @@ import com.espindola.lobwebapp.domain.base.AbstractEntity;
 import com.espindola.lobwebapp.event.LobWebAppEventPublisher;
 import com.espindola.lobwebapp.event.PageReturnEvent;
 import com.espindola.lobwebapp.exception.invalidArgument.InvalidArgumentException;
+import com.espindola.lobwebapp.exception.invalidArgument.ProductInvalidException;
 import com.espindola.lobwebapp.exception.notFound.NotFoundException;
 import com.espindola.lobwebapp.service.contract.base.EntityService;
 
@@ -67,7 +69,10 @@ public abstract class AbstractEntityController<T extends AbstractEntity> {
 	@RequestMapping(method = RequestMethod.POST)
 	@ResponseStatus(value = HttpStatus.CREATED)
 	@ResponseBody
-	public void save(@Validated @RequestBody T data, UriComponentsBuilder cp, HttpServletRequest request, HttpServletResponse response) throws NotFoundException, InvalidArgumentException {
+	public void save(@Validated @RequestBody T data, BindingResult bindingResult, UriComponentsBuilder cp, HttpServletRequest request, HttpServletResponse response) throws NotFoundException, InvalidArgumentException {
+		if(bindingResult.hasErrors())
+			throw new ProductInvalidException(bindingResult.getAllErrors());
+		
 		T entity = service.save(data);
 		UriComponents build = cp.path(request.getPathInfo() + "/{id}").buildAndExpand(entity.getId());
 		response.setHeader("Location", build.toUriString());

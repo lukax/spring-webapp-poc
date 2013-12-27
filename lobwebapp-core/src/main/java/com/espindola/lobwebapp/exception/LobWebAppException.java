@@ -14,14 +14,14 @@ public class LobWebAppException extends RuntimeException {
 	private Object[] messageArgs;
 	
 	public LobWebAppException() {
-		this(MessageKey.LOBWEBAPP_EXCEPTION, new String[] {});
+		this(MessageKey.LOBWEBAPP_EXCEPTION, new Object[] {});
 	}
 	
 	public LobWebAppException(String message){
 		super(message);
 	}
 	
-	protected LobWebAppException(MessageKey messageKey, String[] messageArgs){
+	protected LobWebAppException(MessageKey messageKey, Object[] messageArgs){
 		this.messageKey = messageKey;
 		this.messageArgs = messageArgs;
 	}

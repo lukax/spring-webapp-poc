@@ -67,7 +67,8 @@ public class ProductServiceImpl extends AbstractEntityServiceImpl<Product> imple
 	
 	@Override
 	protected void throwIfAlreadyExists(Product entity) throws AlreadyExistsException {
-		if(repository.exists(entity.getId()))
+		if(repository.exists(entity.getId()) || 
+		  !repository.findByName(entity.getName()).isEmpty())
 			throw new ProductExistsException(entity);
 	}
 

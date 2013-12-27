@@ -1,5 +1,9 @@
 package com.espindola.lobwebapp.exception.invalidArgument;
 
+import java.util.List;
+
+import org.springframework.validation.ObjectError;
+
 import com.espindola.lobwebapp.exception.LobWebAppException;
 import com.espindola.lobwebapp.l10n.MessageKey;
 
@@ -8,10 +12,14 @@ public class InvalidArgumentException extends LobWebAppException {
 	private static final long serialVersionUID = 1L;
 
 	public InvalidArgumentException(){
-		super(MessageKey.INVALIDARGUMENT_EXCEPTION, new String[] {} );
+		super(MessageKey.INVALIDARGUMENT_EXCEPTION, new Object[] {} );
 	}
 	
-	protected InvalidArgumentException(MessageKey messageKey, String[] messageArgs){
+	protected InvalidArgumentException(MessageKey messageKey, Object[] messageArgs){
 		super(messageKey, messageArgs);
+	}
+
+	protected InvalidArgumentException(MessageKey messageKey, List<ObjectError> allErrors) {
+		super(messageKey, allErrors.toArray());
 	}
 }

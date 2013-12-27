@@ -24,7 +24,18 @@ public enum MessageKey {
 	
 	USERALREADYEXITS_EXCEPTION("com.espindola.lobwebapp.exception.useralreadyexistsexception"),
 	USERINVALID_EXCEPTION("com.espindola.lobwebapp.exception.userinvalidexception"),
-	USERNOTFOUND_EXCEPTION("com.espindola.lobwebapp.exception.usernotfoundexception"),
+	USERNOTFOUND_EXCEPTION("com.espindola.lobwebapp.exception.usernotfoundexception"), 
+	
+	//VALIDATION
+	
+	PRODUCTINVALID_VALIDATION("com.espindola.lobwebapp.validation.productinvalid"),
+	PRODUCTIDINVALID_VALIDATION("com.espindola.lobwebapp.validation.productidinvalid"),
+	PRODUCTNAMEINVALID_VALIDATION("com.espindola.lobwebapp.validation.productnameinvalid"),
+	PRODUCTDESCRIPTIONINVALID_VALIDATION("com.espindola.lobwebapp.validation.productdescriptioninvalid"),
+	PRODUCTCOSTPRICEINVALID_VALIDATION("com.espindola.lobwebapp.validation.productcostpriceinvalid"),
+	PRODUCTPRICEINVALID_VALIDATION("com.espindola.lobwebapp.validation.productpriceinvalid"),
+	PRODUCTCATEGORYINVALID_VALIDATION("com.espindola.lobwebapp.validation.productcategoryinvalid"),
+	PRODUCTNCMINVALID_VALIDATION("com.espindola.lobwebapp.validation.productncminvalid"),
 	
 	;
 	
