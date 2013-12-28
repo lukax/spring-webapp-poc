@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,27 +22,29 @@ import com.espindola.lobwebapp.controller.util.HeaderKey;
 import com.espindola.lobwebapp.domain.Product;
 import com.espindola.lobwebapp.domain.Stock;
 import com.espindola.lobwebapp.event.PageReturnEvent;
-import com.espindola.lobwebapp.exception.EntityInvalidException;
-import com.espindola.lobwebapp.exception.EntityNotFoundException;
-import com.espindola.lobwebapp.service.contract.ProductService;
+import com.espindola.lobwebapp.exception.invalidArgument.InvalidArgumentException;
+import com.espindola.lobwebapp.exception.invalidArgument.ProductInvalidException;
+import com.espindola.lobwebapp.exception.notFound.NotFoundException;
+import com.espindola.lobwebapp.facade.ProductFacade;
+import com.espindola.lobwebapp.validation.ProductValidator;
 
 @Controller
 @RequestMapping(value="/product")
 public class ProductController extends AbstractEntityController<Product> {
 	
-	private ProductService productService;
+	private ProductFacade facade;
 	
 	@Autowired
-	public ProductController(ProductService service) {
-		super(service);
-		this.productService = service;
+	public ProductController(ProductFacade facade, ProductValidator validator) {
+		super(facade, validator);
+		this.facade = facade;
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, headers = {HeaderKey.PRODUCT_NAME})
 	@ResponseStatus(value = HttpStatus.OK)
 	@ResponseBody
 	public List<Product> findByNameLike(HttpServletResponse response, @RequestHeader(HeaderKey.PRODUCT_NAME) String productName, @RequestHeader(HeaderKey.PAGE_INDEX) Integer pageIndex, @RequestHeader(HeaderKey.PAGE_SIZE) Integer pageSize) {
-		Page<Product> products = this.productService.findByNameLike(productName, new PageRequest(pageIndex, pageSize));
+		Page<Product> products = this.facade.findByNameLike(productName, new PageRequest(pageIndex, pageSize));
 		super.eventPublisher.publishEvent(new PageReturnEvent(products, response));
 		return products.getContent();
 	}
@@ -50,13 +53,19 @@ public class ProductController extends AbstractEntityController<Product> {
 	@ResponseStatus(value = HttpStatus.OK)
 	@ResponseBody
 	public List<String> findAllCategory(){
-		return this.productService.findAllCategory();
+		return this.facade.findAllCategory();
 	}
 	
 	@RequestMapping(value = "/{productId:[\\d]+}/stock", method = RequestMethod.GET)
 	@ResponseStatus(value = HttpStatus.OK)
 	@ResponseBody
-	public List<Stock> getStock(@PathVariable("productId") Long productId) throws EntityInvalidException, EntityNotFoundException {
+	public List<Stock> getStock(@PathVariable("productId") Long productId) throws InvalidArgumentException, NotFoundException {
 		return super.find(productId).getStocks();
+	}
+
+	@Override
+	protected void validationResult(BindingResult bindingResult) throws InvalidArgumentException {
+		if(bindingResult.hasErrors())
+			throw new ProductInvalidException(bindingResult.getAllErrors());
 	}
 }

@@ -10,8 +10,6 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 import com.espindola.lobwebapp.domain.base.Person;
 
@@ -21,12 +19,8 @@ import com.espindola.lobwebapp.domain.base.Person;
 })
 public class User extends Person {
 
-	@NotNull
-	@Size(min = 4)
 	private String username;
 
-	@NotNull
-	@Size(min = 4)
 	private String password;
 
 	@ElementCollection(fetch = FetchType.EAGER)

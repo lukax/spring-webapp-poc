@@ -4,8 +4,6 @@ import javax.persistence.Embeddable;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
 
 @Embeddable
 public class OrderItem {
@@ -14,8 +12,6 @@ public class OrderItem {
 	@JoinColumn(name = "PRODUCT_ID")
 	private Product product;
 	
-	@NotNull
-	@Min(0)
 	private Integer quantity;
 	
 	public Product getProduct() {

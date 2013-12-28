@@ -5,8 +5,6 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
 
 import com.espindola.lobwebapp.domain.base.AbstractEntity;
 
@@ -18,17 +16,12 @@ public class Stock extends AbstractEntity {
 	@JoinColumn(name = "PRODUCT_ID")
 	private Product product;
 	
-	@NotNull
-	@Min(0)
 	private Integer quantity;
 	
-	@Min(0)
 	private Integer minQuantity;
 	
-	@Min(0)
 	private Integer maxQuantity;
 
-	@NotNull
 	private String unit;
 
 

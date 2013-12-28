@@ -1,19 +1,17 @@
-package com.espindola.lobwebapp.controller.util;
+package com.espindola.lobwebapp.exception.util;
 
-
-public class ResponseError{
+public class ErrorResponse {
 	private String message;
 	
-	public ResponseError(String message) {
+	public ErrorResponse(String message){
 		this.message = message;
 	}
-	
+
 	public String getMessage() {
 		return message;
 	}
-	
+
 	public void setMessage(String message) {
 		this.message = message;
 	}
-
 }

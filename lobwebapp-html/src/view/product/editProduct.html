@@ -17,7 +17,7 @@
                 <label for="inputName" class="col-md-1 control-label">Nome</label>
                 <div class="col-md-11">
                     <input type="text" class="form-control" id="inputName" name="inputName" placeholder="Digite o nome do Produto"
-                           autofocus ng-model="entity.name" required ng-minlength="3">
+                           autofocus ng-model="entity.name" required ng-minlength="5" ng-maxlength="100">
                 </div>
             </div>
             <div class="form-group">
@@ -43,7 +43,7 @@
                         <label for="inputCostPrice" class="col-md-3 control-label">Custo</label>
                         <div class="col-md-9 input-group">
                             <span class="input-group-addon">R$</span>
-                            <input type="text" class="form-control" id="inputCostPrice" name="inputCostPrice" ng-model="entity.costPrice" ng-pattern="/^(?=.*[1-9])\d*(?:\.\d{1,2})?$/">
+                            <input type="text" class="form-control" id="inputCostPrice" name="inputCostPrice" ng-model="entity.costPrice" ng-pattern="/^(?=.*[0-9])\d*(?:\.\d{1,2})?$/">
                         </div>
                     </div>
                 </div>
@@ -70,7 +70,8 @@
                     <label for="inputCategory" class="col-md-1 control-label">Grupo</label>
                     <div class="col-md-6">
                         <input type="text" class="form-control" id="inputCategory" name="inputCategory"
-                               ng-model="entity.category" data-typeahead="category for category in categories | limitTo:5">
+                               ng-model="entity.category" data-typeahead="category for category in categories | limitTo:5"
+                               ng-minlength="5" ng-maxlength="20">
                     </div>
                 </div>
             </div>
@@ -84,11 +85,13 @@
             <save-changes save-disabled="readMode ||
                                      productForm.inputName.$invalid ||
                                      productForm.inputPrice.$invalid ||
+                                     productForm.inputCostPrice.$invalid ||
                                      productForm.inputNcm.$invalid ||
                                      productForm.inputCategory.$invalid ||
                                      productForm.inputDescription.$invalid ||
                                      productForm.inputName.$pristine &&
                                      productForm.inputPrice.$pristine &&
+                                     productForm.inputCostPrice.$pristine &&
                                      productForm.inputNcm.$pristine &&
                                      productForm.inputCategory.$pristine &&
                                      productForm.inputDescription.$pristine" 

@@ -2,8 +2,6 @@ package com.espindola.lobwebapp.domain;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
 
 import com.espindola.lobwebapp.domain.base.AbstractEntity;
 
@@ -11,14 +9,10 @@ import com.espindola.lobwebapp.domain.base.AbstractEntity;
 @Table(name = "TB_PAYMENT")
 public class Payment extends AbstractEntity {
 	
-	@NotNull
-	@Min(0)
 	private Double quantity;
 	
-	@NotNull
 	private PaymentStatus status;
 	
-	@NotNull
 	private PaymentMode mode;
 
 	public Double getQuantity() {

@@ -11,9 +11,6 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 
@@ -25,17 +22,12 @@ import com.espindola.lobwebapp.domain.base.AbstractEntity;
 	})
 public class Product extends AbstractEntity {
 
-	@NotNull
-	@Size(min = 3)
 	private String name;
 
 	private String description;
 	
-	@Min(0)
 	private Double costPrice;
 
-	@NotNull
-	@Min(0)
 	private Double price;
 
 	private String category;
@@ -113,4 +105,11 @@ public class Product extends AbstractEntity {
 		this.stocks = stocks;
 	}
 
+	@Override
+	public String toString() {
+		return "[" + 
+				getId() + ", " + 
+				getName() + 
+				"]";
+	}
 }
