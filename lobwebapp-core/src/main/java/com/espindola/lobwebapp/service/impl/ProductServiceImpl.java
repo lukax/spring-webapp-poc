@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.espindola.lobwebapp.domain.Product;
 import com.espindola.lobwebapp.exception.alreadyExists.AlreadyExistsException;
@@ -20,7 +19,6 @@ import com.espindola.lobwebapp.service.contract.ProductService;
 import com.espindola.lobwebapp.service.impl.base.AbstractEntityServiceImpl;
 
 @Service
-@Transactional
 public class ProductServiceImpl extends AbstractEntityServiceImpl<Product> implements ProductService {
 
 	private ProductRepository repository;
@@ -32,7 +30,7 @@ public class ProductServiceImpl extends AbstractEntityServiceImpl<Product> imple
 	}
 
 	@Override
-	public List<Product> findByName(String name) throws NotFoundException {
+	public Product findByName(String name) throws NotFoundException {
 		return repository.findByName(name);
 	}
 
@@ -67,9 +65,13 @@ public class ProductServiceImpl extends AbstractEntityServiceImpl<Product> imple
 	
 	@Override
 	protected void throwIfAlreadyExists(Product entity) throws AlreadyExistsException {
-		if(repository.exists(entity.getId()) || 
-		  !repository.findByName(entity.getName()).isEmpty())
-			throw new ProductExistsException(entity);
+		Product p = repository.findOne(entity.getId());
+		if(p != null)
+			throw new ProductExistsException(p);
+		
+		Product q = repository.findByName(entity.getName());
+		if(q != null)
+			throw new ProductExistsException(q);
 	}
 
 	@Override

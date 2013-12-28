@@ -19,7 +19,7 @@ public abstract class AbstractEntityValidator<T extends AbstractEntity> implemen
 	@Override
 	public void validate(Object target, Errors errors) {
 		if(target == null){
-			errors.reject(MessageKey.ENTITYINVALID_VALIDATION.getMessageKey());
+			errors.reject(MessageKey.ENTITYINVALID_VALIDATION.getKey());
 			return;
 		}
 		T entity = (T)target;
@@ -32,7 +32,7 @@ public abstract class AbstractEntityValidator<T extends AbstractEntity> implemen
 	private void validateId(T entity, Errors errors) {
 		if(entity.getId() == null || entity.getId() < 0)
 			errors.rejectValue("id", 
-					MessageKey.ENTITYIDINVALID_VALIDATION.getMessageKey(), 
+					MessageKey.ENTITYIDINVALID_VALIDATION.getKey(), 
 					new Object[] { entity.getId() }, defaultMessage);
 	}
 	

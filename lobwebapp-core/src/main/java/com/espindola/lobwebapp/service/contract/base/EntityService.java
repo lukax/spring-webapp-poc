@@ -19,4 +19,5 @@ public interface EntityService<T extends AbstractEntity> {
 	T find(Long id) throws NotFoundException;
 	List<T> findAll();
 	Page<T> findAll(Pageable p);
+	boolean exists(Long id);
 }

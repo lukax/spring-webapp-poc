@@ -22,11 +22,27 @@ public class LobWebAppException extends RuntimeException {
 	}
 	
 	protected LobWebAppException(MessageKey messageKey, Object[] messageArgs){
-		this.messageKey = messageKey;
-		this.messageArgs = messageArgs;
+		this.setMessageKey(messageKey);
+		this.setMessageArgs(messageArgs);
 	}
 	
 	public ErrorResponse getErrorResponse(MessageSource messageSource, Locale locale){
-		return new ErrorResponse(messageSource.getMessage(this.messageKey.getMessageKey(), this.messageArgs, locale));
+		return new ErrorResponse(messageSource.getMessage(this.getMessageKey().getKey(), this.getMessageArgs(), locale));
+	}
+
+	public Object[] getMessageArgs() {
+		return messageArgs;
+	}
+
+	protected void setMessageArgs(Object[] messageArgs) {
+		this.messageArgs = messageArgs;
+	}
+
+	public MessageKey getMessageKey() {
+		return messageKey;
+	}
+
+	protected void setMessageKey(MessageKey messageKey) {
+		this.messageKey = messageKey;
 	}
 }

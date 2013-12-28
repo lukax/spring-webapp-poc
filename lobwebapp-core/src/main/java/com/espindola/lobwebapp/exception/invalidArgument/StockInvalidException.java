@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.validation.ObjectError;
 
+import com.espindola.lobwebapp.exception.util.EntityError;
 import com.espindola.lobwebapp.l10n.MessageKey;
 
 public class StockInvalidException extends InvalidArgumentException {
@@ -12,5 +13,9 @@ public class StockInvalidException extends InvalidArgumentException {
 
 	public StockInvalidException(List<ObjectError> list){
 		super(MessageKey.STOCKINVALID_EXCEPTION, list);
+	}
+	
+	public StockInvalidException(EntityError error){
+		super(MessageKey.STOCKINVALID_EXCEPTION, error);
 	}
 }

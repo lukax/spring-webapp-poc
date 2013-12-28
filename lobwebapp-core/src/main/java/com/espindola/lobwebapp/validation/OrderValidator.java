@@ -40,20 +40,20 @@ public class OrderValidator extends AbstractEntityValidator<Order> {
 
 	private void validateDate(Order t, Errors errors) {
 		if(t.getDate() == null)
-			errors.rejectValue("date", MessageKey.ORDERDATEINVALID_VALIDATION.getMessageKey(), defaultMessage);
+			errors.rejectValue("date", MessageKey.ORDERDATEINVALID_VALIDATION.getKey(), defaultMessage);
 	}
 	
 	private void validateCustomer(Customer customer, Errors errors){
 		//Check just the customer's ID since it's not cascading stuff
 		if(customer == null || customer.getId() == null || customer.getId() <= 0){
-			errors.rejectValue("product", MessageKey.ORDERCUSTOMERINVALID_VALIDATION.getMessageKey(), defaultMessage);
+			errors.rejectValue("product", MessageKey.ORDERCUSTOMERINVALID_VALIDATION.getKey(), defaultMessage);
 		}
 	}
 	
 	private void validateProduct(Product product, Errors errors){
 		//Check just the product's ID since it's not cascading stuff
 		if(product == null || product.getId() == null || product.getId() <= 0){
-			errors.rejectValue("product", MessageKey.ORDERITEMSINVALID_VALIDATION.getMessageKey(), defaultMessage);
+			errors.rejectValue("product", MessageKey.ORDERITEMSINVALID_VALIDATION.getKey(), defaultMessage);
 		}
 	}
 	
@@ -61,18 +61,18 @@ public class OrderValidator extends AbstractEntityValidator<Order> {
 		BindException paymentErrors = new BindException(payment, "payment");
 		this.paymentValidator.validate(payment, paymentErrors);
 		if(paymentErrors.hasErrors()){
-			errors.rejectValue("product", MessageKey.ORDERPAYMENTINVALID_VALIDATION.getMessageKey(), defaultMessage);
+			errors.rejectValue("product", MessageKey.ORDERPAYMENTINVALID_VALIDATION.getKey(), defaultMessage);
 		}
 	}
 	
 	private void validateOrderItems(Set<OrderItem> items, Errors errors){
 		if(items == null || items.isEmpty())
-			errors.rejectValue("items", MessageKey.ORDERITEMSINVALID_VALIDATION.getMessageKey(), defaultMessage);
+			errors.rejectValue("items", MessageKey.ORDERITEMSINVALID_VALIDATION.getKey(), defaultMessage);
 		else
 			for(OrderItem item : items){
 				validateProduct(item.getProduct(), errors);
 				if(item.getQuantity() == null || item.getQuantity() < 0)
-					errors.rejectValue("items", MessageKey.ORDERITEMSINVALID_VALIDATION.getMessageKey(), defaultMessage);
+					errors.rejectValue("items", MessageKey.ORDERITEMSINVALID_VALIDATION.getKey(), defaultMessage);
 			}
 	}
 }

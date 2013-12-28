@@ -9,7 +9,7 @@ import com.espindola.lobwebapp.controller.base.AbstractEntityController;
 import com.espindola.lobwebapp.domain.Stock;
 import com.espindola.lobwebapp.exception.invalidArgument.InvalidArgumentException;
 import com.espindola.lobwebapp.exception.invalidArgument.StockInvalidException;
-import com.espindola.lobwebapp.service.contract.StockService;
+import com.espindola.lobwebapp.facade.StockFacade;
 import com.espindola.lobwebapp.validation.StockValidator;
 
 @Controller
@@ -17,8 +17,8 @@ import com.espindola.lobwebapp.validation.StockValidator;
 public class StockController extends AbstractEntityController<Stock> {
 
 	@Autowired
-	public StockController(StockService service, StockValidator validator) {
-		super(service, validator);
+	public StockController(StockFacade facade, StockValidator validator) {
+		super(facade, validator);
 	}
 
 	@Override

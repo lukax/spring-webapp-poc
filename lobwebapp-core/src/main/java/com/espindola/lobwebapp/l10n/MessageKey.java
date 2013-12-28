@@ -61,14 +61,14 @@ public enum MessageKey {
 	
 	;
 	
-	private String messageKey;
+	private String key;
 
-	MessageKey(String messageKey){
-		this.messageKey = messageKey;
+	MessageKey(String key){
+		this.key = key;
 	}
 
-	public String getMessageKey() {
-		return messageKey;
+	public String getKey() {
+		return key;
 	}
 
 }

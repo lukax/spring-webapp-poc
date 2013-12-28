@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.espindola.lobwebapp.domain.Stock;
 import com.espindola.lobwebapp.exception.alreadyExists.AlreadyExistsException;
@@ -17,7 +16,6 @@ import com.espindola.lobwebapp.service.contract.StockService;
 import com.espindola.lobwebapp.service.impl.base.AbstractEntityServiceImpl;
 
 @Service
-@Transactional
 public class StockServiceImpl extends AbstractEntityServiceImpl<Stock> implements StockService {
 
 	private StockRepository repository;
@@ -36,7 +34,6 @@ public class StockServiceImpl extends AbstractEntityServiceImpl<Stock> implement
 	@Override
 	protected void throwIfInvalid(Stock entity) throws InvalidArgumentException {
 		//TODO: Business logic
-		//TODO: Check if stock.product exists
 	}
 	
 	@Override

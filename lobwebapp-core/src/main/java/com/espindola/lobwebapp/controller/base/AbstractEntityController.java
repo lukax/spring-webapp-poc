@@ -30,7 +30,7 @@ import com.espindola.lobwebapp.event.LobWebAppEventPublisher;
 import com.espindola.lobwebapp.event.PageReturnEvent;
 import com.espindola.lobwebapp.exception.invalidArgument.InvalidArgumentException;
 import com.espindola.lobwebapp.exception.notFound.NotFoundException;
-import com.espindola.lobwebapp.service.contract.base.EntityService;
+import com.espindola.lobwebapp.facade.base.AbstractEntityFacade;
 import com.espindola.lobwebapp.validation.base.AbstractEntityValidator;
 
 @Controller
@@ -38,12 +38,12 @@ public abstract class AbstractEntityController<T extends AbstractEntity> {
 	
 	@Autowired
 	protected LobWebAppEventPublisher eventPublisher;
-	private EntityService<T> service;
+	private AbstractEntityFacade<T> facade;
 	private AbstractEntityValidator<T> validator;
 
 	@Autowired
-	public AbstractEntityController(EntityService<T> service, AbstractEntityValidator<T> validator) {
-		this.service = service;
+	public AbstractEntityController(AbstractEntityFacade<T> facade, AbstractEntityValidator<T> validator) {
+		this.facade = facade;
 		this.validator = validator;
 	}
 	
@@ -56,21 +56,21 @@ public abstract class AbstractEntityController<T extends AbstractEntity> {
 	@ResponseStatus(value = HttpStatus.OK)
 	@ResponseBody
 	public T find(@PathVariable("id") Long id) throws NotFoundException {
-		return service.find(id);	
+		return facade.find(id);	
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
 	@ResponseStatus(value = HttpStatus.OK)
 	@ResponseBody
 	public List<T> findAll() {
-		return service.findAll();
+		return facade.findAll();
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, headers = {HeaderKey.PAGE_INDEX, HeaderKey.PAGE_SIZE})
 	@ResponseStatus(value = HttpStatus.OK)
 	@ResponseBody
 	public List<T> findAll(HttpServletResponse response, @RequestHeader(HeaderKey.PAGE_INDEX) Integer pageIndex, @RequestHeader(HeaderKey.PAGE_SIZE) Integer pageSize) {
-		Page<T> entities = service.findAll(new PageRequest(pageIndex, pageSize));
+		Page<T> entities = facade.findAll(new PageRequest(pageIndex, pageSize));
 		eventPublisher.publishEvent(new PageReturnEvent(entities, response));
 		return entities.getContent();
 	}
@@ -81,7 +81,7 @@ public abstract class AbstractEntityController<T extends AbstractEntity> {
 	public void save(@Validated @RequestBody T data, BindingResult bindingResult, UriComponentsBuilder cp, HttpServletRequest request, HttpServletResponse response) throws NotFoundException, InvalidArgumentException {
 		validationResult(bindingResult);
 		
-		T entity = service.save(data);
+		T entity = facade.save(data);
 		UriComponents build = cp.path(request.getPathInfo() + "/{id}").buildAndExpand(entity.getId());
 		response.setHeader("Location", build.toUriString());
 		response.setHeader("Entity-Id", entity.getId().toString());
@@ -93,14 +93,14 @@ public abstract class AbstractEntityController<T extends AbstractEntity> {
 	public void update(@Validated @RequestBody T data, BindingResult bindingResult) throws InvalidArgumentException, NotFoundException {
 		validationResult(bindingResult);
 
-		service.update(data);
+		facade.update(data);
 	}
 
 	@RequestMapping(value = "/{id:[\\d]+}", method = RequestMethod.DELETE)
 	@ResponseStatus(value = HttpStatus.OK)
 	@ResponseBody
 	public void remove(@PathVariable("id") Long id) throws NotFoundException {
-		service.remove(id);
+		facade.remove(id);
 	}
 	
 	protected abstract void validationResult(BindingResult bindingResult) throws InvalidArgumentException;

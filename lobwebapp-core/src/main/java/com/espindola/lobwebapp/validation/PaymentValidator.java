@@ -23,16 +23,16 @@ public class PaymentValidator extends AbstractEntityValidator<Payment> {
 
 	private void validateStatus(Payment t, Errors e) {
 		if(t.getStatus() == null)
-			e.rejectValue("status", MessageKey.PAYMENTSTATUSINVALID_VALIDATION.getMessageKey(), defaultMessage);
+			e.rejectValue("status", MessageKey.PAYMENTSTATUSINVALID_VALIDATION.getKey(), defaultMessage);
 	}
 
 	private void validateMode(Payment t, Errors e) {
 		if(t.getMode() == null)
-			e.rejectValue("mode", MessageKey.PAYMENTMODEINVALID_VALIDATION.getMessageKey(), defaultMessage);
+			e.rejectValue("mode", MessageKey.PAYMENTMODEINVALID_VALIDATION.getKey(), defaultMessage);
 	}
 
 	private void validateQuantity(Payment t, Errors e) {
 		if(t.getQuantity() == null || t.getQuantity() < 0)
-			e.rejectValue("quantity", MessageKey.PAYMENTQUANTITYINVALID_VALIDATION.getMessageKey(), defaultMessage);
+			e.rejectValue("quantity", MessageKey.PAYMENTQUANTITYINVALID_VALIDATION.getKey(), defaultMessage);
 	}
 }

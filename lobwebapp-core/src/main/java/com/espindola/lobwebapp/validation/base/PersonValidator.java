@@ -16,9 +16,9 @@ public abstract class PersonValidator<T extends Person> extends AbstractEntityVa
 	}
 
 	private void validateName(T t, Errors e) {
-		ValidationUtils.rejectIfEmptyOrWhitespace(e, "name", MessageKey.PERSONNAMEINVALID_VALIDATION.getMessageKey(), new Object[]{ 5, 100} );
+		ValidationUtils.rejectIfEmptyOrWhitespace(e, "name", MessageKey.PERSONNAMEINVALID_VALIDATION.getKey(), new Object[]{ 5, 100} );
 		if(t.getName() == null || t.getName().length() < 5 || t.getName().length() > 100)
-			e.rejectValue("name", MessageKey.PERSONNAMEINVALID_VALIDATION.getMessageKey(),
+			e.rejectValue("name", MessageKey.PERSONNAMEINVALID_VALIDATION.getKey(),
 					new Object[]{ 5, 100 }, defaultMessage);
 		validatePerson(t, e);
 	}

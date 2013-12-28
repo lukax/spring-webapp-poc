@@ -50,6 +50,11 @@ public abstract class AbstractEntityServiceImpl<T extends AbstractEntity> implem
 		repository.delete(id);
 		return entity;
 	}
+	
+	@Override
+	public boolean exists(Long id){
+		return repository.exists(id);
+	}
 
 	@Override
 	public List<T> findAll() {
