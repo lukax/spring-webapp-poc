@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.espindola.lobwebapp.domain.Product;
-import com.espindola.lobwebapp.exception.invalidArgument.InvalidArgumentException;
 import com.espindola.lobwebapp.facade.base.AbstractEntityFacade;
 import com.espindola.lobwebapp.service.contract.ProductService;
 
@@ -33,11 +32,5 @@ public class ProductFacade extends AbstractEntityFacade<Product> {
 	
 	public Page<Product> findByNameLike(String name, Pageable pageable){
 		return productService.findByNameLike(name, pageable);
-	}
-
-	@Override
-	protected void checkIfValid(Product entity) throws InvalidArgumentException {
-		// TODO Auto-generated method stub
-		
 	}
 }

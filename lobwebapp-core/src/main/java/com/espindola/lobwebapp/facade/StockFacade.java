@@ -5,8 +5,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.espindola.lobwebapp.domain.Stock;
+import com.espindola.lobwebapp.exception.alreadyExists.AlreadyExistsException;
 import com.espindola.lobwebapp.exception.invalidArgument.InvalidArgumentException;
 import com.espindola.lobwebapp.exception.invalidArgument.StockInvalidException;
+import com.espindola.lobwebapp.exception.notFound.NotFoundException;
 import com.espindola.lobwebapp.exception.util.EntityError;
 import com.espindola.lobwebapp.facade.base.AbstractEntityFacade;
 import com.espindola.lobwebapp.l10n.MessageKey;
@@ -26,8 +28,21 @@ public class StockFacade extends AbstractEntityFacade<Stock> {
 		super(stockService);
 		this.productService = productService;
 	}
+	
+	@Override
+	public Stock save(Stock entity) throws AlreadyExistsException, InvalidArgumentException {
+		throwIfProductNotExists(entity);
+		return super.save(entity);
+	}
+	
+	@Override
+	public Stock update(Stock entity) throws NotFoundException, InvalidArgumentException {
+		throwIfProductNotExists(entity);
+		return super.update(entity);
+	}
 
-	protected void checkIfValid(Stock entity) throws InvalidArgumentException {
+	
+	private void throwIfProductNotExists(Stock entity) throws InvalidArgumentException {
 		if(!productService.exists(entity.getProduct().getId()))
 			throw new StockInvalidException(new EntityError(MessageKey.STOCKPRODUCTINVALID_VALIDATION));
 	}

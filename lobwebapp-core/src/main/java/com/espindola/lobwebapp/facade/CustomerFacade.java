@@ -5,7 +5,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.espindola.lobwebapp.domain.Customer;
-import com.espindola.lobwebapp.exception.invalidArgument.InvalidArgumentException;
 import com.espindola.lobwebapp.facade.base.AbstractEntityFacade;
 import com.espindola.lobwebapp.service.contract.CustomerService;
 
@@ -18,11 +17,6 @@ public class CustomerFacade extends AbstractEntityFacade<Customer> {
 	@Autowired
 	public CustomerFacade(CustomerService customerService) {
 		super(customerService);
-	}
-
-	@Override
-	protected void checkIfValid(Customer entity) throws InvalidArgumentException {
-		
 	}
 
 }

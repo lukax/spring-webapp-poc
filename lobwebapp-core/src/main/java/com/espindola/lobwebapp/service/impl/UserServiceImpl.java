@@ -40,6 +40,7 @@ public class UserServiceImpl extends AbstractPersonServiceImpl<User> implements 
 		}
 	}
 	
+	
 	@Override
 	protected void throwIfInvalid(User entity) throws InvalidArgumentException {
 		//TODO: Business logic

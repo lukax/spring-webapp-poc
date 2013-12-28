@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.oauth2.common.exceptions.InvalidRequestException;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,16 +36,18 @@ import com.espindola.lobwebapp.event.PageReturnEvent;
 import com.espindola.lobwebapp.exception.invalidArgument.InvalidArgumentException;
 import com.espindola.lobwebapp.exception.invalidArgument.ProductInvalidException;
 import com.espindola.lobwebapp.exception.notFound.NotFoundException;
+import com.espindola.lobwebapp.exception.util.EntityError;
 import com.espindola.lobwebapp.facade.ProductFacade;
+import com.espindola.lobwebapp.l10n.MessageKey;
 import com.espindola.lobwebapp.validation.ProductValidator;
 
 @Controller
 @RequestMapping(value="/product")
 public class ProductController extends AbstractEntityController<Product> {
 	
-	private ProductFacade facade;
 	@Autowired
 	private ServletContext context;
+	private ProductFacade facade;
 	
 	@Autowired
 	public ProductController(ProductFacade facade, ProductValidator validator) {
@@ -79,7 +82,7 @@ public class ProductController extends AbstractEntityController<Product> {
 	@ResponseStatus(value = HttpStatus.OK)
 	public void uploadImage(@PathVariable("productId") Long productId, UriComponentsBuilder ucb, HttpServletRequest request, HttpServletResponse response) throws InvalidArgumentException, NotFoundException {
 		if(!ServletFileUpload.isMultipartContent(request)) 
-			return;
+			throw new InvalidRequestException("request for this url should be multipart");
 		// Create a factory for disk-based file items
 		DiskFileItemFactory factory = new DiskFileItemFactory();
 		// Configure a repository (to ensure a secure temp location is used)
@@ -87,6 +90,7 @@ public class ProductController extends AbstractEntityController<Product> {
 		factory.setRepository(repository);
 		// Create a new file upload handler
 		ServletFileUpload upload = new ServletFileUpload(factory);
+		upload.setSizeMax(5100000);
 		try {
 			// Parse the request
 			List<FileItem> items = upload.parseRequest(request);
@@ -101,8 +105,8 @@ public class ProductController extends AbstractEntityController<Product> {
 					break;
 				}
 			}
-		} catch (FileUploadException e) {
-			e.printStackTrace();
+		} catch (FileUploadException e) {	
+			throw new ProductInvalidException(new EntityError(MessageKey.PRODUCTIMAGETOOBIG_VALIDATION, new Object[] { "5 MB"}));
 		}
 	}
 	
