@@ -1,9 +1,17 @@
 package com.espindola.lobwebapp.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileUploadException;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -16,6 +24,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import com.espindola.lobwebapp.controller.base.AbstractEntityController;
 import com.espindola.lobwebapp.controller.util.HeaderKey;
@@ -33,6 +43,8 @@ import com.espindola.lobwebapp.validation.ProductValidator;
 public class ProductController extends AbstractEntityController<Product> {
 	
 	private ProductFacade facade;
+	@Autowired
+	private ServletContext context;
 	
 	@Autowired
 	public ProductController(ProductFacade facade, ProductValidator validator) {
@@ -61,6 +73,48 @@ public class ProductController extends AbstractEntityController<Product> {
 	@ResponseBody
 	public List<Stock> getStock(@PathVariable("productId") Long productId) throws InvalidArgumentException, NotFoundException {
 		return super.find(productId).getStocks();
+	}
+	
+	@RequestMapping(value = "/{productId:[\\d]+}/image", method = RequestMethod.POST)
+	@ResponseStatus(value = HttpStatus.OK)
+	public void uploadImage(@PathVariable("productId") Long productId, UriComponentsBuilder ucb, HttpServletRequest request, HttpServletResponse response) throws InvalidArgumentException, NotFoundException {
+		if(!ServletFileUpload.isMultipartContent(request)) 
+			return;
+		// Create a factory for disk-based file items
+		DiskFileItemFactory factory = new DiskFileItemFactory();
+		// Configure a repository (to ensure a secure temp location is used)
+		File repository = (File) context.getAttribute("javax.servlet.context.tempdir");
+		factory.setRepository(repository);
+		// Create a new file upload handler
+		ServletFileUpload upload = new ServletFileUpload(factory);
+		try {
+			// Parse the request
+			List<FileItem> items = upload.parseRequest(request);
+			for(FileItem x : items){
+				if(!x.isFormField()){
+					Product product = facade.find(productId);
+					product.setImage(x.get());
+					facade.update(product);
+					//Set Location header
+					UriComponents build = ucb.path(request.getPathInfo()).buildAndExpand(product.getId());
+					response.setHeader("Location", build.toUriString());
+					break;
+				}
+			}
+		} catch (FileUploadException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@RequestMapping(value = "/{productId:[\\d]+}/image", method = RequestMethod.GET)
+	@ResponseStatus(value = HttpStatus.OK)
+	public void showImage(@PathVariable("productId") Long productId, HttpServletResponse response) throws InvalidArgumentException, NotFoundException {
+		Product product = facade.find(productId);
+		try {
+			response.getOutputStream().write(product.getImage());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override

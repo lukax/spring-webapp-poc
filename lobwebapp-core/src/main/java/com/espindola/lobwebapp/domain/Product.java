@@ -6,13 +6,14 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 import com.espindola.lobwebapp.domain.base.AbstractEntity;
 
@@ -20,6 +21,7 @@ import com.espindola.lobwebapp.domain.base.AbstractEntity;
 @Table(name = "TB_PRODUCT", uniqueConstraints = {
 		@UniqueConstraint(columnNames = "NAME")
 	})
+@JsonIgnoreProperties(value = {"image", "stocks"})
 public class Product extends AbstractEntity {
 
 	private String name;
@@ -33,12 +35,14 @@ public class Product extends AbstractEntity {
 	private String category;
 
 	private String ncm;
+	
+	@Lob
+	private byte[] image;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date registerDate;
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "product")
-	@JsonIgnore
 	private List<Stock> stocks;
 
 	public String getName() {
@@ -111,5 +115,13 @@ public class Product extends AbstractEntity {
 				getId() + ", " + 
 				getName() + 
 				"]";
+	}
+
+	public byte[] getImage() {
+		return image;
+	}
+
+	public void setImage(byte[] image) {
+		this.image = image;
 	}
 }
