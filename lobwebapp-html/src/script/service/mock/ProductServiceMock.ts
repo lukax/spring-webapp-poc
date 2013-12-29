@@ -45,6 +45,11 @@ export module service.mock {
                     else errorCallback({ message: "Nenhum Grupo Encontrado"}, 404, null, null);
                 }, 100);
         }
+        
+        getImage(id: number, 
+            successCallback: (imageUrl: string, putImageUrl: string, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
+            
+        }
 
     }
 }

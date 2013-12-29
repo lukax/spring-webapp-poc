@@ -4,6 +4,10 @@
             <a class="list-group-item link active">Detalhes</a>
             <a class="list-group-item link" ng-href="#/stock/list?search={{entity.name}}">Estoque</a>
         </div>
+        <div ng-if="!isEntityNew">
+            <img ng-src="{{imageUrl}}" class="img-thumbnail">
+            <image-upload post-url="putImageUrl" done="imageUploadDone()"></image-upload>
+        </div>
     </div>
     <div class="col-md-10">
         <form class="form-horizontal" role="form" name="productForm" ng-submit="saveChanges(entity)" novalidate>
@@ -81,7 +85,7 @@
                               placeholder="Digite uma Descrição" rows="2" ng-model="entity.description"></textarea>
                 </div>
             </div>
-            
+
             <save-changes save-disabled="readMode ||
                                      productForm.inputName.$invalid ||
                                      productForm.inputPrice.$invalid ||
@@ -100,3 +104,6 @@
         </form>
     </div>
 </div>
+<script src="lib/jquery-file-upload/js/vendor/jquery.ui.widget.js"></script>
+<script src="lib/jquery-file-upload/js/jquery.iframe-transport.js"></script>
+<script src="lib/jquery-file-upload/js/jquery.fileupload.js"></script>

@@ -9,7 +9,7 @@ export module service.impl {
             super("product", $http);
         }
 
-        public findByName(name: string,
+        findByName(name: string,
             successCallback: (data: domain.Product[], status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
             errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
             pageable: domain.util.Pageable) {
@@ -17,12 +17,25 @@ export module service.impl {
                 this.$http.get(this.url + this.getPageableUri(pageable), { headers: { product_name: header } }).success(successCallback).error(errorCallback);
         }
 
-        public listCategory(
+        listCategory(
             successCallback: (data: string[], status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
             errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
-                this.$http.get(this.url + "/category").success(successCallback).error(errorCallback);
+                this.$http.get(this.url + "category").success(successCallback).error(errorCallback);
         }
 
+        getImage(id: number, 
+            successCallback: (getImageUrl: string, putImageUrl: string, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
+                var imageUrl = this.url + id + "/image";
+                var placeholder = "/img/imageplaceholder.png";
+                if(id == 0){
+                    successCallback(placeholder, imageUrl, 200, null, null);
+                }
+                else{
+                    this.$http.get(imageUrl)
+                        .success((d, s, h, c)=>{ successCallback(imageUrl, imageUrl, s, h, c); })
+                        .error((d, s, h, c)=>{ successCallback(placeholder, imageUrl, s, h, c); });
+                }
+        }
     }
 }
 

@@ -1,4 +1,5 @@
 ///<reference path="./../../reference.d.ts"/>
+///<amd-dependency path="fileupload"/>
 
 import i0 = require("./../base/AbstractEditEntityController");
 import enums = require("./../../util/EnumUtil");
@@ -10,6 +11,9 @@ export module controller.product {
         saveChanges(product: domain.Product): void;
         removeProduct(product: domain.Product): void;
         canSave: boolean;
+        imageUrl: string;
+        putImageUrl: string;
+        imageUploadDone: () => void;
     }
 
     export class EditProductController extends i0.controller.base.AbstractEditEntityController<domain.Product> {
@@ -64,7 +68,28 @@ export module controller.product {
             this.$scope.$watch("entity.category", (newValue: string, oldValue: string) => {
                 this.$scope.categories = this.$filter("filter")(this.allCategories, this.$scope.entity.category);
             });
-            
+            this.$scope.$watch("entity.id", (newValue: number, oldValue: number) => {
+                this.reloadImage();
+            });
+        }
+
+        reloadImage(){
+            this.ProductService.getImage(this.$scope.entity.id,
+                (getImageUrl, putImageUrl) => {
+                    if(this.$scope.imageUrl == getImageUrl){
+                        if(this.$scope.imageUrl.indexOf("?") == -1)
+                            this.$scope.imageUrl += "?"+ new Date().getTime();
+                        this.$scope.imageUrl += "&" + new Date().getTime();
+                    }
+                    else {
+                        this.$scope.imageUrl = getImageUrl;
+                    }
+                    this.$scope.putImageUrl = putImageUrl;
+                });
+        }
+
+        imageUploadDone(){
+            this.reloadImage();
         }
 
         processArgs() {
@@ -87,6 +112,7 @@ export module controller.product {
             this.fetchCategories();
             this.$scope.saveChanges = (entity) => this.saveChanges(entity);
             this.$scope.removeProduct = (entity) => this.removeEntity(entity);
+            this.$scope.imageUploadDone = () => this.imageUploadDone();
         }
     }
 }

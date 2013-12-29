@@ -1,7 +1,6 @@
 package com.espindola.lobwebapp.controller;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.ServletContext;
@@ -116,8 +115,8 @@ public class ProductController extends AbstractEntityController<Product> {
 		Product product = facade.find(productId);
 		try {
 			response.getOutputStream().write(product.getImage());
-		} catch (IOException e) {
-			e.printStackTrace();
+		} catch (Exception ex) {
+			throw new NotFoundException();
 		}
 	}
 

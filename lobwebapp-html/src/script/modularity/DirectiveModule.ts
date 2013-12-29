@@ -12,6 +12,7 @@ import i2 = require('./../directive/CustomerDetailDirective');
 import i3 = require('./../directive/PaymentDetailDirective');
 import i4 = require('./../directive/SaveChangesDirective');
 import i5 = require('./../directive/QuickSearchDirective');
+import i6 = require('./../directive/ImageUploadDirective');
 
 export module modularity {
     export class DirectiveModule {
@@ -32,6 +33,7 @@ export module modularity {
                 .directive('paymentDetail', [() => new i3.directive.PaymentDetailDirective()])
                 .directive('saveChanges', [() => new i4.directive.SaveChangesDirective()])
                 .directive('quickSearch', [() => new i5.directive.QuickSearchDirective()])
+                .directive('imageUpload', [() => new i6.directive.ImageUploadDirective()])
             ;
             return this;
         }

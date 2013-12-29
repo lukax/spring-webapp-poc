@@ -1,0 +1,12 @@
+<div>
+	<a class="btn btn-default lwa-fade-left" ng-href="{{postUrl}}" title="Abrir imagem" ng-hide="postUrl.indexOf('imageplaceholder') != -1 || loading">
+        <span class="glyphicon glyphicon-new-window"></span>
+    </a>
+	<a class="btn btn-default lwa-fade-left" id="imageUploadIncludeImage" title="Inserir nova imagem" ng-hide="loading">
+	    <span class="glyphicon glyphicon-upload"></span>
+	</a>
+	<input id="imageUploadInput" type="file" name="files[]" style="visibility: hidden;"> 
+	<div class="lwa-fade-left" ng-hide="!loading">
+		<strong>{{percentage | number:1}}%</strong> Concluído
+	</div>
+</div>
