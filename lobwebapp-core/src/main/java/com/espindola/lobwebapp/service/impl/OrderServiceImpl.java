@@ -27,10 +27,11 @@ public class OrderServiceImpl extends AbstractEntityServiceImpl<Order> implement
 		this.repository = repository;
 	}
 	
+	
 	@Override
 	protected void throwIfInvalid(Order entity) throws InvalidArgumentException {
-		if(entity.getPayment().getId() != 0)
-			throw new OrderInvalidException(new EntityError(MessageKey.ORDERPAYMENTINVALID_VALIDATION));
+		//TODO: Business logic
+		throwIfInvalidPayment(entity);
 	}
 	
 	@Override
@@ -45,4 +46,8 @@ public class OrderServiceImpl extends AbstractEntityServiceImpl<Order> implement
 			throw new OrderNotFoundException(id);
 	}
 
+	private void throwIfInvalidPayment(Order entity) {
+		if(entity.getPayment().getId() != 0)
+			throw new OrderInvalidException(new EntityError(MessageKey.ORDERPAYMENTINVALID_VALIDATION));
+	}
 }

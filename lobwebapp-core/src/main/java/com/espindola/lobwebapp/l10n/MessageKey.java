@@ -38,6 +38,8 @@ public enum MessageKey {
 	PRODUCTPRICEINVALID_VALIDATION("com.espindola.lobwebapp.validation.productpriceinvalid"),
 	PRODUCTCATEGORYINVALID_VALIDATION("com.espindola.lobwebapp.validation.productcategoryinvalid"),
 	PRODUCTNCMINVALID_VALIDATION("com.espindola.lobwebapp.validation.productncminvalid"), 
+	PRODUCTIMAGEINVALID_VALIDATION("com.espindola.lobwebapp.validation.productimageinvalid"),
+	PRODUCTIMAGETOOBIG_VALIDATION("com.espindola.lobwebapp.validation.productimagetoobig"),
 	
 	STOCKPRODUCTINVALID_VALIDATION("com.espindola.lobwebapp.validation.stockproductinvalid"),
 	STOCKQUANTITYINVALID_VALIDATION("com.espindola.lobwebapp.validation.stockquantityinvalid"),

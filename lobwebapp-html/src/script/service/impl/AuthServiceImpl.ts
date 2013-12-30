@@ -11,7 +11,7 @@ export module service.impl {
 
         }
 
-        public login(user: domain.User,
+        login(user: domain.User,
             successCallback: (data: domain.User, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
             errorCallback: (error: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
                 var param = "?grant_type=password&client_id=lobwebapp-html&client_secret=supersecretyeah&username=" + user.username + "&password=" + user.password;
@@ -25,7 +25,7 @@ export module service.impl {
                     }).error(errorCallback);
         }
 
-        public logout(
+        logout(
             successCallback: (data: domain.User, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
             errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
                 if (this.getUser().id != 0) {
@@ -40,7 +40,7 @@ export module service.impl {
                     errorCallback({ message: "Usuário já está deslogado" }, 200, null, null);
         }
 
-        public isLoggedIn() {
+        isLoggedIn() {
             var token = this.getToken();
             if (token != null) {
                 this.authorize(token);
@@ -72,7 +72,7 @@ export module service.impl {
             delete this.$http.defaults.headers.common["Authorization"];
         }
 
-        public getUser(): domain.User {
+        getUser(): domain.User {
             var retrievedUser = null;
             try {
                 retrievedUser = (angular.fromJson((<any>localStorage).AUTHSERVICE_USER));

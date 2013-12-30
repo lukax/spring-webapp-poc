@@ -9,13 +9,6 @@ export module util{
 
         public static start(){
             NProgress.start();
-            if(!util.Progress.cfg){
-                NProgress.configure({minimum: 0.1});
-                // NProgress.configure({
-                //     template: "<div class='bar' role='bar'></div>"
-                // });
-            }
-            util.Progress.cfg = true;
         }
 
         public static set(percent: number){

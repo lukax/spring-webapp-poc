@@ -24,12 +24,10 @@ public abstract class AbstractEntityFacade<T extends AbstractEntity> {
 	}
 
 	public T save(T entity) throws AlreadyExistsException, InvalidArgumentException {
-		checkIfValid(entity);
 		return entityService.save(entity);
 	}
 
 	public T update(T entity) throws NotFoundException, InvalidArgumentException {
-		checkIfValid(entity);
 		return entityService.update(entity);
 	}
 
@@ -44,7 +42,5 @@ public abstract class AbstractEntityFacade<T extends AbstractEntity> {
 	public Page<T> findAll(Pageable p) {
 		return entityService.findAll(p);
 	}
-	
-	protected abstract void checkIfValid(T entity) throws InvalidArgumentException;
 	
 }

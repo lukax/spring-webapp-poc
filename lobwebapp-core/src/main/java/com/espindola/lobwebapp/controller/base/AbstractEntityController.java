@@ -78,11 +78,11 @@ public abstract class AbstractEntityController<T extends AbstractEntity> {
 	@RequestMapping(method = RequestMethod.POST)
 	@ResponseStatus(value = HttpStatus.CREATED)
 	@ResponseBody
-	public void save(@Validated @RequestBody T data, BindingResult bindingResult, UriComponentsBuilder cp, HttpServletRequest request, HttpServletResponse response) throws NotFoundException, InvalidArgumentException {
+	public void save(@Validated @RequestBody T data, BindingResult bindingResult, UriComponentsBuilder ucb, HttpServletRequest request, HttpServletResponse response) throws NotFoundException, InvalidArgumentException {
 		validationResult(bindingResult);
 		
 		T entity = facade.save(data);
-		UriComponents build = cp.path(request.getPathInfo() + "/{id}").buildAndExpand(entity.getId());
+		UriComponents build = ucb.path(request.getPathInfo() + "/{id}").buildAndExpand(entity.getId());
 		response.setHeader("Location", build.toUriString());
 		response.setHeader("Entity-Id", entity.getId().toString());
 	}

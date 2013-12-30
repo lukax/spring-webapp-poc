@@ -27,14 +27,6 @@ module.exports = function (grunt) {
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
         yeoman: yeomanConfig,
-        shell: {
-            deps: {
-                command: ['npm install', 'bower install'].join(';'),
-                options: {
-                    stdout: true
-                }
-            }
-        },
         watch: {
             livereload: {
                 options: {
@@ -262,7 +254,6 @@ module.exports = function (grunt) {
     });
 
     grunt.registerTask('default', [
-        'shell',
         'build'
     ]);
     
@@ -276,5 +267,4 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks("grunt-contrib-less");
     grunt.loadNpmTasks("grunt-open");
     grunt.loadNpmTasks("grunt-ts");
-    grunt.loadNpmTasks("grunt-shell");
 };

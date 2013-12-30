@@ -7,12 +7,13 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 import com.espindola.lobwebapp.domain.base.AbstractEntity;
 
@@ -20,6 +21,7 @@ import com.espindola.lobwebapp.domain.base.AbstractEntity;
 @Table(name = "TB_PRODUCT", uniqueConstraints = {
 		@UniqueConstraint(columnNames = "NAME")
 	})
+@JsonIgnoreProperties(value = {"image", "stocks"})
 public class Product extends AbstractEntity {
 
 	private String name;
@@ -33,12 +35,14 @@ public class Product extends AbstractEntity {
 	private String category;
 
 	private String ncm;
+	
+	@OneToOne(fetch= FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	private FileMeta image;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date registerDate;
 	
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "product")
-	@JsonIgnore
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "product", orphanRemoval = true)
 	private List<Stock> stocks;
 
 	public String getName() {
@@ -112,4 +116,13 @@ public class Product extends AbstractEntity {
 				getName() + 
 				"]";
 	}
+
+	public FileMeta getImage() {
+		return image;
+	}
+
+	public void setImage(FileMeta image) {
+		this.image = image;
+	}
+
 }

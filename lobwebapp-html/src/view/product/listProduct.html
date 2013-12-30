@@ -18,8 +18,8 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="prod in products | filter:searchText | orderBy:predicate:reverse" 
-                ng-click="editProduct(prod.id)" style="cursor: pointer;" class="product-list">
+            <tr ng-repeat="prod in entities | filter:searchText | orderBy:predicate:reverse" 
+                ng-click="editEntity(prod.id)" style="cursor: pointer;" class="product-list">
                 <td>{{prod.id}}</td>
                 <td>{{prod.name}}</td>
                 <td>{{prod.quantity}} {{prod.unit}}</td>

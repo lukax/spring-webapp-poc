@@ -1,4 +1,4 @@
-﻿///<reference path="./../reference.d.ts"/>
+///<reference path="./../reference.d.ts"/>
 
 export module controller {
     export interface MainNavbarViewModel extends d.controller.base.ViewModel {
@@ -7,16 +7,10 @@ export module controller {
     }
 
     export class MainNavbarController implements d.controller.base.Controller {
-
         static $inject = ["$scope", "AuthService"];
-        constructor(public $scope: MainNavbarViewModel, public AuthService: d.service.contract.AuthService) {
-            this.populateScope();
-        }
-
-        processArgs() {
-        }
-
-        populateScope() {
+        constructor(public $scope: MainNavbarViewModel, 
+                    public AuthService: d.service.contract.AuthService) {
+                        
             this.$scope.$watch("user", (newValue: domain.User) => {
                 this.$scope.isUserLogged = (newValue.id != 0);
             });

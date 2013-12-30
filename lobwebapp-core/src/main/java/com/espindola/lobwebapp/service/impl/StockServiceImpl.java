@@ -31,6 +31,7 @@ public class StockServiceImpl extends AbstractEntityServiceImpl<Stock> implement
 		return this.repository.findByProductId(productId);
 	}
 	
+	
 	@Override
 	protected void throwIfInvalid(Stock entity) throws InvalidArgumentException {
 		//TODO: Business logic

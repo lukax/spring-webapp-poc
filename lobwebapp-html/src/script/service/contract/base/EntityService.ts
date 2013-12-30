@@ -1,6 +1,9 @@
 ///<reference path="./../../../reference.d.ts"/>
 
 module d.service.contract.base {
+    export interface HasDefaultValue<T extends domain.base.AbstractEntity>{
+        getDefault():  T;
+    }
     export interface EntityService<T extends domain.base.AbstractEntity> {
         save(entity: T,
             successCallback: (data: T, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,

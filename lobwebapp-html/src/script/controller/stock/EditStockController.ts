@@ -19,8 +19,14 @@ export module controller.stock {
                     public ProductService: d.service.contract.ProductService,
                     public AlertService: d.service.contract.AlertService) {
             super($scope, "stock", StockService, AlertService);
-            this.populateScope();
-            this.processArgs();
+            
+            var stockId = this.$scope.navigator.params().stockId;
+            var productId = this.$scope.navigator.params().productId;
+
+            this.findEntity(stockId || 0, ()=>{
+                if(productId != null) this.fetchProduct(productId);
+                this.populateScope();
+            });
         }
 
         fetchProduct(id: number) {
@@ -31,7 +37,8 @@ export module controller.stock {
                     this.unlock();
                 },
                 (errorData, errorStatus) => {
-                    console.log(errorData);
+                    this.AlertService.add({ title: "Buscar Produto", content: "Nenhum produto encontrado com esse ID", type: enums.AlertType.WARNING });
+                    this.unlock();
                 });
         }
 
@@ -40,33 +47,13 @@ export module controller.stock {
             this.$scope.navigator.navigateTo("/product/list?redirect=" + preparedUrl);
         }
 
-        emptyStock() {
-            this.$scope.entity = { id: 0, product: null, quantity: 0, unit: "" };
-        }
-
-        processArgs() {
-            var stockId = this.$scope.navigator.params().stockId;
-            var productId = this.$scope.navigator.params().productId;
-            if (stockId > 0) {
-                this.findEntity(Number(stockId));
-            } else if (stockId == 0) {
-                this.newEntity();
-            } else if (stockId == "new") {
-                this.emptyStock();
-                if (productId > 0) {
-                    this.fetchProduct(Number(productId));
-                }
-            } else {
-                this.newEntity();
-            }
-        }
-
         populateScope() {
             this.$scope.saveChanges = (stock) => this.saveChanges(stock);
             this.$scope.removeStock = (stock) => this.removeEntity(stock);
             this.$scope.fetchProduct = (productId) => this.fetchProduct(productId);
             this.$scope.quickSearchProduct = () => this.quickSearchProduct();
         }
+        
     }
 }
 

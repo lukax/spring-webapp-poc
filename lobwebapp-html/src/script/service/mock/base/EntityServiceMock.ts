@@ -8,7 +8,7 @@ export module service.mock.base {
             this.repository = new Array<T>();
         }
 
-        public save(entity: T,
+        save(entity: T,
             successCallback: (data: T, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
             errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
                 this.$timeout(() => {
@@ -25,7 +25,7 @@ export module service.mock.base {
                 });
         }
 
-        public update(entity: T,
+        update(entity: T,
             successCallback: (data: T, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
             errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
                 this.$timeout(() => {
@@ -45,7 +45,7 @@ export module service.mock.base {
                 }, 100);
         }
 
-        public remove(entity: T,
+        remove(entity: T,
             successCallback: (data: T, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
             errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
                 this.$timeout(() => {
@@ -64,7 +64,7 @@ export module service.mock.base {
                 }, 100);
         }
 
-        public find(id: number,
+        find(id: number,
             successCallback: (data: T, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
             errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
                 this.$timeout(() => {
@@ -84,7 +84,7 @@ export module service.mock.base {
                 }, 100);
         }
 
-        public list(
+        list(
             successCallback: (data: T[], status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
             errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
             pageable?: domain.util.Pageable) {
@@ -98,7 +98,7 @@ export module service.mock.base {
                 }, 1000);
         }
 
-        public exists(entity: T,
+        exists(entity: T,
             successCallback: (data: boolean, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
             errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
                 this.$timeout(() => {
@@ -116,7 +116,7 @@ export module service.mock.base {
                 }, 100);
         }
 
-        public getRepository() {
+        getRepository() {
             return angular.copy(this.repository);
         }
     }

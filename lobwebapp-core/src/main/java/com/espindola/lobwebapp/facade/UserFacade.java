@@ -5,7 +5,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.espindola.lobwebapp.domain.User;
-import com.espindola.lobwebapp.exception.invalidArgument.InvalidArgumentException;
 import com.espindola.lobwebapp.facade.base.AbstractEntityFacade;
 import com.espindola.lobwebapp.service.contract.UserService;
 
@@ -25,12 +24,6 @@ public class UserFacade extends AbstractEntityFacade<User> {
 	
 	public User findByUsername(String username){
 		return userService.findByUsername(username);
-	}
-
-	@Override
-	protected void checkIfValid(User entity) throws InvalidArgumentException {
-		// TODO Auto-generated method stub
-		
 	}
 
 }

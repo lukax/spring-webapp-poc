@@ -7,6 +7,7 @@ export module controller{
     export class AlertController {
         static $inject = ['$scope', 'AlertService'];
         constructor($scope, AlertService: d.service.contract.AlertService) {
+            
             $scope.alerts = AlertService.list();
         }
     }

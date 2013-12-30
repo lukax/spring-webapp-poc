@@ -6,25 +6,21 @@ import f = require("./../service/impl/NavigationServiceImpl");
 
 export module modularity {
     export class ServiceModule {
-        private module: ng.IModule;
-
         constructor() {
-            this.module = angular.module("lwa.service", []);
-            this.module.config(["$provide", ($provide: ng.auto.IProvideService) => {
-                this.module.lazy = {
-                    service: $provide.service
-                };
-            }]);
-        }
+            var mod = angular.module("lwa.service", []);
 
-        configure() {
-            //Global usage services configuration
-            this.module
+            mod .config(["$provide", ($provide: ng.auto.IProvideService) => {
+                    mod.lazy = {
+                        service: $provide.service
+                    };
+                }]) 
+
                 .service("AuthService", <Function>d.service.impl.AuthServiceImpl)
                 .service("AlertService", <Function>a.service.mock.AlertServiceMock)
                 .service("NavigationService", <Function>f.service.impl.NavigationServiceImpl)
-            ;
-            return this;
+            
+                ;
         }
+
     }
 }

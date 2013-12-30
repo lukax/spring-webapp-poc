@@ -12,9 +12,9 @@
             </div>
         </div>
     </div>
-
-    <quick-search error="customer.id <= 0" label="'Cliente'" entity-id="customer.id" fetch="fetchCustomer(customer.id)" quickSearch="quickSearchCustomer()">
-        <p class="form-control-static">{{customer.name}}</p>
+    
+    <quick-search error="entity.customer.id <= 0" label="'Cliente'" entity-id="entity.customer.id" fetch="fetchCustomer(entity.customer.id)" quickSearch="quickSearchCustomer()">
+        <p class="form-control-static">{{entity.customer.name}}</p>
     </quick-search>
 
     <quick-search error="item.product.id <= 0 && entity.items.length == 0" label="'Produtos'" entity-id="item.product.id" fetch="fetchProduct(item.product.id)" quickSearch="quickSearchProduct()">
