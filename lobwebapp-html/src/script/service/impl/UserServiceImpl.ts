@@ -2,17 +2,22 @@
 import i0 = require("./base/PersonServiceImpl");
 
 export module service.impl {
-    export class UserServiceImpl extends i0.service.impl.base.PersonServiceImpl<domain.User> implements d.service.contract.UserService {
+    export class UserServiceImpl extends i0.service.impl.base.PersonServiceImpl<domain.User> 
+        implements d.service.contract.UserService, d.service.contract.base.HasDefaultValue<domain.User> {
         
         static $inject = ["$http"];
         constructor($http: ng.IHttpService) {
-            super("user", $http);
+            super("user", $http, this);
         }
 
         findByUsername(username: string,
             successCallback: (data: domain.User, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
             errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
                 this.$http({ method: "HEAD", url: this.url + username }).success(successCallback).error(errorCallback);
+        }
+        
+        getDefault(): domain.User{
+            return { id: 0, username: "", password: "", roles: [], name: "" };
         }
     }
 }

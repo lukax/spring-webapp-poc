@@ -30,7 +30,8 @@ require.config({
     map:{
         '*':{
             "fileupload": "../lib/jquery-file-upload/js/jquery.fileupload",
-            "jquery.ui.widget": "../lib/jquery-file-upload/js/vendor/jquery.ui.widget"
+            "jquery.ui.widget": "../lib/jquery-file-upload/js/vendor/jquery.ui.widget",
+            "jquery.iframe.transport": "lib/jquery-file-upload/js/jquery.iframe-transport.js"
         }
     },
 	baseUrl: "script",

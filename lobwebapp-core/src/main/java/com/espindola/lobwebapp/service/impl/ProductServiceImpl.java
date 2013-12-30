@@ -88,13 +88,13 @@ public class ProductServiceImpl extends AbstractEntityServiceImpl<Product> imple
 	}
 	
 	private void throwIfInvalidImage(Product entity) {
-		if(entity.getImage() != null){
+		if(entity.getImage() != null && entity.getImage().getBytes() != null){
 			try{
-				String type = URLConnection.guessContentTypeFromStream(new ByteArrayInputStream(entity.getImage()));
+				String type = URLConnection.guessContentTypeFromStream(new ByteArrayInputStream(entity.getImage().getBytes()));
 				if(type == null || !type.contains("image")){
 					throw new ProductInvalidException(new EntityError(MessageKey.PRODUCTIMAGEINVALID_VALIDATION));
 				}
-				if(entity.getImage().length > 5000000){
+				if(entity.getImage().getBytes().length > 5000000){
 					throw new ProductInvalidException(new EntityError(MessageKey.PRODUCTIMAGETOOBIG_VALIDATION, new Object[] { "5 MB"}));
 				}
 			}catch(IOException ex){

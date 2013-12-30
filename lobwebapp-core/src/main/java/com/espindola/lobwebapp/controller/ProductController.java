@@ -29,6 +29,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import com.espindola.lobwebapp.controller.base.AbstractEntityController;
 import com.espindola.lobwebapp.controller.util.HeaderKey;
+import com.espindola.lobwebapp.domain.FileMeta;
 import com.espindola.lobwebapp.domain.Product;
 import com.espindola.lobwebapp.domain.Stock;
 import com.espindola.lobwebapp.event.PageReturnEvent;
@@ -79,7 +80,8 @@ public class ProductController extends AbstractEntityController<Product> {
 	
 	@RequestMapping(value = "/{productId:[\\d]+}/image", method = RequestMethod.POST)
 	@ResponseStatus(value = HttpStatus.OK)
-	public void uploadImage(@PathVariable("productId") Long productId, UriComponentsBuilder ucb, HttpServletRequest request, HttpServletResponse response) throws InvalidArgumentException, NotFoundException {
+	@ResponseBody
+	public FileMeta uploadImage(@PathVariable("productId") Long productId, UriComponentsBuilder ucb, HttpServletRequest request, HttpServletResponse response) throws InvalidArgumentException, NotFoundException {
 		if(!ServletFileUpload.isMultipartContent(request)) 
 			throw new InvalidRequestException("request for this url should be multipart");
 		// Create a factory for disk-based file items
@@ -90,31 +92,36 @@ public class ProductController extends AbstractEntityController<Product> {
 		// Create a new file upload handler
 		ServletFileUpload upload = new ServletFileUpload(factory);
 		upload.setSizeMax(5100000);
+		
 		try {
 			// Parse the request
 			List<FileItem> items = upload.parseRequest(request);
 			for(FileItem x : items){
 				if(!x.isFormField()){
+					//Update Product
 					Product product = facade.find(productId);
-					product.setImage(x.get());
-					facade.update(product);
+					product.setImage(FileMeta.from(x));
+					product = facade.update(product);
+					
 					//Set Location header
 					UriComponents build = ucb.path(request.getPathInfo()).buildAndExpand(product.getId());
 					response.setHeader("Location", build.toUriString());
-					break;
+					
+					return product.getImage();
 				}
 			}
 		} catch (FileUploadException e) {	
 			throw new ProductInvalidException(new EntityError(MessageKey.PRODUCTIMAGETOOBIG_VALIDATION, new Object[] { "5 MB"}));
 		}
+		throw new ProductInvalidException(new EntityError(MessageKey.PRODUCTIMAGEINVALID_VALIDATION));
 	}
 	
 	@RequestMapping(value = "/{productId:[\\d]+}/image", method = RequestMethod.GET)
 	@ResponseStatus(value = HttpStatus.OK)
-	public void showImage(@PathVariable("productId") Long productId, HttpServletResponse response) throws InvalidArgumentException, NotFoundException {
-		Product product = facade.find(productId);
+	public void downloadImage(@PathVariable("productId") Long productId, HttpServletResponse response) throws InvalidArgumentException, NotFoundException {
+		FileMeta fileMeta = facade.getImage(productId);
 		try {
-			response.getOutputStream().write(product.getImage());
+			response.getOutputStream().write(fileMeta.getBytes());
 		} catch (Exception ex) {
 			throw new NotFoundException();
 		}

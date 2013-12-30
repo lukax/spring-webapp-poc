@@ -1,18 +1,15 @@
-﻿<form class="form-horizontal" role="form" name="formStock" ng-submit="saveChanges(entity)" novalidate>
-    
+<form class="form-horizontal" role="form" name="formStock" ng-submit="saveChanges(entity)" novalidate>
     <div class="form-group">
         <label for="stockId" class="col-md-1 control-label">ID</label>
         <div class="col-md-11">
             <input type="text" class="form-control" id="stockId" name="stockId" readonly ng-model="entity.id">
         </div>
     </div>
-    
-    <quick-search lock="readMode" error="entity.product.id <= 0" label="'Produto'" entity-id="entity.product.id" fetch="fetchProduct(entity.product.id)" quickSearch="quickSearchProduct()">
+    <quick-search error="entity.product.id <= 0" label="'Produto'" entity-id="entity.product.id" fetch="fetchProduct(entity.product.id)" quickSearch="quickSearchProduct()">
         <p class="form-control-static">
                 <product-detail product="entity.product"></product-detail>
         </p>
     </quick-search>
-
     <div class="form-group" ng-class="{'has-error': formStock.quantity.$invalid}">
         <label for="quantity" class="col-md-1 control-label">Qt.</label>
         <div class="col-md-5">
@@ -31,14 +28,12 @@
             </div>
         </div>
     </div>
-    
     <div class="form-group" ng-class="{'has-error': formStock.unit.$invalid}">
         <label for="unit" class="col-md-1 control-label">Unid.</label>
         <div class="col-md-11">
             <input type="text" class="form-control" id="unit" name="unit" autofocus ng-model="entity.unit" required ng-maxlength="3">
         </div>
     </div>
-
     <save-changes save-disabled="readMode ||
                             formStock.quantity.$invalid ||
                             formStock.unit.$invalid ||

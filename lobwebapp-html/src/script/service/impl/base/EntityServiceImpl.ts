@@ -3,11 +3,13 @@
 export module service.impl.base {
     export class EntityServiceImpl<T extends domain.base.AbstractEntity> implements d.service.contract.base.EntityService<T> {
 
-        private rootUrl: string = "/api/";
+        private hasDefault;
+        private rootUrl = "/api/";
         public url: string;
-
-        constructor(contextUrl: string, public $http: ng.IHttpService) {
+        
+        constructor(contextUrl: string, public $http: ng.IHttpService, hasDefault?: d.service.contract.base.HasDefaultValue<T>) {
             this.url = this.rootUrl + contextUrl + "/";
+            this.hasDefault = hasDefault;
         }
 
         save(entity: T,
@@ -31,7 +33,10 @@ export module service.impl.base {
         find(id: number,
             successCallback: (data: T, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
             errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
-                this.$http.get(this.url + id).success(successCallback).error(errorCallback);
+                if(id == 0 && this.hasDefault)
+                    successCallback(this.hasDefault.getDefault(), 200, () => { return ""; }, <any>{});
+                else
+                    this.$http.get(this.url + id).success(successCallback).error(errorCallback);
         }
 
         list(

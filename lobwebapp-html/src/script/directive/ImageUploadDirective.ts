@@ -8,7 +8,7 @@ export module directive {
         public restrict = 'E';
         public replace = true;
         public scope = {
-            postUrl: "=",
+            imageUrl: "=",
             done: "&"
         };
         public templateUrl = '/template/directive/ImageUploadTemplate.html';
@@ -37,7 +37,7 @@ export module directive {
                 }
             });
 
-            scope.$watch("postUrl", (newValue, oldValue)=>{
+            scope.$watch("imageUrl", (newValue, oldValue)=>{
                (<any>element.find("#imageUploadInput")).fileupload("option","url",newValue);
             }); 
 

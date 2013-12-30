@@ -2,11 +2,12 @@
 import a = require("./base/EntityServiceImpl");
 
 export module service.impl {
-    export class ProductServiceImpl extends a.service.impl.base.EntityServiceImpl<domain.Product> implements d.service.contract.ProductService {
+    export class ProductServiceImpl extends a.service.impl.base.EntityServiceImpl<domain.Product> 
+            implements d.service.contract.ProductService, d.service.contract.base.HasDefaultValue<domain.Product> {
 
         static $inject = ["$http"];
         constructor($http: ng.IHttpService) {
-            super("product", $http);
+            super("product", $http, this);
         }
 
         findByName(name: string,
@@ -35,6 +36,10 @@ export module service.impl {
                         .success((d, s, h, c)=>{ successCallback(imageUrl, imageUrl, s, h, c); })
                         .error((d, s, h, c)=>{ successCallback(placeholder, imageUrl, s, h, c); });
                 }
+        }
+        
+        getDefault(): domain.Product{
+            return { id: 0, name: "", description: "", price: 0, costPrice: 0, category: "", ncm: "" };
         }
     }
 }

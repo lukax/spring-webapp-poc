@@ -62,7 +62,7 @@ export var routes: AppRoute[] =
             controller: "GraphProductController",
             deps: [
                 "controller/product/GraphProductController",
-                "service/impl/ProductServiceImpl"
+                "service/impl/OrderServiceImpl"
             ]
         }, {
             name: "order",

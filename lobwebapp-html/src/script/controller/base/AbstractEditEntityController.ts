@@ -10,12 +10,14 @@ export module controller.base{
 	}
 
 	export class AbstractEditEntityController<T extends domain.base.AbstractEntity> implements d.controller.base.Controller{
-		
 		constructor(public $scope: EditEntityViewModel<T>, 
 		            public contextUrl: string, 
 		            public EntityService: d.service.contract.base.EntityService<T>,
 		            public AlertService: d.service.contract.AlertService){
-            this.watchEntity();
+		                
+            this.$scope.$watch("entity.id", (newValue: number, oldValue: number) => {
+                this.$scope.isEntityNew = this.isEntityNew();
+            });
 		}
 		
 		saveChanges(entity: T) {
@@ -27,7 +29,7 @@ export module controller.base{
             this.lock();
             this.EntityService.save(entity,
                 (successData, successStatus, successHeaders) => {
-                    this.$scope.navigator.$location.url("/" + this.contextUrl + "/" + successHeaders("Entity-Id"));
+                    this.$scope.navigator.navigateTo("/" + this.contextUrl + "/" + successHeaders("Entity-Id"));
                 },
                 (errorData, errorStatus) => {
                     console.log(errorData);
@@ -62,11 +64,16 @@ export module controller.base{
                 });
         }
 
-        findEntity(id: number) {
+        findEntity(prettyId: string, done?: ()=> void) {
+            var actualId;
+            if(prettyId == "new") actualId = 0;
+            else actualId = Number(prettyId);
+            
             this.lock();
-            this.EntityService.find(id,
+            this.EntityService.find(actualId,
                 (successData, successStatus) => {
                     this.$scope.entity = successData;
+                    if(done) done();
                     this.unlock();
                 },
                 (errorData, errorStatus) => {
@@ -77,7 +84,7 @@ export module controller.base{
         }
 
         newEntity() {
-            this.$scope.navigator.$location.url("/"+this.contextUrl+"/new");
+            this.$scope.navigator.navigateTo("/"+this.contextUrl+"/new");
         }
 
 		lock(){
@@ -94,10 +101,5 @@ export module controller.base{
             return (this.$scope.entity && this.$scope.entity.id == 0);
         }
         
-        private watchEntity(){
-            this.$scope.$watch("entity.id", (newValue: number, oldValue: number) => {
-                this.$scope.isEntityNew = this.isEntityNew();
-            });
-        }
 	}
 }

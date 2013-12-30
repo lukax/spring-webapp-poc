@@ -6,8 +6,8 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.Lob;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -36,13 +36,13 @@ public class Product extends AbstractEntity {
 
 	private String ncm;
 	
-	@Lob
-	private byte[] image;
+	@OneToOne(fetch= FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	private FileMeta image;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date registerDate;
 	
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "product")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "product", orphanRemoval = true)
 	private List<Stock> stocks;
 
 	public String getName() {
@@ -117,11 +117,12 @@ public class Product extends AbstractEntity {
 				"]";
 	}
 
-	public byte[] getImage() {
+	public FileMeta getImage() {
 		return image;
 	}
 
-	public void setImage(byte[] image) {
+	public void setImage(FileMeta image) {
 		this.image = image;
 	}
+
 }

@@ -5,41 +5,29 @@
 
 export module controller.product {
     export interface GraphProductViewModel extends d.controller.base.ViewModel {
-
     }
 
     export class GraphProductController implements d.controller.base.Controller {
-
-        static $inject = ["$scope", "ProductService", "AlertService"];
+        static $inject = ["$scope", "OrderService", "AlertService"];
         constructor(public $scope: GraphProductViewModel,
-            public ProductService: d.service.contract.ProductService,
-            public AlertService: d.service.contract.AlertService) {
-
-            this.processArgs();
-            this.populateScope();
-        }
-
-        processArgs(){
-
-        }
-
-        populateScope() {
+                    public OrderService: d.service.contract.OrderService,
+                    public AlertService: d.service.contract.AlertService) {
+            
             this.$scope.navigator.progress.start();  
-            this.ProductService.list((successData: domain.Product[]) => {
+            this.OrderService.list((successData) => {
                 this.buildGraphs(successData);
                 this.$scope.navigator.progress.done();
             }, () => { });
-
         }
                 
-        buildGraphs(products: domain.Product[]){
-            //var data = crossfilter(products);
-            //var categoryDimension = data.dimension((d: domain.Product) => {
-            //        return d.category;
-            //    });
-            //var categoryDimensionPriceGroup = categoryDimension.group().reduceSum((d: domain.Product) => {
-            //        return d.price * d.quantity;
-            //    });
+        buildGraphs(orders: domain.Order[]){
+            var data = crossfilter(orders);
+            var orderDimension = data.dimension((d: domain.Order) => {
+                    return d.id;
+                });
+            var orderDimensionDateGroup = orderDimension.group().reduceSum((d: domain.Order) => {
+                    return d.date;
+                });
             //var idDimension = data.dimension((d: domain.Product) => {
             //        return d.id;
             //    });
@@ -47,8 +35,9 @@ export module controller.product {
             //        return d.quantity;
             //});
 
-            //var lastProduct = _.last(products);
-            //if(!lastProduct) lastProduct = { id: 0, name: "", quantity: 0, price: 0 };
+            var lastOrder = _.last(orders);
+            var lastOrderId = 0
+            if(lastOrder) lastOrderId = lastOrder.id;
 
             //var categoryByPrice = dc.rowChart("#dc-category-price", "1");
             //categoryByPrice
@@ -73,27 +62,26 @@ export module controller.product {
 
             //////
 
-            //var nameByPrice = dc.barChart("#dc-name-quantity","2");
-            //nameByPrice
-            //    .width(900)
-            //    .height(150)
-            //    .margins({ top: 10, right: 10, bottom: 20, left: 40 })
-            //    .dimension(idDimension)
-            //    .group(idDimensionQtGroup)
-            //    .transitionDuration(500)
-            //    .centerBar(true)
-            //    .gap(1)
-            //    .x(d3.scale.linear().domain([0, 1]))
-            //    //.elasticY(true)
-            //    .renderHorizontalGridLines(true)
-            //    .title(function (d) { return "ID: " + Math.floor(d.value); })
-            //    // (optional) whether chart should render titles, :default = false
-            //    .renderTitle(true)
-            //    .xUnits(d3.scale.ordinal())
-            //    .x(d3.scale.linear().domain([0, lastProduct.id + 1]))
-            //    // .round(d3.time.month.round)
-            //    // .xAxis().tickFormat();
-            //    ;
+            var nameByPrice = dc.barChart("#dc-name-quantity","2");
+            nameByPrice
+                .width(900)
+                .height(150)
+                .margins({ top: 10, right: 10, bottom: 20, left: 40 })
+                .dimension(orderDimension)
+                .group(orderDimensionDateGroup)
+                .transitionDuration(500)
+                .centerBar(true)
+                .gap(1)
+                //.elasticY(true)
+                .renderHorizontalGridLines(true)
+                .title(function (d) { return "ID: " + Math.floor(d.value); })
+                // (optional) whether chart should render titles, :default = false
+                .renderTitle(true)
+                .xUnits(d3.scale.ordinal())
+                .x(d3.scale.linear())
+                // .round(d3.time.month.round)
+                // .xAxis().tickFormat();
+                ;
 
             //dc.dataTable("#dc-table", "2")
             //    // set dimension
@@ -119,7 +107,7 @@ export module controller.product {
             
             
             //dc.renderAll("1");
-            //dc.renderAll("2");
+            dc.renderAll("2");
         }
     }
 }

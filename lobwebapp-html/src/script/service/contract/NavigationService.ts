@@ -5,7 +5,6 @@ module d.service.contract {
         progress: Progress;
         navigateTo(url: string): void;
         params(): any;
-        $location: ng.ILocationService;
     }
 
     export interface Progress {
