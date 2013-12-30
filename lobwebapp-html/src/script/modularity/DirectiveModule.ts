@@ -16,23 +16,17 @@ import i6 = require("./../directive/ImageUploadDirective");
 
 export module modularity {
     export class DirectiveModule {
-        private module: ng.IModule;
-
         constructor() {
-            this.module = angular.module("lwa.directive", ["lwa.service","ngRoute","ngAnimate", "ui.bootstrap", "ui.utils"]);
-        }
+            angular.module("lwa.directive", ["lwa.service","ngRoute","ngAnimate", "ui.bootstrap", "ui.utils"])
 
-        configure() {
-            //Global usage directives configuration
-            this.module
                 .directive("productDetail", [() => new i1.directive.ProductDetailDirective()])
                 .directive("customerDetail", [() => new i2.directive.CustomerDetailDirective()])
                 .directive("paymentDetail", [() => new i3.directive.PaymentDetailDirective()])
                 .directive("saveChanges", [() => new i4.directive.SaveChangesDirective()])
                 .directive("quickSearch", [() => new i5.directive.QuickSearchDirective()])
                 .directive("imageUpload", [() => new i6.directive.ImageUploadDirective()])
-            ;
-            return this;
+                
+                ;
         }
 
     }

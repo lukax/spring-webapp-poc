@@ -9,8 +9,27 @@ import AppRoutes = require("./AppRoutes");
 
 export module modularity {
     export class ControllerModule {
-        private module: ng.IModule;
         private $provide: ng.auto.IProvideService;
+
+        constructor() {
+            var mod = angular.module("lwa.controller", ["lwa.service", "ui.router"]);
+            
+            mod .config(["$controllerProvider", "$provide", ($controllerProvider: ng.IControllerProvider, $provide: ng.auto.IProvideService) => {
+                    mod.lazy = {
+                        controller: $controllerProvider.register,
+                        service: $provide.service
+                    };
+                }])
+                .config(["$stateProvider", "$urlRouterProvider", this.stateProviderCfg])
+                .config(["$httpProvider", this.intercept401Cfg])
+
+                .run(["$rootScope","NavigationService", this.rootscopeVariables])
+                .run(["$rootScope", "$location", "AuthService", this.userAuthCfg])
+
+                .controller("MainNavbarController", <Function>f.controller.MainNavbarController)
+                .controller("AlertController", <Function>g.controller.AlertController)
+                ;
+        }
 
         private stateProviderCfg = ($stateProvider: ng.ui.IStateProvider, $urlRouterProvider: any) => {
             $urlRouterProvider.otherwise("/user/auth");
@@ -67,32 +86,6 @@ export module modularity {
 
         private rootscopeVariables = ($rootScope: d.controller.base.ViewModel, NavigationService: d.service.contract.NavigationService) => {
             $rootScope.navigator = NavigationService;
-        }
-
-        constructor() {
-            this.module = angular.module("lwa.controller", ["lwa.service", "ui.router"]);
-            this.module.config(["$controllerProvider", "$provide", ($controllerProvider: ng.IControllerProvider, $provide: ng.auto.IProvideService) => {
-                this.module.lazy = {
-                    controller: $controllerProvider.register,
-                    service: $provide.service
-                };
-            }]);
-        }
-
-        configure() {
-            //Global usage controllers configuration
-            this.module
-                .config(["$stateProvider", "$urlRouterProvider", this.stateProviderCfg])
-                .config(["$httpProvider", this.intercept401Cfg])
-
-                .run(["$rootScope","NavigationService", this.rootscopeVariables])
-                .run(["$rootScope", "$location", "AuthService", this.userAuthCfg])
-
-                .controller("MainNavbarController", <Function>f.controller.MainNavbarController)
-                .controller("AlertController", <Function>g.controller.AlertController)
-                ;
-
-            return this;
         }
 
         loadDependencies(deps: Array<string>){

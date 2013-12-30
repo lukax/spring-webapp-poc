@@ -61,7 +61,7 @@ export module directive {
 
         controller = ["AlertService", "$scope", (AlertService, $scope) => {
             $scope.uploadFailed = () => {
-                AlertService.add({ title: "Upload falhou", content: "A imagem precisa estar em um formato válido e ser menor que 5 MB", type: enums.AlertType.DANGER });
+                AlertService.add({ title: "Upload falhou", content: "A imagem precisa estar em um formato válido e ou ser menor que 5 MB", type: enums.AlertType.DANGER });
             }
 
             $scope.$watch("percentage", (newValue, oldValue)=>{
