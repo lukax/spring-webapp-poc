@@ -1,5 +1,5 @@
 <div>
-    <img ng-src="{{imageUrl}}" class="img-thumbnail">
+    <img ng-src="{{imageSrc}}" class="img-thumbnail">
     <div class="btn-group">
     	<a class="btn btn-default lwa-fade-left" ng-href="{{imageUrl}}" title="Abrir imagem" ng-disabled="imageUrl.indexOf('imageplaceholder') != -1 || loading">
             <span class="glyphicon glyphicon-new-window"></span>
@@ -9,5 +9,5 @@
     	    <span class="glyphicon glyphicon-upload"></span>
     	</a>
     </div>
-	<input id="imageUploadInput" type="file" name="files[]" style="visibility: hidden;"> 
+    <input id="imageUploadInput" type="file" name="files[]" style="visibility: hidden;">
 </div>

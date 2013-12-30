@@ -13,8 +13,5 @@ module d.service.contract {
             errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any
             ): void;
         
-        getImage(id: number, 
-            successCallback: (imageUrl: string, putImageUrl: string, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any
-            ): void;
     }
 }

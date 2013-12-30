@@ -23,20 +23,6 @@ export module service.impl {
             errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
                 this.$http.get(this.url + "category").success(successCallback).error(errorCallback);
         }
-
-        getImage(id: number, 
-            successCallback: (getImageUrl: string, putImageUrl: string, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
-                var imageUrl = this.url + id + "/image";
-                var placeholder = "/img/imageplaceholder.png";
-                if(id == 0){
-                    successCallback(placeholder, imageUrl, 200, null, null);
-                }
-                else{
-                    this.$http.get(imageUrl)
-                        .success((d, s, h, c)=>{ successCallback(imageUrl, imageUrl, s, h, c); })
-                        .error((d, s, h, c)=>{ successCallback(placeholder, imageUrl, s, h, c); });
-                }
-        }
         
         getDefault(): domain.Product{
             return { id: 0, name: "", description: "", price: 0, costPrice: 0, category: "", ncm: "" };

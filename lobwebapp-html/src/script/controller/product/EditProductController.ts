@@ -12,8 +12,6 @@ export module controller.product {
         removeProduct(product: domain.Product): void;
         canSave: boolean;
         imageUrl: string;
-        putImageUrl: string;
-        reloadImage: () => void;
     }
 
     export class EditProductController extends i0.controller.base.AbstractEditEntityController<domain.Product> {
@@ -42,21 +40,6 @@ export module controller.product {
                     this.unlock();
                 });
         }
-
-        reloadImage(){
-            this.ProductService.getImage(this.$scope.entity.id,
-                (getImageUrl, putImageUrl) => {
-                    if(this.$scope.imageUrl == getImageUrl){
-                        if(this.$scope.imageUrl.indexOf("?") == -1)
-                            this.$scope.imageUrl += "?"+ new Date().getTime();
-                        this.$scope.imageUrl += "&" + new Date().getTime();
-                    }
-                    else {
-                        this.$scope.imageUrl = getImageUrl;
-                    }
-                    this.$scope.putImageUrl = putImageUrl;
-                });
-        }
         
         watchProduct() {
             this.$scope.$watch("entity.price + entity.costPrice", () => {
@@ -67,7 +50,7 @@ export module controller.product {
                 this.$scope.categories = this.$filter("filter")(this.allCategories, this.$scope.entity.category);
             });
             this.$scope.$watch("entity.id", (newValue: number, oldValue: number) => {
-                this.reloadImage();
+                this.$scope.imageUrl = "/api/product/"+newValue+"/image";
             });
         }
 
@@ -76,7 +59,6 @@ export module controller.product {
             this.fetchCategories();
             this.$scope.saveChanges = (entity) => this.saveChanges(entity);
             this.$scope.removeProduct = (entity) => this.removeEntity(entity);
-            this.$scope.reloadImage = () => this.reloadImage();
         }
     }
 }

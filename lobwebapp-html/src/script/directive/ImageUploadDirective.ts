@@ -1,53 +1,77 @@
 ///<reference path="./../reference.d.ts"/>
 
+import enums = require("./../util/EnumUtil");
 import NProgress = require("NProgress");
 
 export module directive {
     export class ImageUploadDirective implements ng.IDirective {
 
-        public restrict = 'E';
-        public replace = true;
-        public scope = {
-            imageUrl: "=",
-            done: "&"
+        restrict = 'E';
+
+        replace = true;
+
+        scope = {
+            imageUrl: "="
         };
-        public templateUrl = '/template/directive/ImageUploadTemplate.html';
-        public link = (scope: any, element: any, attrs: any)=>{
+
+        templateUrl = '/template/directive/ImageUploadTemplate.html';
+
+        link = (scope: any, element: any, attrs: any)=>{
             element.find("#imageUploadIncludeImage").on("click", ()=>{
                 element.find("#imageUploadInput").click();    
             });
             
-            (<any>element.find("#imageUploadInput")).fileupload({
+            element.find("#imageUploadInput").fileupload({
                 dataType: 'json',
                 acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
                 maxFileSize: 5000000,
-                always: (e, data) => {
-                    if(data.result)
-                        $.each(data.result.files, function (index, file) {
-                            $('<p/>').text(file.name).appendTo(document.body);
-                        });
+                done: (e, data) => {
                     console.log(data);
-                    if(scope.done != null)
-                        scope.done();
+
+                    if(scope.imageUrl.indexOf("?") == -1)
+                        scope.imageUrl += "?"+ new Date().getTime();
+                    scope.imageUrl += "&" + new Date().getTime();
+                
+                },
+                fail: (e, data) =>{
+                    (scope.uploadFailed && scope.uploadFailed());
                 },
                 progressall: (e, data) => {
                     var load = data.loaded / data.total;
-                    (<any>NProgress).set(load);
+                    NProgress.set(load);
                     scope.percentage = load * 100;
                 }
             });
 
             scope.$watch("imageUrl", (newValue, oldValue)=>{
-               (<any>element.find("#imageUploadInput")).fileupload("option","url",newValue);
-            }); 
+                if(newValue == null || newValue == "") return;
 
-            scope.$watch("percentage", (newValue, oldValue)=>{
-                if(newValue == null || newValue == 100)
-                    scope.loading = false;
-                else
-                    scope.loading = true;
-            });
+                element.find("#imageUploadInput").fileupload("option","url",newValue);
+
+                $.ajax(newValue)
+                    .done((data)=>{
+                        scope.imageSrc = newValue;
+                    })
+                    .fail(()=>{
+                        scope.imageSrc = "/img/imageplaceholder.png";
+                    });
+            }); 
             
-        }    
+        };
+
+        controller = ["AlertService", "$scope", (AlertService, $scope) => {
+            $scope.uploadFailed = () => {
+                AlertService.add({ title: "Upload falhou", content: "A imagem precisa estar em um formato válido e ser menor que 5 MB", type: enums.AlertType.DANGER });
+            }
+
+            $scope.$watch("percentage", (newValue, oldValue)=>{
+                if(newValue == null || newValue == 100)
+                    $scope.loading = false;
+                else
+                    $scope.loading = true;
+            });
+
+        }];
+
     }
 }
