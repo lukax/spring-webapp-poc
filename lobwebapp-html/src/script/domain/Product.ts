@@ -8,6 +8,6 @@ module domain {
         costPrice?: number;
         category?: string;
         ncm?: string;
-        registerDate?: Date;
+        registerDate?: number;
     }
 }

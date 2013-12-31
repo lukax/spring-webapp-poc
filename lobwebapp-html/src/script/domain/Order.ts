@@ -5,7 +5,7 @@ module domain {
         customer: domain.Customer;
         items: domain.OrderItem[];
         payment: Payment;
-        date: Date;
+        date: number;
     }
 
     export interface OrderItem {

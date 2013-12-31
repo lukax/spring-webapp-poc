@@ -55,16 +55,6 @@ export var routes: AppRoute[] =
                 "service/impl/ProductServiceImpl"
             ]
         }, {
-            name: "product.graph",
-            baseUrl: "/product",
-            url: "/product/graph",
-            templateUrl: "view/product/graphProduct.html",
-            controller: "GraphProductController",
-            deps: [
-                "controller/product/GraphProductController",
-                "service/impl/OrderServiceImpl"
-            ]
-        }, {
             name: "order",
             url: "/order",
             abstract: true,
@@ -91,6 +81,16 @@ export var routes: AppRoute[] =
             controller: "ListOrderController",
             deps: [
                 "controller/order/ListOrderController",
+                "service/impl/OrderServiceImpl"
+            ]
+        }, {
+            name: "order.graph",
+            baseUrl: "/order",
+            url: "/order/graph",
+            templateUrl: "view/order/graphOrder.html",
+            controller: "GraphOrderController",
+            deps: [
+                "controller/order/GraphOrderController",
                 "service/impl/OrderServiceImpl"
             ]
         }, {
