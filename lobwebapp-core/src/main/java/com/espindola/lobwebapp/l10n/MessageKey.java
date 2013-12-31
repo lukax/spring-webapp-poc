@@ -40,6 +40,7 @@ public enum MessageKey {
 	PRODUCTNCMINVALID_VALIDATION("com.espindola.lobwebapp.validation.productncminvalid"), 
 	PRODUCTIMAGEINVALID_VALIDATION("com.espindola.lobwebapp.validation.productimageinvalid"),
 	PRODUCTIMAGETOOBIG_VALIDATION("com.espindola.lobwebapp.validation.productimagetoobig"),
+	PRODUCTREGISTERDATEINVALID_VALIDATION("com.espindola.lobwebapp.validation.productregisterdateinvalid"),
 	
 	STOCKPRODUCTINVALID_VALIDATION("com.espindola.lobwebapp.validation.stockproductinvalid"),
 	STOCKQUANTITYINVALID_VALIDATION("com.espindola.lobwebapp.validation.stockquantityinvalid"),

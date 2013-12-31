@@ -26,6 +26,13 @@ public class ProductValidator extends AbstractEntityValidator<Product> {
 		
 		validateNcm(t, e);
 		
+		validateRegisterDate(t, e);
+		
+	}
+
+	private void validateRegisterDate(Product t, Errors e) {
+		if(t.getRegisterDate() == null || t.getRegisterDate().getTime() < 1357005600000L) // 1/1/2013
+			e.rejectValue("registerDate", MessageKey.PRODUCTREGISTERDATEINVALID_VALIDATION.getKey());
 	}
 
 	private void validateNcm(Product t, Errors e) {

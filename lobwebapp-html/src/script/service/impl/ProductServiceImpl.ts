@@ -25,7 +25,7 @@ export module service.impl {
         }
         
         getDefault(): domain.Product{
-            return { id: 0, name: "", description: "", price: 0, costPrice: 0, category: "", ncm: "" };
+            return { id: 0, name: "", description: "", price: 0, costPrice: 0, category: "", ncm: "", registerDate: new Date().getTime() };
         }
     }
 }
