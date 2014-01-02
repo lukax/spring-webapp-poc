@@ -8,7 +8,7 @@ export module modularity {
     export class ServiceModule {
         constructor() {
             angular.module("lwa.service", [])
-
+            	//Global usage services
                 .service("AuthService", <Function>d.service.impl.AuthServiceImpl)
                 .service("AlertService", <Function>a.service.mock.AlertServiceMock)
                 .service("NavigationService", <Function>f.service.impl.NavigationServiceImpl)

@@ -12,26 +12,27 @@ export module modularity {
         constructor() {
             var mod = angular.module("lwa.controller", ["lwa.service", "ui.router"]);
             
-            mod .config(["$controllerProvider", "$provide", "$compileProvider", ($controllerProvider: ng.IControllerProvider, $provide: ng.auto.IProvideService,
-                         $compileProvider: ng.ICompileProvider) => {
+            mod .config(["$controllerProvider", "$provide", "$compileProvider", "$filterProvider", ($controllerProvider: ng.IControllerProvider, $provide: ng.auto.IProvideService,
+                         $compileProvider: ng.ICompileProvider, $filterProvider: ng.IFilterProvider) => {
                     mod.lazy = {
                         controller: $controllerProvider.register,
                         service: $provide.service,
-                        directive: $compileProvider.directive
+                        directive: $compileProvider.directive,
+                        filter: $filterProvider.register
                     };
                 }])
                 .config(["$stateProvider", "$urlRouterProvider", this.stateProviderCfg])
-                .config(["$httpProvider", this.intercept401Cfg])
+                .config(["$httpProvider", this.intercept401])
 
-                .run(["$rootScope","NavigationService", this.rootscopeVariables])
-                .run(["$rootScope", "$location", "AuthService", this.userAuthCfg])
+                .run(["$rootScope","NavigationService", this.setRootScopeVariables])
+                .run(["$rootScope", "$location", "AuthService", this.blockNotAllowedStates])
 
                 .controller("MainNavbarController", <Function>f.controller.MainNavbarController)
                 .controller("AlertController", <Function>g.controller.AlertController)
                 ;
         }
 
-        private stateProviderCfg = ($stateProvider: ng.ui.IStateProvider, $urlRouterProvider: any) => {
+        stateProviderCfg = ($stateProvider: ng.ui.IStateProvider, $urlRouterProvider: any) => {
             $urlRouterProvider.otherwise("/user/auth");
 
             AppRoutes.routes.forEach((x)=> {
@@ -45,31 +46,30 @@ export module modularity {
 
         };
         
-        private userAuthCfg = ($rootScope: ng.IRootScopeService, $location: ng.ILocationService, AuthService: d.service.contract.AuthService) => {
-            var allowedRoutes = ["/user/auth"];
-            var isAllowedRoute = (route: string) => {
-                return allowedRoutes.some((x) => {
+        blockNotAllowedStates = ($rootScope: ng.IRootScopeService, $location: ng.ILocationService, AuthService: d.service.contract.AuthService) => {
+            var allowedStates = ["user.auth"];
+            var isAllowedState = (route: string) => {
+                return allowedStates.some((x) => {
                     return x === route;
                 });
             };
-            $rootScope.$on("$stateChangeStart", (event: any, to: string, toParams: any, from: string, fromParams: any) => {
+            $rootScope.$on("$stateChangeStart", (event: any, to: any, toParams: any, from: any, fromParams: any) => {
                 // if route requires auth and user is not logged in
-                var from = $location.path();
-                if (!isAllowedRoute(from) && !AuthService.isLoggedIn()) {
+                if (!isAllowedState(to.name) && !AuthService.isLoggedIn()) {
                     // redirect back to login
                     event.preventDefault();
-                    console.log("State Watcher: user not authenticated, redirecting ...");
+                    console.log("User not authenticated, redirecting ...");
                     $location.path("/user/auth");
                 }
             });
         };
         
-        private intercept401Cfg = ($httpProvider) => {
+        intercept401 = ($httpProvider) => {
             var logoutUserOn401 = ["$q", "$location", ($q: ng.IQService, $location: ng.ILocationService) => {
                 return{
                     "responseError" : (response) => {
                         if(response.status == 401){
-                            $location.url("/user/auth?error=0");
+                            $location.path("/user/auth?error=0");
                             return $q.reject(response);
                         }
                         if (response.status == 500) {
@@ -84,7 +84,7 @@ export module modularity {
             $httpProvider.interceptors.push(logoutUserOn401);
         }
 
-        private rootscopeVariables = ($rootScope: d.controller.base.ViewModel, NavigationService: d.service.contract.NavigationService) => {
+        setRootScopeVariables = ($rootScope: d.controller.base.ViewModel, NavigationService: d.service.contract.NavigationService) => {
             $rootScope.navigator = NavigationService;
         }
 

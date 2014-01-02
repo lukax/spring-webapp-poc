@@ -12,9 +12,9 @@
 </head>
 <body>
 
-    <div data-ng-include="'view/mainNavbarView.html'"></div>
-    <div class="container" data-ui-view=""></div>
-    <div class="container" data-ng-include="'view/alertView.html'"></div>
+    <div ng-include="'view/mainNavbar.html'"></div>
+    <div class="container" ui-view></div>
+    <div class="container" ng-include="'view/alert.html'"></div>
 
     <script data-main="script/main.js" src="lib/requirejs/require.js"></script>
 </body>

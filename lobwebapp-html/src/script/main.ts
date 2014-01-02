@@ -22,8 +22,8 @@ require.config({
         underscore: "../lib/underscore-amd/underscore",
         ngAnimateAnimateCss: "../lib/ngAnimate-animate.css/animate",
         nprogress: "../lib/nprogress/nprogress",
-        dcjs: "../lib/dcjs/dc",
-        d3js: "../lib/d3/d3",
+        dc: "../lib/dcjs/dc",
+        d3: "../lib/d3/d3",
         crossfilter: "../lib/crossfilter/crossfilter",
         NProgress: "../lib/nprogress/nprogress"
     },
@@ -53,10 +53,10 @@ require.config({
             deps: ["jquery"],
             exports: "NProgress"
         },
-        "d3js": { exports: "d3" },
+        "d3": { exports: "d3" },
         "crossfilter": { exports: "crossfilter" },
-        "dcjs": {
-            deps: ["jquery","text!../lib/dcjs/dc.css","d3js","crossfilter"],
+        "dc": {
+            deps: ["jquery","text!../lib/dcjs/dc.css","d3","crossfilter"],
             exports: "dc",
             init: ApplyCSS
         }

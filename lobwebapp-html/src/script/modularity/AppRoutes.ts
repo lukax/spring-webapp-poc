@@ -78,7 +78,8 @@ export var routes: AppRoute[] =
                 "directive/QuickSearchDirective",
                 "directive/CustomerDetailDirective",
                 "directive/ProductDetailDirective",
-                "directive/PaymentDetailDirective"
+                "directive/PaymentDetailDirective",
+                "filter/PaymentFilter"
             ]
         }, {
             name: "order.list",

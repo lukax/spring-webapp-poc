@@ -1,7 +1,7 @@
 ///<reference path="./../../reference.d.ts"/>
 ///<amd-dependency path="crossfilter"/>
-///<amd-dependency path="d3js"/>
-///<amd-dependency path="dcjs"/>
+///<amd-dependency path="d3"/>
+///<amd-dependency path="dc"/>
 
 import enums = require("./../../util/EnumUtil");
 

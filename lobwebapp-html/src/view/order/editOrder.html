@@ -63,11 +63,7 @@
             <input type="number" class="form-control" id="inputPayment" name="inputPayment" ng-model="entity.payment.quantity" required min="0">
             <div class="input-group-btn">
                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                    <ng-pluralize count="entity.payment.mode"
-                                  when="{'MONEY': 'À Vista',
-                                         'CREDIT_CARD': 'Cartão',
-                                         'CHECK': 'Cheque'}">
-                    </ng-pluralize>
+                    {{entity.payment.mode | paymentMode}}
                     <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu" role="menu">
