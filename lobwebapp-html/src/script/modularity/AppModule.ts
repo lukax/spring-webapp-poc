@@ -1,7 +1,6 @@
 ///<reference path="../reference.d.ts"/>
 import a = require("./ControllerModule");
 import b = require("./DirectiveModule");
-import c = require("./FilterModule");
 import d = require("./ServiceModule");
 
 export module modularity {
@@ -9,10 +8,9 @@ export module modularity {
         constructor() {
             new a.modularity.ControllerModule();
             new b.modularity.DirectiveModule();
-            new c.modularity.FilterModule();
             new d.modularity.ServiceModule();
 
-            angular.module("lwa", ["lwa.directive", "lwa.filter", "lwa.controller"]);
+            angular.module("lwa", ["lwa.directive", "lwa.controller"]);
         }
 
         bootstrap(rootElement: any) {

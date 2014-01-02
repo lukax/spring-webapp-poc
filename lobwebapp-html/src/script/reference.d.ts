@@ -1,4 +1,4 @@
-﻿///<reference path="./../../ts-definitions/angularjs/angular.d.ts"/>
+///<reference path="./../../ts-definitions/angularjs/angular.d.ts"/>
 ///<reference path="./../../ts-definitions/angularui/angular-ui.d.ts"/>
 ///<reference path="./../../ts-definitions/jquery/jquery.d.ts"/>
 ///<reference path="./../../ts-definitions/requirejs/require.d.ts"/>
@@ -29,7 +29,6 @@
 ///<reference path="./modularity/AppRoutes.ts"/>
 ///<reference path="./modularity/ControllerModule.ts"/>
 ///<reference path="./modularity/DirectiveModule.ts"/>
-///<reference path="./modularity/FilterModule.ts"/>
 ///<reference path="./modularity/ServiceModule.ts"/>
 
 ///<reference path="./service/contract/base/EntityService.ts"/>

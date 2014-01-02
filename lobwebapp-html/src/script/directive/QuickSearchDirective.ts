@@ -16,3 +16,8 @@ export module directive {
         templateUrl = '/template/directive/QuickSearchTemplate.html';
     }
 }
+
+
+export var register = (moduleName: string) => {
+    angular.module(moduleName).lazy.directive("quickSearch", [() => new directive.QuickSearchDirective()]);
+};

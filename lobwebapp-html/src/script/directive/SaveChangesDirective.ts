@@ -14,3 +14,7 @@ export module directive {
 
     }
 }
+
+export var register = (moduleName: string) => {
+    angular.module(moduleName).lazy.directive("saveChanges", [() => new directive.SaveChangesDirective()]);
+};

@@ -75,3 +75,7 @@ export module directive {
 
     }
 }
+
+export var register = (moduleName: string) => {
+    angular.module(moduleName).lazy.directive("imageUpload", [() => new directive.ImageUploadDirective()]);
+};

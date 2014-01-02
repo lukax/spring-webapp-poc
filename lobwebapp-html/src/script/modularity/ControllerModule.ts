@@ -9,15 +9,15 @@ import AppRoutes = require("./AppRoutes");
 
 export module modularity {
     export class ControllerModule {
-        private $provide: ng.auto.IProvideService;
-
         constructor() {
             var mod = angular.module("lwa.controller", ["lwa.service", "ui.router"]);
             
-            mod .config(["$controllerProvider", "$provide", ($controllerProvider: ng.IControllerProvider, $provide: ng.auto.IProvideService) => {
+            mod .config(["$controllerProvider", "$provide", "$compileProvider", ($controllerProvider: ng.IControllerProvider, $provide: ng.auto.IProvideService,
+                         $compileProvider: ng.ICompileProvider) => {
                     mod.lazy = {
                         controller: $controllerProvider.register,
-                        service: $provide.service
+                        service: $provide.service,
+                        directive: $compileProvider.directive
                     };
                 }])
                 .config(["$stateProvider", "$urlRouterProvider", this.stateProviderCfg])

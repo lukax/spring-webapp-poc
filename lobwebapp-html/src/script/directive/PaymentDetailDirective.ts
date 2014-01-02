@@ -61,3 +61,7 @@ export module directive {
         }
     }
 }
+
+export var register = (moduleName: string) => {
+    angular.module(moduleName).lazy.directive("paymentDetail", [() => new directive.PaymentDetailDirective()]);
+};

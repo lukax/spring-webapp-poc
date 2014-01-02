@@ -9,21 +9,21 @@ export module util {
 
         }
 
-        public resolve(paths: string[], registerProvider: any) {
+        public resolve(paths: string[], moduleName: string) {
             var deferred = this.$q.defer();
             p.util.Progress.start();
 
-            if (registerProvider) {
+            if (moduleName) {
                 paths.forEach((x: string) => {
                     require([x], (dep) => {
-                        if (dep.register) dep.register(registerProvider);
+                        if (dep.register) dep.register(moduleName);
                     });
                 });
             }
 
             require(paths, (deps) => {
                 this.$rootScope.$apply(() => {
-                    console.log("Dependency Manager: resolved " + paths);
+                    console.log("Resolved: " + paths.join(", "));
                     p.util.Progress.done();
                     deferred.resolve();
                 });

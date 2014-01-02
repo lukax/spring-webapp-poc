@@ -16,3 +16,7 @@ export module directive {
 
     }
 }
+
+export var register = (moduleName: string) => {
+    angular.module(moduleName).lazy.directive("customerDetail", [() => new directive.CustomerDetailDirective()]);
+};

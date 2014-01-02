@@ -52,7 +52,9 @@ export var routes: AppRoute[] =
             controller: "EditProductController",
             deps: [
                 "controller/product/EditProductController",
-                "service/impl/ProductServiceImpl"
+                "service/impl/ProductServiceImpl",
+                "directive/ImageUploadDirective",
+                "directive/SaveChangesDirective"
             ]
         }, {
             name: "order",
@@ -71,7 +73,12 @@ export var routes: AppRoute[] =
                 "controller/order/EditOrderController",
                 "service/impl/OrderServiceImpl",
                 "service/impl/ProductServiceImpl",
-                "service/impl/CustomerServiceImpl"
+                "service/impl/CustomerServiceImpl",
+                "directive/SaveChangesDirective",
+                "directive/QuickSearchDirective",
+                "directive/CustomerDetailDirective",
+                "directive/ProductDetailDirective",
+                "directive/PaymentDetailDirective"
             ]
         }, {
             name: "order.list",
@@ -108,7 +115,8 @@ export var routes: AppRoute[] =
             controller: "EditCustomerController",
             deps: [
                 "controller/customer/EditCustomerController",
-                "service/impl/CustomerServiceImpl"
+                "service/impl/CustomerServiceImpl",
+                "directive/SaveChangesDirective"
             ]
         }, {
             name: "customer.list",
@@ -136,7 +144,10 @@ export var routes: AppRoute[] =
             deps: [
                 "controller/stock/EditStockController",
                 "service/impl/StockServiceImpl",
-                "service/impl/ProductServiceImpl"
+                "service/impl/ProductServiceImpl",
+                "directive/SaveChangesDirective",
+                "directive/QuickSearchDirective",
+                "directive/ProductDetailDirective"
             ]
         }, {
             name: "stock.list",

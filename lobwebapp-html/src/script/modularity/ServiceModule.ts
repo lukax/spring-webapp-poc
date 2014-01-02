@@ -7,13 +7,7 @@ import f = require("./../service/impl/NavigationServiceImpl");
 export module modularity {
     export class ServiceModule {
         constructor() {
-            var mod = angular.module("lwa.service", []);
-
-            mod .config(["$provide", ($provide: ng.auto.IProvideService) => {
-                    mod.lazy = {
-                        service: $provide.service
-                    };
-                }]) 
+            angular.module("lwa.service", [])
 
                 .service("AuthService", <Function>d.service.impl.AuthServiceImpl)
                 .service("AlertService", <Function>a.service.mock.AlertServiceMock)
