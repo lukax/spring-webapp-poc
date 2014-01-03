@@ -34,6 +34,7 @@ export module controller.order {
             this.findEntity(orderId, () => { 
                 if(customerId != null) this.fetchCustomer(customerId);
                 this.fetchProduct(productId || 0);
+                this.computeTotal();
                 this.populateScope(); 
             });
         }
@@ -50,6 +51,7 @@ export module controller.order {
                 this.$scope.entity.items.push(this.$scope.item);        
             }
             this.emptyItem();
+            this.computeTotal();
         }
         
         emptyItem(){
@@ -70,14 +72,12 @@ export module controller.order {
             this.$scope.navigator.navigateTo("/product/list?redirect=" + preparedUrl);
         }
         
-        total() {
-            this.$timeout(() => { //TODO: Fix this ugly hack
-                var sum: number = 0;
-                this.$scope.entity.items.forEach((x) => {
-                    sum += x.quantity * x.product.price;
-                });
-                this.$scope.total = sum;
-            }, 100);
+        computeTotal() {
+            var sum = 0;
+            this.$scope.entity.items.forEach((x) => {
+                sum += x.quantity * x.product.price;
+            });
+            this.$scope.total = sum;
         }
 
         fetchCustomer(id: number) {
@@ -109,7 +109,7 @@ export module controller.order {
         }
         
         watchOrder() {
-            this.$scope.$watch("payment", (newValue: domain.Order, oldValue: domain.Order) => {
+            this.$scope.$watch("entity.payment.quantity", (newValue: domain.Order, oldValue: domain.Order) => {
                 if (this.$scope.total > 0) {
                     var sum = this.$scope.entity.payment.quantity - this.$scope.total;
                     if (sum > 0) this.$scope.exchange = sum;
@@ -117,9 +117,6 @@ export module controller.order {
                 } else {
                     this.$scope.exchange = 0;
                 }
-            });
-            this.$scope.$watchCollection("order.items", (newValue: domain.Product[], oldValue: domain.Product[]) => {
-                this.total();
             });
         }
 

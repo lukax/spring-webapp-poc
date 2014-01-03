@@ -29,4 +29,13 @@ public class OrderItem {
 	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
 	}
+	
+	public Double computeTotalPrice(){
+		Double qt = 0D;
+		try{
+			qt = product.getPrice() * quantity;
+		}catch(NullPointerException ex){ }
+		
+		return qt;
+	}
 }

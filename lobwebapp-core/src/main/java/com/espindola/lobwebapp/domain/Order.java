@@ -25,7 +25,7 @@ public class Order extends AbstractEntity {
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "CUSTOMER_ID")
 	private Customer customer;	
-	
+
 	@ElementCollection(fetch= FetchType.EAGER)
 	@CollectionTable(
 	        name="TB_ORDER_ITEM",
@@ -35,7 +35,7 @@ public class Order extends AbstractEntity {
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date date;
-	
+
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "PAYMENT_ID")
 	private Payment payment;
@@ -72,4 +72,15 @@ public class Order extends AbstractEntity {
 		this.items = items;
 	}
 
+	public Double computeTotalPrice(){
+		Double qt = 0D;
+		try { 
+			for(OrderItem i: getItems()){
+				qt += i.computeTotalPrice();
+			}
+		}
+		catch(NullPointerException ex){ }
+		
+		return qt;
+	}
 }

@@ -59,7 +59,7 @@ export module modularity {
                     // redirect back to login
                     event.preventDefault();
                     console.log("User not authenticated, redirecting ...");
-                    $location.path("/user/auth");
+                    $location.url("/user/auth");
                 }
             });
         };
@@ -69,7 +69,7 @@ export module modularity {
                 return{
                     "responseError" : (response) => {
                         if(response.status == 401){
-                            $location.path("/user/auth?error=0");
+                            $location.url("/user/auth?error=0");
                             return $q.reject(response);
                         }
                         if (response.status == 500) {

@@ -56,7 +56,7 @@
         </div>
     </div>
     
-    <div class="form-group lwa-fade-left" ng-class="{'has-error': orderForm.inputPayment.$invalid || total > payment}" ng-show="total != 0 && entity.payment.status != 'OK' && entity.payment.status != 'CANCELLED'">
+    <div class="form-group lwa-fade-left" ng-class="{'has-error': orderForm.inputPayment.$invalid || total > entity.payment.quantity}" ng-show="total != 0 && entity.payment.status != 'OK' && entity.payment.status != 'CANCELLED'">
         <label for="total" class="col-md-1 col-md-offset-1 control-label">Dinheiro</label>
         <div class="col-md-10 input-group">
             <span class="input-group-addon">R$</span>
@@ -75,7 +75,7 @@
         </div>
     </div>
     
-    <div class="form-group lwa-fade-left" ng-show="entity.paymentMode == 0 && exchange != 0 && entity.status.payment == 0">
+    <div class="form-group lwa-fade-left" ng-show="exchange != 0 && entity.payment.status == 'PENDING'">
         <label for="total" class="col-md-1 col-md-offset-1 control-label">Troco</label>
         <div class="col-md-10 input-group">
             <span class="input-group-addon">R$</span>
