@@ -1,11 +1,13 @@
 package com.espindola.lobwebapp.validation;
 
+import java.util.Date;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BindException;
 import org.springframework.validation.Errors;
+import org.springframework.validation.ObjectError;
 
 import com.espindola.lobwebapp.domain.Customer;
 import com.espindola.lobwebapp.domain.Order;
@@ -29,17 +31,17 @@ public class OrderValidator extends AbstractEntityValidator<Order> {
 	protected void validateEntity(Order t, Errors e) {
 		
 		validateCustomer(t.getCustomer(), e);
-
-		validatePayment(t.getPayment(), e);
 		
 		validateOrderItems(t.getItems(), e);
-		
-		validateDate(t, e);
+
+		validateDate(t.getDate(), e);
+			
+		validatePayment(t.getPayment(), e);
 		
 	}
 
-	private void validateDate(Order t, Errors errors) {
-		if(t.getDate() == null)
+	private void validateDate(Date t, Errors errors) {
+		if(t == null)
 			errors.rejectValue("date", MessageKey.ORDERDATEINVALID_VALIDATION.getKey(), defaultMessage);
 	}
 	
@@ -60,8 +62,8 @@ public class OrderValidator extends AbstractEntityValidator<Order> {
 	private void validatePayment(Payment payment, Errors errors){
 		BindException paymentErrors = new BindException(payment, "payment");
 		this.paymentValidator.validate(payment, paymentErrors);
-		if(paymentErrors.hasErrors()){
-			errors.rejectValue("product", MessageKey.ORDERPAYMENTINVALID_VALIDATION.getKey(), defaultMessage);
+		for(ObjectError objErr : paymentErrors.getAllErrors()){
+			errors.rejectValue("payment."+objErr.getObjectName(), objErr.getCode(), objErr.getArguments(), defaultMessage);
 		}
 	}
 	

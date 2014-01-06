@@ -57,6 +57,7 @@ public enum MessageKey {
 	ORDERITEMSINVALID_VALIDATION("com.espindola.lobwebapp.validation.orderitemsinvalid"),
 	ORDERDATEINVALID_VALIDATION("com.espindola.lobwebapp.validation.orderdateinvalid"),
 	ORDERPAYMENTINVALID_VALIDATION("com.espindola.lobwebapp.validation.orderpaymentinvalid"),
+	ORDERPAYMENTQUANTITYLESSTHANTOTAL_VALIDATION("com.espindola.lobwebapp.validation.orderpaymentquantitylessthantotal"),
 
 	PAYMENTQUANTITYINVALID_VALIDATION("com.espindola.lobwebapp.validation.paymentquantityinvalid"),
 	PAYMENTMODEINVALID_VALIDATION("com.espindola.lobwebapp.validation.paymentmodeinvalid"),

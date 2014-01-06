@@ -17,7 +17,7 @@ public class ProductValidator extends AbstractEntityValidator<Product> {
 	protected void validateEntity(Product t, Errors e) {
 		
 		validateName(t, e);
-		
+				
 		validateCostPrice(t, e);
 		
 		validatePrice(t, e);

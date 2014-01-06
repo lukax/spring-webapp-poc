@@ -51,6 +51,6 @@ public class OrderServiceImpl extends AbstractEntityServiceImpl<Order> implement
 			throw new OrderInvalidException(new EntityError(MessageKey.ORDERPAYMENTINVALID_VALIDATION));
 		
 		if(entity.computeTotalPrice() >= entity.getPayment().getQuantity())
-			throw new OrderInvalidException(new EntityError(MessageKey.PAYMENTQUANTITYINVALID_VALIDATION));
+			throw new OrderInvalidException(new EntityError(MessageKey.ORDERPAYMENTQUANTITYLESSTHANTOTAL_VALIDATION));
 	}
 }

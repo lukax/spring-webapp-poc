@@ -14,10 +14,10 @@ public class PaymentValidator extends AbstractEntityValidator<Payment> {
 	protected void validateEntity(Payment t, Errors e) {
 		
 		validateQuantity(t, e);
+
+		validateStatus(t, e);
 		
 		validateMode(t, e);
-		
-		validateStatus(t, e);
 		
 	}
 
