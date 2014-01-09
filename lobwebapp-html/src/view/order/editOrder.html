@@ -57,7 +57,7 @@
     </div>
     
     <div class="form-group lwa-fade-left" ng-class="{'has-error': orderForm.inputPayment.$invalid || total > entity.payment.quantity}" ng-show="total != 0 && entity.payment.status != 'OK' && entity.payment.status != 'CANCELLED'">
-        <label for="total" class="col-md-1 col-md-offset-1 control-label">Dinheiro</label>
+        <label for="total" class="col-md-1 col-md-offset-1 control-label">Pagamento</label>
         <div class="col-md-10 input-group">
             <span class="input-group-addon">R$</span>
             <input type="number" class="form-control" id="inputPayment" name="inputPayment" ng-model="entity.payment.quantity" required min="0">

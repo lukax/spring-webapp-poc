@@ -21,7 +21,7 @@ import com.espindola.lobwebapp.exception.notFound.NotFoundException;
 import com.espindola.lobwebapp.exception.util.ErrorResponse;
 
 @ControllerAdvice //Allows the exception handling to operate on all controllers
-public class ExceptionHandlerControllerAdvice {
+public class GlobalExceptionHandler {
 	
 	@Autowired
 	private MessageSource messageSource;
