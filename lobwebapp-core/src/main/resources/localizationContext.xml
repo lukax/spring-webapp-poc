@@ -5,6 +5,7 @@
 
 	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
 		<property name="basename" value="l10n/messages"></property>
+		<property name="useCodeAsDefaultMessage" value="true"></property>
 	</bean>
 
 </beans>
