@@ -25,6 +25,7 @@ export module directive {
                 dataType: 'json',
                 acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
                 maxFileSize: 5000000,
+                minFileSize: 1,
                 done: (e, data) => {
                     console.log(data);
 
@@ -34,7 +35,7 @@ export module directive {
                 
                 },
                 fail: (e, data) =>{
-                    (scope.uploadFailed && scope.uploadFailed());
+                    scope.uploadFailed();
                 },
                 progressall: (e, data) => {
                     var load = data.loaded / data.total;
@@ -61,7 +62,7 @@ export module directive {
 
         controller = ["AlertService", "$scope", (AlertService, $scope) => {
             $scope.uploadFailed = () => {
-                AlertService.add({ title: "Upload falhou", content: "A imagem precisa estar em um formato válido e ou ser menor que 5 MB", type: enums.AlertType.DANGER });
+                AlertService.add({ title: "Upload falhou", content: "A imagem precisa estar em um formato válido e ser menor que 5 MB", type: enums.AlertType.DANGER });
             }
 
             $scope.$watch("percentage", (newValue, oldValue)=>{

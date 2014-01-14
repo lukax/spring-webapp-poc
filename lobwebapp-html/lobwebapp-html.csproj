@@ -65,6 +65,7 @@
     <Content Include="src\index.html" />
     <Content Include="src\script\.gitignore" />
     <Content Include="src\template\directive\ImageUploadTemplate.html" />
+    <Content Include="src\template\directive\ListPagerTemplate.html" />
     <Content Include="src\template\directive\PaymentDetailTemplate.html" />
     <Content Include="src\template\directive\QuickSearchTemplate.html" />
     <Content Include="src\template\directive\SaveChangesTemplate.html" />
@@ -137,6 +138,7 @@
     <TypeScriptCompile Include="src\script\controller\stock\ListStockController.ts" />
     <TypeScriptCompile Include="src\script\controller\user\AuthUserController.ts" />
     <TypeScriptCompile Include="src\script\directive\ImageUploadDirective.ts" />
+    <TypeScriptCompile Include="src\script\directive\ListPagerDirective.ts" />
     <TypeScriptCompile Include="src\script\directive\PaymentDetailDirective.ts" />
     <TypeScriptCompile Include="src\script\directive\CustomerDetailDirective.ts" />
     <TypeScriptCompile Include="src\script\directive\ProductDetailDirective.ts" />

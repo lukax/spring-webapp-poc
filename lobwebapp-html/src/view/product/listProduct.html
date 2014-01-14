@@ -1,8 +1,8 @@
 <div class="row">
     <div class="input-group">
-        <input type="search" ng-model="searchText" id="inputSearch" placeholder="Procurar" class="form-control" ui-up="{'enter': 'listProduct(0, searchText)'}" autofocus>
+        <input type="search" ng-model="searchText" id="inputSearch" placeholder="Procurar" class="form-control" ui-up="{'enter': 'listProduct(0)'}" autofocus>
         <div class="input-group-btn">
-            <label class="btn btn-primary" for="inputSearch" data-ng-click="listProduct(currentPage, searchText)">
+            <label class="btn btn-primary" for="inputSearch" data-ng-click="listProduct(currentPage)">
                 <span class="glyphicon glyphicon-refresh"></span>
             </label>
         </div>
@@ -18,8 +18,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="prod in entities | filter:searchText | orderBy:predicate:reverse" 
-                ng-click="editEntity(prod.id)" style="cursor: pointer;" class="product-list">
+            <tr class="lwa-list" ng-repeat="prod in entities | filter:searchText | orderBy:predicate:reverse" ng-click="editEntity(prod.id)">
                 <td>{{prod.id}}</td>
                 <td>{{prod.name}}</td>
                 <td>{{prod.quantity}} {{prod.unit}}</td>
@@ -28,15 +27,5 @@
             </tr>
         </tbody>
     </table>
-    <ul class="pager">
-        <li ng-class="{disabled: currentPage == 0, enabled: currentPage != 0}">
-            <a class="link" ng-click="listProduct(0, searchText)">&laquo;</a>
-            <a class="link" ng-click="listProduct(currentPage-1, searchText)">&larr;</a>
-        </li>
-        <li class="disabled"><a class="link">{{currentPage+1}} de {{totalPages}}</a></li>
-        <li ng-class="{disabled: currentPage == totalPages-1, enabled: currentPage != totalPages-1}">
-            <a class="link" ng-click="listProduct(currentPage+1, searchText)">&rarr;</a>
-            <a class="link" ng-click="listProduct(totalPages-1, searchText)">&raquo;</a>
-        </li>
-    </ul>
+    <list-pager page="page" change-page="listProduct"></list-pager>
 </div>

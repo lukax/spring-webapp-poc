@@ -17,8 +17,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="stock in entities | filter:searchText | orderBy:predicate:reverse"
-                ng-click="editEntity(stock.id)" style="cursor: pointer;" class="product-list">
+            <tr class="lwa-list"  ng-repeat="stock in entities | filter:searchText | orderBy:predicate:reverse" ng-click="editEntity(stock.id)">
                 <td>{{stock.id}}</td>
                 <td><product-detail product="stock.product"></product-detail></td>
                 <td>{{stock.quantity}}</td>
@@ -26,4 +25,5 @@
             </tr>
         </tbody>
     </table>
+    <list-pager page="page" change-page="listEntity"></list-pager>
 </div>

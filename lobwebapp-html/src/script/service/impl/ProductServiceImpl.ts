@@ -13,7 +13,7 @@ export module service.impl {
         findByName(name: string,
             successCallback: (data: domain.Product[], status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
             errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
-            pageable: domain.util.Pageable) {
+            pageable: domain.util.Page) {
                 var header = "%" + name + "%";
                 this.$http.get(this.url + this.getPageableUri(pageable), { headers: { product_name: header } }).success(successCallback).error(errorCallback);
         }

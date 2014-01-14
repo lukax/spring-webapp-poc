@@ -18,3 +18,7 @@ export class AlertType {
     public static OK = "success";
     public static INFO = "info";
 }
+
+export class Headers {
+    public static PAGE_TOTAL = "page_total";
+}

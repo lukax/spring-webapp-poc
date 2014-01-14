@@ -13,7 +13,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -42,7 +41,7 @@ public class ProductControllerTest {
 	@Transactional
 	public void findAll() throws Exception {
 		mockMvc.perform(get("/product")
-				.accept(MediaType.ALL))
+				.accept(TestUtil.APPLICATION_JSON_UTF8))
 			.andExpect(status().isOk())
 			.andExpect(content().contentType(TestUtil.APPLICATION_JSON_UTF8))
 			.andExpect(jsonPath("$", Matchers.empty()));
@@ -63,10 +62,16 @@ public class ProductControllerTest {
 		p.setNcm("1234.56.78");
 
 		mockMvc.perform(post("/product")
-				.accept(MediaType.ALL)
-				.contentType(MediaType.APPLICATION_JSON)
+				.accept(TestUtil.APPLICATION_JSON_UTF8)
+				.contentType(TestUtil.APPLICATION_JSON_UTF8)
 				.content(TestUtil.convertObjectToJsonBytes(p)))
 			.andExpect(status().isCreated());
+		
+		mockMvc.perform(get("/product/1")
+				.accept(TestUtil.APPLICATION_JSON_UTF8))
+			.andExpect(status().isOk())
+			.andExpect(content().contentType(TestUtil.APPLICATION_JSON_UTF8))
+			.andExpect(jsonPath("$.name", Matchers.is(p.getName())));
 	}
-
+	
 }

@@ -6,7 +6,7 @@ module d.service.contract {
         findByName(name: string,
             successCallback: (data: domain.Product[], status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
             errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
-            pageable: domain.util.Pageable): void;
+            pageable: domain.util.Page): void;
 
         listCategory(
             successCallback: (data: string[], status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,

@@ -5,7 +5,7 @@ import i0 = require("./../base/AbstractListEntityController");
 
 export module controller.product {
     export interface ListProductViewModel extends i0.controller.base.ListEntityViewModel<domain.Product> {
-        listProduct(page: number, searchText: string): void;
+        listProduct(page: number): void;
         searchProduct(name: string): void;
     }
 
@@ -16,17 +16,19 @@ export module controller.product {
                     public AlertService: d.service.contract.AlertService) {
             super($scope, ProductService, AlertService, "/product/", "productId");
             
-            this.listProduct(0, "");
-            this.$scope.listProduct = (page, searchName) => this.listProduct(page, searchName);
+            this.listProduct(0);
+            this.$scope.listProduct = (page) => this.listProduct(page);
         }
 
-        listProduct(page: number, searchText: string) {
+        listProduct(pageIndex: number) {
+            var searchText = this.$scope.searchText;
+            
             if (searchText == "") {
-                this.listEntity(page);
+                this.listEntity(pageIndex);
             } else {
                 this.ProductService.findByName(searchText,
                     (successData, successStatus, headers) => {
-                        this.$scope.totalPages = Number(headers("page_total"));
+                        this.$scope.page = { index: pageIndex, size: Number(headers(enums.Headers.PAGE_TOTAL)) };
                         this.$scope.entities = successData;
                         this.$scope.navigator.progress.done();
                     },
@@ -35,7 +37,7 @@ export module controller.product {
                         console.log(errorData);
                         this.$scope.navigator.progress.done();
                     },
-                    { page_index: page, page_size: this.defaultPageSize });
+                    { index: pageIndex, size: this.defaultPageSize });
             }
         }
         

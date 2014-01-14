@@ -8,8 +8,7 @@ export module controller.base {
         editEntity(id: number): void;
         listEntity(page: number): void;
         searchText: string;
-        currentPage: number;
-        totalPages: number;
+        page: domain.util.Page;
     }
 
     export class AbstractListEntityController<T extends domain.base.AbstractEntity> implements d.controller.base.Controller{
@@ -27,13 +26,12 @@ export module controller.base {
             this.$scope.listEntity = (page) => this.listEntity(page);
         }
 
-        listEntity(page: number) {
-            this.$scope.totalPages = 1;
-            this.$scope.currentPage = page;
+        listEntity(pageIndex: number) {
+            this.$scope.page = { index: pageIndex, size: 1 };
             this.$scope.navigator.progress.start();
                 this.EntityService.list(
                     (successData, successStatus, headers) => {
-                        this.$scope.totalPages = Number(headers("page_total"));
+                        this.$scope.page.size = Number(headers(enums.Headers.PAGE_TOTAL));
                         this.$scope.entities = successData;
                         this.$scope.navigator.progress.done();
                         if (this.redirectString) this.AlertService.add({ title: "Busca Rápida", content: "Clique em um item da lista para voltar para a página anterior", type: enums.AlertType.INFO });
@@ -42,7 +40,7 @@ export module controller.base {
                         this.AlertService.add({ title: "Erro ao listar", content: errorData.message, type: enums.AlertType.DANGER });
                         console.log(errorData);
                         this.$scope.navigator.progress.done();
-                    }, { page_index: page, page_size: this.defaultPageSize });
+                    }, { index: pageIndex, size: this.defaultPageSize });
         }
 
         editEntity(id: number) {

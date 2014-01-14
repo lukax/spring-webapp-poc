@@ -42,7 +42,8 @@ export var routes: AppRoute[] =
             controller: "ListProductController",
             deps: [
                 "controller/product/ListProductController",
-                "service/impl/ProductServiceImpl"
+                "service/impl/ProductServiceImpl",
+                "directive/ListPagerDirective"
             ]
         }, {
             name: "product.edit",
@@ -89,7 +90,8 @@ export var routes: AppRoute[] =
             controller: "ListOrderController",
             deps: [
                 "controller/order/ListOrderController",
-                "service/impl/OrderServiceImpl"
+                "service/impl/OrderServiceImpl",
+                "directive/ListPagerDirective"
             ]
         }, {
             name: "order.graph",
@@ -127,7 +129,8 @@ export var routes: AppRoute[] =
             controller: "ListCustomerController",
             deps: [
                 "controller/customer/ListCustomerController",
-                "service/impl/CustomerServiceImpl"
+                "service/impl/CustomerServiceImpl",
+                "directive/ListPagerDirective"
             ]
         }, {
             name: "stock",
@@ -158,7 +161,8 @@ export var routes: AppRoute[] =
             controller: "ListStockController",
             deps: [
                 "controller/stock/ListStockController",
-                "service/impl/StockServiceImpl"
+                "service/impl/StockServiceImpl",
+                "directive/ListPagerDirective"
             ]
         }
     ];

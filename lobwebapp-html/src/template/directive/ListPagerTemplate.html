@@ -1,0 +1,13 @@
+<div>
+    <ul class="pager">
+        <li ng-class="{disabled: page.index == 0, enabled: page.index != 0}">
+            <a class="link" ng-click="changePage(0)">&laquo;</a>
+            <a class="link" ng-click="changePage(pagepage.index-1)">&larr;</a>
+        </li>
+            <li class="disabled"><a class="link">{{page.index+1}} de {{page.size}}</a></li>
+            <li ng-class="{disabled: page.size <= 0 || page.index == page.size-1, enabled: page.index != page.size-1}">
+                <a class="link" ng-click="changePage(page.index+1)">&rarr;</a>
+                <a class="link" ng-click="changePage(page.size-1)">&raquo;</a>
+            </li>
+    </ul>
+</div>

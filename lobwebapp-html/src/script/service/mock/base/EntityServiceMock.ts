@@ -87,12 +87,12 @@ export module service.mock.base {
         list(
             successCallback: (data: T[], status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
             errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
-            pageable?: domain.util.Pageable) {
+            pageable?: domain.util.Page) {
                 this.$timeout(() => {
                     var repo = this.getRepository();
                     if (pageable) {
-                        repo.splice(0, pageable.page_index);
-                        repo.splice(pageable.page_index + pageable.page_size, repo.length - 1);
+                        repo.splice(0, pageable.index);
+                        repo.splice(pageable.index + pageable.size, repo.length - 1);
                     }
                     successCallback(repo, 200, null, null);
                 }, 1000);

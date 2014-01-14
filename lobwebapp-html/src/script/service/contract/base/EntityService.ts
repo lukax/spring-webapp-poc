@@ -31,7 +31,7 @@ module d.service.contract.base {
 
         list(successCallback: (data: T[], status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
             errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
-            pageable: domain.util.Pageable): void;
+            pageable: domain.util.Page): void;
 
         exists(entity: T,
             successCallback: (data: boolean, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,

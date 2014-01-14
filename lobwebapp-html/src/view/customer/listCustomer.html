@@ -15,11 +15,11 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="customer in entities | filter:searchText | orderBy:predicate:reverse"
-                ng-click="editEntity(customer.id)" style="cursor: pointer;" class="product-list">
+            <tr class="lwa-list" ng-repeat="customer in entities | filter:searchText | orderBy:predicate:reverse" ng-click="editEntity(customer.id)">
                 <td>{{customer.id}}</td>
                 <td>{{customer.name}}</td>
             </tr>
         </tbody>
     </table>
+    <list-pager page="page" change-page="listEntity"></list-pager>
 </div>

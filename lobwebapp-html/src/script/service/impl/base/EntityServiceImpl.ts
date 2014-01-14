@@ -42,9 +42,9 @@ export module service.impl.base {
         list(
             successCallback: (data: T[], status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
             errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
-            pageable?: domain.util.Pageable) {
-                if (pageable)
-                    this.$http({ method: "GET", url: this.url, headers: pageable }).success(successCallback).error(errorCallback);
+            page?: domain.util.Page) {
+                if (page)
+                    this.$http({ method: "GET", url: this.url, headers: this.getPageableHeader(page) }).success(successCallback).error(errorCallback);
                 else
                     this.$http.get(this.url).success(successCallback).error(errorCallback);
         }
@@ -63,8 +63,12 @@ export module service.impl.base {
             
         }
 
-        getPageableUri(p: domain.util.Pageable) {
-            return "?page=" + p.page_index + "&size=" + p.page_size;
+        getPageableUri(p: domain.util.Page) {
+            return "?page=" + p.index + "&size=" + p.size;
+        }
+
+        getPageableHeader(page: domain.util.Page) {
+            return { page_index: page.index, page_size: page.size };
         }
 
     }

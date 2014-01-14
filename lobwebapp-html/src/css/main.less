@@ -49,10 +49,10 @@ body {
 /* NAVBAR */
 
 ul.nav li.dropdown:hover > ul.dropdown-menu {
-    display: block;
+    cursor: default;
 }
 ul.nav li.dropdown:hover {
-    background: #ebebeb;
+    background: #fafafa;
     cursor: default;
 }
 
@@ -67,10 +67,13 @@ ul.nav li.dropdown:hover {
     .animation(fadeOutLeft 300ms);
 }
 
-.product-list.ng-enter{
+.lwa-list{
+    cursor: pointer;
+}
+.lwa-list.ng-enter{
     .animation(fadeInLeft 500ms);
 }
-.product-list.ng-leave{
+.lwa-list.ng-leave{
     .animation(fadeOut 300ms);
 }
 

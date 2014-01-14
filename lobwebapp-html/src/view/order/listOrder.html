@@ -18,8 +18,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="order in entities | filter:searchText | orderBy:predicate:reverse"
-                ng-click="editEntity(order.id)" style="cursor: pointer;" class="product-list">
+            <tr class="lwa-list" ng-repeat="order in entities | filter:searchText | orderBy:predicate:reverse" ng-click="editEntity(order.id)">
                 <td>{{order.id}}</td>
                 <td><customer-detail ref="order.customer"></customer-detail></td>
                 <td>{{order.items.length}}</td>
@@ -28,4 +27,5 @@
             </tr>
         </tbody>
     </table>
+    <list-pager page="page" change-page="listEntity"></list-pager>
 </div>
