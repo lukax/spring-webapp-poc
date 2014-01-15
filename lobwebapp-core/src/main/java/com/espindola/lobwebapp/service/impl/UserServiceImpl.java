@@ -9,7 +9,7 @@ import com.espindola.lobwebapp.exception.alreadyExists.UserExistsException;
 import com.espindola.lobwebapp.exception.invalidArgument.InvalidArgumentException;
 import com.espindola.lobwebapp.exception.notFound.NotFoundException;
 import com.espindola.lobwebapp.exception.notFound.UserNotFoundException;
-import com.espindola.lobwebapp.repository.contract.UserRepository;
+import com.espindola.lobwebapp.repository.UserRepository;
 import com.espindola.lobwebapp.service.contract.UserService;
 import com.espindola.lobwebapp.service.impl.base.AbstractPersonServiceImpl;
 

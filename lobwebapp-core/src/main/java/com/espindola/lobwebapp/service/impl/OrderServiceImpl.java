@@ -12,7 +12,7 @@ import com.espindola.lobwebapp.exception.notFound.NotFoundException;
 import com.espindola.lobwebapp.exception.notFound.OrderNotFoundException;
 import com.espindola.lobwebapp.exception.util.EntityError;
 import com.espindola.lobwebapp.l10n.MessageKey;
-import com.espindola.lobwebapp.repository.contract.OrderRepository;
+import com.espindola.lobwebapp.repository.OrderRepository;
 import com.espindola.lobwebapp.service.contract.OrderService;
 import com.espindola.lobwebapp.service.impl.base.AbstractEntityServiceImpl;
 
@@ -32,6 +32,8 @@ public class OrderServiceImpl extends AbstractEntityServiceImpl<Order> implement
 	protected void throwIfInvalid(Order entity) throws InvalidArgumentException {
 		//TODO: Business logic
 		throwIfInvalidPayment(entity);
+		throwIfPaymentQtLessIsThanTotalPrice(entity);
+		throwIfPaymentQtExceedsMuchFromTotalPrice(entity);
 	}
 	
 	@Override
@@ -49,7 +51,16 @@ public class OrderServiceImpl extends AbstractEntityServiceImpl<Order> implement
 	private void throwIfInvalidPayment(Order entity) {
 		if(entity.getPayment().getId() != 0)
 			throw new OrderInvalidException(new EntityError(MessageKey.ORDERPAYMENTINVALID_VALIDATION));
-		
+	}
+	
+	private void throwIfPaymentQtExceedsMuchFromTotalPrice(Order entity) {
+		Double exchange = entity.getPayment().getQuantity() - entity.computeTotalPrice();
+		Double maxExchange = 50D;
+		if(exchange > maxExchange)
+			throw new OrderInvalidException(new EntityError(MessageKey.ORDERPAYMENTQUANTITYTOOBIG_VALIDATION, new Object[] { maxExchange }));
+	}
+
+	private void throwIfPaymentQtLessIsThanTotalPrice(Order entity) {
 		if(entity.computeTotalPrice() >= entity.getPayment().getQuantity())
 			throw new OrderInvalidException(new EntityError(MessageKey.ORDERPAYMENTQUANTITYLESSTHANTOTAL_VALIDATION));
 	}

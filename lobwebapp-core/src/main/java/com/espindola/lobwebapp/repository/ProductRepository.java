@@ -1,4 +1,4 @@
-package com.espindola.lobwebapp.repository.contract;
+package com.espindola.lobwebapp.repository;
 
 import java.util.List;
 
@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.espindola.lobwebapp.domain.Product;
-import com.espindola.lobwebapp.repository.contract.base.EntityRepository;
+import com.espindola.lobwebapp.repository.base.EntityRepository;
 
 @Repository
 public interface ProductRepository extends EntityRepository<Product> {

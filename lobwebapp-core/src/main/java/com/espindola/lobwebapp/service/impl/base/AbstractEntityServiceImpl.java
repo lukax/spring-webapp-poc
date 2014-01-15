@@ -10,7 +10,7 @@ import com.espindola.lobwebapp.domain.base.AbstractEntity;
 import com.espindola.lobwebapp.exception.alreadyExists.AlreadyExistsException;
 import com.espindola.lobwebapp.exception.invalidArgument.InvalidArgumentException;
 import com.espindola.lobwebapp.exception.notFound.NotFoundException;
-import com.espindola.lobwebapp.repository.contract.base.EntityRepository;
+import com.espindola.lobwebapp.repository.base.EntityRepository;
 import com.espindola.lobwebapp.service.contract.base.EntityService;
 
 public abstract class AbstractEntityServiceImpl<T extends AbstractEntity> implements EntityService<T> {

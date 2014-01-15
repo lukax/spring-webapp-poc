@@ -2,6 +2,8 @@ package com.espindola.lobwebapp.controller.util;
 
 import java.util.Locale;
 
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 import org.hibernate.TypeMismatchException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -23,13 +25,20 @@ import com.espindola.lobwebapp.exception.util.ErrorResponse;
 @ControllerAdvice //Allows the exception handling to operate on all controllers
 public class GlobalExceptionHandler {
 	
+	private Logger logger;
+	
 	@Autowired
 	private MessageSource messageSource;
 
+	public GlobalExceptionHandler(){
+		logger = Logger.getLogger(GlobalExceptionHandler.class);
+	}
+	
 	@ExceptionHandler({AlreadyExistsException.class, IllegalArgumentException.class, TypeMismatchException.class})
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ResponseBody
 	public ErrorResponse handleBadRequest(Exception ex, Locale locale) {
+		logger.log(Level.DEBUG, ex.getMessage());
 		return this.buildResponse(ex, locale);
 	}
 	
@@ -37,6 +46,7 @@ public class GlobalExceptionHandler {
 	@ResponseStatus(HttpStatus.NOT_FOUND)
 	@ResponseBody
 	public ErrorResponse handleNotFound(Exception ex, Locale locale) {
+		logger.log(Level.DEBUG, ex.getMessage());
 		return this.buildResponse(ex, locale);
 	}
 
@@ -44,6 +54,7 @@ public class GlobalExceptionHandler {
 	@ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
 	@ResponseBody
 	public ErrorResponse handleEntityInvalid(Exception ex, Locale locale){
+		logger.log(Level.DEBUG, ex.getMessage());
 		return this.buildResponse(ex, locale);
 	}
 	
@@ -51,6 +62,7 @@ public class GlobalExceptionHandler {
 	@ResponseStatus(HttpStatus.UNAUTHORIZED)
 	@ResponseBody
 	public ErrorResponse handleAuthentication(Exception ex, Locale locale){
+		logger.log(Level.DEBUG, ex.getMessage());
 		return this.buildResponse(ex, locale);
 	}
 	
@@ -58,6 +70,7 @@ public class GlobalExceptionHandler {
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 	@ResponseBody
 	public ErrorResponse handleOther(Exception ex, Locale locale){
+		logger.log(Level.ERROR, ex.getMessage());
 		return this.buildResponse(ex, locale);
 	}
 	

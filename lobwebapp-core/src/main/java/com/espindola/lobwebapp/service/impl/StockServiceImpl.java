@@ -11,7 +11,7 @@ import com.espindola.lobwebapp.exception.alreadyExists.StockExistsException;
 import com.espindola.lobwebapp.exception.invalidArgument.InvalidArgumentException;
 import com.espindola.lobwebapp.exception.notFound.NotFoundException;
 import com.espindola.lobwebapp.exception.notFound.StockNotFoundException;
-import com.espindola.lobwebapp.repository.contract.StockRepository;
+import com.espindola.lobwebapp.repository.StockRepository;
 import com.espindola.lobwebapp.service.contract.StockService;
 import com.espindola.lobwebapp.service.impl.base.AbstractEntityServiceImpl;
 

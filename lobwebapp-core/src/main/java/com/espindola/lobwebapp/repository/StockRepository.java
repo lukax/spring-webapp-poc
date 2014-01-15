@@ -1,11 +1,11 @@
-package com.espindola.lobwebapp.repository.contract;
+package com.espindola.lobwebapp.repository;
 
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
 import com.espindola.lobwebapp.domain.Stock;
-import com.espindola.lobwebapp.repository.contract.base.EntityRepository;
+import com.espindola.lobwebapp.repository.base.EntityRepository;
 
 @Repository
 public interface StockRepository extends EntityRepository<Stock> {

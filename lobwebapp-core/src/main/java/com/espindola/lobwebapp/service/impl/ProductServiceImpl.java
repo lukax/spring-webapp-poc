@@ -20,7 +20,7 @@ import com.espindola.lobwebapp.exception.notFound.NotFoundException;
 import com.espindola.lobwebapp.exception.notFound.ProductNotFoundException;
 import com.espindola.lobwebapp.exception.util.EntityError;
 import com.espindola.lobwebapp.l10n.MessageKey;
-import com.espindola.lobwebapp.repository.contract.ProductRepository;
+import com.espindola.lobwebapp.repository.ProductRepository;
 import com.espindola.lobwebapp.service.contract.ProductService;
 import com.espindola.lobwebapp.service.impl.base.AbstractEntityServiceImpl;
 
@@ -67,9 +67,10 @@ public class ProductServiceImpl extends AbstractEntityServiceImpl<Product> imple
 	@Override
 	protected void throwIfInvalid(Product entity) throws InvalidArgumentException {
 		//TODO: Business logic
-		throwIfInvalidImage(entity);
+		throwIfPriceIsLessThanCostPrice(entity);
+		throwIfInvalidOrTooBigImage(entity);
 	}
-	
+
 	@Override
 	protected void throwIfAlreadyExists(Product entity) throws AlreadyExistsException {
 		Product p = repository.findOne(entity.getId());
@@ -87,7 +88,12 @@ public class ProductServiceImpl extends AbstractEntityServiceImpl<Product> imple
 			throw new ProductNotFoundException(id);
 	}
 	
-	private void throwIfInvalidImage(Product entity) {
+	private void throwIfPriceIsLessThanCostPrice(Product entity) {
+		if(entity.getCostPrice() >= entity.getPrice())
+			throw new ProductInvalidException(new EntityError(MessageKey.PRODUCTPRICEINVALID_VALIDATION));
+	}
+	
+	private void throwIfInvalidOrTooBigImage(Product entity) {
 		if(entity.getImage() != null && entity.getImage().getBytes() != null){
 			try{
 				String type = URLConnection.guessContentTypeFromStream(new ByteArrayInputStream(entity.getImage().getBytes()));

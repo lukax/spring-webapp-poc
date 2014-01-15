@@ -48,12 +48,12 @@ public class ProductValidator extends AbstractEntityValidator<Product> {
 	}
 
 	private void validatePrice(Product t, Errors e) {
-		if(t.getPrice() == null || t.getPrice() <= 0)
+		if(t.getPrice() == null || (t.getPrice() <= 0 || t.getPrice() > 10000))
 			e.rejectValue("price", MessageKey.PRODUCTPRICEINVALID_VALIDATION.getKey());
 	}
 
 	private void validateCostPrice(Product t, Errors e) {
-		if(t.getCostPrice() != null && t.getCostPrice() < 0)
+		if(t.getCostPrice() != null && (t.getCostPrice() < 0 || t.getCostPrice() > 10000))
 			e.rejectValue("costPrice", MessageKey.PRODUCTCOSTPRICEINVALID_VALIDATION.getKey());
 	}
 
