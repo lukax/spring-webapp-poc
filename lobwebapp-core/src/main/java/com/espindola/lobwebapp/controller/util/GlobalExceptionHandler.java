@@ -22,27 +22,30 @@ import com.espindola.lobwebapp.exception.invalidArgument.InvalidArgumentExceptio
 import com.espindola.lobwebapp.exception.notFound.NotFoundException;
 import com.espindola.lobwebapp.exception.util.ErrorResponse;
 
-@ControllerAdvice //Allows the exception handling to operate on all controllers
+@ControllerAdvice
+// Allows the exception handling to operate on all controllers
 public class GlobalExceptionHandler {
-	
+
 	private Logger logger;
-	
+
 	@Autowired
 	private MessageSource messageSource;
 
-	public GlobalExceptionHandler(){
+	public GlobalExceptionHandler() {
 		logger = Logger.getLogger(GlobalExceptionHandler.class);
 	}
-	
-	@ExceptionHandler({AlreadyExistsException.class, IllegalArgumentException.class, TypeMismatchException.class})
+
+	@ExceptionHandler({ AlreadyExistsException.class,
+			IllegalArgumentException.class, TypeMismatchException.class })
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ResponseBody
 	public ErrorResponse handleBadRequest(Exception ex, Locale locale) {
 		logger.log(Level.DEBUG, ex.getMessage());
 		return this.buildResponse(ex, locale);
 	}
-	
-	@ExceptionHandler({NotFoundException.class, HttpRequestMethodNotSupportedException.class})
+
+	@ExceptionHandler({ NotFoundException.class,
+			HttpRequestMethodNotSupportedException.class })
 	@ResponseStatus(HttpStatus.NOT_FOUND)
 	@ResponseBody
 	public ErrorResponse handleNotFound(Exception ex, Locale locale) {
@@ -50,36 +53,37 @@ public class GlobalExceptionHandler {
 		return this.buildResponse(ex, locale);
 	}
 
-	@ExceptionHandler({InvalidArgumentException.class, HttpMessageConversionException.class})
+	@ExceptionHandler({ InvalidArgumentException.class,
+			HttpMessageConversionException.class })
 	@ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
 	@ResponseBody
-	public ErrorResponse handleEntityInvalid(Exception ex, Locale locale){
+	public ErrorResponse handleEntityInvalid(Exception ex, Locale locale) {
 		logger.log(Level.DEBUG, ex.getMessage());
 		return this.buildResponse(ex, locale);
 	}
-	
+
 	@ExceptionHandler(AuthenticationCredentialsNotFoundException.class)
 	@ResponseStatus(HttpStatus.UNAUTHORIZED)
 	@ResponseBody
-	public ErrorResponse handleAuthentication(Exception ex, Locale locale){
+	public ErrorResponse handleAuthentication(Exception ex, Locale locale) {
 		logger.log(Level.DEBUG, ex.getMessage());
 		return this.buildResponse(ex, locale);
 	}
-	
+
 	@ExceptionHandler
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 	@ResponseBody
-	public ErrorResponse handleOther(Exception ex, Locale locale){
+	public ErrorResponse handleOther(Exception ex, Locale locale) {
 		logger.log(Level.ERROR, ex.getMessage());
 		return this.buildResponse(ex, locale);
 	}
-	
-	private ErrorResponse buildResponse(Exception ex, Locale locale){
-		if(ex instanceof LobWebAppException){
-			LobWebAppException exx = (LobWebAppException)ex;
+
+	private ErrorResponse buildResponse(Exception ex, Locale locale) {
+		if (ex instanceof LobWebAppException) {
+			LobWebAppException exx = (LobWebAppException) ex;
 			return exx.getErrorResponse(this.messageSource, locale);
 		}
 		return new ErrorResponse(ex.getMessage());
 	}
-	
+
 }

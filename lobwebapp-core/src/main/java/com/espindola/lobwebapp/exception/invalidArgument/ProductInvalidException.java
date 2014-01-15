@@ -11,7 +11,7 @@ public class ProductInvalidException extends InvalidArgumentException {
 
 	private static final long serialVersionUID = 1L;
 
-	public ProductInvalidException(List<ObjectError> errors){
+	public ProductInvalidException(List<ObjectError> errors) {
 		super(MessageKey.PRODUCTINVALID_EXCEPTION, errors);
 	}
 

@@ -12,12 +12,18 @@ import com.espindola.lobwebapp.exception.notFound.NotFoundException;
 
 //@PreAuthorize("hasRole('ROLE_USER')")
 public interface EntityService<T extends AbstractEntity> {
-	
+
 	T save(T entity) throws NotFoundException, InvalidArgumentException;
+
 	T update(T entity) throws NotFoundException, InvalidArgumentException;
+
 	T remove(Long id) throws NotFoundException;
+
 	T find(Long id) throws NotFoundException;
+
 	List<T> findAll();
+
 	Page<T> findAll(Pageable p);
+
 	boolean exists(Long id);
 }

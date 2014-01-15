@@ -12,11 +12,13 @@ import com.espindola.lobwebapp.repository.base.EntityRepository;
 
 @Repository
 public interface ProductRepository extends EntityRepository<Product> {
-	
+
 	public Product findByName(String name);
+
 	public List<Product> findByNameLike(String name);
+
 	public Page<Product> findByNameLike(String name, Pageable pageable);
-	
+
 	@Query(value = "SELECT DISTINCT category FROM Product")
 	public List<String> findAllCategory();
 

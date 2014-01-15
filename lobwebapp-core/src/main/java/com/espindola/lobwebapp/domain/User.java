@@ -14,9 +14,7 @@ import javax.persistence.UniqueConstraint;
 import com.espindola.lobwebapp.domain.base.Person;
 
 @Entity
-@Table(name = "TB_USER", uniqueConstraints = {
-		@UniqueConstraint(columnNames = "USERNAME")
-})
+@Table(name = "TB_USER", uniqueConstraints = { @UniqueConstraint(columnNames = "USERNAME") })
 public class User extends Person {
 
 	private String username;
@@ -24,10 +22,7 @@ public class User extends Person {
 	private String password;
 
 	@ElementCollection(fetch = FetchType.EAGER)
-	@CollectionTable(
-	        name="TB_USER_ROLE",
-	        joinColumns= @JoinColumn(name="USER_ID")
-	  )
+	@CollectionTable(name = "TB_USER_ROLE", joinColumns = @JoinColumn(name = "USER_ID"))
 	private Set<String> roles = new HashSet<String>();
 
 	public String getUsername() {

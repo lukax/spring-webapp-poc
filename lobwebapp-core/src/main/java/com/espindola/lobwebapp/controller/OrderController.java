@@ -13,7 +13,7 @@ import com.espindola.lobwebapp.facade.OrderFacade;
 import com.espindola.lobwebapp.validation.OrderValidator;
 
 @Controller
-@RequestMapping(value="/order")
+@RequestMapping(value = "/order")
 public class OrderController extends AbstractEntityController<Order> {
 
 	@Autowired
@@ -22,9 +22,10 @@ public class OrderController extends AbstractEntityController<Order> {
 	}
 
 	@Override
-	protected void validationResult(BindingResult bindingResult) throws InvalidArgumentException {
-		if(bindingResult.hasErrors())
+	protected void validationResult(BindingResult bindingResult)
+			throws InvalidArgumentException {
+		if (bindingResult.hasErrors())
 			throw new OrderInvalidException(bindingResult.getAllErrors());
 	}
-	
+
 }

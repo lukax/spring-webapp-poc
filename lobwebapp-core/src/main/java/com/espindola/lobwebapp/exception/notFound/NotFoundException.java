@@ -11,8 +11,8 @@ public class NotFoundException extends LobWebAppException {
 		super(MessageKey.NOTFOUND_EXCEPTION, new String[] {});
 	}
 
-	protected NotFoundException(MessageKey messageKey, String[] messageArgs){
-			super(messageKey, messageArgs);
+	protected NotFoundException(MessageKey messageKey, String[] messageArgs) {
+		super(messageKey, messageArgs);
 	}
-	
+
 }

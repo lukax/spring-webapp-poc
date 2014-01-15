@@ -12,8 +12,10 @@ import com.espindola.lobwebapp.service.contract.CustomerService;
 @Component
 public class CustomerFacade extends AbstractEntityFacade<Customer> {
 
-	public CustomerFacade(){super(null);}
-	
+	public CustomerFacade() {
+		super(null);
+	}
+
 	@Autowired
 	public CustomerFacade(CustomerService customerService) {
 		super(customerService);

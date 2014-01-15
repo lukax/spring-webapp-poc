@@ -13,7 +13,7 @@ import com.espindola.lobwebapp.facade.StockFacade;
 import com.espindola.lobwebapp.validation.StockValidator;
 
 @Controller
-@RequestMapping(value="/stock")
+@RequestMapping(value = "/stock")
 public class StockController extends AbstractEntityController<Stock> {
 
 	@Autowired
@@ -22,8 +22,9 @@ public class StockController extends AbstractEntityController<Stock> {
 	}
 
 	@Override
-	protected void validationResult(BindingResult bindingResult) throws InvalidArgumentException {
-		if(bindingResult.hasErrors())
+	protected void validationResult(BindingResult bindingResult)
+			throws InvalidArgumentException {
+		if (bindingResult.hasErrors())
 			throw new StockInvalidException(bindingResult.getAllErrors());
 	}
 

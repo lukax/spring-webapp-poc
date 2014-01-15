@@ -6,7 +6,8 @@ public class ProductNotFoundException extends NotFoundException {
 
 	private static final long serialVersionUID = 1L;
 
-	public ProductNotFoundException(Long id){
-		super(MessageKey.PRODUCTNOTFOUND_EXCEPTION, new String[] { id.toString() });
+	public ProductNotFoundException(Long id) {
+		super(MessageKey.PRODUCTNOTFOUND_EXCEPTION, new String[] { id
+				.toString() });
 	}
 }

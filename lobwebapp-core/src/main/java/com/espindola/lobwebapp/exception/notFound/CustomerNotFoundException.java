@@ -6,7 +6,8 @@ public class CustomerNotFoundException extends NotFoundException {
 
 	private static final long serialVersionUID = 1L;
 
-	public CustomerNotFoundException(Long id){
-		super(MessageKey.CUSTOMERNOTFOUND_EXCEPTION, new String[] { id.toString() });
+	public CustomerNotFoundException(Long id) {
+		super(MessageKey.CUSTOMERNOTFOUND_EXCEPTION, new String[] { id
+				.toString() });
 	}
 }

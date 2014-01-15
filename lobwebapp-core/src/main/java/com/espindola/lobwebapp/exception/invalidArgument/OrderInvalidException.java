@@ -11,7 +11,7 @@ public class OrderInvalidException extends InvalidArgumentException {
 
 	private static final long serialVersionUID = 1L;
 
-	public OrderInvalidException(List<ObjectError> list){
+	public OrderInvalidException(List<ObjectError> list) {
 		super(MessageKey.ORDERINVALID_EXCEPTION, list);
 	}
 

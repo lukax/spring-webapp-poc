@@ -11,9 +11,9 @@ public class OrderItem {
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "PRODUCT_ID")
 	private Product product;
-	
+
 	private Integer quantity;
-	
+
 	public Product getProduct() {
 		return product;
 	}
@@ -29,13 +29,14 @@ public class OrderItem {
 	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
 	}
-	
-	public Double computeTotalPrice(){
+
+	public Double computeTotalPrice() {
 		Double qt = 0D;
-		try{
+		try {
 			qt = product.getPrice() * quantity;
-		}catch(NullPointerException ex){ }
-		
+		} catch (NullPointerException ex) {
+		}
+
 		return qt;
 	}
 }

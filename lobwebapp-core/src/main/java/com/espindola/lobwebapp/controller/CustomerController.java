@@ -13,7 +13,7 @@ import com.espindola.lobwebapp.facade.CustomerFacade;
 import com.espindola.lobwebapp.validation.CustomerValidator;
 
 @Controller
-@RequestMapping(value="/customer")
+@RequestMapping(value = "/customer")
 public class CustomerController extends PersonController<Customer> {
 
 	@Autowired
@@ -22,8 +22,9 @@ public class CustomerController extends PersonController<Customer> {
 	}
 
 	@Override
-	protected void validationResult(BindingResult bindingResult) throws InvalidArgumentException {
-		if(bindingResult.hasErrors())
+	protected void validationResult(BindingResult bindingResult)
+			throws InvalidArgumentException {
+		if (bindingResult.hasErrors())
 			throw new CustomerInvalidException(bindingResult.getAllErrors());
 	}
 

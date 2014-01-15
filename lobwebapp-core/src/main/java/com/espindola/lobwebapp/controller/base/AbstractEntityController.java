@@ -35,20 +35,21 @@ import com.espindola.lobwebapp.validation.base.AbstractEntityValidator;
 
 @Controller
 public abstract class AbstractEntityController<T extends AbstractEntity> {
-	
+
 	@Autowired
 	protected LobWebAppEventPublisher eventPublisher;
 	private AbstractEntityFacade<T> facade;
 	private AbstractEntityValidator<T> validator;
 
 	@Autowired
-	public AbstractEntityController(AbstractEntityFacade<T> facade, AbstractEntityValidator<T> validator) {
+	public AbstractEntityController(AbstractEntityFacade<T> facade,
+			AbstractEntityValidator<T> validator) {
 		this.facade = facade;
 		this.validator = validator;
 	}
-	
+
 	@InitBinder
-	protected void initBinder(WebDataBinder dataBinder){
+	protected void initBinder(WebDataBinder dataBinder) {
 		dataBinder.setValidator(validator);
 	}
 
@@ -56,7 +57,7 @@ public abstract class AbstractEntityController<T extends AbstractEntity> {
 	@ResponseStatus(value = HttpStatus.OK)
 	@ResponseBody
 	public T find(@PathVariable("id") Long id) throws NotFoundException {
-		return facade.find(id);	
+		return facade.find(id);
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
@@ -65,11 +66,14 @@ public abstract class AbstractEntityController<T extends AbstractEntity> {
 	public List<T> findAll() {
 		return facade.findAll();
 	}
-	
-	@RequestMapping(method = RequestMethod.GET, headers = {HeaderKey.PAGE_INDEX, HeaderKey.PAGE_SIZE})
+
+	@RequestMapping(method = RequestMethod.GET, headers = {
+			HeaderKey.PAGE_INDEX, HeaderKey.PAGE_SIZE })
 	@ResponseStatus(value = HttpStatus.OK)
 	@ResponseBody
-	public List<T> findAll(HttpServletResponse response, @RequestHeader(HeaderKey.PAGE_INDEX) Integer pageIndex, @RequestHeader(HeaderKey.PAGE_SIZE) Integer pageSize) {
+	public List<T> findAll(HttpServletResponse response,
+			@RequestHeader(HeaderKey.PAGE_INDEX) Integer pageIndex,
+			@RequestHeader(HeaderKey.PAGE_SIZE) Integer pageSize) {
 		Page<T> entities = facade.findAll(new PageRequest(pageIndex, pageSize));
 		eventPublisher.publishEvent(new PageReturnEvent(entities, response));
 		return entities.getContent();
@@ -78,11 +82,15 @@ public abstract class AbstractEntityController<T extends AbstractEntity> {
 	@RequestMapping(method = RequestMethod.POST)
 	@ResponseStatus(value = HttpStatus.CREATED)
 	@ResponseBody
-	public void save(@Validated @RequestBody T data, BindingResult bindingResult, UriComponentsBuilder ucb, HttpServletRequest request, HttpServletResponse response) throws NotFoundException, InvalidArgumentException {
+	public void save(@Validated @RequestBody T data,
+			BindingResult bindingResult, UriComponentsBuilder ucb,
+			HttpServletRequest request, HttpServletResponse response)
+			throws NotFoundException, InvalidArgumentException {
 		validationResult(bindingResult);
-		
+
 		T entity = facade.save(data);
-		UriComponents build = ucb.path(request.getPathInfo() + "/{id}").buildAndExpand(entity.getId());
+		UriComponents build = ucb.path(request.getPathInfo() + "/{id}")
+				.buildAndExpand(entity.getId());
 		response.setHeader("Location", build.toUriString());
 		response.setHeader("Entity-Id", entity.getId().toString());
 	}
@@ -90,7 +98,9 @@ public abstract class AbstractEntityController<T extends AbstractEntity> {
 	@RequestMapping(value = "/{id:[\\d]+}", method = RequestMethod.PUT)
 	@ResponseStatus(value = HttpStatus.OK)
 	@ResponseBody
-	public void update(@Validated @RequestBody T data, BindingResult bindingResult) throws InvalidArgumentException, NotFoundException {
+	public void update(@Validated @RequestBody T data,
+			BindingResult bindingResult) throws InvalidArgumentException,
+			NotFoundException {
 		validationResult(bindingResult);
 
 		facade.update(data);
@@ -102,6 +112,7 @@ public abstract class AbstractEntityController<T extends AbstractEntity> {
 	public void remove(@PathVariable("id") Long id) throws NotFoundException {
 		facade.remove(id);
 	}
-	
-	protected abstract void validationResult(BindingResult bindingResult) throws InvalidArgumentException;
+
+	protected abstract void validationResult(BindingResult bindingResult)
+			throws InvalidArgumentException;
 }

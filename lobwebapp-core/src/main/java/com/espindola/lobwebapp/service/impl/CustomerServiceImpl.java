@@ -14,7 +14,8 @@ import com.espindola.lobwebapp.service.contract.CustomerService;
 import com.espindola.lobwebapp.service.impl.base.AbstractPersonServiceImpl;
 
 @Service
-public class CustomerServiceImpl extends AbstractPersonServiceImpl<Customer> implements CustomerService {
+public class CustomerServiceImpl extends AbstractPersonServiceImpl<Customer>
+		implements CustomerService {
 
 	private CustomerRepository repository;
 
@@ -23,22 +24,24 @@ public class CustomerServiceImpl extends AbstractPersonServiceImpl<Customer> imp
 		super(repository);
 		this.repository = repository;
 	}
-	
+
 	@Override
-	protected void throwIfInvalid(Customer entity) throws InvalidArgumentException {
-		//TODO: Business logic
+	protected void throwIfInvalid(Customer entity)
+			throws InvalidArgumentException {
+		// TODO: Business logic
 	}
-	
+
 	@Override
-	protected void throwIfAlreadyExists(Customer entity) throws AlreadyExistsException {
-		if(repository.exists(entity.getId()))
+	protected void throwIfAlreadyExists(Customer entity)
+			throws AlreadyExistsException {
+		if (repository.exists(entity.getId()))
 			throw new CustomerExistsException(entity);
 	}
 
 	@Override
 	protected void throwIfNotFound(Long id) throws NotFoundException {
-		if(!repository.exists(id))
+		if (!repository.exists(id))
 			throw new CustomerNotFoundException(id);
 	}
-	
+
 }

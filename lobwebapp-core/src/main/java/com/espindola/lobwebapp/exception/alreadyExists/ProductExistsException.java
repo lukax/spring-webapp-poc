@@ -7,7 +7,8 @@ public class ProductExistsException extends AlreadyExistsException {
 
 	private static final long serialVersionUID = 1L;
 
-	public ProductExistsException(Product product){
-		super(MessageKey.PRODUCTALREADYEXITS_EXCEPTION, new String[]{ product.toString() });
+	public ProductExistsException(Product product) {
+		super(MessageKey.PRODUCTALREADYEXITS_EXCEPTION, new String[] { product
+				.toString() });
 	}
 }

@@ -24,13 +24,10 @@ public class Order extends AbstractEntity {
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "CUSTOMER_ID")
-	private Customer customer;	
+	private Customer customer;
 
-	@ElementCollection(fetch= FetchType.EAGER)
-	@CollectionTable(
-	        name="TB_ORDER_ITEM",
-	        joinColumns= @JoinColumn(name = "ORDER_ID")
-	  )
+	@ElementCollection(fetch = FetchType.EAGER)
+	@CollectionTable(name = "TB_ORDER_ITEM", joinColumns = @JoinColumn(name = "ORDER_ID"))
 	private Set<OrderItem> items = new HashSet<OrderItem>();
 
 	@Temporal(TemporalType.TIMESTAMP)
@@ -72,15 +69,15 @@ public class Order extends AbstractEntity {
 		this.items = items;
 	}
 
-	public Double computeTotalPrice(){
+	public Double computeTotalPrice() {
 		Double qt = 0D;
-		try { 
-			for(OrderItem i: getItems()){
+		try {
+			for (OrderItem i : getItems()) {
 				qt += i.computeTotalPrice();
 			}
+		} catch (NullPointerException ex) {
 		}
-		catch(NullPointerException ex){ }
-		
+
 		return qt;
 	}
 }

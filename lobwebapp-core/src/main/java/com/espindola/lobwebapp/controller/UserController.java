@@ -18,7 +18,7 @@ import com.espindola.lobwebapp.facade.UserFacade;
 import com.espindola.lobwebapp.validation.UserValidator;
 
 @Controller
-@RequestMapping(value="/user")
+@RequestMapping(value = "/user")
 public class UserController extends PersonController<User> {
 
 	private UserFacade facade;
@@ -28,17 +28,18 @@ public class UserController extends PersonController<User> {
 		super(facade, validator);
 		this.facade = facade;
 	}
-	
+
 	@RequestMapping(value = "/{userUsername}", method = RequestMethod.HEAD)
 	@ResponseStatus(value = HttpStatus.OK)
 	@ResponseBody
-	public User findByUsername(@PathVariable("userUsername") String userUsername){
+	public User findByUsername(@PathVariable("userUsername") String userUsername) {
 		return this.facade.findByUsername(userUsername);
 	}
 
 	@Override
-	protected void validationResult(BindingResult bindingResult) throws InvalidArgumentException {
-		if(bindingResult.hasErrors())
+	protected void validationResult(BindingResult bindingResult)
+			throws InvalidArgumentException {
+		if (bindingResult.hasErrors())
 			throw new UserInvalidException(bindingResult.getAllErrors());
 	}
 }

@@ -25,32 +25,34 @@ import org.springframework.web.context.WebApplicationContext;
 import com.espindola.lobwebapp.domain.Product;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:testContext.xml"})
+@ContextConfiguration(locations = { "classpath:testContext.xml" })
 @WebAppConfiguration
 public class ProductControllerTest {
 
-	@Autowired private WebApplicationContext webApplicationContext;
+	@Autowired
+	private WebApplicationContext webApplicationContext;
 	private MockMvc mockMvc;
-	
+
 	@Before
-	public void setUp(){
-		mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+	public void setUp() {
+		mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext)
+				.build();
 	}
-	
+
 	@Test
 	@Transactional
 	public void findAll() throws Exception {
-		mockMvc.perform(get("/product")
-				.accept(TestUtil.APPLICATION_JSON_UTF8))
-			.andExpect(status().isOk())
-			.andExpect(content().contentType(TestUtil.APPLICATION_JSON_UTF8))
-			.andExpect(jsonPath("$", Matchers.empty()));
+		mockMvc.perform(get("/product").accept(TestUtil.APPLICATION_JSON_UTF8))
+				.andExpect(status().isOk())
+				.andExpect(
+						content().contentType(TestUtil.APPLICATION_JSON_UTF8))
+				.andExpect(jsonPath("$", Matchers.empty()));
 	}
-	
+
 	@Test
 	@Transactional
 	@Rollback
-	public void save() throws Exception{
+	public void save() throws Exception {
 		Product p = new Product();
 		p.setId(0L);
 		p.setName("my super product");
@@ -61,17 +63,18 @@ public class ProductControllerTest {
 		p.setRegisterDate(new Date());
 		p.setNcm("1234.56.78");
 
-		mockMvc.perform(post("/product")
-				.accept(TestUtil.APPLICATION_JSON_UTF8)
-				.contentType(TestUtil.APPLICATION_JSON_UTF8)
-				.content(TestUtil.convertObjectToJsonBytes(p)))
-			.andExpect(status().isCreated());
-		
-		mockMvc.perform(get("/product/1")
-				.accept(TestUtil.APPLICATION_JSON_UTF8))
-			.andExpect(status().isOk())
-			.andExpect(content().contentType(TestUtil.APPLICATION_JSON_UTF8))
-			.andExpect(jsonPath("$.name", Matchers.is(p.getName())));
+		mockMvc.perform(
+				post("/product").accept(TestUtil.APPLICATION_JSON_UTF8)
+						.contentType(TestUtil.APPLICATION_JSON_UTF8)
+						.content(TestUtil.convertObjectToJsonBytes(p)))
+				.andExpect(status().isCreated());
+
+		mockMvc.perform(
+				get("/product/1").accept(TestUtil.APPLICATION_JSON_UTF8))
+				.andExpect(status().isOk())
+				.andExpect(
+						content().contentType(TestUtil.APPLICATION_JSON_UTF8))
+				.andExpect(jsonPath("$.name", Matchers.is(p.getName())));
 	}
-	
+
 }

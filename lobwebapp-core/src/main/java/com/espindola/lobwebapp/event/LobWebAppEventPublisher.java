@@ -11,7 +11,7 @@ public class LobWebAppEventPublisher implements ApplicationEventPublisher {
 
 	@Autowired
 	private ApplicationContext context;
-	
+
 	@Override
 	public void publishEvent(ApplicationEvent event) {
 		context.publishEvent(event);

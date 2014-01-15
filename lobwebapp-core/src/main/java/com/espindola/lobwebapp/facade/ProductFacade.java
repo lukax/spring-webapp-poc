@@ -19,26 +19,29 @@ import com.espindola.lobwebapp.service.contract.ProductService;
 public class ProductFacade extends AbstractEntityFacade<Product> {
 
 	private ProductService productService;
-	
-	public ProductFacade() { super(null); }
-	
+
+	public ProductFacade() {
+		super(null);
+	}
+
 	@Autowired
 	public ProductFacade(ProductService productService) {
 		super(productService);
 		this.productService = productService;
 	}
 
-	public List<String> findAllCategory(){
+	public List<String> findAllCategory() {
 		return productService.findAllCategory();
 	}
-	
-	public Page<Product> findByNameLike(String name, Pageable pageable){
+
+	public Page<Product> findByNameLike(String name, Pageable pageable) {
 		return productService.findByNameLike(name, pageable);
 	}
-	
-	public FileMeta getImage(Long id){
+
+	public FileMeta getImage(Long id) {
 		FileMeta fileMeta = productService.find(id).getImage();
-		if(fileMeta == null || fileMeta.getFileName() == null)//lazy initialize
+		if (fileMeta == null || fileMeta.getFileName() == null)// lazy
+																// initialize
 			throw new NotFoundException();
 		return fileMeta;
 	}

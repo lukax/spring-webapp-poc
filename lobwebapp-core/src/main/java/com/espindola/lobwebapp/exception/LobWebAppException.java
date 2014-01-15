@@ -12,22 +12,24 @@ public class LobWebAppException extends RuntimeException {
 	private static final long serialVersionUID = -8906012587863340255L;
 	private MessageKey messageKey;
 	private Object[] messageArgs;
-	
+
 	public LobWebAppException() {
 		this(MessageKey.LOBWEBAPP_EXCEPTION, new Object[] {});
 	}
-	
-	public LobWebAppException(String message){
+
+	public LobWebAppException(String message) {
 		super(message);
 	}
-	
-	protected LobWebAppException(MessageKey messageKey, Object[] messageArgs){
+
+	protected LobWebAppException(MessageKey messageKey, Object[] messageArgs) {
 		this.setMessageKey(messageKey);
 		this.setMessageArgs(messageArgs);
 	}
-	
-	public ErrorResponse getErrorResponse(MessageSource messageSource, Locale locale){
-		return new ErrorResponse(messageSource.getMessage(this.getMessageKey().getKey(), this.getMessageArgs(), locale));
+
+	public ErrorResponse getErrorResponse(MessageSource messageSource,
+			Locale locale) {
+		return new ErrorResponse(messageSource.getMessage(this.getMessageKey()
+				.getKey(), this.getMessageArgs(), locale));
 	}
 
 	public Object[] getMessageArgs() {

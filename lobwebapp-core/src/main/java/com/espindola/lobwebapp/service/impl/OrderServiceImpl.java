@@ -17,7 +17,8 @@ import com.espindola.lobwebapp.service.contract.OrderService;
 import com.espindola.lobwebapp.service.impl.base.AbstractEntityServiceImpl;
 
 @Service
-public class OrderServiceImpl extends AbstractEntityServiceImpl<Order> implements OrderService {
+public class OrderServiceImpl extends AbstractEntityServiceImpl<Order>
+		implements OrderService {
 
 	private OrderRepository repository;
 
@@ -26,42 +27,47 @@ public class OrderServiceImpl extends AbstractEntityServiceImpl<Order> implement
 		super(repository);
 		this.repository = repository;
 	}
-	
-	
+
 	@Override
 	protected void throwIfInvalid(Order entity) throws InvalidArgumentException {
-		//TODO: Business logic
+		// TODO: Business logic
 		throwIfInvalidPayment(entity);
 		throwIfPaymentQtLessIsThanTotalPrice(entity);
 		throwIfPaymentQtExceedsMuchFromTotalPrice(entity);
 	}
-	
+
 	@Override
-	protected void throwIfAlreadyExists(Order entity) throws AlreadyExistsException {
-		if(repository.exists(entity.getId()))
+	protected void throwIfAlreadyExists(Order entity)
+			throws AlreadyExistsException {
+		if (repository.exists(entity.getId()))
 			throw new OrderExistsException(entity);
 	}
 
 	@Override
 	protected void throwIfNotFound(Long id) throws NotFoundException {
-		if(!repository.exists(id))
+		if (!repository.exists(id))
 			throw new OrderNotFoundException(id);
 	}
 
 	private void throwIfInvalidPayment(Order entity) {
-		if(entity.getPayment().getId() != 0)
-			throw new OrderInvalidException(new EntityError(MessageKey.ORDERPAYMENTINVALID_VALIDATION));
+		if (entity.getPayment().getId() != 0)
+			throw new OrderInvalidException(new EntityError(
+					MessageKey.ORDERPAYMENTINVALID_VALIDATION));
 	}
-	
+
 	private void throwIfPaymentQtExceedsMuchFromTotalPrice(Order entity) {
-		Double exchange = entity.getPayment().getQuantity() - entity.computeTotalPrice();
+		Double exchange = entity.getPayment().getQuantity()
+				- entity.computeTotalPrice();
 		Double maxExchange = 50D;
-		if(exchange > maxExchange)
-			throw new OrderInvalidException(new EntityError(MessageKey.ORDERPAYMENTQUANTITYTOOBIG_VALIDATION, new Object[] { maxExchange }));
+		if (exchange > maxExchange)
+			throw new OrderInvalidException(new EntityError(
+					MessageKey.ORDERPAYMENTQUANTITYTOOBIG_VALIDATION,
+					new Object[] { maxExchange }));
 	}
 
 	private void throwIfPaymentQtLessIsThanTotalPrice(Order entity) {
-		if(entity.computeTotalPrice() >= entity.getPayment().getQuantity())
-			throw new OrderInvalidException(new EntityError(MessageKey.ORDERPAYMENTQUANTITYLESSTHANTOTAL_VALIDATION));
+		if (entity.computeTotalPrice() >= entity.getPayment().getQuantity())
+			throw new OrderInvalidException(new EntityError(
+					MessageKey.ORDERPAYMENTQUANTITYLESSTHANTOTAL_VALIDATION));
 	}
 }

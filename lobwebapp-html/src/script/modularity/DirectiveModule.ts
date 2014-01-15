@@ -10,6 +10,7 @@
 export module modularity {
     export class DirectiveModule {
         constructor() {
+            //Global usage directives
             angular.module("lwa.directive", 
                 ["ngRoute",
                  "ngAnimate", 

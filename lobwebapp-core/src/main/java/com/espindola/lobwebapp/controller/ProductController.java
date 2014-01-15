@@ -42,83 +42,100 @@ import com.espindola.lobwebapp.l10n.MessageKey;
 import com.espindola.lobwebapp.validation.ProductValidator;
 
 @Controller
-@RequestMapping(value="/product")
+@RequestMapping(value = "/product")
 public class ProductController extends AbstractEntityController<Product> {
-	
+
 	@Autowired
 	private ServletContext context;
 	private ProductFacade facade;
-	
+
 	@Autowired
 	public ProductController(ProductFacade facade, ProductValidator validator) {
 		super(facade, validator);
 		this.facade = facade;
 	}
-	
-	@RequestMapping(method = RequestMethod.GET, headers = {HeaderKey.PRODUCT_NAME})
+
+	@RequestMapping(method = RequestMethod.GET, headers = { HeaderKey.PRODUCT_NAME })
 	@ResponseStatus(value = HttpStatus.OK)
 	@ResponseBody
-	public List<Product> findByNameLike(HttpServletResponse response, @RequestHeader(HeaderKey.PRODUCT_NAME) String productName, @RequestHeader(HeaderKey.PAGE_INDEX) Integer pageIndex, @RequestHeader(HeaderKey.PAGE_SIZE) Integer pageSize) {
-		Page<Product> products = this.facade.findByNameLike(productName, new PageRequest(pageIndex, pageSize));
-		super.eventPublisher.publishEvent(new PageReturnEvent(products, response));
+	public List<Product> findByNameLike(HttpServletResponse response,
+			@RequestHeader(HeaderKey.PRODUCT_NAME) String productName,
+			@RequestHeader(HeaderKey.PAGE_INDEX) Integer pageIndex,
+			@RequestHeader(HeaderKey.PAGE_SIZE) Integer pageSize) {
+		Page<Product> products = this.facade.findByNameLike(productName,
+				new PageRequest(pageIndex, pageSize));
+		super.eventPublisher.publishEvent(new PageReturnEvent(products,
+				response));
 		return products.getContent();
 	}
-	
+
 	@RequestMapping(value = "/category", method = RequestMethod.GET)
 	@ResponseStatus(value = HttpStatus.OK)
 	@ResponseBody
-	public List<String> findAllCategory(){
+	public List<String> findAllCategory() {
 		return this.facade.findAllCategory();
 	}
-	
+
 	@RequestMapping(value = "/{productId:[\\d]+}/stock", method = RequestMethod.GET)
 	@ResponseStatus(value = HttpStatus.OK)
 	@ResponseBody
-	public List<Stock> getStock(@PathVariable("productId") Long productId) throws InvalidArgumentException, NotFoundException {
+	public List<Stock> getStock(@PathVariable("productId") Long productId)
+			throws InvalidArgumentException, NotFoundException {
 		return super.find(productId).getStocks();
 	}
-	
+
 	@RequestMapping(value = "/{productId:[\\d]+}/image", method = RequestMethod.POST)
 	@ResponseStatus(value = HttpStatus.OK)
 	@ResponseBody
-	public FileMeta uploadImage(@PathVariable("productId") Long productId, UriComponentsBuilder ucb, HttpServletRequest request, HttpServletResponse response) throws InvalidArgumentException, NotFoundException {
-		if(!ServletFileUpload.isMultipartContent(request)) 
-			throw new InvalidRequestException("request for this url should be multipart");
+	public FileMeta uploadImage(@PathVariable("productId") Long productId,
+			UriComponentsBuilder ucb, HttpServletRequest request,
+			HttpServletResponse response) throws InvalidArgumentException,
+			NotFoundException {
+		if (!ServletFileUpload.isMultipartContent(request))
+			throw new InvalidRequestException(
+					"request for this url should be multipart");
 		// Create a factory for disk-based file items
 		DiskFileItemFactory factory = new DiskFileItemFactory();
 		// Configure a repository (to ensure a secure temp location is used)
-		File repository = (File) context.getAttribute("javax.servlet.context.tempdir");
+		File repository = (File) context
+				.getAttribute("javax.servlet.context.tempdir");
 		factory.setRepository(repository);
 		// Create a new file upload handler
 		ServletFileUpload upload = new ServletFileUpload(factory);
 		upload.setSizeMax(5100000);
-		
+
 		try {
 			// Parse the request
 			List<FileItem> items = upload.parseRequest(request);
-			for(FileItem x : items){
-				if(!x.isFormField()){
-					//Update Product
+			for (FileItem x : items) {
+				if (!x.isFormField()) {
+					// Update Product
 					Product product = facade.find(productId);
 					product.setImage(FileMeta.from(x));
 					product = facade.update(product);
-					
-					//Set Location header
-					UriComponents build = ucb.path(request.getPathInfo()).buildAndExpand(product.getId());
+
+					// Set Location header
+					UriComponents build = ucb.path(request.getPathInfo())
+							.buildAndExpand(product.getId());
 					response.setHeader("Location", build.toUriString());
-					
+
 					return product.getImage();
 				}
 			}
-		} catch (FileUploadException e) {	
-			throw new ProductInvalidException(new EntityError(MessageKey.PRODUCTIMAGETOOBIG_VALIDATION, new Object[] { "5 MB"}));
+		} catch (FileUploadException e) {
+			throw new ProductInvalidException(new EntityError(
+					MessageKey.PRODUCTIMAGETOOBIG_VALIDATION,
+					new Object[] { "5 MB" }));
 		}
-		throw new ProductInvalidException(new EntityError(MessageKey.PRODUCTIMAGEINVALID_VALIDATION));
+		throw new ProductInvalidException(new EntityError(
+				MessageKey.PRODUCTIMAGEINVALID_VALIDATION));
 	}
-	
+
 	@RequestMapping(value = "/{productId:[\\d]+}/image", method = RequestMethod.GET)
 	@ResponseStatus(value = HttpStatus.OK)
-	public void downloadImage(@PathVariable("productId") Long productId, HttpServletResponse response) throws InvalidArgumentException, NotFoundException {
+	public void downloadImage(@PathVariable("productId") Long productId,
+			HttpServletResponse response) throws InvalidArgumentException,
+			NotFoundException {
 		FileMeta fileMeta = facade.getImage(productId);
 		try {
 			response.getOutputStream().write(fileMeta.getBytes());
@@ -128,8 +145,9 @@ public class ProductController extends AbstractEntityController<Product> {
 	}
 
 	@Override
-	protected void validationResult(BindingResult bindingResult) throws InvalidArgumentException {
-		if(bindingResult.hasErrors())
+	protected void validationResult(BindingResult bindingResult)
+			throws InvalidArgumentException {
+		if (bindingResult.hasErrors())
 			throw new ProductInvalidException(bindingResult.getAllErrors());
 	}
 }

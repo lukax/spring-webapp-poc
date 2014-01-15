@@ -13,16 +13,18 @@ import com.espindola.lobwebapp.service.contract.UserService;
 public class UserFacade extends AbstractEntityFacade<User> {
 
 	private UserService userService;
-	
-	public UserFacade() { super(null); }
-	
+
+	public UserFacade() {
+		super(null);
+	}
+
 	@Autowired
 	public UserFacade(UserService userService) {
 		super(userService);
 		this.userService = userService;
 	}
-	
-	public User findByUsername(String username){
+
+	public User findByUsername(String username) {
 		return userService.findByUsername(username);
 	}
 

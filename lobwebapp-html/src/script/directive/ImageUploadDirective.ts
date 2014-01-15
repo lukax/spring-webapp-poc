@@ -1,7 +1,7 @@
 ///<reference path="./../reference.d.ts"/>
 
+import i0 = require("./../util/Progress");
 import enums = require("./../util/EnumUtil");
-import NProgress = require("NProgress");
 
 export module directive {
     export class ImageUploadDirective implements ng.IDirective {
@@ -39,7 +39,7 @@ export module directive {
                 },
                 progressall: (e, data) => {
                     var load = data.loaded / data.total;
-                    NProgress.set(load);
+                    i0.util.Progress.set(load);
                     scope.percentage = load * 100;
                 }
             });

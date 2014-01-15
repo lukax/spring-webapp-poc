@@ -9,8 +9,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 
-public class AjaxAwareUrlAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
-		
+public class AjaxAwareUrlAuthenticationSuccessHandler extends
+		SimpleUrlAuthenticationSuccessHandler {
+
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request,
 			HttpServletResponse response, Authentication authentication)
@@ -18,7 +19,7 @@ public class AjaxAwareUrlAuthenticationSuccessHandler extends SimpleUrlAuthentic
 
 		response.sendError(HttpServletResponse.SC_OK);
 		super.onAuthenticationSuccess(request, response, authentication);
-		
+
 	}
-	
+
 }

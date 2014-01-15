@@ -14,7 +14,8 @@ import com.espindola.lobwebapp.service.contract.UserService;
 import com.espindola.lobwebapp.service.impl.base.AbstractPersonServiceImpl;
 
 @Service
-public class UserServiceImpl extends AbstractPersonServiceImpl<User> implements UserService {
+public class UserServiceImpl extends AbstractPersonServiceImpl<User> implements
+		UserService {
 
 	private UserRepository repository;
 
@@ -28,33 +29,32 @@ public class UserServiceImpl extends AbstractPersonServiceImpl<User> implements 
 	public User findByUsername(String username) {
 		return this.repository.findByUsername(username);
 	}
-	
+
 	@Override
-	public Boolean authenticate(User user){
+	public Boolean authenticate(User user) {
 		User x = this.repository.findByUsername(user.getUsername());
-		if(x != null && x.getPassword().equals(user.getPassword())) {
+		if (x != null && x.getPassword().equals(user.getPassword())) {
 			return true;
-		}
-		else { 
+		} else {
 			return false;
 		}
 	}
-	
-	
+
 	@Override
 	protected void throwIfInvalid(User entity) throws InvalidArgumentException {
-		//TODO: Business logic
+		// TODO: Business logic
 	}
-	
+
 	@Override
-	protected void throwIfAlreadyExists(User entity) throws AlreadyExistsException {
-		if(repository.exists(entity.getId()))
+	protected void throwIfAlreadyExists(User entity)
+			throws AlreadyExistsException {
+		if (repository.exists(entity.getId()))
 			throw new UserExistsException(entity);
 	}
 
 	@Override
 	protected void throwIfNotFound(Long id) throws NotFoundException {
-		if(!repository.exists(id))
+		if (!repository.exists(id))
 			throw new UserNotFoundException(id);
 	}
 }

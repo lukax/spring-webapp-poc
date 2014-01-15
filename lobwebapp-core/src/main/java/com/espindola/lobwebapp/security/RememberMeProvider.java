@@ -12,13 +12,13 @@ import org.apache.log4j.Logger;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices;
 
-public class RememberMeProvider extends TokenBasedRememberMeServices  {
+public class RememberMeProvider extends TokenBasedRememberMeServices {
 
 	private static final String[] kLocalDomain = { "localhost" };
 	private static final String kProductionDomain = ".example.com";
 	private static final String kRememberMe = "lobwebapp";
 
-	public RememberMeProvider(final UserDetailsService userDetailsService){
+	public RememberMeProvider(final UserDetailsService userDetailsService) {
 		super(kRememberMe, userDetailsService);
 	}
 
@@ -38,36 +38,36 @@ public class RememberMeProvider extends TokenBasedRememberMeServices  {
 	private static String getCookieDomain(final HttpServletRequest request) {
 		String aCookieDomain = null;
 		try {
-			aCookieDomain = new URL(request.getRequestURL().toString()).getHost();
+			aCookieDomain = new URL(request.getRequestURL().toString())
+					.getHost();
 			if (aCookieDomain.contains(RememberMeProvider.kLocalDomain[0])) {
 				aCookieDomain = RememberMeProvider.kLocalDomain[0];
 			} else {
 				aCookieDomain = RememberMeProvider.kProductionDomain;
 			}
 		} catch (final MalformedURLException ex) {
-			Logger.getLogger(RememberMeProvider.class.getName()).log(Level.WARN, null, ex);
+			Logger.getLogger(RememberMeProvider.class.getName()).log(
+					Level.WARN, null, ex);
 			aCookieDomain = RememberMeProvider.kProductionDomain;
 		}
-		return "."+aCookieDomain;
+		return "." + aCookieDomain;
 	}
 
 	@Override
-	protected void setCookie(String[] tokens, int maxAge, HttpServletRequest request, HttpServletResponse response) {
+	protected void setCookie(String[] tokens, int maxAge,
+			HttpServletRequest request, HttpServletResponse response) {
 		response.addCookie(RememberMeProvider.createCookie(
-						super.getCookieName(), 
-						super.encodeCookie(tokens), 
-						getCookieDomain(request), 
-						maxAge, 
-						"/", 
-						request.isSecure()));
+				super.getCookieName(), super.encodeCookie(tokens),
+				getCookieDomain(request), maxAge, "/", request.isSecure()));
 	}
-	
+
 	@Override
-	protected void cancelCookie(final HttpServletRequest request, final HttpServletResponse response) {
-	    response.addCookie(RememberMeProvider.createCookie(
-	                    super.getCookieName(), "",
-	                    RememberMeProvider.getCookieDomain(request), 0, "/",
-	                    request.isSecure()));
+	protected void cancelCookie(final HttpServletRequest request,
+			final HttpServletResponse response) {
+		response.addCookie(RememberMeProvider.createCookie(
+				super.getCookieName(), "",
+				RememberMeProvider.getCookieDomain(request), 0, "/",
+				request.isSecure()));
 	}
 
 }

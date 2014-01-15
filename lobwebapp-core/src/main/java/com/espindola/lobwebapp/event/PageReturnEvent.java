@@ -33,5 +33,4 @@ public class PageReturnEvent extends ApplicationEvent {
 		this.httpServletResponse = httpServletResponse;
 	}
 
-
 }

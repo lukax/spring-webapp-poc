@@ -11,11 +11,11 @@ public class StockInvalidException extends InvalidArgumentException {
 
 	private static final long serialVersionUID = 1L;
 
-	public StockInvalidException(List<ObjectError> list){
+	public StockInvalidException(List<ObjectError> list) {
 		super(MessageKey.STOCKINVALID_EXCEPTION, list);
 	}
-	
-	public StockInvalidException(EntityError error){
+
+	public StockInvalidException(EntityError error) {
 		super(MessageKey.STOCKINVALID_EXCEPTION, error);
 	}
 }

@@ -8,11 +8,11 @@ import com.espindola.lobwebapp.domain.base.AbstractEntity;
 @Entity
 @Table(name = "TB_PAYMENT")
 public class Payment extends AbstractEntity {
-	
+
 	private Double quantity;
-	
+
 	private PaymentStatus status;
-	
+
 	private PaymentMode mode;
 
 	public Double getQuantity() {

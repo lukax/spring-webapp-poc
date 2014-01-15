@@ -8,10 +8,12 @@ import com.espindola.lobwebapp.facade.base.AbstractEntityFacade;
 import com.espindola.lobwebapp.validation.base.PersonValidator;
 
 @Controller
-public abstract class PersonController<T extends Person> extends AbstractEntityController<T> {
+public abstract class PersonController<T extends Person> extends
+		AbstractEntityController<T> {
 
 	@Autowired
-	public PersonController(AbstractEntityFacade<T> facade, PersonValidator<T> validator) {
+	public PersonController(AbstractEntityFacade<T> facade,
+			PersonValidator<T> validator) {
 		super(facade, validator);
 	}
 

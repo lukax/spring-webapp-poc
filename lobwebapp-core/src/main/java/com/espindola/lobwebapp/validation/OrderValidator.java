@@ -19,62 +19,74 @@ import com.espindola.lobwebapp.validation.base.AbstractEntityValidator;
 
 @Component
 public class OrderValidator extends AbstractEntityValidator<Order> {
-	
+
 	private PaymentValidator paymentValidator;
 
 	@Autowired
-	public OrderValidator(PaymentValidator paymentValidator){
+	public OrderValidator(PaymentValidator paymentValidator) {
 		this.paymentValidator = paymentValidator;
 	}
 
 	@Override
 	protected void validateEntity(Order t, Errors e) {
-		
+
 		validateCustomer(t.getCustomer(), e);
-		
+
 		validateOrderItems(t.getItems(), e);
 
 		validateDate(t.getDate(), e);
-			
+
 		validatePayment(t.getPayment(), e);
-		
+
 	}
 
 	private void validateDate(Date t, Errors errors) {
-		if(t == null)
-			errors.rejectValue("date", MessageKey.ORDERDATEINVALID_VALIDATION.getKey(), defaultMessage);
+		if (t == null)
+			errors.rejectValue("date",
+					MessageKey.ORDERDATEINVALID_VALIDATION.getKey(),
+					defaultMessage);
 	}
-	
-	private void validateCustomer(Customer customer, Errors errors){
-		//Check just the customer's ID since it's not cascading stuff
-		if(customer == null || customer.getId() == null || customer.getId() <= 0){
-			errors.rejectValue("product", MessageKey.ORDERCUSTOMERINVALID_VALIDATION.getKey(), defaultMessage);
+
+	private void validateCustomer(Customer customer, Errors errors) {
+		// Check just the customer's ID since it's not cascading stuff
+		if (customer == null || customer.getId() == null
+				|| customer.getId() <= 0) {
+			errors.rejectValue("product",
+					MessageKey.ORDERCUSTOMERINVALID_VALIDATION.getKey(),
+					defaultMessage);
 		}
 	}
-	
-	private void validateProduct(Product product, Errors errors){
-		//Check just the product's ID since it's not cascading stuff
-		if(product == null || product.getId() == null || product.getId() <= 0){
-			errors.rejectValue("product", MessageKey.ORDERITEMSINVALID_VALIDATION.getKey(), defaultMessage);
+
+	private void validateProduct(Product product, Errors errors) {
+		// Check just the product's ID since it's not cascading stuff
+		if (product == null || product.getId() == null || product.getId() <= 0) {
+			errors.rejectValue("product",
+					MessageKey.ORDERITEMSINVALID_VALIDATION.getKey(),
+					defaultMessage);
 		}
 	}
-	
-	private void validatePayment(Payment payment, Errors errors){
+
+	private void validatePayment(Payment payment, Errors errors) {
 		BindException paymentErrors = new BindException(payment, "payment");
 		this.paymentValidator.validate(payment, paymentErrors);
-		for(ObjectError objErr : paymentErrors.getAllErrors()){
-			errors.rejectValue("payment."+objErr.getObjectName(), objErr.getCode(), objErr.getArguments(), defaultMessage);
+		for (ObjectError objErr : paymentErrors.getAllErrors()) {
+			errors.rejectValue("payment." + objErr.getObjectName(),
+					objErr.getCode(), objErr.getArguments(), defaultMessage);
 		}
 	}
-	
-	private void validateOrderItems(Set<OrderItem> items, Errors errors){
-		if(items == null || items.isEmpty())
-			errors.rejectValue("items", MessageKey.ORDERITEMSINVALID_VALIDATION.getKey(), defaultMessage);
+
+	private void validateOrderItems(Set<OrderItem> items, Errors errors) {
+		if (items == null || items.isEmpty())
+			errors.rejectValue("items",
+					MessageKey.ORDERITEMSINVALID_VALIDATION.getKey(),
+					defaultMessage);
 		else
-			for(OrderItem item : items){
+			for (OrderItem item : items) {
 				validateProduct(item.getProduct(), errors);
-				if(item.getQuantity() == null || item.getQuantity() < 0)
-					errors.rejectValue("items", MessageKey.ORDERITEMSINVALID_VALIDATION.getKey(), defaultMessage);
+				if (item.getQuantity() == null || item.getQuantity() < 0)
+					errors.rejectValue("items",
+							MessageKey.ORDERITEMSINVALID_VALIDATION.getKey(),
+							defaultMessage);
 			}
 	}
 }

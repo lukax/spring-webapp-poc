@@ -9,20 +9,19 @@ import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import com.espindola.lobwebapp.domain.base.AbstractEntity;
 
 @Entity
-@JsonIgnoreProperties({"bytes"}) 
+@JsonIgnoreProperties({ "bytes" })
 public class FileMeta extends AbstractEntity {
- 
-    private String fileName;
-    
-    private Long fileSize;
-    
-    private String fileType;
-    
-    @Lob
-    private byte[] bytes;
 
-	
-    public String getFileName() {
+	private String fileName;
+
+	private Long fileSize;
+
+	private String fileType;
+
+	@Lob
+	private byte[] bytes;
+
+	public String getFileName() {
 		return fileName;
 	}
 
@@ -53,8 +52,8 @@ public class FileMeta extends AbstractEntity {
 	public void setBytes(byte[] bytes) {
 		this.bytes = bytes;
 	}
-	
-	public static FileMeta from(FileItem fileItem){
+
+	public static FileMeta from(FileItem fileItem) {
 		FileMeta fileMeta = new FileMeta();
 		fileMeta.setId(0L);
 		fileMeta.setFileName(fileItem.getName());
@@ -63,5 +62,5 @@ public class FileMeta extends AbstractEntity {
 		fileMeta.setBytes(fileItem.get());
 		return fileMeta;
 	}
- 
+
 }

@@ -21,29 +21,34 @@ public class StockFacade extends AbstractEntityFacade<Stock> {
 
 	private ProductService productService;
 
-	public StockFacade(){ super(null); }
-	
+	public StockFacade() {
+		super(null);
+	}
+
 	@Autowired
 	public StockFacade(StockService stockService, ProductService productService) {
 		super(stockService);
 		this.productService = productService;
 	}
-	
+
 	@Override
-	public Stock save(Stock entity) throws AlreadyExistsException, InvalidArgumentException {
+	public Stock save(Stock entity) throws AlreadyExistsException,
+			InvalidArgumentException {
 		throwIfProductNotExists(entity);
 		return super.save(entity);
 	}
-	
+
 	@Override
-	public Stock update(Stock entity) throws NotFoundException, InvalidArgumentException {
+	public Stock update(Stock entity) throws NotFoundException,
+			InvalidArgumentException {
 		throwIfProductNotExists(entity);
 		return super.update(entity);
 	}
 
-	
-	private void throwIfProductNotExists(Stock entity) throws InvalidArgumentException {
-		if(!productService.exists(entity.getProduct().getId()))
-			throw new StockInvalidException(new EntityError(MessageKey.STOCKPRODUCTINVALID_VALIDATION));
+	private void throwIfProductNotExists(Stock entity)
+			throws InvalidArgumentException {
+		if (!productService.exists(entity.getProduct().getId()))
+			throw new StockInvalidException(new EntityError(
+					MessageKey.STOCKPRODUCTINVALID_VALIDATION));
 	}
 }

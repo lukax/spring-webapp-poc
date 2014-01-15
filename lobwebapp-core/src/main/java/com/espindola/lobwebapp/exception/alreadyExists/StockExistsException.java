@@ -8,6 +8,7 @@ public class StockExistsException extends AlreadyExistsException {
 	private static final long serialVersionUID = 1L;
 
 	public StockExistsException(Stock entity) {
-		super(MessageKey.STOCKALREADYEXITS_EXCEPTION, new String[]{ entity.toString() });
+		super(MessageKey.STOCKALREADYEXITS_EXCEPTION, new String[] { entity
+				.toString() });
 	}
 }

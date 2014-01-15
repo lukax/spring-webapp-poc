@@ -18,16 +18,14 @@ import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import com.espindola.lobwebapp.domain.base.AbstractEntity;
 
 @Entity
-@Table(name = "TB_PRODUCT", uniqueConstraints = {
-		@UniqueConstraint(columnNames = "NAME")
-	})
-@JsonIgnoreProperties(value = {"image", "stocks"})
+@Table(name = "TB_PRODUCT", uniqueConstraints = { @UniqueConstraint(columnNames = "NAME") })
+@JsonIgnoreProperties(value = { "image", "stocks" })
 public class Product extends AbstractEntity {
 
 	private String name;
 
 	private String description;
-	
+
 	private Double costPrice;
 
 	private Double price;
@@ -35,13 +33,13 @@ public class Product extends AbstractEntity {
 	private String category;
 
 	private String ncm;
-	
-	@OneToOne(fetch= FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	private FileMeta image;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date registerDate;
-	
+
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "product", orphanRemoval = true)
 	private List<Stock> stocks;
 
@@ -111,10 +109,7 @@ public class Product extends AbstractEntity {
 
 	@Override
 	public String toString() {
-		return "[" + 
-				getId() + ", " + 
-				getName() + 
-				"]";
+		return "[" + getId() + ", " + getName() + "]";
 	}
 
 	public FileMeta getImage() {

@@ -16,24 +16,26 @@ public class InvalidArgumentException extends LobWebAppException {
 	private static final long serialVersionUID = 1L;
 	private EntityError entityError;
 
-	public InvalidArgumentException(){
-		super(MessageKey.INVALIDARGUMENT_EXCEPTION, new Object[] {} );
+	public InvalidArgumentException() {
+		super(MessageKey.INVALIDARGUMENT_EXCEPTION, new Object[] {});
 	}
 
-	protected InvalidArgumentException(MessageKey messageKey, List<ObjectError> allErrors) {
+	protected InvalidArgumentException(MessageKey messageKey,
+			List<ObjectError> allErrors) {
 		super(messageKey, allErrors.toArray());
 	}
-	
+
 	protected InvalidArgumentException(MessageKey messageKey, EntityError error) {
 		super(messageKey, new Object[] { error });
 		this.entityError = error;
 	}
-	
+
 	@Override
-	public ErrorResponse getErrorResponse(MessageSource messageSource, Locale locale) {
-		if(this.entityError != null)
+	public ErrorResponse getErrorResponse(MessageSource messageSource,
+			Locale locale) {
+		if (this.entityError != null)
 			this.setMessageArgs(new Object[] { messageSource.getMessage(
-					this.entityError.getMessageKey().getKey(), 
+					this.entityError.getMessageKey().getKey(),
 					this.entityError.getMessageArgs(), locale) });
 		return super.getErrorResponse(messageSource, locale);
 	}

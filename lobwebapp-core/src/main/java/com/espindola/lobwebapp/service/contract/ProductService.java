@@ -11,7 +11,10 @@ import com.espindola.lobwebapp.service.contract.base.EntityService;
 
 public interface ProductService extends EntityService<Product> {
 	Product findByName(String name) throws NotFoundException;
+
 	Page<Product> findByNameLike(String name, Pageable pageable);
+
 	List<String> findAllCategory();
+
 	List<String> findCategoryByName(String name);
 }

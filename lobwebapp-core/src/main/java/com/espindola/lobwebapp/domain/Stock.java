@@ -11,19 +11,18 @@ import com.espindola.lobwebapp.domain.base.AbstractEntity;
 @Entity
 @Table(name = "TB_STOCK")
 public class Stock extends AbstractEntity {
-	
+
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "PRODUCT_ID")
 	private Product product;
-	
+
 	private Integer quantity;
-	
+
 	private Integer minQuantity;
-	
+
 	private Integer maxQuantity;
 
 	private String unit;
-
 
 	public Integer getQuantity() {
 		return quantity;

@@ -13,7 +13,8 @@ import com.espindola.lobwebapp.exception.notFound.NotFoundException;
 import com.espindola.lobwebapp.repository.base.EntityRepository;
 import com.espindola.lobwebapp.service.contract.base.EntityService;
 
-public abstract class AbstractEntityServiceImpl<T extends AbstractEntity> implements EntityService<T> {
+public abstract class AbstractEntityServiceImpl<T extends AbstractEntity>
+		implements EntityService<T> {
 
 	private EntityRepository<T> repository;
 
@@ -30,14 +31,16 @@ public abstract class AbstractEntityServiceImpl<T extends AbstractEntity> implem
 	}
 
 	@Override
-	public T save(T entity) throws AlreadyExistsException, InvalidArgumentException {
+	public T save(T entity) throws AlreadyExistsException,
+			InvalidArgumentException {
 		throwIfInvalid(entity);
 		throwIfAlreadyExists(entity);
 		return repository.save(entity);
 	}
 
 	@Override
-	public T update(T entity) throws NotFoundException, InvalidArgumentException {
+	public T update(T entity) throws NotFoundException,
+			InvalidArgumentException {
 		throwIfInvalid(entity);
 		throwIfNotFound(entity.getId());
 		return repository.save(entity);
@@ -50,9 +53,9 @@ public abstract class AbstractEntityServiceImpl<T extends AbstractEntity> implem
 		repository.delete(id);
 		return entity;
 	}
-	
+
 	@Override
-	public boolean exists(Long id){
+	public boolean exists(Long id) {
 		return repository.exists(id);
 	}
 
@@ -60,14 +63,18 @@ public abstract class AbstractEntityServiceImpl<T extends AbstractEntity> implem
 	public List<T> findAll() {
 		return repository.findAll();
 	}
-	
+
 	@Override
 	public Page<T> findAll(Pageable p) {
 		return repository.findAll(p);
 	}
-	
-	protected abstract void throwIfAlreadyExists(T entity) throws AlreadyExistsException;
-	protected abstract void throwIfInvalid(T entity) throws InvalidArgumentException;
+
+	protected abstract void throwIfAlreadyExists(T entity)
+			throws AlreadyExistsException;
+
+	protected abstract void throwIfInvalid(T entity)
+			throws InvalidArgumentException;
+
 	protected abstract void throwIfNotFound(Long id) throws NotFoundException;
-	
+
 }

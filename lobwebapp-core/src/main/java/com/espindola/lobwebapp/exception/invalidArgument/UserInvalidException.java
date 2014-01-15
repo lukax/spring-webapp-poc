@@ -10,7 +10,7 @@ public class UserInvalidException extends InvalidArgumentException {
 
 	private static final long serialVersionUID = 1L;
 
-	public UserInvalidException(List<ObjectError> list){
+	public UserInvalidException(List<ObjectError> list) {
 		super(MessageKey.USERINVALID_EXCEPTION, list);
 	}
 }

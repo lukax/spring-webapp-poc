@@ -8,6 +8,7 @@ public class UserExistsException extends AlreadyExistsException {
 	private static final long serialVersionUID = 1L;
 
 	public UserExistsException(User entity) {
-		super(MessageKey.USERALREADYEXITS_EXCEPTION, new String[]{ entity.toString() });
+		super(MessageKey.USERALREADYEXITS_EXCEPTION, new String[] { entity
+				.toString() });
 	}
 }

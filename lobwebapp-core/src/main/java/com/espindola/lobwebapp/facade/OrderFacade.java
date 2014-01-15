@@ -24,40 +24,47 @@ public class OrderFacade extends AbstractEntityFacade<Order> {
 	private CustomerService customerService;
 	private ProductService productService;
 
-	public OrderFacade() { super(null); }
-	
+	public OrderFacade() {
+		super(null);
+	}
+
 	@Autowired
-	public OrderFacade(OrderService orderService, ProductService productService, CustomerService customerService) {
+	public OrderFacade(OrderService orderService,
+			ProductService productService, CustomerService customerService) {
 		super(orderService);
 		this.productService = productService;
 		this.customerService = customerService;
 	}
-	
+
 	@Override
-	public Order save(Order entity) throws AlreadyExistsException,InvalidArgumentException {
+	public Order save(Order entity) throws AlreadyExistsException,
+			InvalidArgumentException {
 		throwIfCustomerNotExists(entity);
 		throwIfInvalidOrderItem(entity);
 		return super.save(entity);
 	}
-	
+
 	@Override
-	public Order update(Order entity) throws NotFoundException, InvalidArgumentException {
+	public Order update(Order entity) throws NotFoundException,
+			InvalidArgumentException {
 		throwIfCustomerNotExists(entity);
 		throwIfInvalidOrderItem(entity);
 		return super.update(entity);
 	}
 
-	
-	private void throwIfInvalidOrderItem(Order entity) throws InvalidArgumentException {
-		for(OrderItem item : entity.getItems()){
-			if(!productService.exists(item.getProduct().getId()))
-				throw new OrderInvalidException(new EntityError(MessageKey.ORDERITEMSINVALID_VALIDATION));
+	private void throwIfInvalidOrderItem(Order entity)
+			throws InvalidArgumentException {
+		for (OrderItem item : entity.getItems()) {
+			if (!productService.exists(item.getProduct().getId()))
+				throw new OrderInvalidException(new EntityError(
+						MessageKey.ORDERITEMSINVALID_VALIDATION));
 		}
 	}
 
 	private void throwIfCustomerNotExists(Order entity) {
-		if(!customerService.exists(entity.getCustomer().getId()))
-			throw new OrderInvalidException(new EntityError(MessageKey.ORDERCUSTOMERINVALID_VALIDATION));
+		if (!customerService.exists(entity.getCustomer().getId()))
+			throw new OrderInvalidException(new EntityError(
+					MessageKey.ORDERCUSTOMERINVALID_VALIDATION));
 	}
 
 }

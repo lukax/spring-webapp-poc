@@ -10,7 +10,7 @@ public class CustomerInvalidException extends InvalidArgumentException {
 
 	private static final long serialVersionUID = 1L;
 
-	public CustomerInvalidException(List<ObjectError> list){
+	public CustomerInvalidException(List<ObjectError> list) {
 		super(MessageKey.CUSTOMERINVALID_EXCEPTION, list);
 	}
 }

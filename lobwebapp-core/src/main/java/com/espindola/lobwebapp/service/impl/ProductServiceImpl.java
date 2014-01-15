@@ -25,10 +25,11 @@ import com.espindola.lobwebapp.service.contract.ProductService;
 import com.espindola.lobwebapp.service.impl.base.AbstractEntityServiceImpl;
 
 @Service
-public class ProductServiceImpl extends AbstractEntityServiceImpl<Product> implements ProductService {
+public class ProductServiceImpl extends AbstractEntityServiceImpl<Product>
+		implements ProductService {
 
 	private ProductRepository repository;
-	
+
 	@Autowired
 	public ProductServiceImpl(ProductRepository repository) {
 		super(repository);
@@ -44,67 +45,75 @@ public class ProductServiceImpl extends AbstractEntityServiceImpl<Product> imple
 	public List<String> findAllCategory() {
 		return repository.findAllCategory();
 	}
-	
+
 	@Override
 	public List<String> findCategoryByName(String name) {
 		String compareName = name.toLowerCase();
 		List<String> current = repository.findAllCategory();
 		List<String> filtered = new ArrayList<String>();
-		for(String x : current){
-			if(x != null && x.toLowerCase().contains(compareName)){
+		for (String x : current) {
+			if (x != null && x.toLowerCase().contains(compareName)) {
 				filtered.add(x);
 			}
 		}
 		return filtered;
 	}
-	
+
 	@Override
 	public Page<Product> findByNameLike(String name, Pageable pageable) {
 		return repository.findByNameLike(name, pageable);
 	}
 
-
 	@Override
-	protected void throwIfInvalid(Product entity) throws InvalidArgumentException {
-		//TODO: Business logic
+	protected void throwIfInvalid(Product entity)
+			throws InvalidArgumentException {
+		// TODO: Business logic
 		throwIfPriceIsLessThanCostPrice(entity);
 		throwIfInvalidOrTooBigImage(entity);
 	}
 
 	@Override
-	protected void throwIfAlreadyExists(Product entity) throws AlreadyExistsException {
+	protected void throwIfAlreadyExists(Product entity)
+			throws AlreadyExistsException {
 		Product p = repository.findOne(entity.getId());
-		if(p != null)
+		if (p != null)
 			throw new ProductExistsException(p);
-		
+
 		Product q = repository.findByName(entity.getName());
-		if(q != null)
+		if (q != null)
 			throw new ProductExistsException(q);
 	}
 
 	@Override
 	protected void throwIfNotFound(Long id) throws NotFoundException {
-		if(!repository.exists(id))
+		if (!repository.exists(id))
 			throw new ProductNotFoundException(id);
 	}
-	
+
 	private void throwIfPriceIsLessThanCostPrice(Product entity) {
-		if(entity.getCostPrice() >= entity.getPrice())
-			throw new ProductInvalidException(new EntityError(MessageKey.PRODUCTPRICEINVALID_VALIDATION));
+		if (entity.getCostPrice() >= entity.getPrice())
+			throw new ProductInvalidException(new EntityError(
+					MessageKey.PRODUCTPRICEINVALID_VALIDATION));
 	}
-	
+
 	private void throwIfInvalidOrTooBigImage(Product entity) {
-		if(entity.getImage() != null && entity.getImage().getBytes() != null){
-			try{
-				String type = URLConnection.guessContentTypeFromStream(new ByteArrayInputStream(entity.getImage().getBytes()));
-				if(type == null || !type.contains("image")){
-					throw new ProductInvalidException(new EntityError(MessageKey.PRODUCTIMAGEINVALID_VALIDATION));
+		if (entity.getImage() != null && entity.getImage().getBytes() != null) {
+			try {
+				String type = URLConnection
+						.guessContentTypeFromStream(new ByteArrayInputStream(
+								entity.getImage().getBytes()));
+				if (type == null || !type.contains("image")) {
+					throw new ProductInvalidException(new EntityError(
+							MessageKey.PRODUCTIMAGEINVALID_VALIDATION));
 				}
-				if(entity.getImage().getBytes().length > 5000000){
-					throw new ProductInvalidException(new EntityError(MessageKey.PRODUCTIMAGETOOBIG_VALIDATION, new Object[] { "5 MB"}));
+				if (entity.getImage().getBytes().length > 5000000) {
+					throw new ProductInvalidException(new EntityError(
+							MessageKey.PRODUCTIMAGETOOBIG_VALIDATION,
+							new Object[] { "5 MB" }));
 				}
-			}catch(IOException ex){
-				throw new ProductInvalidException(new EntityError(MessageKey.PRODUCTIMAGEINVALID_VALIDATION));
+			} catch (IOException ex) {
+				throw new ProductInvalidException(new EntityError(
+						MessageKey.PRODUCTIMAGEINVALID_VALIDATION));
 			}
 		}
 	}

@@ -7,11 +7,11 @@ public class AlreadyExistsException extends LobWebAppException {
 
 	private static final long serialVersionUID = 1L;
 
-	public AlreadyExistsException(){
-		super(MessageKey.ALREADYEXISTS_EXCEPTION, new String[]{ });
+	public AlreadyExistsException() {
+		super(MessageKey.ALREADYEXISTS_EXCEPTION, new String[] {});
 	}
 
-	protected AlreadyExistsException(MessageKey messageKey, String[] messageArgs){
+	protected AlreadyExistsException(MessageKey messageKey, String[] messageArgs) {
 		super(messageKey, messageArgs);
 	}
 }

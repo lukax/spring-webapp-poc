@@ -6,7 +6,8 @@ import com.espindola.lobwebapp.domain.base.Person;
 import com.espindola.lobwebapp.repository.base.EntityRepository;
 import com.espindola.lobwebapp.service.contract.base.PersonService;
 
-public abstract class AbstractPersonServiceImpl<T extends Person> extends AbstractEntityServiceImpl<T> implements PersonService<T> {
+public abstract class AbstractPersonServiceImpl<T extends Person> extends
+		AbstractEntityServiceImpl<T> implements PersonService<T> {
 
 	@Autowired
 	public AbstractPersonServiceImpl(EntityRepository<T> repository) {

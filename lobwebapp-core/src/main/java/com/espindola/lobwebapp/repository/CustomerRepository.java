@@ -7,5 +7,5 @@ import com.espindola.lobwebapp.repository.base.PersonRepository;
 
 @Repository
 public interface CustomerRepository extends PersonRepository<Customer> {
-	
+
 }
