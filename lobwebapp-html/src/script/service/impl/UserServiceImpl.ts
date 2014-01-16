@@ -13,7 +13,8 @@ export module service.impl {
         findByUsername(username: string,
             successCallback: (data: domain.User, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
             errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
-                this.$http({ method: "HEAD", url: this.url + username }).success(successCallback).error(errorCallback);
+                var header = "%" + username + "%";
+                this.$http.head(this.url, { headers: { user_username: header } }).success(successCallback).error(errorCallback);
         }
         
         getDefault(): domain.User{

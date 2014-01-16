@@ -195,7 +195,7 @@ module.exports = function (grunt) {
                 options: {
                     module: 'amd',       // 'amd' (default) | 'commonjs'
                     target: 'es5',            // 'es3' (default) | 'es5'
-                    sourcemap: false,          // true  (default) | false
+                    sourcemap: true,          // true  (default) | false
                     declaration: false,       // true | false  (default)
                     comments: false           // true | false (default)
                 }
@@ -203,13 +203,17 @@ module.exports = function (grunt) {
             dist: {
                 src: ['<%= yeoman.app%>/script/**/*.ts'],
                 options: {
-                    target: 'es5'
+                    module: 'amd',
+                    target: 'es5',
+                    sourcemap: true,
                 }
             },
             test: {
                 src: ['<%= yeoman.test%>/**/*.ts'],
                 options: {
-                    target: 'es5'
+                    module: 'amd',
+                    target: 'es5',
+                    sourcemap: true
                 }
             }
         }

@@ -9,6 +9,13 @@ export module controller.order {
     export interface GraphOrderViewModel extends d.controller.base.ViewModel {
     }
 
+    interface XOrder extends domain.Order {
+        dd: Date;
+        month: Date;
+        total: number;
+        productQt: number;
+    }
+
     export class GraphOrderController implements d.controller.base.Controller {
         static $inject = ["$scope", "OrderService", "AlertService"];
         constructor(public $scope: GraphOrderViewModel,
@@ -28,7 +35,7 @@ export module controller.order {
             var numberFormat = d3.format(".2f");
             var daysSinceJanuary = Math.floor((new Date().getTime() - new Date("1/1/"+new Date().getFullYear()).getTime())*1/1000*1/60*1/60*1/24);
             
-            orders.forEach((o: any) => {
+            orders.forEach((o: XOrder) => {
                 o.dd = new Date(o.date);
                 o.month = d3.time.month(o.dd);
                 o.total = 0;
@@ -42,18 +49,18 @@ export module controller.order {
             var data = crossfilter(orders);
             var all = data.groupAll();
 
-            var yearlyDimension = data.dimension((d) => {
+            var yearlyDimension = data.dimension((d: any) => {
                     return d3.time.year(d.dd).getFullYear();
                 });
             var yearlyPerformanceGroup = yearlyDimension.group().reduce(
-                (p, v) => {
+                (p, v: XOrder) => {
                     ++p.count;
                     p.productQt += v.productQt;
                     p.amountEarned += v.total;
                     p.avgOrdersPerDay += p.count / daysSinceJanuary;
                     return p;
                 },
-                (p, v) => {
+                (p, v: XOrder) => {
                     --p.count;
                     p.productQt -= v.productQt;
                     p.amountEarned -= v.total;
@@ -64,14 +71,14 @@ export module controller.order {
                     return { count: 0, avgOrdersPerDay: 0, amountEarned: 0, productQt: 0  };
                 });
 
-            var dateDimension = data.dimension((d) => {
+            var dateDimension = data.dimension((d: XOrder) => {
                     return d.dd;
                 });
 
-            var monthDimension = data.dimension((d) => {
+            var monthDimension = data.dimension((d: XOrder) => {
                     return d.month;
                 });
-            var totalGroupWithinMonth = monthDimension.group().reduceSum((d)=> {
+            var totalGroupWithinMonth = monthDimension.group().reduceSum((d: XOrder)=> {
                     return Math.abs(d.total);
                 });
 
@@ -136,7 +143,7 @@ export module controller.order {
                     .dimension(paymentStatusDimension) // set dimension
                     .group(paymentStatusGroup) // set group
                     .label((d) => {
-                        return d.data.key + "(" + Math.floor(d.value / all.value() * 100) + "%)";
+                        return d.data.key + "(" + Math.floor(d.value / Number(all.value()) * 100) + "%)";
                     })
                     .title((d) => {
                         return "Pagamento: " + d.data.key + " em " + d.value + " pedido(s)";
@@ -144,7 +151,7 @@ export module controller.order {
                     ;
                     
                     
-                var monthOfYear = data.dimension((d) => {
+                var monthOfYear = data.dimension((d: XOrder) => {
                    var month = d.dd.getMonth();
                    var name = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
                    return month+"."+name[month];
@@ -167,7 +174,7 @@ export module controller.order {
                     ;
                     
                     
-                var dayOfWeek = data.dimension((d) =>{
+                var dayOfWeek = data.dimension((d: XOrder) =>{
                     var day = d.dd.getDay();
                     var name=["Dom","Seg","Ter","Qua","Qui","Sex","Sab"];
                     return day+"."+name[day]; 

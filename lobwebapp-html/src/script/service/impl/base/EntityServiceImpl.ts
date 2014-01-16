@@ -6,7 +6,7 @@ export module service.impl.base {
         private hasDefault;
         private rootUrl = "/api/";
         public url: string;
-        
+
         constructor(contextUrl: string, public $http: ng.IHttpService, hasDefault?: d.service.contract.base.HasDefaultValue<T>) {
             this.url = this.rootUrl + contextUrl + "/";
             this.hasDefault = hasDefault;

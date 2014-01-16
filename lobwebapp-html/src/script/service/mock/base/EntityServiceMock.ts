@@ -5,7 +5,7 @@ export module service.mock.base {
         private repository: T[];
 
         constructor(public $timeout: ng.ITimeoutService) {
-            this.repository = new Array<T>();
+            this.repository = [];
         }
 
         save(entity: T,
@@ -94,7 +94,7 @@ export module service.mock.base {
                         repo.splice(0, pageable.index);
                         repo.splice(pageable.index + pageable.size, repo.length - 1);
                     }
-                    successCallback(repo, 200, null, null);
+                    successCallback(repo, 200, (h) => { if (h == "page_total") return ""+pageable.size; }, null);
                 }, 1000);
         }
 
@@ -112,7 +112,7 @@ export module service.mock.base {
                     });
 
                     if(success) successCallback(true, 200, null, null);
-                    else errorCallback({ message: "Entidade Inexistente"}, 200, null, null);
+                    else errorCallback({ message: "Entidade Inexistente" }, 200, (h) => "", { method: "", url: "" });
                 }, 100);
         }
 

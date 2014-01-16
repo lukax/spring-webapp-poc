@@ -4,6 +4,7 @@
 ///<reference path="./../../ts-definitions/requirejs/require.d.ts"/>
 ///<reference path="./../../ts-definitions/underscore/underscore.d.ts"/>
 ///<reference path="./../../ts-definitions/d3/d3.d.ts"/>
+///<reference path="./../../ts-definitions/crossfilter/crossfilter.d.ts"/>
 
 ///<reference path="./controller/base/Controller.ts"/>
 ///<reference path="./controller/base/ViewModel.ts"/>
@@ -64,5 +65,4 @@
 ///<reference path="./util/EnumUtil.ts"/>
 
 declare var dc: any;
-declare var crossfilter: any;
 declare module "NProgress" { export = any; }

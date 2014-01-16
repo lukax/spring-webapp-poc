@@ -1,12 +1,14 @@
-///<reference path="./../../../reference.d.ts"/>
+///<reference path="./../../reference.d.ts"/>
 ///<amd-dependency path="angular"/>
 ///<amd-dependency path="angularMocks"/>
+///<amd-dependency path="underscore"/>
 import i0 = require("script/service/mock/AlertServiceMock");
 
 describe("service: AlertService", () => {
     beforeEach(() => {
-        angular.module("lwa.service", []).service("AlertService", i0.service.mock.AlertServiceMock);
-        module("lwa.service");
+        module(($provide: ng.auto.IProvideService) => {
+            $provide.service("AlertService", i0.service.mock.AlertServiceMock);
+        });
     });
 
     it("should retrieve an alert", inject((AlertService: d.service.contract.AlertService) => {
@@ -26,15 +28,8 @@ describe("service: AlertService", () => {
         expect(AlertService.list().length).toBe(0);
     }));
 
-    //it("should remove all alerts", inject((AlertService:d.service.contract.AlertService) => {
-    //    AlertService.add({ content: "some content" });
-    //    AlertService.add({ content: "some content" });
-    //    AlertService.removeAll();
-    //    expect(AlertService.list().length).toBe(0);
-    //}));
-
-    xit("should remove old alerts", inject((AlertService: d.service.contract.AlertService, $timeout: ng.ITimeoutService) => {
-        AlertService.add({ content: "some content", time: new Date(2013, 5, 13, 0, 0, 0, 0) });
+    it("should remove old alerts", inject((AlertService: d.service.contract.AlertService, $timeout: ng.ITimeoutService) => {
+        AlertService.add({ content: "some content", date: new Date(2013, 5, 13, 0, 0, 0, 0) });
         expect(AlertService.list().length).toBe(1);
         $timeout.flush();
         expect(AlertService.list().length).toBe(0);

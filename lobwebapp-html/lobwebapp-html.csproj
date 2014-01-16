@@ -197,11 +197,11 @@
     <TypeScriptCompile Include="test\reference.d.ts" />
     <TypeScriptCompile Include="test\test-main.ts" />
     <TypeScriptCompile Include="test\unit\controller\ListProductControllerSpec.ts" />
-    <TypeScriptCompile Include="test\unit\service\mock\AlertServiceSpec.ts" />
-    <TypeScriptCompile Include="test\unit\service\mock\AuthServiceSpec.ts" />
-    <TypeScriptCompile Include="test\unit\service\mock\base\EntityServiceSpec.ts" />
-    <TypeScriptCompile Include="test\unit\service\mock\ProductServiceSpec.ts" />
-    <TypeScriptCompile Include="test\unit\service\mock\UserServiceSpec.ts" />
+    <TypeScriptCompile Include="test\unit\service\AlertServiceSpec.ts" />
+    <TypeScriptCompile Include="test\unit\service\AuthServiceSpec.ts" />
+    <TypeScriptCompile Include="test\unit\service\base\EntityServiceSpec.ts" />
+    <TypeScriptCompile Include="test\unit\service\ProductServiceSpec.ts" />
+    <TypeScriptCompile Include="test\unit\service\UserServiceSpec.ts" />
     <TypeScriptCompile Include="ts-definitions\jasmine\jasmine-tests.ts" />
     <TypeScriptCompile Include="ts-definitions\jasmine\jasmine.d.ts" />
     <TypeScriptCompile Include="ts-definitions\underscore\underscore-tests.ts" />
