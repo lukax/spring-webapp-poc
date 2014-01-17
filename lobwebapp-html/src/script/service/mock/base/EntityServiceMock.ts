@@ -119,5 +119,9 @@ export module service.mock.base {
         getRepository() {
             return angular.copy(this.repository);
         }
+
+        addToRepository(entity: T) {
+            this.repository.push(entity);
+        }
     }
 }

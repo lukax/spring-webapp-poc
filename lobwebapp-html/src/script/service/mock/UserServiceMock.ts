@@ -9,7 +9,7 @@ export module service.mock {
         constructor(public $timeout: ng.ITimeoutService) {
             super($timeout);
 
-            super.getRepository().push({ id: 1, username: "user", password: "password", roles: ["ROLE_USER"], name: "Lucas Espindola" });
+            this.addToRepository({ id: 1, username: "user", password: "password", roles: ["ROLE_USER"], name: "Lucas Espindola" });
         }
 
         findByUsername(username: string,
