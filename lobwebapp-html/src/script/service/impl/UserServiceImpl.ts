@@ -14,7 +14,7 @@ export module service.impl {
             successCallback: (data: domain.User, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
             errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
                 var header = "%" + username + "%";
-                this.$http.head(this.url, { headers: { user_username: header } }).success(successCallback).error(errorCallback);
+                this.$http.get(this.url, { headers: { user_username: header } }).success(successCallback).error(errorCallback);
         }
         
         getDefault(): domain.User{

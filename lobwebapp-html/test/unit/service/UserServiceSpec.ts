@@ -18,7 +18,7 @@ describe("service: UserService", () => {
             errSpy = jasmine.createSpy("errUser");
         var header = "%" + sampleUser.username + "%"; 
 
-        $httpBackend.expect("HEAD", "/api/user/", null, { user_username: header, Accept: "application/json, text/plain, */*" }).respond(200, sampleUser);
+        $httpBackend.expectGET("/api/user/", { user_username: header, Accept: "application/json, text/plain, */*" }).respond(200, sampleUser);
         UserService.findByUsername(sampleUser.username, sucSpy, errSpy);
         $httpBackend.flush();
 
