@@ -1,7 +1,12 @@
-package com.espindola.lobwebapp.exception.util;
+package com.espindola.lobwebapp.controller.util;
+
 
 public class ErrorResponse {
 	private String message;
+	
+	public ErrorResponse(){
+		
+	}
 
 	public ErrorResponse(String message) {
 		this.message = message;

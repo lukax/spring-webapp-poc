@@ -6,9 +6,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import com.espindola.lobwebapp.domain.base.AbstractEntity;
-import com.espindola.lobwebapp.exception.alreadyExists.AlreadyExistsException;
-import com.espindola.lobwebapp.exception.invalidArgument.InvalidArgumentException;
-import com.espindola.lobwebapp.exception.notFound.NotFoundException;
+import com.espindola.lobwebapp.exception.AlreadyExistsException;
+import com.espindola.lobwebapp.exception.InvalidArgumentException;
+import com.espindola.lobwebapp.exception.NotFoundException;
 import com.espindola.lobwebapp.service.contract.base.EntityService;
 
 public abstract class AbstractEntityFacade<T extends AbstractEntity> {

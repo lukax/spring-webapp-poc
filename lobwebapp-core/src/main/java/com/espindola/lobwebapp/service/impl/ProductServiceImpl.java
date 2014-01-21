@@ -3,7 +3,6 @@ package com.espindola.lobwebapp.service.impl;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.URLConnection;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,27 +11,27 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.espindola.lobwebapp.domain.Product;
-import com.espindola.lobwebapp.exception.alreadyExists.AlreadyExistsException;
-import com.espindola.lobwebapp.exception.alreadyExists.ProductExistsException;
-import com.espindola.lobwebapp.exception.invalidArgument.InvalidArgumentException;
-import com.espindola.lobwebapp.exception.invalidArgument.ProductInvalidException;
-import com.espindola.lobwebapp.exception.notFound.NotFoundException;
-import com.espindola.lobwebapp.exception.notFound.ProductNotFoundException;
-import com.espindola.lobwebapp.exception.util.EntityError;
+import com.espindola.lobwebapp.exception.AlreadyExistsException;
+import com.espindola.lobwebapp.exception.InvalidArgumentException;
+import com.espindola.lobwebapp.exception.NotFoundException;
 import com.espindola.lobwebapp.l10n.MessageKey;
 import com.espindola.lobwebapp.repository.ProductRepository;
 import com.espindola.lobwebapp.service.contract.ProductService;
 import com.espindola.lobwebapp.service.impl.base.AbstractEntityServiceImpl;
+import com.espindola.lobwebapp.validation.util.CustomObjectError;
+import com.espindola.lobwebapp.validation.util.ErrorCode;
 
 @Service
 public class ProductServiceImpl extends AbstractEntityServiceImpl<Product>
 		implements ProductService {
+	
+	private MessageKey entityMessageKey = MessageKey.ENTITY_PRODUCT;
 
 	private ProductRepository repository;
 
 	@Autowired
 	public ProductServiceImpl(ProductRepository repository) {
-		super(repository);
+		super(repository, MessageKey.ENTITY_PRODUCT);
 		this.repository = repository;
 	}
 
@@ -48,15 +47,7 @@ public class ProductServiceImpl extends AbstractEntityServiceImpl<Product>
 
 	@Override
 	public List<String> findCategoryByName(String name) {
-		String compareName = name.toLowerCase();
-		List<String> current = repository.findAllCategory();
-		List<String> filtered = new ArrayList<String>();
-		for (String x : current) {
-			if (x != null && x.toLowerCase().contains(compareName)) {
-				filtered.add(x);
-			}
-		}
-		return filtered;
+		return repository.findAllCategoryLike(name);
 	}
 
 	@Override
@@ -77,23 +68,16 @@ public class ProductServiceImpl extends AbstractEntityServiceImpl<Product>
 			throws AlreadyExistsException {
 		Product p = repository.findOne(entity.getId());
 		if (p != null)
-			throw new ProductExistsException(p);
+			throw new AlreadyExistsException(entityMessageKey, p);
 
 		Product q = repository.findByName(entity.getName());
 		if (q != null)
-			throw new ProductExistsException(q);
-	}
-
-	@Override
-	protected void throwIfNotFound(Long id) throws NotFoundException {
-		if (!repository.exists(id))
-			throw new ProductNotFoundException(id);
+			throw new AlreadyExistsException(entityMessageKey, q);
 	}
 
 	private void throwIfPriceIsLessThanCostPrice(Product entity) {
 		if (entity.getCostPrice() >= entity.getPrice())
-			throw new ProductInvalidException(new EntityError(
-					MessageKey.PRODUCTPRICEINVALID_VALIDATION));
+			throw new InvalidArgumentException();
 	}
 
 	private void throwIfInvalidOrTooBigImage(Product entity) {
@@ -103,17 +87,19 @@ public class ProductServiceImpl extends AbstractEntityServiceImpl<Product>
 						.guessContentTypeFromStream(new ByteArrayInputStream(
 								entity.getImage().getBytes()));
 				if (type == null || !type.contains("image")) {
-					throw new ProductInvalidException(new EntityError(
-							MessageKey.PRODUCTIMAGEINVALID_VALIDATION));
+					throw new InvalidArgumentException(entityMessageKey, new CustomObjectError(ErrorCode.REQUIRED,
+							MessageKey.VALIDATION_INVALID, "image", MessageKey.PROPERTY_IMAGE,
+							"5 MB"));
 				}
 				if (entity.getImage().getBytes().length > 5000000) {
-					throw new ProductInvalidException(new EntityError(
-							MessageKey.PRODUCTIMAGETOOBIG_VALIDATION,
-							new Object[] { "5 MB" }));
+					throw new InvalidArgumentException(entityMessageKey, new CustomObjectError(ErrorCode.SIZE,
+							MessageKey.VALIDATION_INVALID, "image", MessageKey.PROPERTY_IMAGE,
+							"5 MB"));
 				}
 			} catch (IOException ex) {
-				throw new ProductInvalidException(new EntityError(
-						MessageKey.PRODUCTIMAGEINVALID_VALIDATION));
+				throw new InvalidArgumentException(entityMessageKey, new CustomObjectError(ErrorCode.REQUIRED,
+						MessageKey.VALIDATION_INVALID, "image", MessageKey.PROPERTY_IMAGE,
+						"5 MB"));
 			}
 		}
 	}

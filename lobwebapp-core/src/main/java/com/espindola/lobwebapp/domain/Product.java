@@ -21,7 +21,7 @@ import com.espindola.lobwebapp.domain.base.AbstractEntity;
 @Table(name = "TB_PRODUCT", uniqueConstraints = { @UniqueConstraint(columnNames = "NAME") })
 @JsonIgnoreProperties(value = { "image", "stocks" })
 public class Product extends AbstractEntity {
-
+	
 	private String name;
 
 	private String description;

@@ -1,6 +1,5 @@
 package com.espindola.lobwebapp.validation;
 
-import java.util.Date;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,11 +8,8 @@ import org.springframework.validation.BindException;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ObjectError;
 
-import com.espindola.lobwebapp.domain.Customer;
 import com.espindola.lobwebapp.domain.Order;
 import com.espindola.lobwebapp.domain.OrderItem;
-import com.espindola.lobwebapp.domain.Payment;
-import com.espindola.lobwebapp.domain.Product;
 import com.espindola.lobwebapp.l10n.MessageKey;
 import com.espindola.lobwebapp.validation.base.AbstractEntityValidator;
 
@@ -21,6 +17,8 @@ import com.espindola.lobwebapp.validation.base.AbstractEntityValidator;
 public class OrderValidator extends AbstractEntityValidator<Order> {
 
 	private PaymentValidator paymentValidator;
+	private Order t;
+	private Errors e;
 
 	@Autowired
 	public OrderValidator(PaymentValidator paymentValidator) {
@@ -29,64 +27,33 @@ public class OrderValidator extends AbstractEntityValidator<Order> {
 
 	@Override
 	protected void validateEntity(Order t, Errors e) {
-
-		validateCustomer(t.getCustomer(), e);
-
+		this.t = t;
+		this.e = e;
 		validateOrderItems(t.getItems(), e);
-
-		validateDate(t.getDate(), e);
-
-		validatePayment(t.getPayment(), e);
-
+		validateDate("date");
+		validatePayment("payment");
 	}
 
-	private void validateDate(Date t, Errors errors) {
-		if (t == null)
-			errors.rejectValue("date",
-					MessageKey.ORDERDATEINVALID_VALIDATION.getKey(),
-					defaultMessage);
+	private void validateDate(String fieldName) {
+		required(fieldName);
 	}
 
-	private void validateCustomer(Customer customer, Errors errors) {
-		// Check just the customer's ID since it's not cascading stuff
-		if (customer == null || customer.getId() == null
-				|| customer.getId() <= 0) {
-			errors.rejectValue("product",
-					MessageKey.ORDERCUSTOMERINVALID_VALIDATION.getKey(),
-					defaultMessage);
-		}
-	}
-
-	private void validateProduct(Product product, Errors errors) {
-		// Check just the product's ID since it's not cascading stuff
-		if (product == null || product.getId() == null || product.getId() <= 0) {
-			errors.rejectValue("product",
-					MessageKey.ORDERITEMSINVALID_VALIDATION.getKey(),
-					defaultMessage);
-		}
-	}
-
-	private void validatePayment(Payment payment, Errors errors) {
-		BindException paymentErrors = new BindException(payment, "payment");
-		this.paymentValidator.validate(payment, paymentErrors);
+	private void validatePayment(String fieldName) {
+		BindException paymentErrors = new BindException(t, fieldName);
+		this.paymentValidator.validate(t, paymentErrors);
 		for (ObjectError objErr : paymentErrors.getAllErrors()) {
-			errors.rejectValue("payment." + objErr.getObjectName(),
+			e.rejectValue(fieldName + "." + objErr.getObjectName(),
 					objErr.getCode(), objErr.getArguments(), defaultMessage);
 		}
 	}
 
 	private void validateOrderItems(Set<OrderItem> items, Errors errors) {
 		if (items == null || items.isEmpty())
-			errors.rejectValue("items",
-					MessageKey.ORDERITEMSINVALID_VALIDATION.getKey(),
-					defaultMessage);
+			addError("items", MessageKey.VALIDATION_REQUIRED);
 		else
-			for (OrderItem item : items) {
-				validateProduct(item.getProduct(), errors);
+			for (OrderItem item : items) {;
 				if (item.getQuantity() == null || item.getQuantity() < 0)
-					errors.rejectValue("items",
-							MessageKey.ORDERITEMSINVALID_VALIDATION.getKey(),
-							defaultMessage);
+					addError("items", MessageKey.VALIDATION_MIN, "0");
 			}
 	}
 }

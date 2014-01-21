@@ -7,8 +7,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 
 import com.espindola.lobwebapp.domain.base.AbstractEntity;
-import com.espindola.lobwebapp.exception.invalidArgument.InvalidArgumentException;
-import com.espindola.lobwebapp.exception.notFound.NotFoundException;
+import com.espindola.lobwebapp.exception.InvalidArgumentException;
+import com.espindola.lobwebapp.exception.NotFoundException;
 
 //@PreAuthorize("hasRole('ROLE_USER')")
 public interface EntityService<T extends AbstractEntity> {

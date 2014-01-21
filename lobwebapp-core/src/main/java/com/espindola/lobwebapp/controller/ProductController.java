@@ -17,7 +17,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.oauth2.common.exceptions.InvalidRequestException;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,13 +32,13 @@ import com.espindola.lobwebapp.domain.FileMeta;
 import com.espindola.lobwebapp.domain.Product;
 import com.espindola.lobwebapp.domain.Stock;
 import com.espindola.lobwebapp.event.PageReturnEvent;
-import com.espindola.lobwebapp.exception.invalidArgument.InvalidArgumentException;
-import com.espindola.lobwebapp.exception.invalidArgument.ProductInvalidException;
-import com.espindola.lobwebapp.exception.notFound.NotFoundException;
-import com.espindola.lobwebapp.exception.util.EntityError;
+import com.espindola.lobwebapp.exception.InvalidArgumentException;
+import com.espindola.lobwebapp.exception.NotFoundException;
 import com.espindola.lobwebapp.facade.ProductFacade;
 import com.espindola.lobwebapp.l10n.MessageKey;
 import com.espindola.lobwebapp.validation.ProductValidator;
+import com.espindola.lobwebapp.validation.util.CustomObjectError;
+import com.espindola.lobwebapp.validation.util.ErrorCode;
 
 @Controller
 @RequestMapping(value = "/product")
@@ -51,7 +50,7 @@ public class ProductController extends AbstractEntityController<Product> {
 
 	@Autowired
 	public ProductController(ProductFacade facade, ProductValidator validator) {
-		super(facade, validator);
+		super(facade, validator, MessageKey.ENTITY_PRODUCT);
 		this.facade = facade;
 	}
 
@@ -123,12 +122,11 @@ public class ProductController extends AbstractEntityController<Product> {
 				}
 			}
 		} catch (FileUploadException e) {
-			throw new ProductInvalidException(new EntityError(
-					MessageKey.PRODUCTIMAGETOOBIG_VALIDATION,
-					new Object[] { "5 MB" }));
+			throw new InvalidArgumentException(MessageKey.ENTITY_PRODUCT,
+					new CustomObjectError(ErrorCode.REQUIRED, MessageKey.VALIDATION_INVALIDFORMAT, "image", MessageKey.ENTITY_PRODUCT));
 		}
-		throw new ProductInvalidException(new EntityError(
-				MessageKey.PRODUCTIMAGEINVALID_VALIDATION));
+		throw new InvalidArgumentException(MessageKey.ENTITY_PRODUCT,
+				new CustomObjectError(ErrorCode.SIZE, MessageKey.VALIDATION_SIZE, "image", MessageKey.ENTITY_PRODUCT, "5 MB"));
 	}
 
 	@RequestMapping(value = "/{productId:[\\d]+}/image", method = RequestMethod.GET)
@@ -144,10 +142,4 @@ public class ProductController extends AbstractEntityController<Product> {
 		}
 	}
 
-	@Override
-	protected void validationResult(BindingResult bindingResult)
-			throws InvalidArgumentException {
-		if (bindingResult.hasErrors())
-			throw new ProductInvalidException(bindingResult.getAllErrors());
-	}
 }

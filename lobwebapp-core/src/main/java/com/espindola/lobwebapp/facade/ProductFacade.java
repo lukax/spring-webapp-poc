@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.espindola.lobwebapp.domain.FileMeta;
 import com.espindola.lobwebapp.domain.Product;
-import com.espindola.lobwebapp.exception.notFound.NotFoundException;
+import com.espindola.lobwebapp.exception.NotFoundException;
 import com.espindola.lobwebapp.facade.base.AbstractEntityFacade;
 import com.espindola.lobwebapp.service.contract.ProductService;
 

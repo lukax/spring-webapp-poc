@@ -16,11 +16,10 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import com.espindola.lobwebapp.exception.AlreadyExistsException;
+import com.espindola.lobwebapp.exception.InvalidArgumentException;
 import com.espindola.lobwebapp.exception.LobWebAppException;
-import com.espindola.lobwebapp.exception.alreadyExists.AlreadyExistsException;
-import com.espindola.lobwebapp.exception.invalidArgument.InvalidArgumentException;
-import com.espindola.lobwebapp.exception.notFound.NotFoundException;
-import com.espindola.lobwebapp.exception.util.ErrorResponse;
+import com.espindola.lobwebapp.exception.NotFoundException;
 
 @ControllerAdvice
 // Allows the exception handling to operate on all controllers

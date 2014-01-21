@@ -11,6 +11,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
@@ -28,9 +29,10 @@ import com.espindola.lobwebapp.controller.util.HeaderKey;
 import com.espindola.lobwebapp.domain.base.AbstractEntity;
 import com.espindola.lobwebapp.event.LobWebAppEventPublisher;
 import com.espindola.lobwebapp.event.PageReturnEvent;
-import com.espindola.lobwebapp.exception.invalidArgument.InvalidArgumentException;
-import com.espindola.lobwebapp.exception.notFound.NotFoundException;
+import com.espindola.lobwebapp.exception.InvalidArgumentException;
+import com.espindola.lobwebapp.exception.NotFoundException;
 import com.espindola.lobwebapp.facade.base.AbstractEntityFacade;
+import com.espindola.lobwebapp.l10n.MessageKey;
 import com.espindola.lobwebapp.validation.base.AbstractEntityValidator;
 
 @Controller
@@ -40,12 +42,14 @@ public abstract class AbstractEntityController<T extends AbstractEntity> {
 	protected LobWebAppEventPublisher eventPublisher;
 	private AbstractEntityFacade<T> facade;
 	private AbstractEntityValidator<T> validator;
+	private MessageKey entityMessageKey;
 
 	@Autowired
 	public AbstractEntityController(AbstractEntityFacade<T> facade,
-			AbstractEntityValidator<T> validator) {
+			AbstractEntityValidator<T> validator, MessageKey entityMessageKey) {
 		this.facade = facade;
 		this.validator = validator;
+		this.entityMessageKey = entityMessageKey;
 	}
 
 	@InitBinder
@@ -113,6 +117,9 @@ public abstract class AbstractEntityController<T extends AbstractEntity> {
 		facade.remove(id);
 	}
 
-	protected abstract void validationResult(BindingResult bindingResult)
-			throws InvalidArgumentException;
+	protected void validationResult(BindingResult bindingResult)
+			throws InvalidArgumentException {
+		if (bindingResult.hasErrors())
+			throw new InvalidArgumentException(entityMessageKey, (ObjectError[]) bindingResult.getAllErrors().toArray());
+	}
 }

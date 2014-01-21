@@ -7,9 +7,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import com.espindola.lobwebapp.domain.base.AbstractEntity;
-import com.espindola.lobwebapp.exception.alreadyExists.AlreadyExistsException;
-import com.espindola.lobwebapp.exception.invalidArgument.InvalidArgumentException;
-import com.espindola.lobwebapp.exception.notFound.NotFoundException;
+import com.espindola.lobwebapp.exception.AlreadyExistsException;
+import com.espindola.lobwebapp.exception.InvalidArgumentException;
+import com.espindola.lobwebapp.exception.NotFoundException;
+import com.espindola.lobwebapp.l10n.MessageKey;
 import com.espindola.lobwebapp.repository.base.EntityRepository;
 import com.espindola.lobwebapp.service.contract.base.EntityService;
 
@@ -17,11 +18,12 @@ public abstract class AbstractEntityServiceImpl<T extends AbstractEntity>
 		implements EntityService<T> {
 
 	private EntityRepository<T> repository;
+	protected MessageKey entityMessageKey;
 
 	@Autowired
-	public AbstractEntityServiceImpl(EntityRepository<T> repository) {
+	public AbstractEntityServiceImpl(EntityRepository<T> repository, MessageKey entityMessageKey) {
 		this.repository = repository;
-
+		this.entityMessageKey = entityMessageKey;
 	}
 
 	@Override
@@ -69,12 +71,16 @@ public abstract class AbstractEntityServiceImpl<T extends AbstractEntity>
 		return repository.findAll(p);
 	}
 
-	protected abstract void throwIfAlreadyExists(T entity)
-			throws AlreadyExistsException;
+	protected void throwIfAlreadyExists(T entity) throws AlreadyExistsException{
+		if (repository.exists(entity.getId()))
+			throw new AlreadyExistsException(entityMessageKey, entity);
+	}
 
-	protected abstract void throwIfInvalid(T entity)
-			throws InvalidArgumentException;
-
-	protected abstract void throwIfNotFound(Long id) throws NotFoundException;
+	protected void throwIfNotFound(Long id) throws NotFoundException{
+		if (!repository.exists(id))
+			throw new NotFoundException(this.entityMessageKey, id);
+	}
+	
+	protected abstract void throwIfInvalid(T entity) throws InvalidArgumentException;
 
 }

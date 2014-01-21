@@ -4,28 +4,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.espindola.lobwebapp.domain.Order;
-import com.espindola.lobwebapp.exception.alreadyExists.AlreadyExistsException;
-import com.espindola.lobwebapp.exception.alreadyExists.OrderExistsException;
-import com.espindola.lobwebapp.exception.invalidArgument.InvalidArgumentException;
-import com.espindola.lobwebapp.exception.invalidArgument.OrderInvalidException;
-import com.espindola.lobwebapp.exception.notFound.NotFoundException;
-import com.espindola.lobwebapp.exception.notFound.OrderNotFoundException;
-import com.espindola.lobwebapp.exception.util.EntityError;
+import com.espindola.lobwebapp.exception.InvalidArgumentException;
 import com.espindola.lobwebapp.l10n.MessageKey;
 import com.espindola.lobwebapp.repository.OrderRepository;
 import com.espindola.lobwebapp.service.contract.OrderService;
 import com.espindola.lobwebapp.service.impl.base.AbstractEntityServiceImpl;
+import com.espindola.lobwebapp.validation.util.CustomObjectError;
+import com.espindola.lobwebapp.validation.util.ErrorCode;
 
 @Service
 public class OrderServiceImpl extends AbstractEntityServiceImpl<Order>
 		implements OrderService {
 
-	private OrderRepository repository;
-
 	@Autowired
 	public OrderServiceImpl(OrderRepository repository) {
-		super(repository);
-		this.repository = repository;
+		super(repository, MessageKey.ENTITY_ORDER);
 	}
 
 	@Override
@@ -36,23 +29,9 @@ public class OrderServiceImpl extends AbstractEntityServiceImpl<Order>
 		throwIfPaymentQtExceedsMuchFromTotalPrice(entity);
 	}
 
-	@Override
-	protected void throwIfAlreadyExists(Order entity)
-			throws AlreadyExistsException {
-		if (repository.exists(entity.getId()))
-			throw new OrderExistsException(entity);
-	}
-
-	@Override
-	protected void throwIfNotFound(Long id) throws NotFoundException {
-		if (!repository.exists(id))
-			throw new OrderNotFoundException(id);
-	}
-
 	private void throwIfInvalidPayment(Order entity) {
 		if (entity.getPayment().getId() != 0)
-			throw new OrderInvalidException(new EntityError(
-					MessageKey.ORDERPAYMENTINVALID_VALIDATION));
+			throw new InvalidArgumentException(entityMessageKey, new CustomObjectError(ErrorCode.REQUIRED, MessageKey.VALIDATION_REQUIRED, "payment", MessageKey.ENTITY_PAYMENT));
 	}
 
 	private void throwIfPaymentQtExceedsMuchFromTotalPrice(Order entity) {
@@ -60,14 +39,12 @@ public class OrderServiceImpl extends AbstractEntityServiceImpl<Order>
 				- entity.computeTotalPrice();
 		Double maxExchange = 50D;
 		if (exchange > maxExchange)
-			throw new OrderInvalidException(new EntityError(
-					MessageKey.ORDERPAYMENTQUANTITYTOOBIG_VALIDATION,
-					new Object[] { maxExchange }));
+			throw new InvalidArgumentException(entityMessageKey, new CustomObjectError(ErrorCode.SIZE, MessageKey.VALIDATION_SIZE, "payment", MessageKey.ENTITY_PAYMENT, exchange.toString()));
 	}
 
 	private void throwIfPaymentQtLessIsThanTotalPrice(Order entity) {
-		if (entity.computeTotalPrice() >= entity.getPayment().getQuantity())
-			throw new OrderInvalidException(new EntityError(
-					MessageKey.ORDERPAYMENTQUANTITYLESSTHANTOTAL_VALIDATION));
+		Double paymentQt = entity.getPayment().getQuantity();
+		if (entity.computeTotalPrice() >= paymentQt)
+			throw new InvalidArgumentException(entityMessageKey, new CustomObjectError(ErrorCode.SIZE, MessageKey.VALIDATION_SIZE, "payment.quantity", MessageKey.ENTITY_PAYMENT, paymentQt.toString()));
 	}
 }
