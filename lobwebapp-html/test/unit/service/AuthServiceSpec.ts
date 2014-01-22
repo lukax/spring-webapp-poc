@@ -12,7 +12,7 @@ describe("service: AuthService", () => {
         });
     });
 
-    var sampleUser: domain.User = { id: 1, name: "John Metallation", username: "orion", password: "masterofpuppets" };
+    var sampleUser: domain.User = { id: 1, name: "John Metallation", username: "orion", password: "masterofpuppets", roles: [] };
     var sampleAuthToken: domain.AuthToken = { access_token: "xx", token_type: "Bearer", refresh_token: "yy", expires_in: new Date("2015").getTime() };
 
     it("should login an user", (inject((AuthService: d.service.contract.AuthService, $httpBackend: ng.IHttpBackendService) => {

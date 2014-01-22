@@ -16,16 +16,16 @@ public class PaymentValidator extends AbstractEntityValidator<Payment> {
 		validateMode("mode");
 	}
 
-	private void validateStatus(String fieldName) {
-		required(fieldName);
+	private void validateStatus(String propertyName) {
+		required(propertyName);
 	}
 
-	private void validateMode(String fieldName) {
-		required(fieldName);
+	private void validateMode(String propertyName) {
+		required(propertyName);
 	}
 
-	private void validateQuantity(String fieldName) {
-		required(fieldName);
-		min(fieldName, 0);
+	private void validateQuantity(String propertyName) {
+		required(propertyName);
+		min(propertyName, 0);
 	}
 }

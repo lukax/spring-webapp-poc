@@ -21,31 +21,31 @@ public class ProductValidator extends AbstractEntityValidator<Product> {
 		validateRegisterDate("registerDate");
 	}
 
-	private void validateRegisterDate(String fieldName) {
-		required(fieldName);
-		dateMin(fieldName, 1357005600000L); // 1/1/2013
+	private void validateRegisterDate(String propertyName) {
+		required(propertyName);
+		dateMin(propertyName, 1357005600000L); // 1/1/2013
 	}
 
-	private void validateNcm(String fieldName) {
-		pattern(fieldName, Pattern.compile("^\\d\\d\\d\\d.\\d\\d.\\d\\d$"));
+	private void validateNcm(String propertyName) {
+		pattern(propertyName, Pattern.compile("^\\d\\d\\d\\d.\\d\\d.\\d\\d$"));
 	}
 
-	private void validateCategory(String fieldName) {
-		range(fieldName, 5, 20);
+	private void validateCategory(String propertyName) {
+		stringLength(propertyName, 5, 20);
 	}
 
-	private void validatePrice(String fieldName) {
-		required(fieldName);
-		range(fieldName, 0, 10000);
+	private void validatePrice(String propertyName) {
+		required(propertyName);
+		range(propertyName, 0, 10000);
 	}
 
-	private void validateCostPrice(String fieldName) {
-		range(fieldName, 0, 10000);
+	private void validateCostPrice(String propertyName) {
+		range(propertyName, 0, 10000);
 	}
 
-	private void validateName(String fieldName) {
-		required(fieldName);
-		range(fieldName, 5, 100);
+	private void validateName(String propertyName) {
+		required(propertyName);
+		stringLength(propertyName, 5, 100);
 	}
 
 }

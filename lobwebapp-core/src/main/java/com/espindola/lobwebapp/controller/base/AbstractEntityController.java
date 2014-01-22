@@ -119,7 +119,9 @@ public abstract class AbstractEntityController<T extends AbstractEntity> {
 
 	protected void validationResult(BindingResult bindingResult)
 			throws InvalidArgumentException {
-		if (bindingResult.hasErrors())
-			throw new InvalidArgumentException(entityMessageKey, (ObjectError[]) bindingResult.getAllErrors().toArray());
+		if (bindingResult.hasErrors()) {
+			throw new InvalidArgumentException(entityMessageKey, bindingResult
+					.getAllErrors().toArray(new ObjectError[] {}));
+		}
 	}
 }

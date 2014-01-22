@@ -7,8 +7,10 @@ public class AlreadyExistsException extends LobWebAppException {
 
 	private static final long serialVersionUID = 1L;
 
-	public AlreadyExistsException(MessageKey propertyMessageKey, AbstractEntity entity) {
-		super(MessageKey.ALREADYEXISTS_EXCEPTION, new Object[] { propertyMessageKey.getKey() });
+	public AlreadyExistsException(MessageKey propertyMessageKey,
+			AbstractEntity entity) {
+		super(MessageKey.ALREADYEXISTS_EXCEPTION,
+				new Object[] { propertyMessageKey.getKey() });
 	}
 
 }

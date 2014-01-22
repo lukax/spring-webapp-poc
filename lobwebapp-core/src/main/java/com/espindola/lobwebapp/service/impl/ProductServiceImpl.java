@@ -24,7 +24,7 @@ import com.espindola.lobwebapp.validation.util.ErrorCode;
 @Service
 public class ProductServiceImpl extends AbstractEntityServiceImpl<Product>
 		implements ProductService {
-	
+
 	private MessageKey entityMessageKey = MessageKey.ENTITY_PRODUCT;
 
 	private ProductRepository repository;
@@ -87,19 +87,21 @@ public class ProductServiceImpl extends AbstractEntityServiceImpl<Product>
 						.guessContentTypeFromStream(new ByteArrayInputStream(
 								entity.getImage().getBytes()));
 				if (type == null || !type.contains("image")) {
-					throw new InvalidArgumentException(entityMessageKey, new CustomObjectError(ErrorCode.REQUIRED,
-							MessageKey.VALIDATION_INVALID, "image", MessageKey.PROPERTY_IMAGE,
-							"5 MB"));
+					throw new InvalidArgumentException(entityMessageKey,
+							new CustomObjectError(ErrorCode.REQUIRED,
+									MessageKey.VALIDATION_INVALID, "image",
+									"5 MB"));
 				}
 				if (entity.getImage().getBytes().length > 5000000) {
-					throw new InvalidArgumentException(entityMessageKey, new CustomObjectError(ErrorCode.SIZE,
-							MessageKey.VALIDATION_INVALID, "image", MessageKey.PROPERTY_IMAGE,
-							"5 MB"));
+					throw new InvalidArgumentException(entityMessageKey,
+							new CustomObjectError(ErrorCode.INVALID,
+									MessageKey.VALIDATION_INVALID, "image",
+									"5 MB"));
 				}
 			} catch (IOException ex) {
-				throw new InvalidArgumentException(entityMessageKey, new CustomObjectError(ErrorCode.REQUIRED,
-						MessageKey.VALIDATION_INVALID, "image", MessageKey.PROPERTY_IMAGE,
-						"5 MB"));
+				throw new InvalidArgumentException(entityMessageKey,
+						new CustomObjectError(ErrorCode.REQUIRED,
+								MessageKey.VALIDATION_INVALID, "image", "5 MB"));
 			}
 		}
 	}

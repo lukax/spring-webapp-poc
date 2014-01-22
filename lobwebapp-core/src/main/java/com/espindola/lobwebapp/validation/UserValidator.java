@@ -15,14 +15,14 @@ public class UserValidator extends PersonValidator<User> {
 		validatePassword("password");
 	}
 
-	private void validatePassword(String fieldName) {
-		required(fieldName);
-		length(fieldName, 8, 20);
+	private void validatePassword(String propertyName) {
+		required(propertyName);
+		stringLength(propertyName, 8, 20);
 	}
 
-	private void validateUsername(String fieldName) {
-		required(fieldName);
-		length(fieldName, 6, 20);
+	private void validateUsername(String propertyName) {
+		required(propertyName);
+		stringLength(propertyName, 6, 20);
 	}
 
 }

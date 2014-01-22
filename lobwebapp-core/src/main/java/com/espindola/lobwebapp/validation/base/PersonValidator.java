@@ -14,9 +14,9 @@ public abstract class PersonValidator<T extends Person> extends
 		validatePerson(t, e);
 	}
 
-	private void validateName(String fieldName) {
-		required(fieldName);
-		range(fieldName, 5, 100);	
+	private void validateName(String propertyName) {
+		required(propertyName);
+		stringLength(propertyName, 5, 100);
 	}
 
 	protected abstract void validatePerson(T t, Errors e);

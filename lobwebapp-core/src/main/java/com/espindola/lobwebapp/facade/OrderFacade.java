@@ -56,17 +56,17 @@ public class OrderFacade extends AbstractEntityFacade<Order> {
 			throws InvalidArgumentException {
 		for (OrderItem item : entity.getItems()) {
 			if (!productService.exists(item.getProduct().getId()))
-				throw new InvalidArgumentException(MessageKey.ENTITY_ORDER, new CustomObjectError(ErrorCode.REQUIRED,
-						MessageKey.VALIDATION_INVALID, "image", MessageKey.PROPERTY_IMAGE,
-						"5 MB"));
+				throw new InvalidArgumentException(MessageKey.ENTITY_ORDER,
+						new CustomObjectError(ErrorCode.REQUIRED,
+								MessageKey.VALIDATION_INVALID, "image", "5 MB"));
 		}
 	}
 
 	private void throwIfCustomerNotExists(Order entity) {
 		if (!customerService.exists(entity.getCustomer().getId()))
-			throw new InvalidArgumentException(MessageKey.ENTITY_ORDER, new CustomObjectError(ErrorCode.REQUIRED,
-					MessageKey.VALIDATION_INVALID, "image", MessageKey.PROPERTY_IMAGE,
-					"5 MB"));
+			throw new InvalidArgumentException(MessageKey.ENTITY_ORDER,
+					new CustomObjectError(ErrorCode.REQUIRED,
+							MessageKey.VALIDATION_INVALID, "image", "5 MB"));
 	}
 
 }

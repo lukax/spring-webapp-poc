@@ -20,7 +20,8 @@ public class CustomerServiceImpl extends AbstractPersonServiceImpl<Customer>
 	}
 
 	@Override
-	protected void throwIfInvalid(Customer entity) throws InvalidArgumentException {
+	protected void throwIfInvalid(Customer entity)
+			throws InvalidArgumentException {
 		// TODO: Business logic
 	}
 

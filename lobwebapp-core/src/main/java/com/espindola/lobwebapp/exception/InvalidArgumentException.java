@@ -19,28 +19,34 @@ public class InvalidArgumentException extends LobWebAppException {
 	private ObjectError[] objectErrors;
 
 	public InvalidArgumentException() {
-		this(MessageKey.INVALIDARGUMENT_EXCEPTION, new ObjectError[] { });
+		this(MessageKey.INVALIDARGUMENT_EXCEPTION, new ObjectError[] {});
 	}
 
-	public InvalidArgumentException(MessageKey propertyKey, ObjectError... objectErrors) {
+	public InvalidArgumentException(MessageKey propertyKey,
+			ObjectError... objectErrors) {
 		super(propertyKey, objectErrors);
 		this.objectErrors = objectErrors;
 	}
-	
+
 	@Override
-    public ErrorResponse getErrorResponse(MessageSource messageSource, Locale locale) {
+	public ErrorResponse getErrorResponse(MessageSource messageSource,
+			Locale locale) {
 		List<ValidationResult> validationResults = new ArrayList<ValidationResult>();
-		for(ObjectError o : objectErrors){
-			if (o instanceof CustomObjectError){
-				validationResults.add(((CustomObjectError) o).getValidationResponse(messageSource, locale));
-            }	
+		for (ObjectError o : objectErrors) {
+			if (o instanceof CustomObjectError) {
+				validationResults.add(((CustomObjectError) o)
+						.getValidationResponse(messageSource, locale));
+			} else {
+				throw new UnsupportedOperationException();
+			}
 		}
 
 		ValidationErrorResponse errorResponse = new ValidationErrorResponse();
-		errorResponse.setMessage(super.getErrorResponse(messageSource, locale).getMessage());
+		errorResponse.setMessage(super.getErrorResponse(messageSource, locale)
+				.getMessage());
 		errorResponse.setValidations(validationResults);
-        
-        return errorResponse;
-    }
+
+		return errorResponse;
+	}
 
 }

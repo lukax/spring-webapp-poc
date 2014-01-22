@@ -200,14 +200,6 @@ module.exports = function (grunt) {
                     comments: false           // true | false (default)
                 }
             },
-            dist: {
-                src: ['<%= yeoman.app%>/script/**/*.ts'],
-                options: {
-                    module: 'amd',
-                    target: 'es5',
-                    sourcemap: true,
-                }
-            },
             test: {
                 src: ['<%= yeoman.test%>/**/*.ts'],
                 options: {

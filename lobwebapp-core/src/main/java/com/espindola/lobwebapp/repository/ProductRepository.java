@@ -21,7 +21,7 @@ public interface ProductRepository extends EntityRepository<Product> {
 
 	@Query(value = "SELECT DISTINCT category FROM Product")
 	public List<String> findAllCategory();
-	
+
 	@Query(value = "SELECT DISTINCT p.category FROM Product p WHERE p.category LIKE ?1")
 	public List<String> findAllCategoryLike(String category);
 

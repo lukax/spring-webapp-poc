@@ -11,7 +11,8 @@ public abstract class AbstractPersonServiceImpl<T extends Person> extends
 		AbstractEntityServiceImpl<T> implements PersonService<T> {
 
 	@Autowired
-	public AbstractPersonServiceImpl(EntityRepository<T> repository, MessageKey entityMessageKey) {
+	public AbstractPersonServiceImpl(EntityRepository<T> repository,
+			MessageKey entityMessageKey) {
 		super(repository, entityMessageKey);
 	}
 

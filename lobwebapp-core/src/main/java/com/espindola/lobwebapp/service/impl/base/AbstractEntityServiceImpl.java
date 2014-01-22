@@ -21,7 +21,8 @@ public abstract class AbstractEntityServiceImpl<T extends AbstractEntity>
 	protected MessageKey entityMessageKey;
 
 	@Autowired
-	public AbstractEntityServiceImpl(EntityRepository<T> repository, MessageKey entityMessageKey) {
+	public AbstractEntityServiceImpl(EntityRepository<T> repository,
+			MessageKey entityMessageKey) {
 		this.repository = repository;
 		this.entityMessageKey = entityMessageKey;
 	}
@@ -71,16 +72,17 @@ public abstract class AbstractEntityServiceImpl<T extends AbstractEntity>
 		return repository.findAll(p);
 	}
 
-	protected void throwIfAlreadyExists(T entity) throws AlreadyExistsException{
+	protected void throwIfAlreadyExists(T entity) throws AlreadyExistsException {
 		if (repository.exists(entity.getId()))
 			throw new AlreadyExistsException(entityMessageKey, entity);
 	}
 
-	protected void throwIfNotFound(Long id) throws NotFoundException{
+	protected void throwIfNotFound(Long id) throws NotFoundException {
 		if (!repository.exists(id))
 			throw new NotFoundException(this.entityMessageKey, id);
 	}
-	
-	protected abstract void throwIfInvalid(T entity) throws InvalidArgumentException;
+
+	protected abstract void throwIfInvalid(T entity)
+			throws InvalidArgumentException;
 
 }

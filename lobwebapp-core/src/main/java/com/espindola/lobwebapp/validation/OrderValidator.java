@@ -12,6 +12,7 @@ import com.espindola.lobwebapp.domain.Order;
 import com.espindola.lobwebapp.domain.OrderItem;
 import com.espindola.lobwebapp.l10n.MessageKey;
 import com.espindola.lobwebapp.validation.base.AbstractEntityValidator;
+import com.espindola.lobwebapp.validation.util.ErrorCode;
 
 @Component
 public class OrderValidator extends AbstractEntityValidator<Order> {
@@ -34,26 +35,29 @@ public class OrderValidator extends AbstractEntityValidator<Order> {
 		validatePayment("payment");
 	}
 
-	private void validateDate(String fieldName) {
-		required(fieldName);
+	private void validateDate(String propertyName) {
+		required(propertyName);
 	}
 
-	private void validatePayment(String fieldName) {
-		BindException paymentErrors = new BindException(t, fieldName);
+	private void validatePayment(String propertyName) {
+		BindException paymentErrors = new BindException(t, propertyName);
 		this.paymentValidator.validate(t, paymentErrors);
 		for (ObjectError objErr : paymentErrors.getAllErrors()) {
-			e.rejectValue(fieldName + "." + objErr.getObjectName(),
+			e.rejectValue(propertyName + "." + objErr.getObjectName(),
 					objErr.getCode(), objErr.getArguments(), defaultMessage);
 		}
 	}
 
 	private void validateOrderItems(Set<OrderItem> items, Errors errors) {
 		if (items == null || items.isEmpty())
-			addError("items", MessageKey.VALIDATION_REQUIRED);
+			addError("items", ErrorCode.REQUIRED,
+					MessageKey.VALIDATION_REQUIRED);
 		else
-			for (OrderItem item : items) {;
+			for (OrderItem item : items) {
+				;
 				if (item.getQuantity() == null || item.getQuantity() < 0)
-					addError("items", MessageKey.VALIDATION_MIN, "0");
+					addError("items", ErrorCode.REQUIRED,
+							MessageKey.VALIDATION_MIN, "0");
 			}
 	}
 }

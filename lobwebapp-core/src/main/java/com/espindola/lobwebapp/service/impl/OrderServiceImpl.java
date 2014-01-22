@@ -31,7 +31,9 @@ public class OrderServiceImpl extends AbstractEntityServiceImpl<Order>
 
 	private void throwIfInvalidPayment(Order entity) {
 		if (entity.getPayment().getId() != 0)
-			throw new InvalidArgumentException(entityMessageKey, new CustomObjectError(ErrorCode.REQUIRED, MessageKey.VALIDATION_REQUIRED, "payment", MessageKey.ENTITY_PAYMENT));
+			throw new InvalidArgumentException(entityMessageKey,
+					new CustomObjectError(ErrorCode.REQUIRED,
+							MessageKey.VALIDATION_REQUIRED, "payment"));
 	}
 
 	private void throwIfPaymentQtExceedsMuchFromTotalPrice(Order entity) {
@@ -39,12 +41,18 @@ public class OrderServiceImpl extends AbstractEntityServiceImpl<Order>
 				- entity.computeTotalPrice();
 		Double maxExchange = 50D;
 		if (exchange > maxExchange)
-			throw new InvalidArgumentException(entityMessageKey, new CustomObjectError(ErrorCode.SIZE, MessageKey.VALIDATION_SIZE, "payment", MessageKey.ENTITY_PAYMENT, exchange.toString()));
+			throw new InvalidArgumentException(entityMessageKey,
+					new CustomObjectError(ErrorCode.INVALID,
+							MessageKey.VALIDATION_SIZE, "payment",
+							exchange.toString()));
 	}
 
 	private void throwIfPaymentQtLessIsThanTotalPrice(Order entity) {
 		Double paymentQt = entity.getPayment().getQuantity();
 		if (entity.computeTotalPrice() >= paymentQt)
-			throw new InvalidArgumentException(entityMessageKey, new CustomObjectError(ErrorCode.SIZE, MessageKey.VALIDATION_SIZE, "payment.quantity", MessageKey.ENTITY_PAYMENT, paymentQt.toString()));
+			throw new InvalidArgumentException(entityMessageKey,
+					new CustomObjectError(ErrorCode.INVALID,
+							MessageKey.VALIDATION_SIZE, "payment.quantity",
+							paymentQt.toString()));
 	}
 }

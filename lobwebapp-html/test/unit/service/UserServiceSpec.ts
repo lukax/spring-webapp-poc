@@ -11,7 +11,7 @@ describe("service: UserService", () => {
         });
     });
 
-    var sampleUser: domain.User = { id: 1, name: "John Metallation", username: "orion", password: "masterofpuppets" };
+    var sampleUser: domain.User = { id: 1, name: "John Metallation", username: "orion", password: "masterofpuppets", roles: [] };
 
     it("should find a user by username", (inject((UserService: d.service.contract.UserService, $httpBackend: ng.IHttpBackendService) => {
         var sucSpy = jasmine.createSpy("sucUser"),

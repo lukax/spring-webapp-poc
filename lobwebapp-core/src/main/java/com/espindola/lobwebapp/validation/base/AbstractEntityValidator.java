@@ -6,11 +6,14 @@ import java.util.Date;
 import java.util.regex.Pattern;
 
 import org.springframework.util.StringUtils;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 import com.espindola.lobwebapp.domain.base.AbstractEntity;
 import com.espindola.lobwebapp.l10n.MessageKey;
+import com.espindola.lobwebapp.validation.util.CustomObjectError;
+import com.espindola.lobwebapp.validation.util.ErrorCode;
 
 public abstract class AbstractEntityValidator<T extends AbstractEntity>
 		implements Validator {
@@ -35,72 +38,90 @@ public abstract class AbstractEntityValidator<T extends AbstractEntity>
 
 		validateEntity(entity, errors);
 	}
-	
-	protected void required(String fieldName){
-		Object fieldValue = this.errors.getFieldValue(fieldName);
-		if(fieldValue == null || !StringUtils.hasText(fieldValue.toString())){
-			this.addError(fieldName, MessageKey.VALIDATION_REQUIRED);
-		}
-	}
-	
-	protected void length(String fieldName, int min, int max){
-		Object fieldValue = this.errors.getFieldValue(fieldName);
-		if(fieldValue == null) return;
-		if(fieldValue.toString().length() < min || fieldValue.toString().length() > max){
-			this.addError(fieldName, MessageKey.VALIDATION_STRINGLENGTH);
-		}
-	}
-	
-	protected void min(String fieldName, double min){
-		Object fieldValue = this.errors.getFieldValue(fieldName);
-		if(fieldValue == null) return;
-		double number = Double.valueOf(fieldName.toString());
-		if(number < min){
-			this.addError(fieldName, MessageKey.VALIDATION_MIN);
-		}
-	}
-	
-	protected void max(String fieldName, double max){
-		Object fieldValue = this.errors.getFieldValue(fieldName);
-		if(fieldValue == null) return;
-		double number = Double.valueOf(fieldName.toString());
-		if(number > max){
-			this.addError(fieldName, MessageKey.VALIDATION_MAX);
-		}
-	}
-	
-	protected void range(String fieldName, double min, double max){
-		Object fieldValue = this.errors.getFieldValue(fieldName);
-		if(fieldValue == null) return;
-		double number = Double.valueOf(fieldName.toString());
-		if(number < min || number > max){
-			this.addError(fieldName, MessageKey.VALIDATION_SIZE);
-		}
-	}
-	
-	protected void dateMin(String fieldName, double min){
-		Object fieldValue = this.errors.getFieldValue(fieldName);
-		if(fieldValue == null) return;
-		try {
-			Date date = new SimpleDateFormat().parse(fieldValue.toString());
-			if(date.getTime() < min)
-				this.addError(fieldName, MessageKey.VALIDATION_MIN);
-		} catch (ParseException e) {
-			return;
-		}
-		
-	}
-	
-	protected void pattern(String fieldName, Pattern pattern) {
-		Object fieldValue = this.errors.getFieldValue(fieldName);
-		if(fieldValue == null) return;
-		if(!pattern.matcher(fieldValue.toString()).matches()){
-			this.addError(fieldName, MessageKey.VALIDATION_PATTERN);
+
+	protected void required(String propertyName) {
+		Object value = this.errors.getFieldValue(propertyName);
+		if (value == null || !StringUtils.hasText(value.toString())) {
+			this.addError(propertyName, ErrorCode.REQUIRED,
+					MessageKey.VALIDATION_REQUIRED);
 		}
 	}
 
-	protected void addError(String fieldName, MessageKey validationKey, String... args) {
-		
+	protected void stringLength(String propertyName, int min, int max) {
+		Object value = this.errors.getFieldValue(propertyName);
+		if (value == null)
+			return;
+		if (value.toString().length() < min
+				|| value.toString().length() > max) {
+			this.addError(propertyName, ErrorCode.INVALID,
+					MessageKey.VALIDATION_STRINGLENGTH, min, max);
+		}
+	}
+
+	protected void min(String propertyName, double min) {
+		Object value = this.errors.getFieldValue(propertyName);
+		if (value == null)
+			return;
+		Double number = Double.parseDouble(value.toString());
+		if (number < min) {
+			this.addError(propertyName, ErrorCode.INVALID,
+					MessageKey.VALIDATION_MIN, min);
+		}
+	}
+
+	protected void max(String propertyName, double max) {
+		Object value = this.errors.getFieldValue(propertyName);
+		if (value == null)
+			return;
+		Double number = Double.parseDouble(value.toString());
+		if (number > max) {
+			this.addError(propertyName, ErrorCode.INVALID,
+					MessageKey.VALIDATION_MAX, max);
+		}
+	}
+
+	protected void range(String propertyName, double min, double max) {
+		Object value = this.errors.getFieldValue(propertyName);
+		if (value == null)
+			return;
+		Double number = Double.parseDouble(value.toString());
+		if (number < min || number > max) {
+			this.addError(propertyName, ErrorCode.INVALID,
+					MessageKey.VALIDATION_SIZE, min, max);
+		}
+	}
+
+	protected void dateMin(String propertyName, double min) {
+		Object value = this.errors.getFieldValue(propertyName);
+		if (value == null)
+			return;
+		try {
+			Date date = new SimpleDateFormat().parse(value.toString());
+			if (date.getTime() < min)
+				this.addError(propertyName, ErrorCode.INVALID,
+						MessageKey.VALIDATION_MIN, min);
+		} catch (ParseException e) {
+			return;
+		}
+
+	}
+
+	protected void pattern(String propertyName, Pattern pattern) {
+		Object value = this.errors.getFieldValue(propertyName);
+		if (value == null)
+			return;
+		if (!pattern.matcher(value.toString()).matches()) {
+			this.addError(propertyName, ErrorCode.INVALID,
+					MessageKey.VALIDATION_PATTERN);
+		}
+	}
+
+	protected void addError(String propertyName, ErrorCode errorCode,
+			MessageKey validationKey, Object... args) {
+		if (errors instanceof BindingResult) {
+			((BindingResult) errors).addError(new CustomObjectError(errorCode,
+					validationKey, propertyName, args));
+		}
 	}
 
 	protected abstract void validateEntity(T t, Errors e);

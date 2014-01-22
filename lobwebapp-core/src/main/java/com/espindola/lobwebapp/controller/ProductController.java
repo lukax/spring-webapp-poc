@@ -123,10 +123,12 @@ public class ProductController extends AbstractEntityController<Product> {
 			}
 		} catch (FileUploadException e) {
 			throw new InvalidArgumentException(MessageKey.ENTITY_PRODUCT,
-					new CustomObjectError(ErrorCode.REQUIRED, MessageKey.VALIDATION_INVALIDFORMAT, "image", MessageKey.ENTITY_PRODUCT));
+					new CustomObjectError(ErrorCode.REQUIRED,
+							MessageKey.VALIDATION_INVALIDFORMAT, "image"));
 		}
 		throw new InvalidArgumentException(MessageKey.ENTITY_PRODUCT,
-				new CustomObjectError(ErrorCode.SIZE, MessageKey.VALIDATION_SIZE, "image", MessageKey.ENTITY_PRODUCT, "5 MB"));
+				new CustomObjectError(ErrorCode.INVALID,
+						MessageKey.VALIDATION_SIZE, "image", "5 MB"));
 	}
 
 	@RequestMapping(value = "/{productId:[\\d]+}/image", method = RequestMethod.GET)

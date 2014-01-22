@@ -1,11 +1,10 @@
 package com.espindola.lobwebapp.controller.util;
 
-
 public class ErrorResponse {
 	private String message;
-	
-	public ErrorResponse(){
-		
+
+	public ErrorResponse() {
+
 	}
 
 	public ErrorResponse(String message) {
