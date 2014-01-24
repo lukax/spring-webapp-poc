@@ -16,7 +16,7 @@ public class CustomerController extends AbstractEntityController<Customer> {
 
 	@Autowired
 	public CustomerController(CustomerFacade facade, CustomerValidator validator) {
-		super(facade, validator, MessageKey.ENTITY_CUSTOMER);
+		super(facade, validator, MessageKey.CUSTOMER);
 	}
 
 }

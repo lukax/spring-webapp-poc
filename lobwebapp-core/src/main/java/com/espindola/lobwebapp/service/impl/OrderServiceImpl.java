@@ -18,7 +18,7 @@ public class OrderServiceImpl extends AbstractEntityServiceImpl<Order>
 
 	@Autowired
 	public OrderServiceImpl(OrderRepository repository) {
-		super(repository, MessageKey.ENTITY_ORDER);
+		super(repository, MessageKey.ORDER);
 	}
 
 	@Override

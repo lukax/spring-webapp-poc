@@ -16,7 +16,7 @@ public class StockController extends AbstractEntityController<Stock> {
 
 	@Autowired
 	public StockController(StockFacade facade, StockValidator validator) {
-		super(facade, validator, MessageKey.ENTITY_STOCK);
+		super(facade, validator, MessageKey.STOCK);
 	}
 
 }

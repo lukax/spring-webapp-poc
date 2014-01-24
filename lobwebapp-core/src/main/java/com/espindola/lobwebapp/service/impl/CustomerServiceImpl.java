@@ -16,7 +16,7 @@ public class CustomerServiceImpl extends AbstractPersonServiceImpl<Customer>
 
 	@Autowired
 	public CustomerServiceImpl(CustomerRepository repository) {
-		super(repository, MessageKey.ENTITY_CUSTOMER);
+		super(repository, MessageKey.CUSTOMER);
 	}
 
 	@Override

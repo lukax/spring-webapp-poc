@@ -50,7 +50,7 @@ public class ProductController extends AbstractEntityController<Product> {
 
 	@Autowired
 	public ProductController(ProductFacade facade, ProductValidator validator) {
-		super(facade, validator, MessageKey.ENTITY_PRODUCT);
+		super(facade, validator, MessageKey.PRODUCT);
 		this.facade = facade;
 	}
 
@@ -122,11 +122,11 @@ public class ProductController extends AbstractEntityController<Product> {
 				}
 			}
 		} catch (FileUploadException e) {
-			throw new InvalidArgumentException(MessageKey.ENTITY_PRODUCT,
+			throw new InvalidArgumentException(MessageKey.PRODUCT,
 					new CustomObjectError(ErrorCode.REQUIRED,
 							MessageKey.VALIDATION_INVALIDFORMAT, "image"));
 		}
-		throw new InvalidArgumentException(MessageKey.ENTITY_PRODUCT,
+		throw new InvalidArgumentException(MessageKey.PRODUCT,
 				new CustomObjectError(ErrorCode.INVALID,
 						MessageKey.VALIDATION_SIZE, "image", "5 MB"));
 	}
@@ -140,7 +140,7 @@ public class ProductController extends AbstractEntityController<Product> {
 		try {
 			response.getOutputStream().write(fileMeta.getBytes());
 		} catch (Exception ex) {
-			throw new NotFoundException();
+			throw new NotFoundException(MessageKey.IMAGE, productId);
 		}
 	}
 

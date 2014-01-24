@@ -1,24 +1,41 @@
 package com.espindola.lobwebapp.l10n;
 
+import org.springframework.context.MessageSourceResolvable;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
+
 public enum MessageKey {
 	LOBWEBAPP_EXCEPTION("com.espindola.lobwebapp.exception.lobwebappexception"), 
 	ALREADYEXISTS_EXCEPTION("com.espindola.lobwebapp.exception.alreadyexistsexception"), 
 	NOTFOUND_EXCEPTION("com.espindola.lobwebapp.exception.notfoundexception"), 
 	INVALIDARGUMENT_EXCEPTION("com.espindola.lobwebapp.exception.invalidargumentexception"),
 
-	// ENTITIES
 	ENTITY("com.espindola.lobwebapp.entity"), 
-	ENTITY_PRODUCT("com.espindola.lobwebapp.entity.product"), 
-	ENTITY_CUSTOMER("com.espindola.lobwebapp.entity.customer"), 
-	ENTITY_ORDER("com.espindola.lobwebapp.entity.order"), 
-	ENTITY_STOCK("com.espindola.lobwebapp.entity.stock"), 
-	ENTITY_USER("com.espindola.lobwebapp.entity.user"), 
-	ENTITY_PAYMENT("com.espindola.lobwebapp.entity.payment"),
-
-	// PROPERTIES
 	PROPERTY("com.espindola.lobwebapp.property"), 
-	PROPERTY_IMAGE("com.espindola.lobwebapp.property.image"),
-
+	PRODUCT("com.espindola.lobwebapp.product"), 
+	CUSTOMER("com.espindola.lobwebapp.customer"), 
+	ORDER("com.espindola.lobwebapp.order"), 
+	STOCK("com.espindola.lobwebapp.stock"), 
+	USER("com.espindola.lobwebapp.user"), 
+	PAYMENT("com.espindola.lobwebapp.payment"),
+	NAME("com.espindola.lobwebapp.name"),
+	IMAGE("com.espindola.lobwebapp.image"),
+	DESCRIPTION("com.espindola.lobwebapp.description"),
+	COSTPRICE("com.espindola.lobwebapp.costprice"),
+	PRICE("com.espindola.lobwebapp.price"),
+	CATEGORY("com.espindola.lobwebapp.category"),
+	NCM("com.espindola.lobwebapp.ncm"),
+	USERNAME("com.espindola.lobwebapp.username"),
+	PASSWORD("com.espindola.lobwebapp.password"),
+	QUANTITY("com.espindola.lobwebapp.quantity"),
+	MINQUANTITY("com.espindola.lobwebapp.minquantity"),
+	MAXQUANTITY("com.espindola.lobwebapp.maxquantity"),
+	UNIT("com.espindola.lobwebapp.unit"),
+	STATUS("com.espindola.lobwebapp.status"),
+	MODE("com.espindola.lobwebapp.mode"),
+	ITEMS("com.espindola.lobwebapp.items"),
+	DATE("com.espindola.lobwebapp.date"),
+	REGISTERDATE("com.espindola.lobwebapp.registerdate"),
+	
 	// VALIDATION
 	VALIDATION_INVALID("com.espindola.lobwebapp.validation.invalid"), 
 	VALIDATION_REQUIRED("com.espindola.lobwebapp.validation.required"), 
@@ -39,6 +56,10 @@ public enum MessageKey {
 
 	public String getKey() {
 		return key;
+	}
+	
+	public MessageSourceResolvable getMessageSourceResolvable(){
+		return new DefaultMessageSourceResolvable(getKey());
 	}
 
 }

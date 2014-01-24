@@ -12,6 +12,7 @@ import com.espindola.lobwebapp.domain.FileMeta;
 import com.espindola.lobwebapp.domain.Product;
 import com.espindola.lobwebapp.exception.NotFoundException;
 import com.espindola.lobwebapp.facade.base.AbstractEntityFacade;
+import com.espindola.lobwebapp.l10n.MessageKey;
 import com.espindola.lobwebapp.service.contract.ProductService;
 
 @Transactional
@@ -40,9 +41,8 @@ public class ProductFacade extends AbstractEntityFacade<Product> {
 
 	public FileMeta getImage(Long id) {
 		FileMeta fileMeta = productService.find(id).getImage();
-		if (fileMeta == null || fileMeta.getFileName() == null)// lazy
-																// initialize
-			throw new NotFoundException();
+		if (fileMeta == null || fileMeta.getFileName() == null) // lazy initialize
+			throw new NotFoundException(MessageKey.IMAGE, id);
 		return fileMeta;
 	}
 }

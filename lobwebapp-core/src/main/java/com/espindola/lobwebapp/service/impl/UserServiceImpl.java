@@ -18,7 +18,7 @@ public class UserServiceImpl extends AbstractPersonServiceImpl<User> implements
 
 	@Autowired
 	public UserServiceImpl(UserRepository repository) {
-		super(repository, MessageKey.ENTITY_USER);
+		super(repository, MessageKey.USER);
 		this.repository = repository;
 	}
 

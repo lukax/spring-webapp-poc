@@ -24,7 +24,7 @@ public class UserController extends AbstractEntityController<User> {
 
 	@Autowired
 	public UserController(UserFacade facade, UserValidator validator) {
-		super(facade, validator, MessageKey.ENTITY_USER);
+		super(facade, validator, MessageKey.USER);
 		this.facade = facade;
 	}
 

@@ -16,7 +16,7 @@ public class OrderController extends AbstractEntityController<Order> {
 
 	@Autowired
 	public OrderController(OrderFacade facade, OrderValidator validator) {
-		super(facade, validator, MessageKey.ENTITY_ORDER);
+		super(facade, validator, MessageKey.ORDER);
 	}
 
 }

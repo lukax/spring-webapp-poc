@@ -25,13 +25,13 @@ import com.espindola.lobwebapp.validation.util.ErrorCode;
 public class ProductServiceImpl extends AbstractEntityServiceImpl<Product>
 		implements ProductService {
 
-	private MessageKey entityMessageKey = MessageKey.ENTITY_PRODUCT;
+	private MessageKey entityMessageKey = MessageKey.PRODUCT;
 
 	private ProductRepository repository;
 
 	@Autowired
 	public ProductServiceImpl(ProductRepository repository) {
-		super(repository, MessageKey.ENTITY_PRODUCT);
+		super(repository, MessageKey.PRODUCT);
 		this.repository = repository;
 	}
 
@@ -77,7 +77,9 @@ public class ProductServiceImpl extends AbstractEntityServiceImpl<Product>
 
 	private void throwIfPriceIsLessThanCostPrice(Product entity) {
 		if (entity.getCostPrice() >= entity.getPrice())
-			throw new InvalidArgumentException();
+			throw new InvalidArgumentException(entityMessageKey,
+					new CustomObjectError(ErrorCode.REQUIRED,
+							MessageKey.VALIDATION_INVALID, "price"));
 	}
 
 	private void throwIfInvalidOrTooBigImage(Product entity) {

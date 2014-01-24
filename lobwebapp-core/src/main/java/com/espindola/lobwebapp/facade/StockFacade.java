@@ -48,7 +48,7 @@ public class StockFacade extends AbstractEntityFacade<Stock> {
 	private void throwIfProductNotExists(Stock entity)
 			throws InvalidArgumentException {
 		if (!productService.exists(entity.getProduct().getId()))
-			throw new InvalidArgumentException(MessageKey.ENTITY_STOCK,
+			throw new InvalidArgumentException(MessageKey.STOCK,
 					new CustomObjectError(ErrorCode.REQUIRED,
 							MessageKey.NOTFOUND_EXCEPTION, "product"));
 	}

@@ -20,7 +20,7 @@ public class StockServiceImpl extends AbstractEntityServiceImpl<Stock>
 
 	@Autowired
 	public StockServiceImpl(StockRepository repository) {
-		super(repository, MessageKey.ENTITY_STOCK);
+		super(repository, MessageKey.STOCK);
 		this.repository = repository;
 	}
 

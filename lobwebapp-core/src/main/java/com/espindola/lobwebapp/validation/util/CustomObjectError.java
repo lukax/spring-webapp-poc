@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.Locale;
 
 import org.springframework.context.MessageSource;
-import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.validation.ObjectError;
 
 import com.espindola.lobwebapp.l10n.MessageKey;
@@ -16,7 +15,7 @@ public class CustomObjectError extends ObjectError {
 	private ErrorCode code;
 	private MessageKey validationMessageKey;
 	private String propertyName;
-	private String propertyMessage;
+	private MessageKey propertyMessageKey;
 	private Object[] propertyMessageArgs;
 
 	public CustomObjectError(ErrorCode errorCode,
@@ -26,15 +25,19 @@ public class CustomObjectError extends ObjectError {
 		this.code = errorCode;
 		this.validationMessageKey = validationMessageKey;
 		this.propertyName = propertyName;
-		this.propertyMessage = "com.espindola.lobwebapp.property."
-				+ propertyName;
+		try {
+			this.propertyMessageKey = MessageKey
+					.valueOf(propertyName.toUpperCase());
+		} catch (IllegalArgumentException ex) {
+			this.propertyMessageKey = MessageKey.PROPERTY;
+		}
 		this.propertyMessageArgs = propertyMessageArgs;
 	}
 
 	public ValidationResult getValidationResponse(MessageSource messageSource,
 			Locale locale) {
 		ArrayList<Object> msgArgs = new ArrayList<Object>();
-		msgArgs.add(new DefaultMessageSourceResolvable(propertyMessage));
+		msgArgs.add(propertyMessageKey.getMessageSourceResolvable());
 		msgArgs.addAll(Arrays.asList(propertyMessageArgs));
 
 		String msg = messageSource.getMessage(validationMessageKey.getKey(),
