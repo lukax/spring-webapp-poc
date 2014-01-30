@@ -243,7 +243,7 @@ module.exports = function (grunt) {
         grunt.task.run([
             'clean:dist',
             'less:dist',
-            'ts:dist',
+            'ts:dev',
             'uglify:dist',
             'copy:dist'
         ]);

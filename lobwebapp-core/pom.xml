@@ -1,30 +1,15 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.espindola</groupId>
+	<parent>
+		<groupId>com.espindola</groupId>
+		<artifactId>lobwebapp</artifactId>
+		<version>0.1.0</version>
+	</parent>
 	<artifactId>lobwebapp-core</artifactId>
 	<packaging>war</packaging>
-	<version>0.1.0</version>
-	<name>lobwebapp-core</name>
-	<url>http://maven.apache.org</url>
-	<repositories>
-		<repository>
-			<id>jboss-public</id>
-			<url>http://repository.jboss.org/nexus/content/groups/public/</url>
-		</repository>
-		<repository>
-			<id>spring-release</id>
-			<name>Spring Framework Release Repository</name>
-			<url>http://maven.springframework.org/release/</url>
-		</repository>
-		<repository>
-			<id>java.net</id>
-			<url>http://download.java.net/maven/2/</url>
-		</repository>
-	</repositories>
 	<properties>
 		<context.path>lobwebapp-core</context.path>
-		<source.encoding>UTF-8</source.encoding>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<log4j.conf>file:./src/main/resources/log4j.xml</log4j.conf>
 		<log4j.version>1.2.17</log4j.version>
@@ -43,14 +28,21 @@
 		<javax-validation.version>1.1.0.Final</javax-validation.version>
 		<hibernate-validator.version>4.2.0.Final</hibernate-validator.version>
 		<bonecp.version>0.8.0.RELEASE</bonecp.version>
-		<h2.version>1.3.166</h2.version>
+		<hsqldb.version>2.3.1</hsqldb.version>
 		<mysql.version>5.1.6</mysql.version>
 		<javax.version>2.5</javax.version>
 		<tomcat.version>7.0.37</tomcat.version>
 		<commons-fileupload.version>1.3</commons-fileupload.version>
 	</properties>
-	
+
 	<dependencies>
+		<dependency>
+			<groupId>com.espindola</groupId>
+			<artifactId>lobwebapp-html</artifactId>
+			<version>0.1.0</version>
+			<type>zip</type>
+		</dependency>
+
 		<!-- Spring 3 dependencies -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -107,36 +99,28 @@
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-core</artifactId>
 			<version>${spring-security.version}</version>
-			<type>jar</type>
-			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-web</artifactId>
 			<version>${spring-security.version}</version>
-			<type>jar</type>
-			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-config</artifactId>
 			<version>${spring-security.version}</version>
-			<type>jar</type>
-			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-taglibs</artifactId>
 			<version>${spring-security.version}</version>
-			<type>jar</type>
-			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.security.oauth</groupId>
 			<artifactId>spring-security-oauth2</artifactId>
 			<version>${spring-security-oauth2.version}</version>
 		</dependency>
-		<!--  -->
+		<!-- -->
 		<dependency>
 			<groupId>cglib</groupId>
 			<artifactId>cglib</artifactId>
@@ -198,11 +182,8 @@
 			<artifactId>bonecp</artifactId>
 			<version>${bonecp.version}</version>
 		</dependency>
-		<!-- <dependency>
-			<groupId>com.jolbox</groupId>
-			<artifactId>bonecp-provider</artifactId>
-			<version>${bonecp.version}</version>
-		</dependency> -->
+		<!-- <dependency> <groupId>com.jolbox</groupId> <artifactId>bonecp-provider</artifactId> 
+			<version>${bonecp.version}</version> </dependency> -->
 		<!-- MySql dependencies -->
 		<dependency>
 			<groupId>mysql</groupId>
@@ -213,7 +194,7 @@
 		<dependency>
 			<groupId>org.hsqldb</groupId>
 			<artifactId>hsqldb</artifactId>
-			<version>2.3.1</version>
+			<version>${hsqldb.version}</version>
 		</dependency>
 		<!-- JAVAX Dependencies -->
 		<dependency>
@@ -232,7 +213,7 @@
 			<artifactId>hibernate-validator</artifactId>
 			<version>${hibernate-validator.version}</version>
 		</dependency>
-		<!-- TOMCAT Dependencies -->            
+		<!-- TOMCAT Dependencies -->
 		<dependency>
 			<groupId>org.apache.tomcat.extras</groupId>
 			<artifactId>tomcat-extras-juli</artifactId>
@@ -287,16 +268,16 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-	
+
 	<build>
 		<finalName>${context.path}</finalName>
-		<resources>  
-			<resource>  
-				<directory>src/main/resources</directory>  
-				<filtering>true</filtering>  
-			</resource>  
-		</resources>  
-		<plugins>  
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -304,23 +285,8 @@
 				<configuration>
 					<source>${java.version}</source>
 					<target>${java.version}</target>
-					<encoding>UTF-8</encoding> 
+					<encoding>${project.build.sourceEncoding}</encoding>
 				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-eclipse-plugin</artifactId>
-				<version>2.8</version>
-				<configuration>
-					<wtpversion>2.0</wtpversion>
-					<downloadSources>true</downloadSources>
-					<downloadJavadocs>true</downloadJavadocs>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.tomcat.maven</groupId>
-				<artifactId>tomcat7-maven-plugin</artifactId>
-				<version>2.2</version>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -333,6 +299,23 @@
 				<version>2.4</version>
 				<executions>
 					<execution>
+						<id>cfg-unpack-resource-lobwebapp-html</id>
+        				<phase>process-resources</phase>
+						<goals>
+							<goal>unpack-dependencies</goal>
+						</goals>
+						<configuration>
+          					<overwrite>true</overwrite>
+							<outputDirectory>${project.build.directory}/${project.artifactId}/WEB-INF/html</outputDirectory>
+							<includeArtifacIds>lobwebapp-html</includeArtifacIds>
+							<includeGroupIds>${project.groupId}</includeGroupIds>
+							<excludeTransitive>true</excludeTransitive>
+							<excludeTypes>pom</excludeTypes>
+							<scope>test</scope>
+						</configuration>
+					</execution>
+					<execution>
+						<id>cfg-copy-heroku-runner</id>
 						<phase>package</phase>
 						<goals>
 							<goal>copy</goal>
@@ -350,6 +333,22 @@
 					</execution>
 				</executions>
 			</plugin>
-		</plugins>  
+			<plugin>
+				<groupId>org.apache.tomcat.maven</groupId>
+				<artifactId>tomcat7-maven-plugin</artifactId>
+				<version>2.2</version>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-eclipse-plugin</artifactId>
+				<version>2.8</version>
+				<configuration>
+					<wtpversion>2.0</wtpversion>
+					<downloadSources>true</downloadSources>
+					<downloadJavadocs>true</downloadJavadocs>
+				</configuration>
+			</plugin>
+		</plugins>
 	</build>
+
 </project>

@@ -3,7 +3,7 @@
 #################
 
 ## core
-/target
+target/
 .springBeans
 
 ## html
