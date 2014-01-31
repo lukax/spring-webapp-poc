@@ -12,13 +12,6 @@
 
 	<mvc:annotation-driven/>
 	
-	<mvc:interceptors>
-	   <mvc:interceptor>
-	     <mvc:mapping path="/**" />
-	     <bean class="com.espindola.lobwebapp.controller.util.ExecuteTimeInterceptor" />
-	   </mvc:interceptor>
-	</mvc:interceptors>
-	
 	<import resource="classpath*:infrastructureContext.xml" />
 	<import resource="classpath*:persistenceContext.xml" />
 	<import resource="classpath*:securityContext.xml" />
