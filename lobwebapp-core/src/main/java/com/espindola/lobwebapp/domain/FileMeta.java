@@ -4,12 +4,11 @@ import javax.persistence.Entity;
 import javax.persistence.Lob;
 
 import org.apache.commons.fileupload.FileItem;
-import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 import com.espindola.lobwebapp.domain.base.AbstractEntity;
 
 @Entity
-@JsonIgnoreProperties({ "bytes" })
 public class FileMeta extends AbstractEntity {
 
 	private String fileName;
@@ -18,6 +17,7 @@ public class FileMeta extends AbstractEntity {
 
 	private String fileType;
 
+	@JsonIgnore
 	@Lob
 	private byte[] bytes;
 

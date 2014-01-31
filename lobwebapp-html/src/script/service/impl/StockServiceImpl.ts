@@ -1,4 +1,4 @@
-///<reference path="./../../reference.d.ts"/>
+///<reference path="../../reference.d.ts"/>
 import i0 = require("./base/EntityServiceImpl");
 
 export module service.impl {

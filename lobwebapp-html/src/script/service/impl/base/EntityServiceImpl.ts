@@ -1,4 +1,4 @@
-///<reference path="./../../../reference.d.ts"/>
+///<reference path="../../../reference.d.ts"/>
 
 export module service.impl.base {
     export class EntityServiceImpl<T extends domain.base.AbstractEntity> implements d.service.contract.base.EntityService<T> {
@@ -14,25 +14,25 @@ export module service.impl.base {
 
         save(entity: T,
             successCallback: (data: T, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
-            errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
+            errorCallback: (data: domain.util.MessageResponse, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
                 this.$http.post(this.url, entity).success(successCallback).error(errorCallback);
         }
 
         update(entity: T,
             successCallback: (data: T, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
-            errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
+            errorCallback: (data: domain.util.MessageResponse, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
                 this.$http.put(this.url + entity.id, entity).success(successCallback).error(errorCallback);
         }
 
         remove(entity: T,
             successCallback: (data: T, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
-            errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
+            errorCallback: (data: domain.util.MessageResponse, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
                 this.$http.delete(this.url + entity.id).success(successCallback).error(errorCallback);
         }
 
         find(id: number,
             successCallback: (data: T, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
-            errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
+            errorCallback: (data: domain.util.MessageResponse, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
                 if(id == 0 && this.hasDefault)
                     successCallback(this.hasDefault.getDefault(), 200, () => { return ""; }, <any>{});
                 else
@@ -41,7 +41,7 @@ export module service.impl.base {
 
         list(
             successCallback: (data: T[], status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
-            errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
+            errorCallback: (data: domain.util.MessageResponse, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
             page?: domain.util.Page) {
                 if (page)
                     this.$http({ method: "GET", url: this.url, headers: this.getPageableHeader(page) }).success(successCallback).error(errorCallback);
@@ -51,7 +51,7 @@ export module service.impl.base {
 
         exists(entity: T,
             successCallback: (data: boolean, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
-            errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
+            errorCallback: (data: domain.util.MessageResponse, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
                 this.find(entity.id, (d, s, h, c) => {
                     if (_.isEqual(d, entity))
                         successCallback(true, s, h, c);

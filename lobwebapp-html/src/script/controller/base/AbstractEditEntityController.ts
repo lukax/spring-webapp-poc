@@ -1,4 +1,4 @@
-///<reference path="./../../reference.d.ts"/>
+///<reference path="../../reference.d.ts"/>
 
 import enums = require("./../../util/EnumUtil");
 
@@ -15,7 +15,7 @@ export module controller.base{
 		            public EntityService: d.service.contract.base.EntityService<T>,
 		            public AlertService: d.service.contract.AlertService){
 		                
-            this.$scope.$watch("entity.id", (newValue: number, oldValue: number) => {
+            this.$scope.$watch("entity.id", () => {
                 this.$scope.isEntityNew = this.isEntityNew();
             });
 		}
@@ -31,7 +31,7 @@ export module controller.base{
                 (successData, successStatus, successHeaders) => {
                     this.$scope.navigator.navigateTo("/" + this.contextUrl + "/" + successHeaders("Entity-Id"));
                 },
-                (errorData, errorStatus) => {
+                (errorData) => {
                     console.log(errorData);
                     this.AlertService.add({ content: errorData.message, title: "Item não pôde ser salvado", type: enums.AlertType.DANGER });
                     this.unlock();
@@ -41,10 +41,10 @@ export module controller.base{
         updateEntity(entity: T) {
             this.lock();
             this.EntityService.update(entity,
-                (successData, successStatus) => {
+                () => {
                     this.unlock();
                 },
-                (errorData, errorStatus) => {
+                (errorData) => {
                     console.log(errorData);
                     this.AlertService.add({ content: errorData.message, title: "Item não pôde ser atualizado", type: enums.AlertType.DANGER });
                     this.unlock();
@@ -54,10 +54,10 @@ export module controller.base{
         removeEntity(entity: T) {
             this.lock();
             this.EntityService.remove(entity,
-                (successData, successStatus) => {
+                () => {
                     this.newEntity();
                 },
-                (errorData, errorStatus) => {
+                (errorData) => {
                     console.log(errorData);
                     this.AlertService.add({ content: errorData.message, title: "Item não pôde ser removido", type: enums.AlertType.DANGER });
                     this.unlock();
@@ -71,12 +71,12 @@ export module controller.base{
             
             this.lock();
             this.EntityService.find(actualId,
-                (successData, successStatus) => {
+                (successData) => {
                     this.$scope.entity = successData;
                     if(done) done();
                     this.unlock();
                 },
-                (errorData, errorStatus) => {
+                (errorData) => {
                     console.log(errorData);
                     this.AlertService.add({ content: errorData.message, title: "Item não pôde ser encontrado", type: enums.AlertType.DANGER });
                     this.newEntity();

@@ -1,4 +1,4 @@
-///<reference path="./../../reference.d.ts"/>
+///<reference path="../../reference.d.ts"/>
 import a = require("./UserServiceMock");
 
 export module service.mock {
@@ -13,7 +13,7 @@ export module service.mock {
 
         login(user: domain.User,
             successCallback: (data: domain.User, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
-            errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
+            errorCallback: (data: domain.util.MessageResponse, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
                 this.UserService.findByUsername(user.username,
                     (x: domain.User) => {
                         if (x.password === user.password) {
@@ -30,7 +30,7 @@ export module service.mock {
 
         logout(
             successCallback: (data: domain.User, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
-            errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
+            errorCallback: (data: domain.util.MessageResponse, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
                 if (this.user.id != 0) {
                     this.setUser(this.temporaryUser);
                     successCallback(this.user, 200, null, null);

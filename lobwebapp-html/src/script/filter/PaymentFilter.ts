@@ -1,11 +1,11 @@
-///<reference path="./../reference.d.ts"/>
+///<reference path="../reference.d.ts"/>
 
 import enums = require("./../util/EnumUtil");
 
 export module filter{
     export class PaymentStatusFilter{
         constructor(input: enums.PaymentMode){
-            var localizedInput = "";
+            var localizedInput: string = "";
             
             switch(input){
                 case enums.PaymentStatus.CANCELLED:
@@ -29,7 +29,7 @@ export module filter{
     
     export class PaymentModeFilter{
         constructor(input: enums.PaymentMode){
-            var localizedInput = "";
+            var localizedInput: string = "";
             
             switch(input){
                 case enums.PaymentMode.CHECK:

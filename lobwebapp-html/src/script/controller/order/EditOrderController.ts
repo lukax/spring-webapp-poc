@@ -1,4 +1,4 @@
-///<reference path="./../../reference.d.ts"/>
+///<reference path="../../reference.d.ts"/>
 
 import i0 = require("./../base/AbstractEditEntityController");
 import enums = require("./../../util/EnumUtil");
@@ -83,11 +83,12 @@ export module controller.order {
         fetchCustomer(id: number) {
             this.lock();
             this.CustomerService.find(id,
-                (successData: domain.Customer) => {
+                (successData) => {
                     this.$scope.entity.customer = successData;
                     this.unlock();
-                }, (errorData: domain.util.Error) => {
-                    this.AlertService.add({ title: "Buscar Cliente", content: "Não foi possível achar um cliente com o ID informado", type: enums.AlertType.WARNING });
+                }, (errorData) => {
+                    console.log(errorData);
+                    this.AlertService.add({ title: "Buscar Cliente", content: errorData.message, type: enums.AlertType.WARNING });
                     this.$scope.entity.customer.id = 0;
                     this.unlock();
                 });
@@ -97,19 +98,20 @@ export module controller.order {
         fetchProduct(id: number) {
             this.lock();
             this.ProductService.find(id,
-                (successData: domain.Product) => {
+                (successData) => {
                     if(!this.$scope.item) this.emptyItem();
                     this.$scope.item.product = successData;
                     this.unlock();
-                }, (errorData: domain.util.Error) => {
-                    this.AlertService.add({ title: "Buscar Produto", content: "Nenhum produto encontrado com esse ID", type: enums.AlertType.WARNING });
+                }, (errorData) => {
+                    console.log(errorData);
+                    this.AlertService.add({ title: "Buscar Produto", content: errorData.message, type: enums.AlertType.WARNING });
                     this.emptyItem();
                     this.unlock();
                 });
         }
         
         watchOrder() {
-            this.$scope.$watch("entity.payment.quantity", (newValue: domain.Order, oldValue: domain.Order) => {
+            this.$scope.$watch("entity.payment.quantity", () => {
                 if (this.$scope.total > 0) {
                     var sum = this.$scope.entity.payment.quantity - this.$scope.total;
                     if (sum > 0) this.$scope.exchange = sum;

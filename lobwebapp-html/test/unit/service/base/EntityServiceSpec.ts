@@ -1,4 +1,4 @@
-///<reference path="./../../../reference.d.ts"/>
+///<reference path="../../../reference.d.ts"/>
 ///<amd-dependency path="angular"/>
 ///<amd-dependency path="angularMocks"/>
 ///<amd-dependency path="underscore"/>

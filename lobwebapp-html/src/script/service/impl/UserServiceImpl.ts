@@ -1,4 +1,4 @@
-///<reference path="./../../reference.d.ts"/>
+///<reference path="../../reference.d.ts"/>
 import i0 = require("./base/PersonServiceImpl");
 
 export module service.impl {
@@ -12,7 +12,7 @@ export module service.impl {
 
         findByUsername(username: string,
             successCallback: (data: domain.User, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
-            errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
+            errorCallback: (data: domain.util.MessageResponse, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
                 var header = "%" + username + "%";
                 this.$http.get(this.url, { headers: { user_username: header } }).success(successCallback).error(errorCallback);
         }

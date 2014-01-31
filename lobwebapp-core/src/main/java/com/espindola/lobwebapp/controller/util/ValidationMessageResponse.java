@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.espindola.lobwebapp.validation.util.ValidationResult;
 
-public class ValidationErrorResponse extends ErrorResponse {
+public class ValidationMessageResponse extends MessageResponse {
 	private List<ValidationResult> validations = Collections.emptyList();
 
 	public List<ValidationResult> getValidations() {

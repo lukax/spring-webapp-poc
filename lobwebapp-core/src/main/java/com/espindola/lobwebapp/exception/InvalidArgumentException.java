@@ -7,8 +7,8 @@ import java.util.Locale;
 import org.springframework.context.MessageSource;
 import org.springframework.validation.ObjectError;
 
-import com.espindola.lobwebapp.controller.util.ErrorResponse;
-import com.espindola.lobwebapp.controller.util.ValidationErrorResponse;
+import com.espindola.lobwebapp.controller.util.MessageResponse;
+import com.espindola.lobwebapp.controller.util.ValidationMessageResponse;
 import com.espindola.lobwebapp.l10n.MessageKey;
 import com.espindola.lobwebapp.validation.util.CustomObjectError;
 import com.espindola.lobwebapp.validation.util.ValidationResult;
@@ -25,7 +25,7 @@ public class InvalidArgumentException extends LobWebAppException {
 	}
 
 	@Override
-	public ErrorResponse getErrorResponse(MessageSource messageSource,
+	public MessageResponse getErrorResponse(MessageSource messageSource,
 			Locale locale) {
 		List<ValidationResult> validationResults = new ArrayList<ValidationResult>();
 		for (ObjectError o : objectErrors) {
@@ -37,7 +37,7 @@ public class InvalidArgumentException extends LobWebAppException {
 			}
 		}
 
-		ValidationErrorResponse errorResponse = new ValidationErrorResponse();
+		ValidationMessageResponse errorResponse = new ValidationMessageResponse();
 		errorResponse.setMessage(super.getErrorResponse(messageSource, locale)
 				.getMessage());
 		errorResponse.setValidations(validationResults);

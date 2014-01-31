@@ -38,7 +38,7 @@ public class GlobalExceptionHandler {
 			IllegalArgumentException.class, TypeMismatchException.class })
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ResponseBody
-	public ErrorResponse handleBadRequest(Exception ex, Locale locale) {
+	public MessageResponse handleBadRequest(Exception ex, Locale locale) {
 		logger.log(Level.DEBUG, ex.getMessage());
 		return this.buildResponse(ex, locale);
 	}
@@ -47,7 +47,7 @@ public class GlobalExceptionHandler {
 			HttpRequestMethodNotSupportedException.class })
 	@ResponseStatus(HttpStatus.NOT_FOUND)
 	@ResponseBody
-	public ErrorResponse handleNotFound(Exception ex, Locale locale) {
+	public MessageResponse handleNotFound(Exception ex, Locale locale) {
 		logger.log(Level.DEBUG, ex.getMessage());
 		return this.buildResponse(ex, locale);
 	}
@@ -56,7 +56,7 @@ public class GlobalExceptionHandler {
 			HttpMessageConversionException.class })
 	@ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
 	@ResponseBody
-	public ErrorResponse handleEntityInvalid(Exception ex, Locale locale) {
+	public MessageResponse handleEntityInvalid(Exception ex, Locale locale) {
 		logger.log(Level.DEBUG, ex.getMessage());
 		return this.buildResponse(ex, locale);
 	}
@@ -64,7 +64,7 @@ public class GlobalExceptionHandler {
 	@ExceptionHandler(AuthenticationCredentialsNotFoundException.class)
 	@ResponseStatus(HttpStatus.UNAUTHORIZED)
 	@ResponseBody
-	public ErrorResponse handleAuthentication(Exception ex, Locale locale) {
+	public MessageResponse handleAuthentication(Exception ex, Locale locale) {
 		logger.log(Level.DEBUG, ex.getMessage());
 		return this.buildResponse(ex, locale);
 	}
@@ -72,17 +72,17 @@ public class GlobalExceptionHandler {
 	@ExceptionHandler
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 	@ResponseBody
-	public ErrorResponse handleOther(Exception ex, Locale locale) {
+	public MessageResponse handleOther(Exception ex, Locale locale) {
 		logger.log(Level.ERROR, ex.getMessage());
 		return this.buildResponse(ex, locale);
 	}
 
-	private ErrorResponse buildResponse(Exception ex, Locale locale) {
+	private MessageResponse buildResponse(Exception ex, Locale locale) {
 		if (ex instanceof LobWebAppException) {
 			LobWebAppException exx = (LobWebAppException) ex;
 			return exx.getErrorResponse(this.messageSource, locale);
 		}
-		return new ErrorResponse(ex.getMessage());
+		return new MessageResponse(ex.getMessage());
 	}
 
 }

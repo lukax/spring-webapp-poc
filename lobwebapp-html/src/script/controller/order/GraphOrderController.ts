@@ -1,4 +1,4 @@
-///<reference path="./../../reference.d.ts"/>
+///<reference path="../../reference.d.ts"/>
 ///<amd-dependency path="crossfilter"/>
 ///<amd-dependency path="d3"/>
 ///<amd-dependency path="dc"/>

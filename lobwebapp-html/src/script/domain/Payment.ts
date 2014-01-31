@@ -1,7 +1,4 @@
-/**
- * Created by lucas on 10/25/13.
- */
-///<reference path='./base/AbstractEntity.ts'/>
+///<reference path="../reference.d.ts"/>
 
 module domain {
     export interface Payment extends domain.base.AbstractEntity {

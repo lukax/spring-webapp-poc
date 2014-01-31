@@ -1,4 +1,4 @@
-///<reference path="./../../reference.d.ts"/>
+///<reference path="../../reference.d.ts"/>
 
 import i0 = require("./../base/AbstractEditEntityController");
 import enums = require("./../../util/EnumUtil");
@@ -32,12 +32,13 @@ export module controller.stock {
         fetchProduct(id: number) {
             this.lock();
             this.ProductService.find(id,
-                (successData, successStatus) => {
+                (successData) => {
                     this.$scope.entity.product = successData;
                     this.unlock();
                 },
-                (errorData, errorStatus) => {
-                    this.AlertService.add({ title: "Buscar Produto", content: "Nenhum produto encontrado com esse ID", type: enums.AlertType.WARNING });
+                (errorData) => {
+                    console.log(errorData);
+                    this.AlertService.add({ title: "Buscar Produto", content: errorData.message, type: enums.AlertType.WARNING });
                     this.unlock();
                 });
         }

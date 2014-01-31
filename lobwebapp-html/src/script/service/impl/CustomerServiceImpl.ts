@@ -1,4 +1,4 @@
-///<reference path="./../../reference.d.ts"/>
+///<reference path="../../reference.d.ts"/>
 import i0 = require("./base/PersonServiceImpl");
 
 export module service.impl {

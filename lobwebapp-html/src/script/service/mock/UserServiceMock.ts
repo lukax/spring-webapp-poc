@@ -1,4 +1,4 @@
-///<reference path="./../../reference.d.ts"/>
+///<reference path="../../reference.d.ts"/>
 
 import a = require("./base/PersonServiceMock");
 
@@ -14,7 +14,7 @@ export module service.mock {
 
         findByUsername(username: string,
             successCallback: (data: domain.User, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
-            errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
+            errorCallback: (data: domain.util.MessageResponse, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
                 this.$timeout(() => {
                     var items = this.getRepository().filter(function (x: domain.User) {
                         return x.username.toLowerCase() == username.toLowerCase();

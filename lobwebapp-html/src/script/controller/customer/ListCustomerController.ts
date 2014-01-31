@@ -1,4 +1,4 @@
-///<reference path="./../../reference.d.ts"/>
+///<reference path="../../reference.d.ts"/>
 
 import enums = require("./../../util/EnumUtil");
 import i0 = require("./../base/AbstractListEntityController");

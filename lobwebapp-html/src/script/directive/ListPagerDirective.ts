@@ -1,4 +1,4 @@
-///<reference path="./../reference.d.ts"/>
+///<reference path="../reference.d.ts"/>
 
 export module directive {
     export class ListPagerDirective implements ng.IDirective {

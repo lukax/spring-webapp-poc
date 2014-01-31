@@ -1,4 +1,4 @@
-///<reference path="./../../reference.d.ts"/>
+///<reference path="../../reference.d.ts"/>
 
 import enums = require("./../../util/EnumUtil");
 
@@ -62,7 +62,8 @@ export module controller.user {
                     this.$scope.user = successData;
                     this.unlock();
                 },
-                (errorData, errorStatus) => {
+                (errorData) => {
+                    console.log(errorData);
                     this.AlertService.add({ title: "Logout", content: String(errorData.message), type: enums.AlertType.WARNING });
                     this.unlock();
                 });

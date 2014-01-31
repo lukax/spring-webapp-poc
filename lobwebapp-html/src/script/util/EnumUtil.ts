@@ -1,4 +1,4 @@
-///<reference path="./../reference.d.ts"/>
+///<reference path="../reference.d.ts"/>
 
 export class PaymentStatus {
     public static OK = "OK";

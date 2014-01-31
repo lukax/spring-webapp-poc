@@ -1,4 +1,4 @@
-///<reference path="./../reference.d.ts"/>
+///<reference path="../reference.d.ts"/>
 
 import p = require("./Progress");
 
@@ -21,7 +21,7 @@ export module util {
                 });
             }
 
-            require(paths, (deps) => {
+            require(paths, () => {
                 this.$rootScope.$apply(() => {
                     console.log("Resolved: " + paths.join(", "));
                     p.util.Progress.done();

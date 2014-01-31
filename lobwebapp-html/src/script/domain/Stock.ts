@@ -1,4 +1,4 @@
-///<reference path='./base/AbstractEntity.ts'/>
+///<reference path="../reference.d.ts"/>
 
 module domain {
     export interface Stock extends domain.base.AbstractEntity {

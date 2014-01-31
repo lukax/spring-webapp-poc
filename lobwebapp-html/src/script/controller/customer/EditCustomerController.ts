@@ -1,4 +1,4 @@
-///<reference path="./../../reference.d.ts"/>
+///<reference path="../../reference.d.ts"/>
 
 import i0 = require("./../base/AbstractEditEntityController");
 import enums = require("./../../util/EnumUtil");
@@ -17,7 +17,9 @@ export module controller.customer {
             super($scope, "customer", CustomerService, AlertService);
             
             var customerId = this.$scope.navigator.params().customerId;
-            this.findEntity(customerId || 0, ()=> { this.populateScope(); });
+            this.findEntity(customerId || 0, ()=> {
+                this.populateScope();
+            });
         }
 
         populateScope() {

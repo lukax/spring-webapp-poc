@@ -1,4 +1,4 @@
-///<reference path="./../reference.d.ts"/>
+///<reference path="../reference.d.ts"/>
 
 import i0 = require("./../util/Progress");
 import enums = require("./../util/EnumUtil");

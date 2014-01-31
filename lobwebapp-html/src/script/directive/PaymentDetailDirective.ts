@@ -1,15 +1,15 @@
-///<reference path="./../reference.d.ts"/>
+///<reference path="../reference.d.ts"/>
 
 export module directive {
     export class PaymentDetailDirective implements ng.IDirective {
 
-        public restrict = 'E';
-        public replace = true;
-        public scope = {
-            ref: '=',
+        restrict = 'E';
+        replace = true;
+        scope = {
+            ref: '='
         };
-        public templateUrl = "template/directive/PaymentDetailTemplate.html";
-        public link = (scope: any, element: any, attrs: ng.IAttributes) => {
+        templateUrl = "template/directive/PaymentDetailTemplate.html";
+        link = (scope: any, element: any, attrs: ng.IAttributes) => {
             scope.$watch("ref.status", (newValue, oldValue) => {
                 var labelClass;
                 switch (newValue) {

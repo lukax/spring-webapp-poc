@@ -1,4 +1,4 @@
-///<reference path="./../../reference.d.ts"/>
+///<reference path="../../reference.d.ts"/>
 ///<amd-dependency path="fileupload"/>
 
 import i0 = require("./../base/AbstractEditEntityController");
@@ -37,6 +37,7 @@ export module controller.product {
                     this.unlock();
                 },
                 (errorData) => {
+                    this.AlertService.add({ title: "Carregar categorias", content: errorData.message, type: enums.AlertType.DANGER });
                     this.unlock();
                 });
         }

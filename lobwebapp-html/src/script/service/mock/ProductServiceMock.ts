@@ -1,4 +1,4 @@
-///<reference path="./../../reference.d.ts"/>
+///<reference path="../../reference.d.ts"/>
 
 import a = require("./base/EntityServiceMock");
 
@@ -21,7 +21,7 @@ export module service.mock {
 
         findByName(name: string,
             successCallback: (data: domain.Product[], status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
-            errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
+            errorCallback: (data: domain.util.MessageResponse, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
             pageable: domain.util.Page) {
                 this.$timeout(()=> {
                     var items = this.getRepository().filter(function (element) {
@@ -34,7 +34,7 @@ export module service.mock {
 
         listCategory(
             successCallback: (data: string[], status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
-            errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
+            errorCallback: (data: domain.util.MessageResponse, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
                 this.$timeout(() => {
                     var categories = [];
                     this.getRepository().forEach((item) => {

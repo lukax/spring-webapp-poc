@@ -1,4 +1,4 @@
-///<reference path="./../../reference.d.ts"/>
+///<reference path="../../reference.d.ts"/>
 
 import enums = require("./../../util/EnumUtil");
 
@@ -36,9 +36,9 @@ export module controller.base {
                         this.$scope.navigator.progress.done();
                         if (this.redirectString) this.AlertService.add({ title: "Busca Rápida", content: "Clique em um item da lista para voltar para a página anterior", type: enums.AlertType.INFO });
                     },
-                    (errorData, errorStatus) => {
-                        this.AlertService.add({ title: "Erro ao listar", content: errorData.message, type: enums.AlertType.DANGER });
+                    (errorData) => {
                         console.log(errorData);
+                        this.AlertService.add({ title: "Erro ao listar", content: errorData.message, type: enums.AlertType.DANGER });
                         this.$scope.navigator.progress.done();
                     }, { index: pageIndex, size: this.defaultPageSize });
         }

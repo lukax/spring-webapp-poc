@@ -1,4 +1,4 @@
-///<reference path="./../../../reference.d.ts"/>
+///<reference path="../../../reference.d.ts"/>
 
 export module service.mock.base {
     export class EntityServiceMock<T extends domain.base.AbstractEntity> implements d.service.contract.base.EntityService<T> {
@@ -10,7 +10,7 @@ export module service.mock.base {
 
         save(entity: T,
             successCallback: (data: T, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
-            errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
+            errorCallback: (data: domain.util.MessageResponse, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
                 this.$timeout(() => {
                     if (entity.id != 0) errorCallback({ message: "ID Inválido"}, 403, null, null);
                     var storId = 0;
@@ -18,7 +18,7 @@ export module service.mock.base {
                         (item: T) => {
                             if (item.id > storId) storId = item.id;
                         });
-                    entity.id = ++storId;
+                    (<T>entity).id = ++storId;
                     this.getRepository().push(angular.copy(entity));
 
                     successCallback(entity, 200, null, null);
@@ -27,7 +27,7 @@ export module service.mock.base {
 
         update(entity: T,
             successCallback: (data: T, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
-            errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
+            errorCallback: (data: domain.util.MessageResponse, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
                 this.$timeout(() => {
                     if (entity.id == 0) errorCallback({ message: "ID Inválido"}, 403, null, null);
                     var success = false;
@@ -47,7 +47,7 @@ export module service.mock.base {
 
         remove(entity: T,
             successCallback: (data: T, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
-            errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
+            errorCallback: (data: domain.util.MessageResponse, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
                 this.$timeout(() => {
                     var success = false;
                     this.getRepository().some(
@@ -66,7 +66,7 @@ export module service.mock.base {
 
         find(id: number,
             successCallback: (data: T, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
-            errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
+            errorCallback: (data: domain.util.MessageResponse, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
                 this.$timeout(() => {
                     var success = false;
                     var retrievedEntity = <T>{};
@@ -86,7 +86,7 @@ export module service.mock.base {
 
         list(
             successCallback: (data: T[], status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
-            errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
+            errorCallback: (data: domain.util.MessageResponse, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
             pageable?: domain.util.Page) {
                 this.$timeout(() => {
                     var repo = this.getRepository();
@@ -100,7 +100,7 @@ export module service.mock.base {
 
         exists(entity: T,
             successCallback: (data: boolean, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
-            errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
+            errorCallback: (data: domain.util.MessageResponse, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
                 this.$timeout(() => {
                     var success = false;
                     this.getRepository().some((x: T) => {

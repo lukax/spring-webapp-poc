@@ -1,4 +1,4 @@
-///<reference path="./../reference.d.ts"/>
+///<reference path="../reference.d.ts"/>
 
 export module controller {
     export interface MainNavbarViewModel extends d.controller.base.ViewModel {

@@ -1,13 +1,13 @@
 package com.espindola.lobwebapp.controller.util;
 
-public class ErrorResponse {
+public class MessageResponse {
 	private String message;
 
-	public ErrorResponse() {
+	public MessageResponse() {
 
 	}
 
-	public ErrorResponse(String message) {
+	public MessageResponse(String message) {
 		this.message = message;
 	}
 

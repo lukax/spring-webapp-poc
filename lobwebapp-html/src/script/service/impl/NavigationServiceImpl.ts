@@ -1,4 +1,4 @@
-///<reference path="./../../reference.d.ts"/>
+///<reference path="../../reference.d.ts"/>
 
 import svcu = d.service.contract;
 import p = require("./../../util/Progress");

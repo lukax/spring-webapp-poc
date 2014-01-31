@@ -1,4 +1,4 @@
-///<reference path="./../../reference.d.ts"/>
+///<reference path="../../reference.d.ts"/>
 
 import enums = require("./../../util/EnumUtil");
 import i0 = require("./../base/AbstractListEntityController");
@@ -32,9 +32,9 @@ export module controller.product {
                         this.$scope.entities = successData;
                         this.$scope.navigator.progress.done();
                     },
-                    (errorData, errorStatus) => {
-                        this.AlertService.add({ title: "Listar Produtos", content: "Lista de Produtos não pôde ser carregada", type: enums.AlertType.DANGER });
+                    (errorData) => {
                         console.log(errorData);
+                        this.AlertService.add({ title: "Listar Produtos", content: errorData.message, type: enums.AlertType.DANGER });
                         this.$scope.navigator.progress.done();
                     },
                     { index: pageIndex, size: this.defaultPageSize });
