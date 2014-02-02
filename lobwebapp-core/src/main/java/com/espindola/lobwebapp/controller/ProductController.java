@@ -30,7 +30,6 @@ import com.espindola.lobwebapp.controller.base.AbstractEntityController;
 import com.espindola.lobwebapp.controller.util.HeaderKey;
 import com.espindola.lobwebapp.domain.FileMeta;
 import com.espindola.lobwebapp.domain.Product;
-import com.espindola.lobwebapp.domain.Stock;
 import com.espindola.lobwebapp.event.PageReturnEvent;
 import com.espindola.lobwebapp.exception.InvalidArgumentException;
 import com.espindola.lobwebapp.exception.NotFoundException;
@@ -73,14 +72,6 @@ public class ProductController extends AbstractEntityController<Product> {
 	@ResponseBody
 	public List<String> findAllCategory() {
 		return this.facade.findAllCategory();
-	}
-
-	@RequestMapping(value = "/{productId:[\\d]+}/stock", method = RequestMethod.GET)
-	@ResponseStatus(value = HttpStatus.OK)
-	@ResponseBody
-	public List<Stock> getStock(@PathVariable("productId") Long productId)
-			throws InvalidArgumentException, NotFoundException {
-		return super.find(productId).getStocks();
 	}
 
 	@RequestMapping(value = "/{productId:[\\d]+}/image", method = RequestMethod.POST)

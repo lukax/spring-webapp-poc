@@ -5,11 +5,12 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import com.espindola.lobwebapp.domain.base.AbstractEntity;
 
 @Entity
-@Table(name = "TB_STOCK")
+@Table(name = "TB_STOCK", uniqueConstraints = { @UniqueConstraint(columnNames = "PRODUCT_ID") })
 public class Stock extends AbstractEntity {
 
 	@ManyToOne(fetch = FetchType.EAGER)
