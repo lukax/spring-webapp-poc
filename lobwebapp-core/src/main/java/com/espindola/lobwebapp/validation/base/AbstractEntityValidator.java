@@ -49,10 +49,9 @@ public abstract class AbstractEntityValidator<T extends AbstractEntity>
 
 	protected void stringLength(String propertyName, int min, int max) {
 		Object value = this.errors.getFieldValue(propertyName);
-		if (value == null)
+		if (value == null || !StringUtils.hasText(value.toString()))
 			return;
-		if (value.toString().length() < min
-				|| value.toString().length() > max) {
+		if (value.toString().length() < min || value.toString().length() > max) {
 			this.addError(propertyName, ErrorCode.INVALID,
 					MessageKey.VALIDATION_STRINGLENGTH, min, max);
 		}
@@ -60,7 +59,7 @@ public abstract class AbstractEntityValidator<T extends AbstractEntity>
 
 	protected void min(String propertyName, double min) {
 		Object value = this.errors.getFieldValue(propertyName);
-		if (value == null)
+		if (value == null || !StringUtils.hasText(value.toString()))
 			return;
 		Double number = Double.parseDouble(value.toString());
 		if (number < min) {
@@ -71,7 +70,7 @@ public abstract class AbstractEntityValidator<T extends AbstractEntity>
 
 	protected void max(String propertyName, double max) {
 		Object value = this.errors.getFieldValue(propertyName);
-		if (value == null)
+		if (value == null || !StringUtils.hasText(value.toString()))
 			return;
 		Double number = Double.parseDouble(value.toString());
 		if (number > max) {
@@ -82,7 +81,7 @@ public abstract class AbstractEntityValidator<T extends AbstractEntity>
 
 	protected void range(String propertyName, double min, double max) {
 		Object value = this.errors.getFieldValue(propertyName);
-		if (value == null)
+		if (value == null || !StringUtils.hasText(value.toString()))
 			return;
 		Double number = Double.parseDouble(value.toString());
 		if (number < min || number > max) {
@@ -93,7 +92,7 @@ public abstract class AbstractEntityValidator<T extends AbstractEntity>
 
 	protected void dateMin(String propertyName, double min) {
 		Object value = this.errors.getFieldValue(propertyName);
-		if (value == null)
+		if (value == null || !StringUtils.hasText(value.toString()))
 			return;
 		try {
 			Date date = new SimpleDateFormat().parse(value.toString());
@@ -108,7 +107,7 @@ public abstract class AbstractEntityValidator<T extends AbstractEntity>
 
 	protected void pattern(String propertyName, Pattern pattern) {
 		Object value = this.errors.getFieldValue(propertyName);
-		if (value == null)
+		if (value == null || !StringUtils.hasText(value.toString()))
 			return;
 		if (!pattern.matcher(value.toString()).matches()) {
 			this.addError(propertyName, ErrorCode.INVALID,

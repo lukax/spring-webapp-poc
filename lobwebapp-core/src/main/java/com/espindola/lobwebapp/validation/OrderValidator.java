@@ -10,6 +10,7 @@ import org.springframework.validation.ObjectError;
 
 import com.espindola.lobwebapp.domain.Order;
 import com.espindola.lobwebapp.domain.OrderItem;
+import com.espindola.lobwebapp.domain.Payment;
 import com.espindola.lobwebapp.l10n.MessageKey;
 import com.espindola.lobwebapp.validation.base.AbstractEntityValidator;
 import com.espindola.lobwebapp.validation.util.ErrorCode;
@@ -18,9 +19,7 @@ import com.espindola.lobwebapp.validation.util.ErrorCode;
 public class OrderValidator extends AbstractEntityValidator<Order> {
 
 	private PaymentValidator paymentValidator;
-	private Order t;
-	private Errors e;
-
+	
 	@Autowired
 	public OrderValidator(PaymentValidator paymentValidator) {
 		this.paymentValidator = paymentValidator;
@@ -28,18 +27,16 @@ public class OrderValidator extends AbstractEntityValidator<Order> {
 
 	@Override
 	protected void validateEntity(Order t, Errors e) {
-		this.t = t;
-		this.e = e;
 		validateOrderItems(t.getItems(), e);
 		validateDate("date");
-		validatePayment("payment");
+		validatePayment("payment", t.getPayment(), e);
 	}
 
 	private void validateDate(String propertyName) {
 		required(propertyName);
 	}
 
-	private void validatePayment(String propertyName) {
+	private void validatePayment(String propertyName, Payment t, Errors e) {
 		BindException paymentErrors = new BindException(t, propertyName);
 		this.paymentValidator.validate(t, paymentErrors);
 		for (ObjectError objErr : paymentErrors.getAllErrors()) {
@@ -54,7 +51,6 @@ public class OrderValidator extends AbstractEntityValidator<Order> {
 					MessageKey.VALIDATION_REQUIRED);
 		else
 			for (OrderItem item : items) {
-				;
 				if (item.getQuantity() == null || item.getQuantity() < 0)
 					addError("items", ErrorCode.REQUIRED,
 							MessageKey.VALIDATION_MIN, "0");

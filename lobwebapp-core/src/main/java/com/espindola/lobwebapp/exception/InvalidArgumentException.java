@@ -18,30 +18,33 @@ public class InvalidArgumentException extends LobWebAppException {
 	private static final long serialVersionUID = 1L;
 	private ObjectError[] objectErrors;
 
-	public InvalidArgumentException(MessageKey argumentMessageKey,
+	public InvalidArgumentException(MessageKey propertyMessageKey,
 			ObjectError... objectErrors) {
-		super(argumentMessageKey, objectErrors);
+		super(
+				MessageKey.INVALIDARGUMENT_EXCEPTION,
+				new Object[] { propertyMessageKey.getMessageSourceResolvable() });
 		this.objectErrors = objectErrors;
 	}
 
 	@Override
 	public MessageResponse getErrorResponse(MessageSource messageSource,
 			Locale locale) {
+		ValidationMessageResponse errorResponse = new ValidationMessageResponse();
+		errorResponse.setMessage(super.getErrorResponse(messageSource, locale)
+				.getMessage());
+
 		List<ValidationResult> validationResults = new ArrayList<ValidationResult>();
 		for (ObjectError o : objectErrors) {
 			if (o instanceof CustomObjectError) {
 				validationResults.add(((CustomObjectError) o)
 						.getValidationResponse(messageSource, locale));
 			} else {
-				throw new UnsupportedOperationException("ObjectError has to be of type CustomObjectError");
+				throw new UnsupportedOperationException(
+						"ObjectError has to be of type CustomObjectError");
 			}
 		}
 
-		ValidationMessageResponse errorResponse = new ValidationMessageResponse();
-		errorResponse.setMessage(super.getErrorResponse(messageSource, locale)
-				.getMessage());
 		errorResponse.setValidations(validationResults);
-
 		return errorResponse;
 	}
 

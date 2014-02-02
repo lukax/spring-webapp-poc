@@ -8,7 +8,7 @@ public class NotFoundException extends LobWebAppException {
 
 	public NotFoundException(MessageKey propertyMessageKey, Long id) {
 		super(MessageKey.NOTFOUND_EXCEPTION, new Object[] {
-				propertyMessageKey.getKey(), id });
+				propertyMessageKey.getMessageSourceResolvable(), id });
 	}
 
 }

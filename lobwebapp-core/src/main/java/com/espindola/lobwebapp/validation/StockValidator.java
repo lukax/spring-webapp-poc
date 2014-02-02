@@ -11,13 +11,10 @@ import com.espindola.lobwebapp.validation.util.ErrorCode;
 @Component
 public class StockValidator extends AbstractEntityValidator<Stock> {
 
-	private Stock t;
-
 	@Override
 	protected void validateEntity(Stock t, Errors e) {
-		this.t = t;
 		validateQuantity("quantity");
-		validateMaxQuantity("maxQuantity");
+		validateMaxQuantity("maxQuantity", t);
 		validateMinQuantity("minQuantity");
 		validateUnit("unit");
 	}
@@ -31,7 +28,7 @@ public class StockValidator extends AbstractEntityValidator<Stock> {
 		min(propertyName, 0);
 	}
 
-	private void validateMaxQuantity(String propertyName) {
+	private void validateMaxQuantity(String propertyName, Stock t) {
 		min(propertyName, 0);
 		if (t.getMinQuantity() != null && t.getMaxQuantity() != null) {
 			if (t.getMinQuantity() > 0

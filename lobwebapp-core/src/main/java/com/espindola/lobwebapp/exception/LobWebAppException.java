@@ -13,10 +13,6 @@ public class LobWebAppException extends RuntimeException {
 	private MessageKey messageKey;
 	private Object[] messageArgs;
 
-	public LobWebAppException() {
-		this(MessageKey.LOBWEBAPP_EXCEPTION, new Object[] {});
-	}
-
 	public LobWebAppException(String message) {
 		super(message);
 	}
@@ -28,8 +24,8 @@ public class LobWebAppException extends RuntimeException {
 
 	public MessageResponse getErrorResponse(MessageSource messageSource,
 			Locale locale) {
-		return new MessageResponse(messageSource.getMessage(this.getMessageKey()
-				.getKey(), this.getMessageArgs(), locale));
+		return new MessageResponse(messageSource.getMessage(this
+				.getMessageKey().getKey(), this.getMessageArgs(), locale));
 	}
 
 	public Object[] getMessageArgs() {
