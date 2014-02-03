@@ -38,7 +38,7 @@ export module controller.base {
                     },
                     (errorData) => {
                         console.log(errorData);
-                        this.AlertService.add({ title: "Erro ao listar", content: errorData.message, type: enums.AlertType.DANGER });
+                        this.AlertService.add({ title: "Não foi possível listar", content: errorData.message, type: enums.AlertType.DANGER });
                         this.$scope.navigator.progress.done();
                     }, { index: pageIndex, size: this.defaultPageSize });
         }

@@ -38,7 +38,7 @@ export module controller.stock {
                 },
                 (errorData) => {
                     console.log(errorData);
-                    this.AlertService.add({ title: "Buscar Produto", content: errorData.message, type: enums.AlertType.WARNING });
+                    this.AlertService.add({ title: "Não foi possível buscar produto", content: errorData.message, type: enums.AlertType.WARNING });
                     this.unlock();
                 });
         }

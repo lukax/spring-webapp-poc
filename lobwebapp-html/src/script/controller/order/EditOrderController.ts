@@ -88,7 +88,7 @@ export module controller.order {
                     this.unlock();
                 }, (errorData) => {
                     console.log(errorData);
-                    this.AlertService.add({ title: "Buscar Cliente", content: errorData.message, type: enums.AlertType.WARNING });
+                    this.AlertService.add({ title: "Não foi possível buscar cliente", content: errorData.message, type: enums.AlertType.WARNING });
                     this.$scope.entity.customer.id = 0;
                     this.unlock();
                 });
@@ -104,7 +104,7 @@ export module controller.order {
                     this.unlock();
                 }, (errorData) => {
                     console.log(errorData);
-                    this.AlertService.add({ title: "Buscar Produto", content: errorData.message, type: enums.AlertType.WARNING });
+                    this.AlertService.add({ title: "Não foi possível buscar produto", content: errorData.message, type: enums.AlertType.WARNING });
                     this.emptyItem();
                     this.unlock();
                 });
