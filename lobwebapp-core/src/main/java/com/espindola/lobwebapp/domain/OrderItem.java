@@ -1,5 +1,7 @@
 package com.espindola.lobwebapp.domain;
 
+import java.math.BigDecimal;
+
 import javax.persistence.Embeddable;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
@@ -30,13 +32,12 @@ public class OrderItem {
 		this.quantity = quantity;
 	}
 
-	public Double computeTotalPrice() {
-		Double qt = 0D;
+	public BigDecimal computeTotalPrice() {
+		BigDecimal qt = new BigDecimal(0);
 		try {
-			qt = product.getPrice() * quantity;
+			qt = product.getPrice().multiply(new BigDecimal(quantity));
 		} catch (NullPointerException ex) {
 		}
-
 		return qt;
 	}
 }

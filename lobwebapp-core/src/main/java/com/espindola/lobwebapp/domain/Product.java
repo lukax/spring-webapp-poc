@@ -1,5 +1,6 @@
 package com.espindola.lobwebapp.domain;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.CascadeType;
@@ -23,9 +24,9 @@ public class Product extends AbstractEntity {
 
 	private String description;
 
-	private Double costPrice;
+	private BigDecimal costPrice;
 
-	private Double price;
+	private BigDecimal price;
 
 	private String category;
 
@@ -54,19 +55,19 @@ public class Product extends AbstractEntity {
 		this.description = description;
 	}
 
-	public Double getCostPrice() {
+	public BigDecimal getCostPrice() {
 		return costPrice;
 	}
 
-	public void setCostPrice(Double costPrice) {
+	public void setCostPrice(BigDecimal costPrice) {
 		this.costPrice = costPrice;
 	}
 
-	public Double getPrice() {
+	public BigDecimal getPrice() {
 		return price;
 	}
 
-	public void setPrice(Double price) {
+	public void setPrice(BigDecimal price) {
 		this.price = price;
 	}
 

@@ -1,5 +1,6 @@
 package com.espindola.lobwebapp.domain;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -69,11 +70,11 @@ public class Order extends AbstractEntity {
 		this.items = items;
 	}
 
-	public Double computeTotalPrice() {
-		Double qt = 0D;
+	public BigDecimal computeTotalPrice() {
+		BigDecimal qt = new BigDecimal(0);
 		try {
 			for (OrderItem i : getItems()) {
-				qt += i.computeTotalPrice();
+				qt = qt.add(i.computeTotalPrice());
 			}
 		} catch (NullPointerException ex) {
 		}

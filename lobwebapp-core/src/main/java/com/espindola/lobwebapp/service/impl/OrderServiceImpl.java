@@ -1,5 +1,7 @@
 package com.espindola.lobwebapp.service.impl;
 
+import java.math.BigDecimal;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,13 +30,13 @@ public class OrderServiceImpl extends AbstractEntityServiceImpl<Order>
 	}
 
 	private void throwIfInvalidPaymentQuantity(Order entity) {
-		Double payment = entity.getPayment().getQuantity();
-		Double minPayment = entity.computeTotalPrice();
-		Double exchange = payment - minPayment;
-		Double maxExchange = 50D;
-		Double maxPayment = minPayment + maxExchange;
+		BigDecimal payment = entity.getPayment().getQuantity();
+		BigDecimal minPayment = entity.computeTotalPrice();
+		BigDecimal exchange = payment.subtract(minPayment);
+		BigDecimal maxExchange = new BigDecimal(50);
+		BigDecimal maxPayment = minPayment.add(maxExchange);
 		
-		if (minPayment >= payment || exchange > maxExchange)
+		if (payment.compareTo(minPayment) == -1 || exchange.compareTo(maxExchange) == 1)
 			throw new InvalidArgumentException(MessageKey.PAYMENT,
 					new CustomObjectError(ErrorCode.INVALID,
 							MessageKey.VALIDATION_SIZE, "quantity",

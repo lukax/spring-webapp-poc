@@ -6,6 +6,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 import org.hamcrest.Matchers;
@@ -56,9 +57,9 @@ public class ProductControllerTest {
 		Product p = new Product();
 		p.setId(0L);
 		p.setName("my super product");
-		p.setPrice(100D);
+		p.setPrice(new BigDecimal(100));
 		p.setCategory("my category");
-		p.setCostPrice(99D);
+		p.setCostPrice(new BigDecimal(99));
 		p.setDescription("not much");
 		p.setRegisterDate(new Date());
 		p.setNcm("1234.56.78");

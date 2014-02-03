@@ -1,5 +1,7 @@
 package com.espindola.lobwebapp.domain;
 
+import java.math.BigDecimal;
+
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
@@ -9,17 +11,17 @@ import com.espindola.lobwebapp.domain.base.AbstractEntity;
 @Table(name = "TB_PAYMENT")
 public class Payment extends AbstractEntity {
 
-	private Double quantity;
+	private BigDecimal quantity;
 
 	private PaymentStatus status;
 
 	private PaymentMode mode;
 
-	public Double getQuantity() {
+	public BigDecimal getQuantity() {
 		return quantity;
 	}
 
-	public void setQuantity(Double quantity) {
+	public void setQuantity(BigDecimal quantity) {
 		this.quantity = quantity;
 	}
 

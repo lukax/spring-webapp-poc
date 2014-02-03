@@ -76,7 +76,7 @@ public class ProductServiceImpl extends AbstractEntityServiceImpl<Product>
 	}
 
 	private void throwIfPriceIsLessThanCostPrice(Product entity) {
-		if (entity.getCostPrice() >= entity.getPrice())
+		if (entity.getCostPrice().compareTo(entity.getPrice()) >= 0)
 			throw new InvalidArgumentException(entityMessageKey,
 					new CustomObjectError(ErrorCode.REQUIRED,
 							MessageKey.VALIDATION_INVALID, "price"));
