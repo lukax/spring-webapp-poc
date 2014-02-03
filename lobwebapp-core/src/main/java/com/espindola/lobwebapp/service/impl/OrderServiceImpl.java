@@ -24,15 +24,7 @@ public class OrderServiceImpl extends AbstractEntityServiceImpl<Order>
 	@Override
 	protected void throwIfInvalid(Order entity) throws InvalidArgumentException {
 		// TODO: Business logic
-		throwIfInvalidPayment(entity);
 		throwIfInvalidPaymentQuantity(entity);
-	}
-
-	private void throwIfInvalidPayment(Order entity) {
-		if (entity.getPayment().getId() != 0)
-			throw new InvalidArgumentException(entityMessageKey,
-					new CustomObjectError(ErrorCode.REQUIRED,
-							MessageKey.VALIDATION_REQUIRED, "payment"));
 	}
 
 	private void throwIfInvalidPaymentQuantity(Order entity) {
@@ -43,9 +35,9 @@ public class OrderServiceImpl extends AbstractEntityServiceImpl<Order>
 		Double maxPayment = minPayment + maxExchange;
 		
 		if (minPayment >= payment || exchange > maxExchange)
-			throw new InvalidArgumentException(entityMessageKey,
+			throw new InvalidArgumentException(MessageKey.PAYMENT,
 					new CustomObjectError(ErrorCode.INVALID,
-							MessageKey.VALIDATION_SIZE, "payment.quantity",
+							MessageKey.VALIDATION_SIZE, "quantity",
 							minPayment, maxPayment));
 	}
 

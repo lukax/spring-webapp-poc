@@ -79,7 +79,7 @@ public abstract class AbstractEntityServiceImpl<T extends AbstractEntity>
 
 	protected void throwIfNotFound(Long id) throws NotFoundException {
 		if (!repository.exists(id))
-			throw new NotFoundException(this.entityMessageKey, id);
+			throw new NotFoundException(entityMessageKey, id);
 	}
 
 	protected abstract void throwIfInvalid(T entity)

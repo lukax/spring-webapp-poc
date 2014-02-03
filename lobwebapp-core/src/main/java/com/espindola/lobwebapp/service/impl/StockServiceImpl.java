@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import com.espindola.lobwebapp.domain.Stock;
 import com.espindola.lobwebapp.exception.AlreadyExistsException;
 import com.espindola.lobwebapp.exception.InvalidArgumentException;
+import com.espindola.lobwebapp.exception.NotFoundException;
 import com.espindola.lobwebapp.l10n.MessageKey;
 import com.espindola.lobwebapp.repository.StockRepository;
 import com.espindola.lobwebapp.service.contract.StockService;
@@ -24,8 +25,11 @@ public class StockServiceImpl extends AbstractEntityServiceImpl<Stock>
 	}
 
 	@Override
-	public Stock findByProductId(Long productId) {
-		return this.repository.findByProductId(productId);
+	public Stock findByProductId(Long productId) throws NotFoundException {
+		Stock s = this.repository.findByProductId(productId);
+		if (s == null)
+			throw new NotFoundException(entityMessageKey, productId);
+		return s;
 	}
 
 	@Override

@@ -14,6 +14,7 @@ public enum MessageKey {
 	PRODUCT("com.espindola.lobwebapp.product"), 
 	CUSTOMER("com.espindola.lobwebapp.customer"), 
 	ORDER("com.espindola.lobwebapp.order"), 
+	ORDERITEM("com.espindola.lobwebapp.orderitem"), 
 	STOCK("com.espindola.lobwebapp.stock"), 
 	USER("com.espindola.lobwebapp.user"), 
 	PAYMENT("com.espindola.lobwebapp.payment"),
@@ -45,6 +46,7 @@ public enum MessageKey {
 	VALIDATION_MIN("com.espindola.lobwebapp.validation.min"), 
 	VALIDATION_MAX("com.espindola.lobwebapp.validation.max"), 
 	VALIDATION_PATTERN("com.espindola.lobwebapp.validation.pattern"),
+	VALIDATION_INSUFFICIENT("com.espindola.lobwebapp.validation.insufficient"), 
 
 	;
 
