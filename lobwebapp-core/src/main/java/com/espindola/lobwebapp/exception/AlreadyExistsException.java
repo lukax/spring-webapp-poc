@@ -10,7 +10,7 @@ public class AlreadyExistsException extends LobWebAppException {
 	public AlreadyExistsException(MessageKey propertyMessageKey,
 			AbstractEntity entity) {
 		super(MessageKey.ALREADYEXISTS_EXCEPTION, new Object[] {
-				propertyMessageKey.getMessageSourceResolvable(),
+				propertyMessageKey.asMessageSourceResolvable(),
 				entity.toString() });
 	}
 

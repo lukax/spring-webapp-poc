@@ -9,6 +9,7 @@ export module controller.stock {
         removeStock: (stock: domain.Stock) => void;
         fetchProduct: (productId: number) => void;
         quickSearchProduct: () => void;
+        entityValidation: any;
     }
 
     export class EditStockController extends i0.controller.base.AbstractEditEntityController<domain.Stock> {
@@ -26,10 +27,12 @@ export module controller.stock {
             this.findEntity(stockId || 0, ()=>{
                 if(productId != null) this.fetchProduct(productId);
                 this.populateScope();
+                this.setupValidations();
             });
         }
 
         fetchProduct(id: number) {
+            if(id == null) return;
             this.lock();
             this.ProductService.find(id,
                 (successData) => {
@@ -41,6 +44,19 @@ export module controller.stock {
                     this.AlertService.add({ title: "Não foi possível buscar produto", content: errorData.message, type: enums.AlertType.WARNING });
                     this.unlock();
                 });
+        }
+
+        setupValidations(){
+            this.$scope.entityValidation = {};
+            this.$scope.$watch("entity.quantity", ()=>{
+                this.$scope.entityValidation.quantity = this.$scope.entity.quantity < this.$scope.entity.minQuantity;
+            });
+            this.$scope.$watch("entity.minQuantity", ()=>{
+                this.$scope.entityValidation.minQuantity = this.$scope.entity.minQuantity >= this.$scope.entity.maxQuantity;
+            });
+            this.$scope.$watch("entity.maxQuantity", ()=>{
+                this.$scope.entityValidation.maxQuantity = this.$scope.entity.maxQuantity <= this.$scope.entity.minQuantity;
+            });
         }
 
         quickSearchProduct() {

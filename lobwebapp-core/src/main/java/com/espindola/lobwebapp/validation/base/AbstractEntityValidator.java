@@ -115,6 +115,46 @@ public abstract class AbstractEntityValidator<T extends AbstractEntity>
 		}
 	}
 
+	protected void firstGreaterThanSecond(String firstProperty, String secondProperty,
+			boolean orEqual) {
+		Object valueFirst = this.errors.getFieldValue(firstProperty);
+		Object valueSecond = this.errors.getFieldValue(secondProperty);
+		if (valueFirst == null || valueSecond == null
+				|| !StringUtils.hasText(valueFirst.toString())
+				|| !StringUtils.hasText(valueSecond.toString()))
+			return;
+		Double numberFirst = Double.parseDouble(valueFirst.toString());
+		Double numberSecond = Double.parseDouble(valueSecond.toString());
+		
+		if (orEqual && numberFirst.compareTo(numberSecond) < 0) {
+			addError(firstProperty, ErrorCode.INVALID, MessageKey.VALIDATION_MIN, numberSecond);
+		}
+		if(!orEqual && numberFirst.compareTo(numberSecond) <= 0){
+			//TODO: chain with message greater than args
+			addError(firstProperty, ErrorCode.INVALID, MessageKey.VALIDATION_MIN, numberSecond);
+		}
+	}
+
+	protected void firstLesserThanSecond(String firstProperty, String secondProperty,
+			boolean orEqual) {
+		Object valueFirst = this.errors.getFieldValue(firstProperty);
+		Object valueSecond = this.errors.getFieldValue(secondProperty);
+		if (valueFirst == null || valueSecond == null
+				|| !StringUtils.hasText(valueFirst.toString())
+				|| !StringUtils.hasText(valueSecond.toString()))
+			return;
+		Double numberFirst = Double.parseDouble(valueFirst.toString());
+		Double numberSecond = Double.parseDouble(valueSecond.toString());
+		
+		if (orEqual && numberFirst.compareTo(numberSecond) > 0) {
+			addError(firstProperty, ErrorCode.INVALID, MessageKey.VALIDATION_MAX, numberSecond);
+		}
+		if(!orEqual && numberFirst.compareTo(numberSecond) <= 0){
+			//TODO: chain messageKey with message less than args
+			addError(firstProperty, ErrorCode.INVALID, MessageKey.VALIDATION_MAX, numberSecond);	
+		}
+	}
+
 	protected void addError(String propertyName, ErrorCode errorCode,
 			MessageKey validationKey, Object... args) {
 		if (errors instanceof BindingResult) {

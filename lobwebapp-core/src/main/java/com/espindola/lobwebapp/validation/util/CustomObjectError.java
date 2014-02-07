@@ -37,7 +37,7 @@ public class CustomObjectError extends ObjectError {
 	public ValidationResult getValidationResponse(MessageSource messageSource,
 			Locale locale) {
 		ArrayList<Object> msgArgs = new ArrayList<Object>();
-		msgArgs.add(propertyMessageKey.getMessageSourceResolvable());
+		msgArgs.add(propertyMessageKey.asMessageSourceResolvable());
 		msgArgs.addAll(Arrays.asList(propertyMessageArgs));
 
 		String msg = messageSource.getMessage(validationMessageKey.getKey(),

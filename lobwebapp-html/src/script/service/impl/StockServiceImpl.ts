@@ -11,7 +11,7 @@ export module service.impl {
         }
 
         getDefault(): domain.Stock{
-            return { id: 0, product: null, quantity: 0, unit: "", minQuantity: 0, maxQuantity: 0 };
+            return { id: 0, product: null, quantity: 0, unit: "", minQuantity: 0, maxQuantity: 1000 };
         }
     }
 }

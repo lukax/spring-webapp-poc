@@ -106,8 +106,8 @@ public class OrderFacade extends AbstractEntityFacade<Order> {
 				if (newQuantity < 0)
 					throw new InvalidArgumentException(MessageKey.STOCK,
 							new CustomObjectError(ErrorCode.INVALID,
-									MessageKey.VALIDATION_INSUFFICIENT,
-									"quantity"));
+									MessageKey.VALIDATION_MIN,
+									"quantity", 0));
 				itemStock.setQuantity(newQuantity);
 				stockService.update(itemStock);
 			} catch (NotFoundException ex) {

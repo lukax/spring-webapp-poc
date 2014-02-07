@@ -46,7 +46,6 @@ public enum MessageKey {
 	VALIDATION_MIN("com.espindola.lobwebapp.validation.min"), 
 	VALIDATION_MAX("com.espindola.lobwebapp.validation.max"), 
 	VALIDATION_PATTERN("com.espindola.lobwebapp.validation.pattern"),
-	VALIDATION_INSUFFICIENT("com.espindola.lobwebapp.validation.insufficient"), 
 
 	;
 
@@ -60,7 +59,7 @@ public enum MessageKey {
 		return key;
 	}
 	
-	public MessageSourceResolvable getMessageSourceResolvable(){
+	public MessageSourceResolvable asMessageSourceResolvable(){
 		return new DefaultMessageSourceResolvable(getKey());
 	}
 

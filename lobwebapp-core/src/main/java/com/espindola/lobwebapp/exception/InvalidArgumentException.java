@@ -22,7 +22,7 @@ public class InvalidArgumentException extends LobWebAppException {
 			ObjectError... objectErrors) {
 		super(
 				MessageKey.INVALIDARGUMENT_EXCEPTION,
-				new Object[] { propertyMessageKey.getMessageSourceResolvable() });
+				new Object[] { propertyMessageKey.asMessageSourceResolvable() });
 		this.objectErrors = objectErrors;
 	}
 
