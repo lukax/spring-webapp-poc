@@ -12,26 +12,24 @@ for (var file in (<any>window).__karma__.files) {
 requirejs.config({
     baseUrl: "/base/src",
     paths: {
-        jquery: "lib/jquery/jquery",
-        bootstrap: "lib/bootstrap/dist/js/bootstrap",
-        angular: "lib/angular/angular",
-        angularRoute: "lib/angular-route/angular-route",
-        angularUiRouter: "lib/angular-ui-router/release/angular-ui-router",
+        jquery: "lib/jquery/jquery.min",
+        angular: "lib/angular/angular.min",
+        angularUiRouter: "lib/angular-ui-router/release/angular-ui-router.min",
         angularMocks: "lib/angular-mocks/angular-mocks",
-        NProgress: "lib/nprogress/nprogress",
-        underscore: "lib/underscore-amd/underscore"
+        underscore: "lib/underscore/underscore-min",
+        NProgress: "lib/nprogress/nprogress"
     },
     shim: {
-        "bootstrap": ["jquery"],
         "angular": {
             deps: ["jquery"],
             exports: "angular"
         },
-        "angularRoute":  ["angular"],
         "angularUiRouter": ["angular"],
         "angularMocks": ["angular"],
+        "underscore": {
+            exports: "_"
+        },
         "NProgress": {
-            deps: ["jquery"],
             exports: "NProgress"
         }
     },

@@ -1,7 +1,6 @@
 ///<reference path="../reference.d.ts"/>
-///<amd-dependency path="angularRoute"/>
-///<amd-dependency path="angularUiRouter"/>
 
+///<amd-dependency path="angularUiRouter"/>
 import f = require("./../controller/MainNavbarController");
 import g = require("./../controller/AlertController");
 import h = require("./../util/DependencyManager");

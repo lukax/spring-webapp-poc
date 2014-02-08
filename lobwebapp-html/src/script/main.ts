@@ -9,22 +9,19 @@ require.config({
     waitSeconds: 10,
     paths: {
         text: "../lib/requirejs-text/text",
-        jquery: "../lib/jquery/jquery",
-        jqueryMaskedInput: "../lib/jquery.maskedinput/jquery.maskedinput",
-        bootstrap: "../lib/bootstrap/dist/js/bootstrap",
-		angular: "../lib/angular/angular",
-        angularRoute: "../lib/angular-route/angular-route",
-        angularAnimate: "../lib/angular-animate/angular-animate",
-        angularUi: "../lib/angular-ui/build/angular-ui",
+        jquery: "../lib/jquery/jquery.min",
+        jqueryMaskedInput: "../lib/jquery.maskedinput/jquery.maskedinput.min",
+        bootstrap: "../lib/bootstrap/dist/js/bootstrap.min",
+        angular: "../lib/angular/angular.min",
+        angularAnimate: "../lib/angular-animate/angular-animate.min",
+        angularUi: "../lib/angular-ui/build/angular-ui.min",
         angularUiUtils: "../lib/angular-ui-utils/ui-utils",
-        angularUiRouter: "../lib/angular-ui-router/release/angular-ui-router",
-        angularUiBootstrap: "../lib/angular-ui-bootstrap-bower/ui-bootstrap",
-        underscore: "../lib/underscore-amd/underscore",
-        ngAnimateAnimateCss: "../lib/ngAnimate-animate.css/animate",
-        nprogress: "../lib/nprogress/nprogress",
-        dc: "../lib/dcjs/dc",
-        d3: "../lib/d3/d3",
-        crossfilter: "../lib/crossfilter/crossfilter",
+        angularUiRouter: "../lib/angular-ui-router/release/angular-ui-router.min",
+        angularUiBootstrap: "../lib/angular-ui-bootstrap-bower/ui-bootstrap.min",
+        underscore: "../lib/underscore/underscore-min",
+        dc: "../lib/dcjs/dc.min",
+        d3: "../lib/d3/d3.min",
+        crossfilter: "../lib/crossfilter/crossfilter.min",
         NProgress: "../lib/nprogress/nprogress"
     },
     map:{
@@ -34,21 +31,25 @@ require.config({
             "jquery.iframe.transport": "lib/jquery-file-upload/js/jquery.iframe-transport.js"
         }
     },
-	baseUrl: "script",
+    baseUrl: "script",
     shim: {
         "angular": {
             deps: ["jquery", "bootstrap", "underscore"],
             exports: "angular"
         },
-        "jqueryMaskedInput": ["jquery"],
-        "bootstrap": ["jquery"],
-        "angularRoute": ["angular"],
+        "jqueryMaskedInput": {
+            deps: ["jquery"],
+            exports: "$.fn.mask"
+        },
+        "bootstrap": {
+            deps: ["jquery"],
+            exports: "$.fn.alert"
+        },
         "angularAnimate": ["angular"],
         "angularUi": ["angular"],
         "angularUiUtils": ["jqueryMaskedInput","angular"],
         "angularUiRouter": ["angular"],
         "angularUiBootstrap": ["angular"],
-        "ngAnimateAnimateCss": ["angularAnimate"],
         "NProgress": {
             deps: ["jquery"],
             exports: "NProgress"
