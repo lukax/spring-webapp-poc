@@ -6,14 +6,27 @@ export module directive {
         replace = true;
         transclude = true;
         scope = {
-            error: '=',
-            label: '=',
+            label: '@',
+            invalid: '=',
             entityId: '=',
-            entityDetail: '=',
             fetch: '&',
-            quickSearch: '&'
+            search: '&'
         };
         templateUrl = '/template/directive/QuickSearchTemplate.html';
+
+        controller = ["$scope", ($scope: any) => {
+            $scope.$watch("entityId + invalid", ()=> {
+                if($scope.invalid == null)
+                    $scope.error = $scope.entityId == null || $scope.entityId <= 0;
+                else
+                    $scope.error = $scope.invalid;
+            });
+            
+            $scope.fetchEntity = () => {
+                if($scope.entityId > 0)
+                    $scope.fetch();
+            }
+        }];
     }
 }
 

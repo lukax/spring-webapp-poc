@@ -5,7 +5,7 @@
             <input type="text" class="form-control" id="stockId" name="stockId" readonly ng-model="entity.id">
         </div>
     </div>
-    <quick-search error="entity.product.id <= 0" label="'Produto'" entity-id="entity.product.id" fetch="fetchProduct(entity.product.id)" quickSearch="quickSearchProduct()">
+    <quick-search label="Produto" entity-id="entity.product.id" fetch="fetchProduct(entity.product.id)" search="quickSearchProduct()">
         <p class="form-control-static">
                 <product-detail product="entity.product"></product-detail>
         </p>

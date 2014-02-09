@@ -13,11 +13,11 @@
         </div>
     </div>
     
-    <quick-search error="entity.customer.id <= 0" label="'Cliente'" entity-id="entity.customer.id" fetch="fetchCustomer(entity.customer.id)" quickSearch="quickSearchCustomer()">
+    <quick-search label="Cliente" entity-id="entity.customer.id" fetch="fetchCustomer(entity.customer.id)" search="quickSearchCustomer()">
         <p class="form-control-static">{{entity.customer.name}}</p>
     </quick-search>
 
-    <quick-search error="item.product.id <= 0 && entity.items.length == 0" label="'Produtos'" entity-id="item.product.id" fetch="fetchProduct(item.product.id)" quickSearch="quickSearchProduct()">
+    <quick-search label="Produtos" invalid="item.product.id <= 0 && entity.items.length == 0" entity-id="item.product.id" fetch="fetchProduct(item.product.id)" search="quickSearchProduct()">
         <div class="col-md-3 input-group" ng-class="{'has-error': orderForm.productQuantity.$invalid && entity.products.length == 0}">
             <input type="number" required min="1" class="form-control" id="productQuantity" name="productQuantity" placeholder="Qt" ng-model="item.quantity" ui-keyup="{'enter': 'addItem(item)'}" ng-disabled="!item.product.id">
             <div class="input-group-btn">
