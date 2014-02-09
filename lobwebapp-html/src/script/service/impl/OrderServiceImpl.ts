@@ -12,7 +12,7 @@ export module service.impl {
         }
 
         getDefault(): domain.Order{
-            return { id: 0, customer: { id: 0, name: "" }, items: [], payment: { id: 0, quantity: 0, status: enums.PaymentStatus.PENDING, mode: enums.PaymentMode.MONEY }, date: new Date().getTime() };
+            return { id: 0, customer: { id: 0, name: "" }, items: [], payment: { id: 0, quantity: 0, status: enums.PaymentStatus.OK, mode: enums.PaymentMode.MONEY }, date: new Date().getTime() };
         }
         
     }

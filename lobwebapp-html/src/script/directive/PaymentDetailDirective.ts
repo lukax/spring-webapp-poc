@@ -13,11 +13,11 @@ export module directive {
             scope.$watch("ref.status", (newValue, oldValue) => {
                 var labelClass;
                 switch (newValue) {
-                    case "PENDING":
+                    case "OK":
                         labelClass = "label-default";
                         break;
-                    case "OK":
-                        labelClass = "label-success";
+                    case "PENDING":
+                        labelClass = "label-info";
                         break;
                     case "CANCELLED":
                         labelClass = "label-warning";

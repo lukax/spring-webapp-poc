@@ -7,14 +7,24 @@ export module directive {
         transclude = true;
         scope = {
             label: '@',
+            resourceUrl: '@',
             invalid: '=',
             entityId: '=',
-            fetch: '&',
-            search: '&'
+            fetch: '&'
         };
         templateUrl = '/template/directive/QuickSearchTemplate.html';
 
-        controller = ["$scope", ($scope: any) => {
+        controller = ["$scope", "$location", ($scope: any, $location: ng.ILocationService) => {
+            $scope.search = () => {
+                //TODO: Support previous url parameters
+                $location.url("/" + $scope.resourceUrl + "/list?redirect=" + $location.path());
+            };
+            
+            $scope.fetchEntity = () => {
+                if($scope.entityId > 0)
+                    $scope.fetch();
+            };
+
             $scope.$watch("entityId + invalid", ()=> {
                 if($scope.invalid == null)
                     $scope.error = $scope.entityId == null || $scope.entityId <= 0;
@@ -22,10 +32,6 @@ export module directive {
                     $scope.error = $scope.invalid;
             });
             
-            $scope.fetchEntity = () => {
-                if($scope.entityId > 0)
-                    $scope.fetch();
-            }
         }];
     }
 }

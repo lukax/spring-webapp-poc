@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.espindola.lobwebapp.domain.Order;
+import com.espindola.lobwebapp.domain.PaymentStatus;
 import com.espindola.lobwebapp.exception.InvalidArgumentException;
 import com.espindola.lobwebapp.l10n.MessageKey;
 import com.espindola.lobwebapp.repository.OrderRepository;
@@ -35,12 +36,17 @@ public class OrderServiceImpl extends AbstractEntityServiceImpl<Order>
 		BigDecimal exchange = payment.subtract(minPayment);
 		BigDecimal maxExchange = new BigDecimal(50);
 		BigDecimal maxPayment = minPayment.add(maxExchange);
-		
-		if (payment.compareTo(minPayment) == -1 || exchange.compareTo(maxExchange) == 1)
+
+		if (entity.getPayment().getStatus() == PaymentStatus.PENDING
+				&& entity.getPayment().getQuantity()
+						.compareTo(new BigDecimal(0)) == 0) {
+			// If status is pending and quantity is 0, let it pass...
+		} else if (payment.compareTo(minPayment) == -1
+				|| exchange.compareTo(maxExchange) == 1)
 			throw new InvalidArgumentException(MessageKey.PAYMENT,
 					new CustomObjectError(ErrorCode.INVALID,
-							MessageKey.VALIDATION_SIZE, "quantity",
-							minPayment, maxPayment));
+							MessageKey.VALIDATION_SIZE, "quantity", minPayment,
+							maxPayment));
 	}
 
 }

@@ -13,12 +13,12 @@
         </div>
     </div>
     
-    <quick-search label="Cliente" entity-id="entity.customer.id" fetch="fetchCustomer(entity.customer.id)" search="quickSearchCustomer()">
+    <quick-search label="Cliente" resource-url="customer" entity-id="entity.customer.id" fetch="fetchCustomer(entity.customer.id)">
         <p class="form-control-static">{{entity.customer.name}}</p>
     </quick-search>
 
-    <quick-search label="Produtos" invalid="item.product.id <= 0 && entity.items.length == 0" entity-id="item.product.id" fetch="fetchProduct(item.product.id)" search="quickSearchProduct()">
-        <div class="col-md-3 input-group" ng-class="{'has-error': orderForm.productQuantity.$invalid && entity.products.length == 0}">
+    <quick-search label="Produtos" resource-url="product" invalid="invalid.orderItems" entity-id="item.product.id" fetch="fetchProduct(item.product.id)">
+        <div class="col-md-3 input-group" ng-class="{'has-error': orderForm.productQuantity.$invalid && invalid.orderItems}">
             <input type="number" required min="1" class="form-control" id="productQuantity" name="productQuantity" placeholder="Qt" ng-model="item.quantity" ui-keyup="{'enter': 'addItem(item)'}" ng-disabled="!item.product.id">
             <div class="input-group-btn">
                 <button type="button" class="btn btn-primary" data-toggle="tooltip" title="Adicionar produto à lista" ng-click="addItem(item)" ng-disabled="orderForm.productQuantity.$invalid || orderForm.productId.$invalid || readMode">
@@ -56,7 +56,9 @@
         </div>
     </div>
     
-    <div class="form-group lwa-fade-left" ng-class="{'has-error': orderForm.inputPayment.$invalid || total > entity.payment.quantity}" ng-show="total != 0 && entity.payment.status != 'OK' && entity.payment.status != 'CANCELLED'">
+    <div class="form-group lwa-fade-left" 
+        ng-class="{'has-error': orderForm.inputPayment.$invalid || invalid.paymentQuantity || invalid.exchange }" 
+        ng-hide="total <= 0 || entity.payment.status == 'PENDING'">
         <label for="total" class="col-md-1 col-md-offset-1 control-label">Pagamento</label>
         <div class="col-md-10 input-group">
             <span class="input-group-addon">R$</span>
@@ -75,7 +77,7 @@
         </div>
     </div>
     
-    <div class="form-group lwa-fade-left" ng-show="exchange != 0 && entity.payment.status == 'PENDING'">
+    <div class="form-group lwa-fade-left" ng-hide="exchange <= 0 || invalid.paymentQuantity || entity.payment.status == 'PENDING'">
         <label for="total" class="col-md-1 col-md-offset-1 control-label">Troco</label>
         <div class="col-md-10 input-group">
             <span class="input-group-addon">R$</span>
@@ -90,7 +92,7 @@
             </button>
             <ul class="dropdown-menu" role="menu">
                 <li role="presentation" class="dropdown-header">Pagamento</li>
-                <li><a class="link" ng-click="entity.payment.status = 'OK';" ng-if="entity.status.payment != 'OK'">Confirmado</a></li>
+                <li><a class="link" ng-click="entity.payment.status = 'OK';" ng-if="entity.status.payment != 'OK'">OK</a></li>
                 <li><a class="link" ng-click="entity.payment.status = 'PENDING';" ng-if="entity.status.payment != 'PENDING'">Pendente</a></li>
                 <li><a class="link" ng-click="entity.payment.status = 'CANCELLED';" ng-if="entity.status.payment != 'CANCELLED'">Cancelado</a></li>
             </ul>
@@ -101,8 +103,9 @@
     </div>
 
     <save-changes save-disabled="readMode ||
-                                 orderForm.inputPayment.$invalid ||
-                                 entity.products.length == 0" 
+                                 invalid.orderItems ||
+                                 invalid.paymentQuantity ||
+                                 orderForm.inputPayment.$invalid" 
                   remove-disabled="isEntityNew || readMode" remove="removeOrder(entity)"></save-changes>
 
 </form>

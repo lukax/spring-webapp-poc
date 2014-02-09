@@ -8,8 +8,7 @@ export module controller.stock {
         saveChanges: (stock: domain.Stock) => void;
         removeStock: (stock: domain.Stock) => void;
         fetchProduct: (productId: number) => void;
-        quickSearchProduct: () => void;
-        entityValidation: any;
+        invalid: any;
     }
 
     export class EditStockController extends i0.controller.base.AbstractEditEntityController<domain.Stock> {
@@ -23,7 +22,6 @@ export module controller.stock {
             
             var stockId = this.$scope.navigator.params().stockId;
             var productId = this.$scope.navigator.params().productId;
-
             this.findEntity(stockId || 0, ()=>{
                 if(productId != null) this.fetchProduct(productId);
                 this.populateScope();
@@ -47,28 +45,22 @@ export module controller.stock {
         }
 
         setupValidations(){
-            this.$scope.entityValidation = {};
+            this.$scope.invalid = {};
             this.$scope.$watch("entity.quantity", ()=>{
-                this.$scope.entityValidation.quantity = this.$scope.entity.quantity < this.$scope.entity.minQuantity;
+                this.$scope.invalid.quantity = this.$scope.entity.quantity < this.$scope.entity.minQuantity;
             });
             this.$scope.$watch("entity.minQuantity", ()=>{
-                this.$scope.entityValidation.minQuantity = this.$scope.entity.minQuantity >= this.$scope.entity.maxQuantity;
+                this.$scope.invalid.minQuantity = this.$scope.entity.minQuantity >= this.$scope.entity.maxQuantity;
             });
             this.$scope.$watch("entity.maxQuantity", ()=>{
-                this.$scope.entityValidation.maxQuantity = this.$scope.entity.maxQuantity <= this.$scope.entity.minQuantity;
+                this.$scope.invalid.maxQuantity = this.$scope.entity.maxQuantity <= this.$scope.entity.minQuantity;
             });
-        }
-
-        quickSearchProduct() {
-            var preparedUrl = "/stock/" + (this.$scope.isEntityNew ? "new" : String(this.$scope.entity.id));
-            this.$scope.navigator.navigateTo("/product/list?redirect=" + preparedUrl);
         }
 
         populateScope() {
             this.$scope.saveChanges = (stock) => this.saveChanges(stock);
             this.$scope.removeStock = (stock) => this.removeEntity(stock);
             this.$scope.fetchProduct = (productId) => this.fetchProduct(productId);
-            this.$scope.quickSearchProduct = () => this.quickSearchProduct();
         }
         
     }

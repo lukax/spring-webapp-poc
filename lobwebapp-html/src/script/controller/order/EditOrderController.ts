@@ -11,10 +11,9 @@ export module controller.order {
         saveChanges(order: domain.Order): void;
         addItem(item: domain.OrderItem): void;
         removeItem(item: domain.OrderItem): void;
-        quickSearchProduct(): void;
-        quickSearchCustomer(): void;
         fetchProduct(id: number): void;
         fetchCustomer(id: number): void;
+        invalid: any;
     }
 
     export class EditOrderController extends i0.controller.base.AbstractEditEntityController<domain.Order> {
@@ -35,7 +34,9 @@ export module controller.order {
                 if(customerId != null) this.fetchCustomer(customerId);
                 this.fetchProduct(productId || 0);
                 this.computeTotal();
+                this.watchOrder();
                 this.populateScope(); 
+                this.setupValidation();
             });
         }
 
@@ -60,16 +61,6 @@ export module controller.order {
 
         removeItem(orderItem: domain.OrderItem) {
             this.$scope.entity.items = _.without(this.$scope.entity.items, orderItem);
-        }
-
-        quickSearchCustomer() {
-            var preparedUrl = "/order/" + (this.isEntityNew() ? "new" : String(this.$scope.entity.id));
-            this.$scope.navigator.navigateTo("/customer/list?redirect=" + preparedUrl);
-        }
-
-        quickSearchProduct() {
-            var preparedUrl = "/order/" + (this.isEntityNew() ? "new" : String(this.$scope.entity.id));
-            this.$scope.navigator.navigateTo("/product/list?redirect=" + preparedUrl);
         }
         
         computeTotal() {
@@ -112,23 +103,28 @@ export module controller.order {
         
         watchOrder() {
             this.$scope.$watch("entity.payment.quantity", () => {
-                if (this.$scope.total > 0) {
-                    var sum = this.$scope.entity.payment.quantity - this.$scope.total;
-                    if (sum > 0) this.$scope.exchange = sum;
-                    else this.$scope.exchange = 0;
-                } else {
-                    this.$scope.exchange = 0;
-                }
+                this.$scope.exchange = this.$scope.entity.payment.quantity - this.$scope.total;
+            });
+            this.$scope.$watch("entity.payment.status", () => {
+                if(this.$scope.entity.payment.status == enums.PaymentStatus.PENDING)
+                    this.$scope.entity.payment.quantity = 0;
+            });
+        }
+
+        setupValidation() {
+            this.$scope.invalid = {};
+            this.$scope.$watchCollection("entity.items", ()=>{
+                this.$scope.invalid.orderItems = this.$scope.entity.items.length == 0;
+            });
+            this.$scope.$watch("exchange", () =>{
+                this.$scope.invalid.paymentQuantity = this.$scope.entity.payment.status != enums.PaymentStatus.PENDING && this.$scope.exchange < 0;
             });
         }
 
         populateScope() {
-            this.watchOrder();
             this.$scope.saveChanges = (order) => this.saveChanges(order);
             this.$scope.addItem = (item) => this.addItem(item);
             this.$scope.removeItem = (item) => this.removeItem(item);
-            this.$scope.quickSearchCustomer = () => this.quickSearchCustomer();
-            this.$scope.quickSearchProduct = () => this.quickSearchProduct();
             this.$scope.fetchProduct = (id) => this.fetchProduct(id);
             this.$scope.fetchCustomer = (id) => this.fetchCustomer(id);
         }
