@@ -24,7 +24,7 @@ export module controller.product {
                     public $filter: ng.IFilterService) {
             super($scope, "product", ProductService, AlertService);
 
-            var routeProdId = this.$scope.navigator.params().productId;
+            var routeProdId = this.$scope.navigator.$stateParams.productId;
             this.findEntity(routeProdId || 0, ()=> { this.populateScope(); });
         }
         

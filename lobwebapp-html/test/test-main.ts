@@ -16,8 +16,7 @@ requirejs.config({
         angular: "lib/angular/angular.min",
         angularUiRouter: "lib/angular-ui-router/release/angular-ui-router.min",
         angularMocks: "lib/angular-mocks/angular-mocks",
-        underscore: "lib/underscore/underscore-min",
-        NProgress: "lib/nprogress/nprogress"
+        underscore: "lib/underscore/underscore-min"
     },
     shim: {
         "angular": {
@@ -28,9 +27,6 @@ requirejs.config({
         "angularMocks": ["angular"],
         "underscore": {
             exports: "_"
-        },
-        "NProgress": {
-            exports: "NProgress"
         }
     },
     deps: tests,

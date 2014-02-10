@@ -23,7 +23,7 @@ export module modularity {
                 .config(["$stateProvider", "$urlRouterProvider", this.stateProviderCfg])
                 .config(["$httpProvider", this.intercept401])
 
-                .run(["$rootScope","NavigationService", this.setRootScopeVariables])
+                .run(["$rootScope","Navigator", this.setRootScopeVariables])
                 .run(["$rootScope", "$location", "AuthService", this.blockNotAllowedStates])
 
                 .controller("MainNavbarController", <Function>f.controller.MainNavbarController)
@@ -83,15 +83,15 @@ export module modularity {
             $httpProvider.interceptors.push(logoutUserOn401);
         }
 
-        setRootScopeVariables = ($rootScope: d.controller.base.ViewModel, NavigationService: d.service.contract.NavigationService) => {
-            $rootScope.navigator = NavigationService;
+        setRootScopeVariables = ($rootScope: d.controller.base.ViewModel, Navigator: d.service.contract.Navigator) => {
+            $rootScope.navigator = Navigator;
         }
 
         loadDependencies(deps: Array<string>){
             if(deps.length === 0) return;
             var definition = {
-                resolver: ["$q", "$rootScope", ($q: ng.IQService, $rootScope: ng.IRootScopeService) => {
-                    return (new h.util.DependencyManager($q, $rootScope)).resolve(deps, "lwa.controller");
+                resolver: ["$q", "$rootScope", "Progress", ($q: ng.IQService, $rootScope: ng.IRootScopeService, Progress: d.service.contract.Progress) => {
+                    return (new h.util.DependencyManager($q, $rootScope, Progress)).resolve(deps, "lwa.controller");
                 }]
             }
             return definition;

@@ -31,18 +31,18 @@ export module util{
         }
 
             
-        static start(){
+        start(){
             if(!Progress.alreadyStarted){
                 Progress.alreadyStarted = new Date().getTime();
                 Progress.delayedProgress();
             }
         }
 
-        static set(percent: number){
+        set(percent: number){
             NProgress.set(percent);
         }
 
-        static done(){
+        done(){
             Progress.callDone = true;
         }
     }

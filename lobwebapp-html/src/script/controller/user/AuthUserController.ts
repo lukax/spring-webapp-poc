@@ -15,8 +15,8 @@ export module controller.user {
                     public AuthService: d.service.contract.AuthService,
                     public AlertService: d.service.contract.AlertService) {
 
-            var error = this.$scope.navigator.params().error;
-            var logout = this.$scope.navigator.params().logout;
+            var error = this.$scope.navigator.$stateParams.error;
+            var logout = this.$scope.navigator.$stateParams.logout;
             switch (error) {
                 case "0":
                     this.AlertService.add({ content: "Login ou senha Inválido", type: enums.AlertType.WARNING });
@@ -28,7 +28,7 @@ export module controller.user {
                     break;
                 default:
                     if (this.AuthService.isLoggedIn()) {
-                        this.$scope.navigator.navigateTo("/product/list");
+                        this.$scope.navigator.$location.url("/product/list");
                     }
                     break;
             }
@@ -44,7 +44,7 @@ export module controller.user {
             this.lock();
             this.AuthService.login(this.$scope.user,
                 (successData) => {
-                    this.$scope.navigator.navigateTo("/product/list");
+                    this.$scope.navigator.$location.url("/product/list");
                     this.AlertService.add({ title: "Login", content: "Bem vindo " + successData.name });
                     this.unlock();
                 },

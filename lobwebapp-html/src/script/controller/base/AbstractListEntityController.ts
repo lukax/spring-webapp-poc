@@ -21,32 +21,32 @@ export module controller.base {
                     public contextUrl: string,
                     public redirectParam: string) {
 
-            this.$scope.searchText = (this.$scope.navigator.params().search || "");
+            this.$scope.searchText = (this.$scope.navigator.$stateParams.search || "");
             this.$scope.editEntity = (id: number) => this.editEntity(id);
             this.$scope.listEntity = (page) => this.listEntity(page);
         }
 
         listEntity(pageIndex: number) {
             this.$scope.page = { index: pageIndex, size: 1 };
-            this.$scope.navigator.progress.start();
+            this.$scope.navigator.Progress.start();
                 this.EntityService.list(
                     (successData, successStatus, headers) => {
                         this.$scope.page.size = Number(headers(enums.Headers.PAGE_TOTAL));
                         this.$scope.entities = successData;
-                        this.$scope.navigator.progress.done();
+                        this.$scope.navigator.Progress.done();
                         if (this.redirectString) this.AlertService.add({ title: "Busca Rápida", content: "Clique em um item da lista para voltar para a página anterior", type: enums.AlertType.INFO });
                     },
                     (errorData) => {
                         console.log(errorData);
                         this.AlertService.add({ title: "Não foi possível listar", content: errorData.message, type: enums.AlertType.DANGER });
-                        this.$scope.navigator.progress.done();
+                        this.$scope.navigator.Progress.done();
                     }, { index: pageIndex, size: this.defaultPageSize });
         }
 
         editEntity(id: number) {
-            this.redirectString = this.$scope.navigator.params().redirect;
-            if (this.redirectString) this.$scope.navigator.navigateTo(this.redirectString + "?" + this.redirectParam + "=" + id);
-            else this.$scope.navigator.navigateTo(this.contextUrl + id);
+            this.redirectString = this.$scope.navigator.$stateParams.redirect;
+            if (this.redirectString) this.$scope.navigator.$location.url(this.redirectString + "?" + this.redirectParam + "=" + id);
+            else this.$scope.navigator.$location.url(this.contextUrl + id);
         }
 
     }

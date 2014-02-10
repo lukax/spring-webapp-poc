@@ -1,10 +1,10 @@
 ///<reference path="../../reference.d.ts"/>
 
 module d.service.contract {
-    export interface NavigationService {
-        progress: Progress;
-        navigateTo(url: string): void;
-        params(): any;
+    export interface Navigator {
+        Progress: Progress;
+        $location: ng.ILocationService;
+        $stateParams: any;
     }
 
     export interface Progress {

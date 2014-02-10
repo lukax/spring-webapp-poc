@@ -69,11 +69,11 @@ require.config({
 //};
 
 require(["util/Progress"], (progress: any)=> {
-   progress.util.Progress.start();
+    new progress.util.Progress().start();
 });
 
 require(["angular", "util/Progress", "modularity/AppModule"], (angular: ng.IAngularStatic, progress: any, app: any) => {
     new app.modularity.AppModule().bootstrap(document);
-    progress.util.Progress.done();
+    new progress.util.Progress().done();
 });
 

@@ -10,7 +10,8 @@ export module modularity {
         constructor() {
             //Global usage directives
             angular.module("lwa.directive", 
-                ["ngAnimate", 
+                ["lwa.service",
+                 "ngAnimate", 
                  "ui.bootstrap", 
                  "ui.utils"
                 ]);

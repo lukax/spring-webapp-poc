@@ -1,6 +1,5 @@
 ///<reference path="../reference.d.ts"/>
 
-import i0 = require("./../util/Progress");
 import enums = require("./../util/EnumUtil");
 
 export module directive {
@@ -39,7 +38,7 @@ export module directive {
                 },
                 progressall: (e, data) => {
                     var load = data.loaded / data.total;
-                    i0.util.Progress.set(load);
+                    scope.Progress.set(load);
                     scope.percentage = load * 100;
                 }
             });
@@ -60,7 +59,9 @@ export module directive {
             
         };
 
-        controller = ["AlertService", "$scope", (AlertService, $scope) => {
+        controller = ["AlertService", "Progress", "$scope", (AlertService, Progress, $scope) => {
+            $scope.Progress = Progress;
+
             $scope.uploadFailed = () => {
                 AlertService.add({ title: "Upload falhou", content: "A imagem precisa estar em um formato válido e ser menor que 5 MB", type: enums.AlertType.DANGER });
             }

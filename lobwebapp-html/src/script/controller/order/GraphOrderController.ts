@@ -22,10 +22,10 @@ export module controller.order {
                     public OrderService: d.service.contract.OrderService,
                     public AlertService: d.service.contract.AlertService) {
             
-            this.$scope.navigator.progress.start();  
+            this.$scope.navigator.Progress.start();  
             this.OrderService.list((successData) => {
                 this.buildGraph(successData);
-                this.$scope.navigator.progress.done();
+                this.$scope.navigator.Progress.done();
             }, () => { });
         }
                 

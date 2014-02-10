@@ -16,7 +16,7 @@ export module controller.customer {
                     public AlertService: d.service.contract.AlertService) {
             super($scope, "customer", CustomerService, AlertService);
             
-            var customerId = this.$scope.navigator.params().customerId;
+            var customerId = this.$scope.navigator.$stateParams.customerId;
             this.findEntity(customerId || 0, ()=> {
                 this.populateScope();
             });

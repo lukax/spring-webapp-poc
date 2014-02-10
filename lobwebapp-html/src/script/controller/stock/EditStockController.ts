@@ -20,8 +20,8 @@ export module controller.stock {
                     public AlertService: d.service.contract.AlertService) {
             super($scope, "stock", StockService, AlertService);
             
-            var stockId = this.$scope.navigator.params().stockId;
-            var productId = this.$scope.navigator.params().productId;
+            var stockId = this.$scope.navigator.$stateParams.stockId;
+            var productId = this.$scope.navigator.$stateParams.productId;
             this.findEntity(stockId || 0, ()=>{
                 if(productId != null) this.fetchProduct(productId);
                 this.populateScope();

@@ -29,7 +29,7 @@ export module controller.base{
             this.lock();
             this.EntityService.save(entity,
                 (successData, successStatus, successHeaders) => {
-                    this.$scope.navigator.navigateTo("/" + this.contextUrl + "/" + successHeaders("Entity-Id"));
+                    this.$scope.navigator.$location.url("/" + this.contextUrl + "/" + successHeaders("Entity-Id"));
                 },
                 (errorData) => {
                     console.log(errorData);
@@ -84,17 +84,17 @@ export module controller.base{
         }
 
         newEntity() {
-            this.$scope.navigator.navigateTo("/"+this.contextUrl+"/new");
+            this.$scope.navigator.$location.url("/"+this.contextUrl+"/new");
         }
 
 		lock(){
 			this.$scope.readMode = true;
-		    this.$scope.navigator.progress.start();
+		    this.$scope.navigator.Progress.start();
 		}
 
 		unlock(){
 			this.$scope.readMode = false;
-			this.$scope.navigator.progress.done();
+			this.$scope.navigator.Progress.done();
 		}
 
 		isEntityNew() {

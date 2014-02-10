@@ -2,6 +2,6 @@
 
 module d.controller.base{
     export interface ViewModel extends ng.IScope{
-        navigator: d.service.contract.NavigationService;
+        navigator: d.service.contract.Navigator;
     }
 }

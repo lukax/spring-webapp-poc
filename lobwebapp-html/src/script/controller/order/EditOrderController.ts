@@ -26,9 +26,9 @@ export module controller.order {
                     public OrderService: d.service.contract.OrderService) {
             super($scope, "order", OrderService, AlertService);
             
-            var orderId = this.$scope.navigator.params().orderId;
-            var customerId = this.$scope.navigator.params().customerId;
-            var productId = this.$scope.navigator.params().productId;
+            var orderId = this.$scope.navigator.$stateParams.orderId;
+            var customerId = this.$scope.navigator.$stateParams.customerId;
+            var productId = this.$scope.navigator.$stateParams.productId;
 
             this.findEntity(orderId, () => { 
                 if(customerId != null) this.fetchCustomer(customerId);
