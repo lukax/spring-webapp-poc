@@ -7,12 +7,10 @@
   },
   "devDependencies": {    
     "karma": "~0.10.4",
-    "karma-script-launcher": "~0.1.0",
-    "karma-chrome-launcher": "~0.1.0",
     "karma-phantomjs-launcher": "~0.1.0",
     "karma-jasmine": "~0.1.0",
     "karma-requirejs": "~0.1.0",
-    "grunt": "~0.4.1",
+    "grunt": "~0.4.2",
     "grunt-karma": "~0.6.2",
     "grunt-contrib-copy": "~0.4.1",
     "grunt-contrib-uglify": "~0.2.4",
@@ -22,7 +20,7 @@
     "grunt-contrib-less": "~0.8.1",
     "grunt-connect-proxy": "~0.1.6",
     "grunt-open": "~0.2.0",
-    "grunt-ts": "~1.4.0",
+    "grunt-ts": "~1.4.6",
     "connect-livereload": "~0.2.0",
     "connect-modrewrite": "~0.5.4"
   },

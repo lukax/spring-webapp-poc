@@ -61,7 +61,7 @@ module.exports = function (grunt) {
             options: {
                 port: 9000,
                 // Change this to '0.0.0.0' to access the server from outside.
-                hostname: '0.0.0.0'
+                hostname: 'localhost'
             },
             proxies: [
                 {
@@ -173,7 +173,9 @@ module.exports = function (grunt) {
         },
         uglify: {
             options: {
-                banner: '/*! <%= pkg.name %> v<%= pkg.version %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'//,
+                banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - <%= grunt.template.today("yyyy-mm-dd") %> */\n',
+                compress: true,
+                preserveComments: false
             },
             dist: {
                 files: [{
@@ -186,26 +188,31 @@ module.exports = function (grunt) {
         },
         ts: {
             dev: {
-                src: ['<%= yeoman.app%>/script/**/*.ts'],        // The source typescript files, http://gruntjs.com/configuring-tasks#files
-                //html: [], // The source html files, https://github.com/basarat/grunt-ts#html-2-typescript-support
-                //reference: './test/reference.ts',  // If specified, generate this file that you can use for your reference management
-                //out: 'test/out.js',                // If specified, generate an out.js file which is the merged js file
-                //outDir: 'test/outputdirectory',    // If specified, the generate javascript files are placed here. Only works if out is not specified
-                //watch: '<%= yeoman.app%>/script',   // If specified, watches this directory for changes, and re-runs the current target
+                src: ['<%= yeoman.app%>/script/**/*.ts'],   // The source typescript files, http://gruntjs.com/configuring-tasks#files
+                //html: ["test/work/**/*.tpl.html"],        // The source html files, https://github.com/basarat/grunt-ts#html-2-typescript-support
+                //reference: "./test/reference.ts",         // If specified, generate this file that you can use for your reference management
+                //out: 'test/out.js',                       // If specified, generate an out.js file which is the merged js file
+                //outDir: 'test/outputdirectory',           // If specified, the generate javascript files are placed here. Only works if out is not specified
+                //watch: 'test',                            // If specified, watches this directory for changes, and re-runs the current target
                 options: {
-                    module: 'amd',       // 'amd' (default) | 'commonjs'
+                    module: 'amd',            // 'amd' (default) | 'commonjs'
                     target: 'es5',            // 'es3' (default) | 'es5'
                     sourcemap: true,          // true  (default) | false
                     declaration: false,       // true | false  (default)
-                    comments: false           // true | false (default)
+                    removeComments: false     // true (default) | false
+                }
+            },
+            dist: {
+                src: ['<%= yeoman.app%>/script/**/*.ts'],
+                options: {
+                    target: 'es5',
+                    sourcemap: false
                 }
             },
             test: {
                 src: ['<%= yeoman.test%>/**/*.ts'],
                 options: {
-                    module: 'amd',
-                    target: 'es5',
-                    sourcemap: true
+                    target: 'es5'
                 }
             }
         }
@@ -243,7 +250,7 @@ module.exports = function (grunt) {
         grunt.task.run([
             'clean:dist',
             'less:dist',
-            'ts:dev',
+            'ts:dist',
             'uglify:dist',
             'copy:dist'
         ]);
