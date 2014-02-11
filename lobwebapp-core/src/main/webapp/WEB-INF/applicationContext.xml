@@ -13,7 +13,8 @@
 	<mvc:annotation-driven/>
 	
 	<import resource="classpath*:infrastructureContext.xml" />
-	<import resource="classpath*:persistenceContext.xml" />
+	<import resource="classpath*:persistenceContext-dev.xml" />
+	<import resource="classpath*:persistenceContext-prod.xml" />
 	<import resource="classpath*:securityContext.xml" />
 	<import resource="classpath*:localizationContext.xml" />
 
