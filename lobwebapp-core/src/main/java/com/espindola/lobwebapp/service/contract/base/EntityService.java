@@ -10,7 +10,7 @@ import com.espindola.lobwebapp.domain.base.AbstractEntity;
 import com.espindola.lobwebapp.exception.InvalidArgumentException;
 import com.espindola.lobwebapp.exception.NotFoundException;
 
-//@PreAuthorize("hasRole('ROLE_USER')")
+@PreAuthorize("hasRole('ROLE_USER')")
 public interface EntityService<T extends AbstractEntity> {
 
 	T save(T entity) throws NotFoundException, InvalidArgumentException;
