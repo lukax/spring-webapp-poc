@@ -8,6 +8,10 @@ public enum MessageKey {
 	ALREADYEXISTS_EXCEPTION("com.espindola.lobwebapp.exception.alreadyexistsexception"), 
 	NOTFOUND_EXCEPTION("com.espindola.lobwebapp.exception.notfoundexception"), 
 	INVALIDARGUMENT_EXCEPTION("com.espindola.lobwebapp.exception.invalidargumentexception"),
+	NOTAUTHENTICATED_EXCEPTION("com.espindola.lobwebapp.exception.notauthenticated"),
+	INVALIDJSON_EXCEPTION("com.espindola.lobwebapp.exception.invalidjson"),
+	INVALIDREQUEST_EXCEPTION("com.espindola.lobwebapp.exception.invalidrequest"),
+	METHODNOTSUPPORTED_EXCEPTION("com.espindola.lobwebapp.exception.methodnotsupported"),
 
 	ENTITY("com.espindola.lobwebapp.entity"), 
 	PROPERTY("com.espindola.lobwebapp.property"), 

@@ -27,10 +27,10 @@ public class InvalidArgumentException extends LobWebAppException {
 	}
 
 	@Override
-	public MessageResponse getErrorResponse(MessageSource messageSource,
+	public MessageResponse getMessageResponse(MessageSource messageSource,
 			Locale locale) {
 		ValidationMessageResponse errorResponse = new ValidationMessageResponse();
-		errorResponse.setMessage(super.getErrorResponse(messageSource, locale)
+		errorResponse.setMessage(super.getMessageResponse(messageSource, locale)
 				.getMessage());
 
 		List<ValidationResult> validationResults = new ArrayList<ValidationResult>();

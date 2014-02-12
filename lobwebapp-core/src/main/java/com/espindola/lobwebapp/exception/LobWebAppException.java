@@ -22,7 +22,7 @@ public class LobWebAppException extends RuntimeException {
 		this.setMessageArgs(messageArgs);
 	}
 
-	public MessageResponse getErrorResponse(MessageSource messageSource,
+	public MessageResponse getMessageResponse(MessageSource messageSource,
 			Locale locale) {
 		return new MessageResponse(messageSource.getMessage(this
 				.getMessageKey().getKey(), this.getMessageArgs(), locale));
