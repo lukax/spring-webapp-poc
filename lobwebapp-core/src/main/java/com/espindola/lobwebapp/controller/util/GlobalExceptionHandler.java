@@ -2,9 +2,9 @@ package com.espindola.lobwebapp.controller.util;
 
 import java.util.Locale;
 
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
 import org.hibernate.TypeMismatchException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
@@ -25,21 +25,17 @@ import com.espindola.lobwebapp.exception.NotFoundException;
 // Allows the exception handling to operate on all controllers
 public class GlobalExceptionHandler {
 
-	private Logger logger;
+	private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
 	@Autowired
 	private MessageSource messageSource;
-
-	public GlobalExceptionHandler() {
-		logger = Logger.getLogger(GlobalExceptionHandler.class);
-	}
 
 	@ExceptionHandler({ AlreadyExistsException.class,
 			IllegalArgumentException.class, TypeMismatchException.class })
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ResponseBody
 	public MessageResponse handleBadRequest(Exception ex, Locale locale) {
-		logger.log(Level.DEBUG, ex.getMessage());
+		logger.debug(ex.getMessage());
 		return this.buildResponse(ex, locale);
 	}
 
@@ -48,7 +44,7 @@ public class GlobalExceptionHandler {
 	@ResponseStatus(HttpStatus.NOT_FOUND)
 	@ResponseBody
 	public MessageResponse handleNotFound(Exception ex, Locale locale) {
-		logger.log(Level.DEBUG, ex.getMessage());
+		logger.debug(ex.getMessage());
 		return this.buildResponse(ex, locale);
 	}
 
@@ -57,7 +53,7 @@ public class GlobalExceptionHandler {
 	@ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
 	@ResponseBody
 	public MessageResponse handleEntityInvalid(Exception ex, Locale locale) {
-		logger.log(Level.DEBUG, ex.getMessage());
+		logger.debug(ex.getMessage());
 		return this.buildResponse(ex, locale);
 	}
 
@@ -65,7 +61,7 @@ public class GlobalExceptionHandler {
 	@ResponseStatus(HttpStatus.UNAUTHORIZED)
 	@ResponseBody
 	public MessageResponse handleAuthentication(Exception ex, Locale locale) {
-		logger.log(Level.DEBUG, ex.getMessage());
+		logger.debug(ex.getMessage());
 		return this.buildResponse(ex, locale);
 	}
 
@@ -73,7 +69,7 @@ public class GlobalExceptionHandler {
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 	@ResponseBody
 	public MessageResponse handleOther(Exception ex, Locale locale) {
-		logger.log(Level.ERROR, ex.getMessage());
+		logger.error(ex.getMessage());
 		return this.buildResponse(ex, locale);
 	}
 
