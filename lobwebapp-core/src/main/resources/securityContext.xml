@@ -69,7 +69,7 @@
 	<authentication-manager alias="authenticationManager" xmlns="http://www.springframework.org/schema/security">
 		<authentication-provider>
 			<user-service id="userDetailsService">
-				<user name="user" password="password" authorities="ROLE_USER" />
+				<user name="usuario" password="senha" authorities="ROLE_USER" />
 			</user-service>
 		</authentication-provider>
 	</authentication-manager>
@@ -113,8 +113,6 @@
 	
 	<!-- ClientsDeailsService: Entry Point to clients database (given is in memory implementation) -->
 	<oauth:client-details-service id="clientDetails">
-		<oauth:client client-id="the_client" authorized-grant-types="authorization_code,client_credentials"
-		            authorities="ROLE_USER" scope="read,write,trust" secret="secret" />
 		<oauth:client client-id="lobwebapp-html" authorized-grant-types="password,authorization_code,refresh_token,implicit"
 				secret="supersecretyeah" authorities="ROLE_USER" />
 	</oauth:client-details-service>

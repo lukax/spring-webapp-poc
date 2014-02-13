@@ -18,6 +18,7 @@ public class LobWebAppException extends RuntimeException {
 	}
 
 	protected LobWebAppException(MessageKey messageKey, Object[] messageArgs) {
+		super(messageKey.getKey() + " " + messageArgs.toString());
 		this.setMessageKey(messageKey);
 		this.setMessageArgs(messageArgs);
 	}

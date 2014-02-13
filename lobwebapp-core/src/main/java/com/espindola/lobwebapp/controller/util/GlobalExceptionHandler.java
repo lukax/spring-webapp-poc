@@ -103,7 +103,7 @@ public class GlobalExceptionHandler {
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 	@ResponseBody
 	public MessageResponse handleOther(Exception ex, Locale locale) {
-		logger.error(ex.getMessage());
+		logger.warn(ex.getMessage());
 		return new MessageResponse(ex.getMessage());
 	}
 
