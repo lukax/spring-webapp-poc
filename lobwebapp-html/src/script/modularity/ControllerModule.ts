@@ -36,7 +36,7 @@ export module modularity {
 
             AppRoutes.routes.forEach((x)=> {
                 $stateProvider.state(x.name, {
-                    url: x.url.replace(x.baseUrl,""),
+                    url: x.url,
                     templateUrl: x.templateUrl,
                     controller: x.controller,
                     resolve: this.loadDependencies(x.deps)
@@ -46,7 +46,7 @@ export module modularity {
         };
         
         blockNotAllowedStates = ($rootScope: ng.IRootScopeService, $location: ng.ILocationService, AuthService: d.service.contract.AuthService) => {
-            var allowedStates = ["user.auth"];
+            var allowedStates = ["userAuth"];
             var isAllowedState = (route: string) => {
                 return allowedStates.some((x) => {
                     return x === route;
