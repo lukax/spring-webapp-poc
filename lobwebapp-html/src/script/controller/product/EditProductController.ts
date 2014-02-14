@@ -6,11 +6,10 @@ import enums = require("./../../util/EnumUtil");
 
 export module controller.product {
     export interface EditProductViewModel extends i0.controller.base.EditEntityViewModel<domain.Product> {  
-        profitMargin: number;
+        markUp: number;
         categories: string[];
         saveChanges(product: domain.Product): void;
         removeProduct(product: domain.Product): void;
-        canSave: boolean;
         imageUrl: string;
     }
 
@@ -41,11 +40,15 @@ export module controller.product {
                     this.unlock();
                 });
         }
+
+        computeMarkUp(){
+            if (this.$scope.entity.costPrice != 0)
+                this.$scope.markUp = 100 * (this.$scope.entity.price - this.$scope.entity.costPrice) / this.$scope.entity.costPrice;
+        }
         
         watchProduct() {
             this.$scope.$watch("entity.price + entity.costPrice", () => {
-                if (this.$scope.entity.costPrice != 0)
-                    this.$scope.profitMargin = this.$scope.entity.price / this.$scope.entity.costPrice;
+                this.computeMarkUp();
             });
             this.$scope.$watch("entity.category", (newValue: string, oldValue: string) => {
                 this.$scope.categories = this.$filter("filter")(this.allCategories, this.$scope.entity.category);
