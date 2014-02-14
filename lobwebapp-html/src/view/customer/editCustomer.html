@@ -1,18 +1,18 @@
-<form class="form-horizontal" role="form" name="formCustomer" ng-submit="saveChanges(entity)" novalidate>
+<form class="form-horizontal" role="form" name="customerForm" ng-submit="saveChanges(entity)" novalidate>
     <div class="form-group">
         <label for="inputId" class="col-md-1 control-label">ID</label>
         <div class="col-md-11">
-            <input type="text" class="form-control" id="customerId" name="customerId" readonly ng-model="entity.id">
+            <input type="text" class="form-control" id="inputId" readonly ng-model="entity.id">
         </div>
     </div>
-    <div class="form-group" ng-class="{'has-error': formCustomer.name.$invalid}">
+    <div class="form-group" ng-class="{'has-error': customerForm.inputName.$invalid}">
         <label for="inputName" class="col-md-1 control-label">Nome</label>
         <div class="col-md-11">
-            <input type="text" class="form-control" id="name" name="name" autofocus ng-model="entity.name" required ng-minlength="5" ng-maxlength="100">
+            <input type="text" class="form-control" id="inputName" name="inputName" autofocus ng-model="entity.name" required ng-minlength="5" ng-maxlength="100">
         </div>
     </div>
     <save-changes save-disabled="readMode ||
-                                 formCustomer.name.$invalid ||
-                                 formCustomer.name.$pristine" 
+                                 customerForm.inputName.$invalid ||
+                                 customerForm.inputName.$pristine" 
                   remove-disabled="isEntityNew || readMode" remove="removeCustomer(entity)"></save-changes>
 </form>
