@@ -23,8 +23,11 @@ export module controller.product {
                     public $filter: ng.IFilterService) {
             super($scope, "product", ProductService, AlertService);
 
-            var routeProdId = this.$scope.navigator.$stateParams.productId;
-            this.findEntity(routeProdId || 0, ()=> { this.populateScope(); });
+            var productId = this.$scope.navigator.$stateParams.productId;
+            
+            this.findEntity(productId, ()=> { 
+                this.populateScope(); 
+            });
         }
         
         fetchCategories() {
@@ -45,21 +48,25 @@ export module controller.product {
             if (this.$scope.entity.costPrice != 0)
                 this.$scope.markUp = 100 * (this.$scope.entity.price - this.$scope.entity.costPrice) / this.$scope.entity.costPrice;
         }
+
+        filterCategories(){
+            this.$scope.categories = this.$filter("filter")(this.allCategories, this.$scope.entity.category);
+        }
+
+        setImageUrl(){
+            this.$scope.imageUrl = "/api/product/" + this.$scope.entity.id + "/image";
+        }
         
-        watchProduct() {
+        populateScope() {
             this.$scope.$watch("entity.price + entity.costPrice", () => {
                 this.computeMarkUp();
             });
-            this.$scope.$watch("entity.category", (newValue: string, oldValue: string) => {
-                this.$scope.categories = this.$filter("filter")(this.allCategories, this.$scope.entity.category);
+            this.$scope.$watch("entity.category", () => {
+                this.filterCategories();
             });
-            this.$scope.$watch("entity.id", (newValue: number, oldValue: number) => {
-                this.$scope.imageUrl = "/api/product/"+newValue+"/image";
+            this.$scope.$watch("entity.id", () => {
+                this.setImageUrl();
             });
-        }
-
-        populateScope() {
-            this.watchProduct();
             this.fetchCategories();
             this.$scope.saveChanges = (entity) => this.saveChanges(entity);
             this.$scope.removeProduct = (entity) => this.removeEntity(entity);

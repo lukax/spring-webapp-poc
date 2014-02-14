@@ -17,7 +17,8 @@ export module controller.customer {
             super($scope, "customer", CustomerService, AlertService);
             
             var customerId = this.$scope.navigator.$stateParams.customerId;
-            this.findEntity(customerId || 0, ()=> {
+
+            this.findEntity(customerId, ()=> {
                 this.populateScope();
             });
         }

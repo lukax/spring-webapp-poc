@@ -22,7 +22,8 @@ export module controller.stock {
             
             var stockId = this.$scope.navigator.$stateParams.stockId;
             var productId = this.$scope.navigator.$stateParams.productId;
-            this.findEntity(stockId || 0, ()=>{
+
+            this.findEntity(stockId, ()=>{
                 if(productId != null) this.fetchProduct(productId);
                 this.populateScope();
                 this.setupValidations();

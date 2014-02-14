@@ -33,7 +33,7 @@ export module controller.base{
                 },
                 (errorData) => {
                     console.log(errorData);
-                    this.AlertService.add({ content: errorData.message, title: "Item não pôde ser salvado", type: enums.AlertType.DANGER });
+                    this.AlertService.add({ content: errorData.message, title: "Item não pôde ser salvo", type: enums.AlertType.DANGER });
                     this.unlock();
                 });
         }

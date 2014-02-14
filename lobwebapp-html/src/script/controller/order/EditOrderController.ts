@@ -32,11 +32,10 @@ export module controller.order {
 
             this.findEntity(orderId, () => { 
                 if(customerId != null) this.fetchCustomer(customerId);
-                this.fetchProduct(productId || 0);
+                if(productId != null) this.fetchProduct(productId);
                 this.computeTotal();
-                this.watchOrder();
                 this.populateScope(); 
-                this.setupValidation();
+                this.setupValidations();
             });
         }
 
@@ -71,6 +70,10 @@ export module controller.order {
             this.$scope.total = sum;
         }
 
+        computeExchange(){
+            this.$scope.exchange = this.$scope.entity.payment.quantity - this.$scope.total;
+        }
+
         fetchCustomer(id: number) {
             this.lock();
             this.CustomerService.find(id,
@@ -101,17 +104,7 @@ export module controller.order {
                 });
         }
         
-        watchOrder() {
-            this.$scope.$watch("entity.payment.quantity", () => {
-                this.$scope.exchange = this.$scope.entity.payment.quantity - this.$scope.total;
-            });
-            this.$scope.$watch("entity.payment.status", () => {
-                if(this.$scope.entity.payment.status == enums.PaymentStatus.PENDING)
-                    this.$scope.entity.payment.quantity = 0;
-            });
-        }
-
-        setupValidation() {
+        setupValidations() {
             this.$scope.invalid = {};
             this.$scope.$watchCollection("entity.items", ()=>{
                 this.$scope.invalid.orderItems = this.$scope.entity.items.length == 0;
@@ -122,6 +115,13 @@ export module controller.order {
         }
 
         populateScope() {
+            this.$scope.$watch("entity.payment.quantity", () => {
+                this.computeExchange();
+            });
+            this.$scope.$watch("entity.payment.status", () => {
+                if(this.$scope.entity.payment.status == enums.PaymentStatus.PENDING)
+                    this.$scope.entity.payment.quantity = 0;
+            });
             this.$scope.saveChanges = (order) => this.saveChanges(order);
             this.$scope.addItem = (item) => this.addItem(item);
             this.$scope.removeItem = (item) => this.removeItem(item);
