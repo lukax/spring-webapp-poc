@@ -33,7 +33,6 @@ export module controller.order {
             this.findEntity(orderId, () => { 
                 if(customerId != null) this.fetchCustomer(customerId);
                 if(productId != null) this.fetchProduct(productId);
-                this.computeTotal();
                 this.populateScope(); 
                 this.setupValidations();
             });
@@ -51,7 +50,7 @@ export module controller.order {
                 this.$scope.entity.items.push(this.$scope.item);        
             }
             this.emptyItem();
-            this.computeTotal();
+            this.$scope.total = this.OrderService.getTotal(this.$scope.entity);
         }
         
         emptyItem(){
@@ -60,18 +59,6 @@ export module controller.order {
 
         removeItem(orderItem: domain.OrderItem) {
             this.$scope.entity.items = _.without(this.$scope.entity.items, orderItem);
-        }
-        
-        computeTotal() {
-            var sum = 0;
-            this.$scope.entity.items.forEach((x) => {
-                sum += x.quantity * x.product.price;
-            });
-            this.$scope.total = sum;
-        }
-
-        computeExchange(){
-            this.$scope.exchange = this.$scope.entity.payment.quantity - this.$scope.total;
         }
 
         fetchCustomer(id: number) {
@@ -115,8 +102,9 @@ export module controller.order {
         }
 
         populateScope() {
+            this.$scope.total = 0;
             this.$scope.$watch("entity.payment.quantity", () => {
-                this.computeExchange();
+                this.$scope.exchange = this.OrderService.getExchange(this.$scope.entity);
             });
             this.$scope.$watch("entity.payment.status", () => {
                 if(this.$scope.entity.payment.status == enums.PaymentStatus.PENDING)

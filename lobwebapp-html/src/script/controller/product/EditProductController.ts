@@ -44,28 +44,19 @@ export module controller.product {
                 });
         }
 
-        computeMarkUp(){
-            if (this.$scope.entity.costPrice != 0)
-                this.$scope.markUp = 100 * (this.$scope.entity.price - this.$scope.entity.costPrice) / this.$scope.entity.costPrice;
-        }
-
         filterCategories(){
             this.$scope.categories = this.$filter("filter")(this.allCategories, this.$scope.entity.category);
         }
-
-        setImageUrl(){
-            this.$scope.imageUrl = "/api/product/" + this.$scope.entity.id + "/image";
-        }
         
         populateScope() {
-            this.$scope.$watch("entity.price + entity.costPrice", () => {
-                this.computeMarkUp();
-            });
             this.$scope.$watch("entity.category", () => {
                 this.filterCategories();
             });
+            this.$scope.$watch("entity.price + entity.costPrice", () => {
+                this.$scope.markUp = 100 * this.ProductService.getMarkUp(this.$scope.entity);
+            });
             this.$scope.$watch("entity.id", () => {
-                this.setImageUrl();
+                this.$scope.imageUrl = this.ProductService.getImageUrl(this.$scope.entity.id);
             });
             this.fetchCategories();
             this.$scope.saveChanges = (entity) => this.saveChanges(entity);
