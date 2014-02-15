@@ -48,8 +48,8 @@
  
  	<!-- ClientsDetailsService: Entry Point to clients database (given is in memory implementation) -->
 	<oauth:client-details-service id="clientDetails">
-		<oauth:client client-id="lobwebapp-html" authorized-grant-types="password,authorization_code,refresh_token,implicit"
-				secret="supersecretyeah" authorities="ROLE_USER" />
+		<oauth:client client-id="da39a3ee5e6b4b0d3255bfef95601890afd80709" authorized-grant-types="password,refresh_token"
+				authorities="ROLE_USER" />
 	</oauth:client-details-service>
 	
 	<!-- Used to create token and and everything about them except for their persistence that is responsibility of TokenStore (Given here is a default implementation) -->
@@ -77,7 +77,7 @@
 		<property name="authenticationManager" ref="clientAuthenticationManager" />
 	</bean>
 
-	<bean id="accessDecisionManager" class="org.springframework.security.access.vote.UnanimousBased" xmlns="http://www.springframework.org/schema/beans">
+	<bean id="accessDecisionManager" class="org.springframework.security.access.vote.UnanimousBased">
 		<constructor-arg>
 			<list>
 				<bean class="org.springframework.security.oauth2.provider.vote.ScopeVoter" />
@@ -108,10 +108,10 @@
 	<!-- authorization-server aka AuthorizationServerTokenServices is an interface that defines everything necessary for token management -->
 	<oauth:authorization-server client-details-service-ref="clientDetails" token-services-ref="tokenServices" 
 		user-approval-handler-ref="userApprovalHandler">
-		<oauth:authorization-code />
-		<oauth:implicit />
+		<oauth:authorization-code disabled="true" />
+		<oauth:implicit disabled="true"/>
 		<oauth:refresh-token />
-		<oauth:client-credentials />
+		<oauth:client-credentials disabled="true"/>
 		<oauth:password />
 	</oauth:authorization-server>
 

@@ -4,8 +4,7 @@ import a = require("./UserServiceImpl");
 export module service.impl {
     export class AuthServiceImpl implements d.service.contract.AuthService {
         private defaultUser: domain.User = { id: 1, name: "Usuário", isLogged: true, username: "user", password: "", roles: ["ROLE_USER"] };
-        private c_id = "lobwebapp-html";
-        private c_passwd = "supersecretyeah";
+        private client_id = "da39a3ee5e6b4b0d3255bfef95601890afd80709";
 
         static $inject = ["$http", "$rootScope", "$window"];
         constructor(public $http: ng.IHttpService, 
@@ -18,8 +17,7 @@ export module service.impl {
             successCallback: (data: domain.User, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
             errorCallback: (error: domain.util.MessageResponse, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
                 var param = "grant_type=password" + 
-                            "&client_id=" + this.c_id + 
-                            "&client_secret=" + this.c_passwd + 
+                            "&client_id=" + this.client_id +  
                             "&username=" + user.username + 
                             "&password=" + user.password;
                 this.$http.post("/api/oauth/token", param, {headers: {"Content-Type": "application/x-www-form-urlencoded"}})
