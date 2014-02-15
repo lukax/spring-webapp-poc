@@ -1,16 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans" 
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:oauth="http://www.springframework.org/schema/security/oauth2" 
 	xmlns:sec="http://www.springframework.org/schema/security"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
-	http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
-	http://www.springframework.org/schema/security
-	http://www.springframework.org/schema/security/spring-security-3.1.xsd
-	http://www.springframework.org/schema/security/oauth2 
-	http://www.springframework.org/schema/security/spring-security-oauth2-1.0.xsd
-	http://www.springframework.org/schema/context 
-	http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+						http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+						http://www.springframework.org/schema/security
+						http://www.springframework.org/schema/security/spring-security-3.1.xsd
+						http://www.springframework.org/schema/security/oauth2 
+						http://www.springframework.org/schema/security/spring-security-oauth2-1.0.xsd">
 	
 	<sec:global-method-security pre-post-annotations="enabled">
 		<!--you could also wire in the expression handler up at the layer of the http filters. See https://jira.springsource.org/browse/SEC-1452 -->
@@ -32,6 +30,7 @@
 	<sec:http pattern="/**" create-session="never" entry-point-ref="oauthAuthenticationEntryPoint" 
 			access-decision-manager-ref="accessDecisionManager">
 		<sec:anonymous enabled="false" />
+		<sec:intercept-url pattern="/v1/**" access="ROLE_USER"/>
 		<sec:custom-filter ref="resourceServerFilter" before="PRE_AUTH_FILTER" />
 		<sec:access-denied-handler ref="oauthAccessDeniedHandler" />
 	</sec:http>

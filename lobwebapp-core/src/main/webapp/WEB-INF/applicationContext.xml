@@ -10,12 +10,6 @@
        					http://www.springframework.org/schema/context 
        					http://www.springframework.org/schema/context/spring-context-3.1.xsd">
 
-	<mvc:annotation-driven/>
-	
-	<import resource="classpath*:infrastructureContext.xml" />
-	<import resource="classpath*:persistenceContext-dev.xml" />
-	<import resource="classpath*:persistenceContext-prod.xml" />
-	<import resource="classpath*:securityContext.xml" />
 	<import resource="classpath*:localizationContext.xml" />
 
 </beans>

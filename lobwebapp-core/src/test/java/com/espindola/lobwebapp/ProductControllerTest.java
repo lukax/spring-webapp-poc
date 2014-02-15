@@ -29,7 +29,8 @@ import com.espindola.lobwebapp.domain.Product;
 @ContextConfiguration(locations = { "classpath:testContext.xml" })
 @WebAppConfiguration
 public class ProductControllerTest {
-
+	private final String contextUrl = "/product/";
+	
 	@Autowired
 	private WebApplicationContext webApplicationContext;
 	private MockMvc mockMvc;
@@ -43,7 +44,7 @@ public class ProductControllerTest {
 	@Test
 	@Transactional
 	public void findAll() throws Exception {
-		mockMvc.perform(get("/product").accept(TestUtil.APPLICATION_JSON_UTF8))
+		mockMvc.perform(get(contextUrl).accept(TestUtil.APPLICATION_JSON_UTF8))
 				.andExpect(status().isOk())
 				.andExpect(
 						content().contentType(TestUtil.APPLICATION_JSON_UTF8))
@@ -65,13 +66,13 @@ public class ProductControllerTest {
 		p.setNcm("1234.56.78");
 
 		mockMvc.perform(
-				post("/product").accept(TestUtil.APPLICATION_JSON_UTF8)
+				post(contextUrl).accept(TestUtil.APPLICATION_JSON_UTF8)
 						.contentType(TestUtil.APPLICATION_JSON_UTF8)
 						.content(TestUtil.convertObjectToJsonBytes(p)))
 				.andExpect(status().isCreated());
 
 		mockMvc.perform(
-				get("/product/1").accept(TestUtil.APPLICATION_JSON_UTF8))
+				get(contextUrl + "1").accept(TestUtil.APPLICATION_JSON_UTF8))
 				.andExpect(status().isOk())
 				.andExpect(
 						content().contentType(TestUtil.APPLICATION_JSON_UTF8))

@@ -4,7 +4,7 @@ export module service.impl.base {
     export class EntityServiceImpl<T extends domain.base.AbstractEntity> implements d.service.contract.base.EntityService<T> {
 
         private hasDefault;
-        private rootUrl = "/api/";
+        private rootUrl = "/api/v1/";
         public url: string;
 
         constructor(contextUrl: string, public $http: ng.IHttpService, hasDefault?: d.service.contract.base.HasDefaultValue<T>) {
