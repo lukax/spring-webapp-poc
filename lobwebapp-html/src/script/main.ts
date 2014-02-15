@@ -9,7 +9,7 @@ require.config({
     waitSeconds: 10,
     paths: {
         text: "../lib/requirejs-text/text",
-        jquery: "../lib/jquery/jquery.min",
+        jquery: "../lib/jquery/dist/jquery.min",
         jqueryMaskedInput: "../lib/jquery.maskedinput/jquery.maskedinput.min",
         bootstrap: "../lib/bootstrap/dist/js/bootstrap.min",
         angular: "../lib/angular/angular.min",
