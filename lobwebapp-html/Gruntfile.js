@@ -1,11 +1,14 @@
 'use strict';
 var LIVERELOAD_PORT = 35729;
 var lrSnippet = require('connect-livereload')({ port: LIVERELOAD_PORT });
-var proxySnippet = require('grunt-connect-proxy/lib/utils').proxyRequest;
 var mountFolder = function (connect, dir) {
     return connect.static(require('path').resolve(dir));
 };
-
+var modRewrite = require('connect-modrewrite');
+var rewriteRules = [
+    '^/api/(.*)$ http://localhost:8080/lobwebapp-core/$1 [P]', /* API Proxy */
+    '!\\.html|\\.js|\\.css|\\.eot|\\.jpeg|\\.svg|\\.ttf|\\.woff|\\.ico|\\.gif|\\.otf|\\.png$ /index.html [L]' /* HTML5 Redirect */
+];
 // # Globbing
 // for performance reasons we're only matching one level down:
 // 'test/spec/{,*/}*.js'
@@ -16,13 +19,8 @@ module.exports = function (grunt) {
     var yeomanConfig = {
         app: 'src',
         dist: 'dist',
-        test: 'test',
-        tmp: '.tmp'
+        test: 'test'
     };
-
-    try {
-        yeomanConfig.app = require('./bower.json').appPath || yeomanConfig.app;
-    } catch (e) {}
 
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
@@ -33,10 +31,10 @@ module.exports = function (grunt) {
                     livereload: LIVERELOAD_PORT
                 },
                 files: [
-                    '<%= yeoman.app %>/**/*.html',
-                    '{<%= yeoman.tmp %>,<%= yeoman.app %>}/css/**/*.css',
-                    '{<%= yeoman.tmp %>,<%= yeoman.app %>}/script/**/*.js',
-                    '<%= yeoman.app %>/img/**/*.{png,jpg,jpeg,gif,webp,svg}'
+                '<%= yeoman.app %>/**/*.html',
+                '<%= yeoman.app %>/css/**/*.css',
+                '<%= yeoman.app %>/script/**/*.js',
+                '<%= yeoman.app %>/img/**/*.{png,jpg,jpeg,gif,webp,svg}'
                 ]
             },
             less:{
@@ -63,39 +61,13 @@ module.exports = function (grunt) {
                 // Change this to '0.0.0.0' to access the server from outside.
                 hostname: 'localhost'
             },
-            proxies: [
-                {
-                    context: '/api',
-                    host: 'localhost',
-                    port: 8080,
-                    https: false,
-                    changeOrigin: false,
-                    xforward: false,
-                    rewrite: {                        
-                        '^/api': '/lobwebapp-core'
-                    }
-                }
-            ],
             livereload: {
                 options: {
                     middleware: function (connect) {
                         return [
-                            // HTML5 SUPPORT
-                            // modRewrite(['!\\.html|\\.js|\\.css|\\.eot|\\.jpeg|\\.svg|\\.ttf|\\.woff|\\.ico|\\.gif|\\.otf|\\.png$ /index.html [L]']),
+                            modRewrite(rewriteRules),
                             lrSnippet,
-                            proxySnippet,
-                            mountFolder(connect, yeomanConfig.tmp),
                             mountFolder(connect, yeomanConfig.app)
-                        ];
-                    }
-                }
-            },
-            test: {
-                options: {
-                    middleware: function (connect) {
-                        return [
-                            mountFolder(connect, yeomanConfig.tmp),
-                            mountFolder(connect, yeomanConfig.test)
                         ];
                     }
                 }
@@ -104,8 +76,17 @@ module.exports = function (grunt) {
                 options: {
                     middleware: function (connect) {
                         return [
-                            proxySnippet,
+                            modRewrite(rewriteRules),
                             mountFolder(connect, yeomanConfig.dist)
+                        ];
+                    }
+                }
+            },
+            test: {
+                options: {
+                    middleware: function (connect) {
+                        return [
+                            mountFolder(connect, yeomanConfig.test)
                         ];
                     }
                 }
@@ -120,14 +101,9 @@ module.exports = function (grunt) {
             dist: {
                 files: [{
                     dot: true,
-                    src: [
-                        '<%= yeoman.tmp %>',
-                        '<%= yeoman.dist %>/*',
-                        '!<%= yeoman.dist %>/.git*'
-                    ]
+                    src: ['<%= yeoman.dist %>/*']
                 }]
-            },
-            server: '<%= yeoman.tmp %>'
+            }
         },
         copy: {
             dist: {
@@ -137,12 +113,12 @@ module.exports = function (grunt) {
                     cwd: '<%= yeoman.app %>',
                     dest: '<%= yeoman.dist %>',
                     src: [
-                        '*.{ico,png,txt,html}',
-                        '.htaccess',
-                        'lib/**/*',
-                        'img/**/*.{gif,webp,png,ico}',
-                        'template/**/*.html',
-                        'view/**/*.html'
+                    '*.{ico,png,txt,html}',
+                    '.htaccess',
+                    'lib/**/*',
+                    'img/**/*.{gif,webp,png,ico}',
+                    'template/**/*.html',
+                    'view/**/*.html'
                     ]
                 }]
             }
@@ -188,18 +164,11 @@ module.exports = function (grunt) {
         },
         ts: {
             dev: {
-                src: ['<%= yeoman.app%>/script/**/*.ts'],   // The source typescript files, http://gruntjs.com/configuring-tasks#files
-                //html: ["test/work/**/*.tpl.html"],        // The source html files, https://github.com/basarat/grunt-ts#html-2-typescript-support
-                //reference: "./test/reference.ts",         // If specified, generate this file that you can use for your reference management
-                //out: 'test/out.js',                       // If specified, generate an out.js file which is the merged js file
-                //outDir: 'test/outputdirectory',           // If specified, the generate javascript files are placed here. Only works if out is not specified
-                //watch: 'test',                            // If specified, watches this directory for changes, and re-runs the current target
+                src: ['<%= yeoman.app%>/script/**/*.ts'],
                 options: {
-                    module: 'amd',            // 'amd' (default) | 'commonjs'
-                    target: 'es5',            // 'es3' (default) | 'es5'
-                    sourcemap: true,          // true  (default) | false
-                    declaration: false,       // true | false  (default)
-                    removeComments: false     // true (default) | false
+                    target: 'es5',
+                    declaration: false,
+                    removeComments: false
                 }
             },
             dist: {
@@ -210,7 +179,7 @@ module.exports = function (grunt) {
                 }
             },
             test: {
-                src: ['<%= yeoman.test%>/**/*.ts'],
+                src: ['<%= yeoman.app%>/script/**/*.ts', '<%= yeoman.test%>/**/*.ts'],
                 options: {
                     target: 'es5'
                 }
@@ -221,17 +190,15 @@ module.exports = function (grunt) {
 
     grunt.registerTask('server', function (target) {
         if (target === 'dist') {
-            return grunt.task.run(['build', 'configureProxies', 'open', 'connect:dist:keepalive']);
+            return grunt.task.run(['build', 'open', 'connect:dist:keepalive']);
         }
         grunt.task.run([
-            'clean:server',
             'less:dev',
             'ts:dev',
-            'configureProxies',
             'connect:livereload',
             'open',
             'watch'
-        ]);
+            ]);
     });
 
     grunt.registerTask('test', function (target) {
@@ -239,29 +206,26 @@ module.exports = function (grunt) {
             return grunt.task.run('watch');
         }
         grunt.task.run([
-            'clean:server',
-            'ts:dev',
             'ts:test',
             'karma:unit'
-        ]);
+            ]);
     });
 
     grunt.registerTask('build', function (target) {
         grunt.task.run([
             'clean:dist',
+            'copy:dist',
             'less:dist',
             'ts:dist',
-            'uglify:dist',
-            'copy:dist'
-        ]);
+            'uglify:dist'
+            ]);
     });
 
     grunt.registerTask('default', [
         'build'
-    ]);
-    
+        ]);
+
     grunt.loadNpmTasks("grunt-karma");
-    grunt.loadNpmTasks("grunt-connect-proxy");
     grunt.loadNpmTasks("grunt-contrib-copy");
     grunt.loadNpmTasks("grunt-contrib-uglify");
     grunt.loadNpmTasks("grunt-contrib-connect");

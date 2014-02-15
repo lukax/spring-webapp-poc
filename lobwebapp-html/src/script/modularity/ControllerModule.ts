@@ -22,6 +22,7 @@ export module modularity {
                 }])
                 .config(["$stateProvider", "$urlRouterProvider", this.stateProviderCfg])
                 .config(["$httpProvider", this.intercept401])
+                .config(["$locationProvider", this.html5Cfg])
 
                 .run(["$rootScope","Navigator", this.setRootScopeVariables])
                 .run(["$rootScope", "$location", "AuthService", this.blockNotAllowedStates])
@@ -43,6 +44,10 @@ export module modularity {
                 });
             });
 
+        };
+
+        html5Cfg = ($locationProvider: ng.ILocationProvider) => {
+            $locationProvider.html5Mode(true);
         };
         
         blockNotAllowedStates = ($rootScope: ng.IRootScopeService, $location: ng.ILocationService, AuthService: d.service.contract.AuthService) => {

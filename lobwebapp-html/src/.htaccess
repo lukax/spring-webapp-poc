@@ -260,13 +260,14 @@ AddDefaultCharset utf-8
 # ANGULARJS HTML5 REWRITE
 #-------------------------------------------------------------------------------
 
-#<ifModule mod_rewrite.c>
-#    RewriteCond %{REQUEST_FILENAME} !-f
-#    RewriteCond %{REQUEST_FILENAME} !-d
-#    RewriteCond %{REQUEST_URI} !index
-#    RewriteCond %{REQUEST_URI} !.*\.(css¦js|html|png) #Add extra extensions needed.
-#    RewriteRule (.*) index.html [L]
-#</ifModule>
+<ifModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_URI} !index
+    RewriteCond %{REQUEST_URI} !.*\.(css¦js|html|png|eot|jpeg|svg|ttf|woff|ico|gif|otf) #Add extra extensions needed.
+    RewriteRule (.*) index.html [L]
+</ifModule>
 
 #-------------------------------------------------------------------------------
 # API SERVER REWRITE
