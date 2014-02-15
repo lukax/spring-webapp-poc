@@ -64,9 +64,9 @@ require.config({
     }
 });
 
-//require.onError = (err: RequireError) => {
-//        window.location.replace("500.html?message=" + err.requireType + " | " + err.requireModules + " | " + err.originalError);
-//};
+require.onError = (err: RequireError) => {
+        window.location.replace("500.html?message=" + err.requireType + " | " + err.requireModules + " | " + err.originalError);
+};
 
 require(["util/Progress"], (progress: any)=> {
     new progress.util.Progress().start();
