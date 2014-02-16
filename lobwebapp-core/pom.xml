@@ -133,6 +133,7 @@
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-entitymanager</artifactId>
 			<version>${hibernate.version}</version>
+			<scope>runtime</scope>
 		</dependency>
 		<!-- BoneCP -->
 		<dependency>
@@ -140,17 +141,18 @@
 			<artifactId>bonecp</artifactId>
 			<version>0.8.0.RELEASE</version>
 		</dependency>
-		<!-- MySql -->
+		<!-- DBs -->
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<version>5.1.6</version>
+			<scope>runtime</scope>
 		</dependency>
-		<!-- HSQLDB -->
 		<dependency>
 			<groupId>org.hsqldb</groupId>
 			<artifactId>hsqldb</artifactId>
 			<version>2.3.1</version>
+			<scope>runtime</scope>
 		</dependency>
 		<!-- File Upload -->
 		<dependency>

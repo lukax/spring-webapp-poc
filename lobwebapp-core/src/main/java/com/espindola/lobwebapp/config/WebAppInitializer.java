@@ -7,21 +7,22 @@ import javax.servlet.ServletRegistration;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
-import org.springframework.web.context.support.XmlWebApplicationContext;
 import org.springframework.web.filter.DelegatingFilterProxy;
 import org.springframework.web.servlet.DispatcherServlet;
+
+import com.espindola.lobwebapp.config.context.ApplicationContextConfig;
 
 public class WebAppInitializer implements WebApplicationInitializer {
 
 	@Override
 	public void onStartup(ServletContext servletContext)
 			throws ServletException {
-		XmlWebApplicationContext rootContext = new XmlWebApplicationContext();
-		rootContext.setConfigLocation("classpath*:applicationContext.xml");
+		AnnotationConfigWebApplicationContext rootContext = new AnnotationConfigWebApplicationContext();
+		rootContext.register(ApplicationContextConfig.class);
 		servletContext.addListener(new ContextLoaderListener(rootContext));
-
+		
 		//Default Profile is production
-		servletContext.setAttribute("spring.profiles.default", "prod");
+		servletContext.setInitParameter("spring.profiles.default", "prod");
 
 		registerDefaultServlet(servletContext);
 		registerRestv1Servlet(servletContext);
