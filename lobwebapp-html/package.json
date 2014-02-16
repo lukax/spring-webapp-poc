@@ -2,7 +2,7 @@
   "name": "lobwebapp-html",
   "version": "0.2.0",
   "description": "Line of Business Web application Front End, based on AngularJS",
-  "dependencies": {   
+  "dependencies": {
     "bower": "~1.2.8"
   },
   "devDependencies": {
@@ -27,6 +27,6 @@
     "node": ">=0.8.0"
   },
   "scripts": {
-    "postinstall": "./node_modules/bower/bin/bower install"
+    "postinstall": "./node_modules/bower/bin/bower install; while [ $? -ne 0 ]; do ./node_modules/bower/bin/bower install; done"
   }
 }
