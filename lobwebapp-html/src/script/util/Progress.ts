@@ -5,37 +5,19 @@ import NProgress = require("NProgress");
 
 export module util{
     export class Progress implements d.service.contract.Progress {
+        static dontStart: boolean;
 
-        static firstStart: boolean = true;
-        static alreadyStarted: any = false;
-        static callDone: any = false;
-
-        static delayedProgress(){
-            if(Progress.firstStart) { 
-                NProgress.start(); 
-                Progress.firstStart = false;
-            }
-            else if(Progress.alreadyStarted && ((new Date().getTime() - Progress.alreadyStarted) > 300)) {
-                NProgress.start();
-                
-                if(Progress.callDone){
-                    Progress.callDone = false;
-                    NProgress.done();
-                    return;
-                }
-            }
-
-            setTimeout(() => {
-                Progress.delayedProgress();
-            }, 100);
+        constructor(){
+            NProgress.configure({ trickleRate: 0.01, trickleSpeed: 500 });
+            NProgress.configure({ showSpinner: false });
         }
-
-            
+ 
         start(){
-            if(!Progress.alreadyStarted){
-                Progress.alreadyStarted = new Date().getTime();
-                Progress.delayedProgress();
-            }
+            Progress.dontStart = false; //start fresh
+            setTimeout(() => { //if nothing impedes .5s from now start the progress
+                if(!Progress.dontStart)
+                    NProgress.start();
+            }, 300);
         }
 
         set(percent: number){
@@ -43,7 +25,9 @@ export module util{
         }
 
         done(){
-            Progress.callDone = true;
+            Progress.dontStart = true; //finished before time, impede the start of a already running progress
+            NProgress.done();
         }
+
     }
 }
