@@ -3,7 +3,6 @@
   "version": "0.2.0",
   "description": "Line of Business Web application Front End, based on AngularJS",
   "dependencies": {
-    "bower": "~1.2.8"
   },
   "devDependencies": {
     "karma": "~0.10.4",
@@ -25,8 +24,5 @@
   },
   "engines": {
     "node": ">=0.8.0"
-  },
-  "scripts": {
-    "postinstall": "./node_modules/bower/bin/bower install; while [ $? -ne 0 ]; do ./node_modules/bower/bin/bower install; done"
   }
 }

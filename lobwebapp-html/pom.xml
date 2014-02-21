@@ -17,8 +17,8 @@
 				<version>1.2.1</version>
 				<executions>
 					<execution>
-						<id>get-dependencies</id>
-						<phase>initialize</phase>
+						<id>process-npm-dependencies</id>
+						<phase>process-resources</phase>
 						<goals>
 							<goal>exec</goal>
 						</goals>
@@ -26,6 +26,19 @@
 							<executable>npm</executable>
 							<arguments>
 								<argument>install</argument>
+							</arguments>
+						</configuration>
+					</execution>
+					<execution>
+						<id>process-bower-dependencies</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<configuration>
+							<executable>sh</executable>
+							<arguments>
+								<argument>bower-install.sh</argument>
 							</arguments>
 						</configuration>
 					</execution>
