@@ -57,12 +57,7 @@ export module service.impl {
         }
 
         getUser(): domain.User {
-            var retrievedUser = null;
-            try {
-                retrievedUser = angular.fromJson((<any>this.$window.localStorage).AUTHSERVICE_USER);
-            }
-            catch (Exception) { 
-            }
+            var retrievedUser = angular.fromJson((<any>this.$window.localStorage).AUTHSERVICE_USER) || { id: 0, username: "", password: "", roles: [], name: "" };
             return retrievedUser;
         }
 
