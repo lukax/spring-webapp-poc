@@ -7,11 +7,11 @@
 	</appender>
 
 	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<file>logs/lobwebapp-core.log.txt</file>
+		<file>logs/lobwebapp-core.log</file>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<fileNamePattern>logs/lobwebapp-core.log-%d{yyyy-MM-dd}.%i.txt</fileNamePattern>
+			<fileNamePattern>logs/lobwebapp-core-%d{yyyy-MM-dd}.log</fileNamePattern>
 			<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-				<maxFileSize>10MB</maxFileSize>
+				<maxFileSize>20MB</maxFileSize>
 			</timeBasedFileNamingAndTriggeringPolicy>
 		</rollingPolicy>
 		<encoder>
