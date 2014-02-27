@@ -13,5 +13,7 @@ module d.service.contract {
             errorCallback: (data: domain.util.MessageResponse, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any
             ): void;
         
+        getImageUrl(productId: number): string;
+        getMarkUp(product: domain.Product): number;
     }
 }

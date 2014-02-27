@@ -22,6 +22,7 @@ export module modularity {
                 }])
                 .config(["$stateProvider", "$urlRouterProvider", this.stateProviderCfg])
                 .config(["$httpProvider", this.intercept401])
+                .config(["$locationProvider", this.html5Cfg])
 
                 .run(["$rootScope","Navigator", this.setRootScopeVariables])
                 .run(["$rootScope", "$location", "AuthService", this.blockNotAllowedStates])
@@ -36,7 +37,7 @@ export module modularity {
 
             AppRoutes.routes.forEach((x)=> {
                 $stateProvider.state(x.name, {
-                    url: x.url.replace(x.baseUrl,""),
+                    url: x.url,
                     templateUrl: x.templateUrl,
                     controller: x.controller,
                     resolve: this.loadDependencies(x.deps)
@@ -44,9 +45,13 @@ export module modularity {
             });
 
         };
+
+        html5Cfg = ($locationProvider: ng.ILocationProvider) => {
+            $locationProvider.html5Mode(true);
+        };
         
         blockNotAllowedStates = ($rootScope: ng.IRootScopeService, $location: ng.ILocationService, AuthService: d.service.contract.AuthService) => {
-            var allowedStates = ["user.auth"];
+            var allowedStates = ["userAuth"];
             var isAllowedState = (route: string) => {
                 return allowedStates.some((x) => {
                     return x === route;

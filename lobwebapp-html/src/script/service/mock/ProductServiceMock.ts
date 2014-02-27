@@ -45,6 +45,14 @@ export module service.mock {
                 }, 100);
         }
 
+        getImageUrl(productId: number){
+            return "/api/product/" + productId + "/image";
+        }
+
+        getMarkUp(product: domain.Product){
+            if (product.costPrice == 0) return null;
+            return (product.price - product.costPrice) / product.costPrice;
+        }
     }
 }
 

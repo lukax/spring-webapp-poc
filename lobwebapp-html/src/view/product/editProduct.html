@@ -2,7 +2,7 @@
     <div class="col-md-2">
         <div class="list-group">
             <a class="list-group-item link active">Detalhes</a>
-            <a class="list-group-item link" ng-href="#/stock/list?search={{entity.name}}">Estoque</a>
+            <a class="list-group-item link" ng-href="/stock/list?search={{entity.name}}">Estoque</a>
         </div>
         <div class="lwa-fade-left" ng-if="!isEntityNew">
             <image-upload image-url="imageUrl"></image-upload>
@@ -13,7 +13,7 @@
             <div class="form-group">
                 <label for="inputId" class="col-md-1 control-label">ID</label>
                 <div class="col-md-11">
-                    <input type="text" class="form-control" id="inputId" name="inputId" readonly ng-model="entity.id">
+                    <input type="text" class="form-control" id="inputId" readonly ng-model="entity.id">
                 </div>
             </div>
             <div class="form-group" ng-class="{'has-error': productForm.inputName.$invalid}">
@@ -50,11 +50,11 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <div ng-class="{'has-error': productProfitMargin < 1}">
-                        <label for="inputProfit" class="col-md-3 control-label">Lucro</label>
+                    <div ng-class="{'has-error': markUp <= 0}">
+                        <label for="inputMarkUp" class="col-md-3 control-label">Lucro</label>
                         <div class="col-md-9 input-group">
                             <span class="input-group-addon">%</span>
-                            <input type="text" class="form-control" id="inputProfit" name="inputProfit" readonly value="{{ profitMargin | number:2 }}">
+                            <input type="text" class="form-control" id="inputMarkUp" name="inputMarkUp" readonly value="{{ markUp | number:2 }}">
                         </div>
                     </div>
                 </div>

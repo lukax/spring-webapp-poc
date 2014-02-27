@@ -1,6 +1,5 @@
 export interface AppRoute {
     name: string;
-    baseUrl?: string;
     url: string;
     abstract?: boolean;
     templateUrl: string;
@@ -11,15 +10,7 @@ export interface AppRoute {
 export var routes: AppRoute[] =
     [
         {
-            name: "user",
-            url: "/user",
-            abstract: true,
-            templateUrl: "view/user/user.html",
-            controller: "",
-            deps: []
-    }, {
-            name: "user.auth",
-            baseUrl: "/user",
+            name: "userAuth",
             url: "/user/auth?logout&error",
             templateUrl: "view/user/authUser.html",
             controller: "AuthUserController",
@@ -28,15 +19,7 @@ export var routes: AppRoute[] =
                 "service/impl/AuthServiceImpl"
             ]
         }, {
-            name: "product",
-            url: "/product",
-            abstract: true,
-            templateUrl: "view/product/product.html",
-            controller: "",
-            deps: []
-        }, {
-            name: "product.list",
-            baseUrl: "/product",
+            name: "productList",
             url: "/product/list?search&redirect",
             templateUrl: "view/product/listProduct.html",
             controller: "ListProductController",
@@ -46,8 +29,7 @@ export var routes: AppRoute[] =
                 "directive/ListPagerDirective"
             ]
         }, {
-            name: "product.edit",
-            baseUrl: "/product",
+            name: "productEdit",
             url: "/product/{productId:[0-9]{1,8}|new}", //0-9 numbers in 1-8 digits long match
             templateUrl: "view/product/editProduct.html",
             controller: "EditProductController",
@@ -58,15 +40,7 @@ export var routes: AppRoute[] =
                 "directive/SaveChangesDirective"
             ]
         }, {
-            name: "order",
-            url: "/order",
-            abstract: true,
-            templateUrl: "view/order/order.html",
-            controller: "",
-            deps: []
-        }, {
-            name: "order.edit",
-            baseUrl: "/order",
+            name: "orderEdit",
             url: "/order/{orderId:[0-9]{1,8}|new}?customerId&productId", //0-9 numbers in 1-8 digits long match
             templateUrl: "view/order/editOrder.html",
             controller: "EditOrderController",
@@ -83,8 +57,7 @@ export var routes: AppRoute[] =
                 "filter/PaymentFilter"
             ]
         }, {
-            name: "order.list",
-            baseUrl: "/order",
+            name: "orderList",
             url: "/order/list?search&redirect",
             templateUrl: "view/order/listOrder.html",
             controller: "ListOrderController",
@@ -94,8 +67,7 @@ export var routes: AppRoute[] =
                 "directive/ListPagerDirective"
             ]
         }, {
-            name: "order.graph",
-            baseUrl: "/order",
+            name: "orderGraph",
             url: "/order/graph",
             templateUrl: "view/order/graphOrder.html",
             controller: "GraphOrderController",
@@ -104,15 +76,7 @@ export var routes: AppRoute[] =
                 "service/impl/OrderServiceImpl"
             ]
         }, {
-            name: "customer",
-            url: "/customer",
-            abstract: true,
-            templateUrl: "view/customer/customer.html",
-            controller: "",
-            deps: []
-        }, {
-            name: "customer.edit",
-            baseUrl: "/customer",
+            name: "customerEdit",
             url: "/customer/{customerId:[0-9]{1,8}|new}",
             templateUrl: "view/customer/editCustomer.html",
             controller: "EditCustomerController",
@@ -122,8 +86,7 @@ export var routes: AppRoute[] =
                 "directive/SaveChangesDirective"
             ]
         }, {
-            name: "customer.list",
-            baseUrl: "/customer",
+            name: "customerList",
             url: "/customer/list?search&redirect",
             templateUrl: "view/customer/listCustomer.html",
             controller: "ListCustomerController",
@@ -133,15 +96,7 @@ export var routes: AppRoute[] =
                 "directive/ListPagerDirective"
             ]
         }, {
-            name: "stock",
-            url: "/stock",
-            abstract: true,
-            templateUrl: "view/stock/stock.html",
-            controller: "",
-            deps: []
-        }, {
-            name: "stock.edit",
-            baseUrl: "/stock",
+            name: "stockEdit",
             url: "/stock/{stockId:[0-9]{1,8}|new}?productId",
             templateUrl: "view/stock/editStock.html",
             controller: "EditStockController",
@@ -154,8 +109,7 @@ export var routes: AppRoute[] =
                 "directive/ProductDetailDirective"
             ]
         }, {
-            name: "stock.list",
-            baseUrl: "/stock",
+            name: "stockList",
             url: "/stock/list?search&redirect",
             templateUrl: "view/stock/listStock.html",
             controller: "ListStockController",

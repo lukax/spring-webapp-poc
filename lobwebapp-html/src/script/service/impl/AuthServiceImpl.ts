@@ -4,40 +4,47 @@ import a = require("./UserServiceImpl");
 export module service.impl {
     export class AuthServiceImpl implements d.service.contract.AuthService {
         private defaultUser: domain.User = { id: 1, name: "Usuário", isLogged: true, username: "user", password: "", roles: ["ROLE_USER"] };
-        private emptyUser: domain.User = { id: 0, username: "", password: "", roles: [], name: "" };
+        private client_id = "da39a3ee5e6b4b0d3255bfef95601890afd80709";
 
-        static $inject = ["$http", "$rootScope"];
-        constructor(public $http: ng.IHttpService, public $rootScope: ng.IRootScopeService) {
+        static $inject = ["$http", "$rootScope", "$window"];
+        constructor(public $http: ng.IHttpService, 
+                    public $rootScope: ng.IRootScopeService,
+                    public $window: ng.IWindowService) {
 
         }
 
         login(user: domain.User,
             successCallback: (data: domain.User, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
             errorCallback: (error: domain.util.MessageResponse, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
-                var param = "?grant_type=password&client_id=lobwebapp-html&client_secret=supersecretyeah&username=" + user.username + "&password=" + user.password;
-                this.$http.get("/api/oauth/token" + param)
+                var param = "grant_type=password" + 
+                            "&client_id=" + this.client_id +  
+                            "&username=" + user.username + 
+                            "&password=" + user.password;
+                this.$http.post("/api/oauth/token", param, {headers: {"Content-Type": "application/x-www-form-urlencoded"}})
                     .success((data: domain.AuthToken, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => {
+                        var user = angular.copy(this.defaultUser); //TODO: make server return user information after login...
+                        this.setUser(user);
                         this.setToken(data);
-                        this.setUser(this.defaultUser);  //TODO: make server return user information after login...
                         this.authorize(data);
-                        
-                        successCallback(this.defaultUser, status, headers, config);
-                    }).error(errorCallback);
+                    
+                        successCallback(user, status, headers, config);
+                    })
+                    .error(errorCallback);
         }
 
         logout(
             successCallback: (data: domain.User, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
             errorCallback: (data: domain.util.MessageResponse, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
-                if (this.getUser().id != 0) {
+                if (this.getUser() && this.getUser().id != 0) {
                     var previousUser = this.getUser();
                     this.setToken(null);
-                    this.setUser(this.emptyUser);
+                    this.setUser(null);
                     this.unauthorize();
                 
                     successCallback(previousUser, 200, null, null);
                 }
                 else
-                    errorCallback({ message: "Usuário já está deslogado" }, 200, null, null);
+                    errorCallback({ message: "Usuário já saiu" }, 200, null, null);
         }
 
         isLoggedIn() {
@@ -49,17 +56,10 @@ export module service.impl {
             return false;
         }
 
-/*        private refreshAccess(authToken: domain.AuthToken, callback: (data: boolean) => void){
-            this.$http.get("/api/oauth/token?grant_type=refresh_token&client_id=lobwebapp-html&client_secret=supersecretyeah&refresh_token=" + authToken.refresh_token)
-                        .success((data: domain.AuthToken, status)=>{
-                                this.setToken(data);
-                                this.authorize(data);
-
-                                callback(true);
-                            }).error(()=>{
-                                callback(false);    
-                            });
-        }*/
+        getUser(): domain.User {
+            var retrievedUser = angular.fromJson((<any>this.$window.localStorage).AUTHSERVICE_USER) || { id: 0, username: "", password: "", roles: [], name: "" };
+            return retrievedUser;
+        }
 
         private authorize(authToken: domain.AuthToken) {
             var key = authToken.token_type + " " + authToken.access_token;
@@ -72,34 +72,25 @@ export module service.impl {
             delete this.$http.defaults.headers.common["Authorization"];
         }
 
-        getUser(): domain.User {
-            var retrievedUser = null;
-            try {
-                retrievedUser = (angular.fromJson((<any>localStorage).AUTHSERVICE_USER));
-            }
-            catch (Exception) {  }
-            if (retrievedUser == null) return this.emptyUser;
-            return retrievedUser;
-        }
-
-        private setUser(user: domain.User) {
-            (<any>localStorage).AUTHSERVICE_USER = angular.toJson(user);
-            this.$rootScope.$broadcast("USER_CHANGED", [user]);
-        }
-
         private getToken() {
             var retrievedToken = null;
             try {
-                retrievedToken = angular.fromJson((<any>localStorage).AUTHSERVICE_TOKEN);
+                retrievedToken = angular.fromJson((<any>this.$window.localStorage).AUTHSERVICE_TOKEN);
             }
-            catch (Exception) { return null; }
+            catch (Exception) { 
+            }
             return retrievedToken;
         }
 
         private setToken(authToken: domain.AuthToken) {
-            (<any>localStorage).AUTHSERVICE_TOKEN = angular.toJson(authToken);
+            (<any>this.$window.localStorage).AUTHSERVICE_TOKEN = angular.toJson(authToken);
         }
 
+        private setUser(user: domain.User) {
+            if(user == null) user = { id: 0, username: "", password: "", roles: [], name: "" };
+            (<any>this.$window.localStorage).AUTHSERVICE_USER = angular.toJson(user);
+            this.$rootScope.$broadcast("USER_CHANGED", [user]);
+        }
     }
 }
 

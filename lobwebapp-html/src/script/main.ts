@@ -9,7 +9,7 @@ require.config({
     waitSeconds: 10,
     paths: {
         text: "../lib/requirejs-text/text",
-        jquery: "../lib/jquery/jquery.min",
+        jquery: "../lib/jquery/dist/jquery.min",
         jqueryMaskedInput: "../lib/jquery.maskedinput/jquery.maskedinput.min",
         bootstrap: "../lib/bootstrap/dist/js/bootstrap.min",
         angular: "../lib/angular/angular.min",
@@ -64,9 +64,9 @@ require.config({
     }
 });
 
-//require.onError = (err: RequireError) => {
-//        window.location.replace("500.html?message=" + err.requireType + " | " + err.requireModules + " | " + err.originalError);
-//};
+require.onError = (err: RequireError) => {
+        window.location.replace("500.html?message=" + err.requireType + " | " + err.requireModules + " | " + err.originalError);
+};
 
 require(["util/Progress"], (progress: any)=> {
     new progress.util.Progress().start();

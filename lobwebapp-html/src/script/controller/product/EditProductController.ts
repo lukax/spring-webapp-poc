@@ -6,11 +6,10 @@ import enums = require("./../../util/EnumUtil");
 
 export module controller.product {
     export interface EditProductViewModel extends i0.controller.base.EditEntityViewModel<domain.Product> {  
-        profitMargin: number;
+        markUp: number;
         categories: string[];
         saveChanges(product: domain.Product): void;
         removeProduct(product: domain.Product): void;
-        canSave: boolean;
         imageUrl: string;
     }
 
@@ -24,8 +23,11 @@ export module controller.product {
                     public $filter: ng.IFilterService) {
             super($scope, "product", ProductService, AlertService);
 
-            var routeProdId = this.$scope.navigator.$stateParams.productId;
-            this.findEntity(routeProdId || 0, ()=> { this.populateScope(); });
+            var productId = this.$scope.navigator.$stateParams.productId;
+            
+            this.findEntity(productId, ()=> { 
+                this.populateScope(); 
+            });
         }
         
         fetchCategories() {
@@ -41,22 +43,21 @@ export module controller.product {
                     this.unlock();
                 });
         }
-        
-        watchProduct() {
-            this.$scope.$watch("entity.price + entity.costPrice", () => {
-                if (this.$scope.entity.costPrice != 0)
-                    this.$scope.profitMargin = this.$scope.entity.price / this.$scope.entity.costPrice;
-            });
-            this.$scope.$watch("entity.category", (newValue: string, oldValue: string) => {
-                this.$scope.categories = this.$filter("filter")(this.allCategories, this.$scope.entity.category);
-            });
-            this.$scope.$watch("entity.id", (newValue: number, oldValue: number) => {
-                this.$scope.imageUrl = "/api/product/"+newValue+"/image";
-            });
-        }
 
+        filterCategories(){
+            this.$scope.categories = this.$filter("filter")(this.allCategories, this.$scope.entity.category);
+        }
+        
         populateScope() {
-            this.watchProduct();
+            this.$scope.$watch("entity.category", () => {
+                this.filterCategories();
+            });
+            this.$scope.$watch("entity.price + entity.costPrice", () => {
+                this.$scope.markUp = 100 * this.ProductService.getMarkUp(this.$scope.entity);
+            });
+            this.$scope.$watch("entity.id", () => {
+                this.$scope.imageUrl = this.ProductService.getImageUrl(this.$scope.entity.id);
+            });
             this.fetchCategories();
             this.$scope.saveChanges = (entity) => this.saveChanges(entity);
             this.$scope.removeProduct = (entity) => this.removeEntity(entity);

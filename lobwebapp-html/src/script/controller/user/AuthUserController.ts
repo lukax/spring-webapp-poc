@@ -26,27 +26,28 @@ export module controller.user {
                     this.AlertService.add({ content: "Usuário não possui permissão para acessar esta página", type: enums.AlertType.WARNING });
                     this.AuthService.logout(()=>{}, ()=>{});
                     break;
-                default:
-                    if (this.AuthService.isLoggedIn()) {
-                        this.$scope.navigator.$location.url("/product/list");
-                    }
-                    break;
             }
-
             if (logout == "true") {
                 this.logout();
             }
+            else if (this.AuthService.isLoggedIn()) { 
+                // If not logging out, and user is logged in already send him to default page
+                this.toDefaultPage();
+            }
             
             this.populateScope();
+        }
+
+        toDefaultPage(){
+            this.$scope.navigator.$location.url("/product/list");
         }
 
         login() {
             this.lock();
             this.AuthService.login(this.$scope.user,
                 (successData) => {
-                    this.$scope.navigator.$location.url("/product/list");
                     this.AlertService.add({ title: "Login", content: "Bem vindo " + successData.name });
-                    this.unlock();
+                    this.toDefaultPage();
                 },
                 () => {
                     this.AlertService.add({ title: "Login", content: "Usuário ou senha inválido", type: enums.AlertType.WARNING });

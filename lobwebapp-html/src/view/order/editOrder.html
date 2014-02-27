@@ -1,12 +1,12 @@
 <form class="form-horizontal form-validation" role="form" name="orderForm" novalidate ng-submit="saveChanges(entity)">
     
     <div class="form-group">
-        <label for="orderId" class="col-md-1 control-label">ID</label>
+        <label for="inputId" class="col-md-1 control-label">ID</label>
         <div class="col-md-9">
-            <input type="text" class="form-control" id="orderId" readonly value="{{entity.id}}">
+            <input type="text" class="form-control" id="inputId" readonly value="{{entity.id}}">
         </div>
         <div class="col-md-2 input-group">
-            <input type="text" class="form-control" ng-model="entity.date" datepicker-popup="dd MMM  HH:mm" required>
+            <input type="text" class="form-control" ng-model="entity.date" datepicker-popup="dd MMM HH:mm" required>
             <div class="input-group-addon">
                 <span class="glyphicon glyphicon-calendar"></span>
             </div>
@@ -49,20 +49,21 @@
     </div>
     
     <div class="form-group">
-        <label for="total" class="col-md-1 control-label">Total</label>
+        <label for="inputTotal" class="col-md-1 control-label">Total</label>
         <div class="col-md-11 input-group">
             <span class="input-group-addon">R$</span>
-            <input type="text" class="form-control" id="total" value="{{total | number:2}}" readonly>
+            <input type="text" class="form-control" id="inputTotal" value="{{total | number:2}}" readonly>
         </div>
     </div>
     
     <div class="form-group lwa-fade-left" 
         ng-class="{'has-error': orderForm.inputPayment.$invalid || invalid.paymentQuantity || invalid.exchange }" 
         ng-hide="total <= 0 || entity.payment.status == 'PENDING'">
-        <label for="total" class="col-md-1 col-md-offset-1 control-label">Pagamento</label>
+        <label for="inputPayment" class="col-md-1 col-md-offset-1 control-label">Pagamento</label>
         <div class="col-md-10 input-group">
             <span class="input-group-addon">R$</span>
-            <input type="number" class="form-control" id="inputPayment" name="inputPayment" ng-model="entity.payment.quantity" required min="0">
+            <input type="number" class="form-control" id="inputPayment" name="inputPayment" ng-model="entity.payment.quantity" 
+            ng-pattern="/^(?=.*[1-9])\d*(?:\.\d{1,2})?$/">
             <div class="input-group-btn">
                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                     {{entity.payment.mode | paymentMode}}
@@ -78,10 +79,10 @@
     </div>
     
     <div class="form-group lwa-fade-left" ng-hide="exchange <= 0 || invalid.paymentQuantity || entity.payment.status == 'PENDING'">
-        <label for="total" class="col-md-1 col-md-offset-1 control-label">Troco</label>
+        <label for="inputExchange" class="col-md-1 col-md-offset-1 control-label">Troco</label>
         <div class="col-md-10 input-group">
             <span class="input-group-addon">R$</span>
-            <input type="text" class="form-control" id="inputExchange" name="inputExchange" value="{{exchange | number:2}}" readonly>
+            <input type="text" class="form-control" id="inputExchange" value="{{exchange | number:2}}" readonly>
         </div>
     </div>
     

@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>com.espindola</groupId>
 		<artifactId>lobwebapp</artifactId>
-		<version>0.1.0</version>
+		<version>0.2.0</version>
 	</parent>
 	<artifactId>lobwebapp-html</artifactId>
 	<packaging>pom</packaging>
@@ -12,41 +12,12 @@
 	<build>
 		<plugins>
 			<plugin>
-				<groupId>com.kelveden</groupId>
-				<artifactId>maven-karma-plugin</artifactId>
-				<version>1.3</version>
-				<executions>
-					<execution>
-						<phase>test</phase>
-						<goals>
-							<goal>start</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<browsers>PhantomJS</browsers>
-				</configuration>
-			</plugin>
-			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>exec-maven-plugin</artifactId>
 				<version>1.2.1</version>
 				<executions>
 					<execution>
-						<id>test-compile-typescript</id>
-						<phase>test-compile</phase>
-						<goals>
-							<goal>exec</goal>
-						</goals>
-						<configuration>
-							<executable>grunt</executable>
-							<arguments>
-								<argument>test</argument>
-							</arguments>
-						</configuration>
-					</execution>
-					<execution>
-						<id>process-resources-npm</id>
+						<id>process-npm-dependencies</id>
 						<phase>process-resources</phase>
 						<goals>
 							<goal>exec</goal>
@@ -59,8 +30,21 @@
 						</configuration>
 					</execution>
 					<execution>
-						<id>prepare-package-grunt</id>
-						<phase>prepare-package</phase>
+						<id>process-bower-dependencies</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<configuration>
+							<executable>sh</executable>
+							<arguments>
+								<argument>bower-install.sh</argument>
+							</arguments>
+						</configuration>
+					</execution>
+					<execution>
+						<id>build-project</id>
+						<phase>compile</phase>
 						<goals>
 							<goal>exec</goal>
 						</goals>
@@ -72,15 +56,15 @@
 						</configuration>
 					</execution>
 					<execution>
-						<id>process-resources-bower</id>
-						<phase>process-resources</phase>
+						<id>run-tests</id>
+						<phase>test</phase>
 						<goals>
 							<goal>exec</goal>
 						</goals>
 						<configuration>
-							<executable>bower</executable>
+							<executable>grunt</executable>
 							<arguments>
-								<argument>install</argument>
+								<argument>test</argument>
 							</arguments>
 						</configuration>
 					</execution>

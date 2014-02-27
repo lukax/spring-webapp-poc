@@ -4,6 +4,7 @@
 
 ## core
 target/
+logs/
 .springBeans
 
 ## html

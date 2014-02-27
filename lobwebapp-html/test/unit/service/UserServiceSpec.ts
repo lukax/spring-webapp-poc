@@ -11,6 +11,7 @@ describe("service: UserService", () => {
         });
     });
 
+    var contextUrl: string = "/api/v1/user/";
     var sampleUser: domain.User = { id: 1, name: "John Metallation", username: "orion", password: "masterofpuppets", roles: [] };
 
     it("should find a user by username", (inject((UserService: d.service.contract.UserService, $httpBackend: ng.IHttpBackendService) => {
@@ -18,7 +19,7 @@ describe("service: UserService", () => {
             errSpy = jasmine.createSpy("errUser");
         var header = "%" + sampleUser.username + "%"; 
 
-        $httpBackend.expectGET("/api/user/", { user_username: header, Accept: "application/json, text/plain, */*" }).respond(200, sampleUser);
+        $httpBackend.expectGET(contextUrl, { user_username: header, Accept: "application/json, text/plain, */*" }).respond(200, sampleUser);
         UserService.findByUsername(sampleUser.username, sucSpy, errSpy);
         $httpBackend.flush();
 

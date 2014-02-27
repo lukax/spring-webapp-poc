@@ -45,8 +45,25 @@ export module controller.base {
 
         editEntity(id: number) {
             this.redirectString = this.$scope.navigator.$stateParams.redirect;
-            if (this.redirectString) this.$scope.navigator.$location.url(this.redirectString + "?" + this.redirectParam + "=" + id);
-            else this.$scope.navigator.$location.url(this.contextUrl + id);
+            if (this.redirectString) {
+                this.redirectString = this.replaceUrlParam(decodeURIComponent(this.redirectString), this.redirectParam, String(id));
+                console.log(this.redirectString);
+                this.$scope.navigator.$location.url(this.redirectString);
+            }
+            else 
+                this.$scope.navigator.$location.url(this.contextUrl + id);
+        }
+
+        private replaceUrlParam(url: string, paramName: string, paramVal: string) {
+            var newUrl;
+            if(url.indexOf(paramName) != -1)
+                newUrl = url.replace(new RegExp("([?&])"+ paramName + "=\\d+"), "$1" + paramName + "=" + paramVal);
+            else
+                if(url.indexOf("?") > 0)
+                    newUrl = url + "&" + paramName + "=" + paramVal;
+                else
+                    newUrl = url + "?" + paramName + "=" + paramVal;
+            return newUrl;
         }
 
     }

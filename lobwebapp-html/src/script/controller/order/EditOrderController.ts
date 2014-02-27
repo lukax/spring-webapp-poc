@@ -32,11 +32,9 @@ export module controller.order {
 
             this.findEntity(orderId, () => { 
                 if(customerId != null) this.fetchCustomer(customerId);
-                this.fetchProduct(productId || 0);
-                this.computeTotal();
-                this.watchOrder();
+                if(productId != null) this.fetchProduct(productId);
                 this.populateScope(); 
-                this.setupValidation();
+                this.setupValidations();
             });
         }
 
@@ -52,7 +50,7 @@ export module controller.order {
                 this.$scope.entity.items.push(this.$scope.item);        
             }
             this.emptyItem();
-            this.computeTotal();
+            this.$scope.total = this.OrderService.getTotal(this.$scope.entity);
         }
         
         emptyItem(){
@@ -61,14 +59,6 @@ export module controller.order {
 
         removeItem(orderItem: domain.OrderItem) {
             this.$scope.entity.items = _.without(this.$scope.entity.items, orderItem);
-        }
-        
-        computeTotal() {
-            var sum = 0;
-            this.$scope.entity.items.forEach((x) => {
-                sum += x.quantity * x.product.price;
-            });
-            this.$scope.total = sum;
         }
 
         fetchCustomer(id: number) {
@@ -101,17 +91,7 @@ export module controller.order {
                 });
         }
         
-        watchOrder() {
-            this.$scope.$watch("entity.payment.quantity", () => {
-                this.$scope.exchange = this.$scope.entity.payment.quantity - this.$scope.total;
-            });
-            this.$scope.$watch("entity.payment.status", () => {
-                if(this.$scope.entity.payment.status == enums.PaymentStatus.PENDING)
-                    this.$scope.entity.payment.quantity = 0;
-            });
-        }
-
-        setupValidation() {
+        setupValidations() {
             this.$scope.invalid = {};
             this.$scope.$watchCollection("entity.items", ()=>{
                 this.$scope.invalid.orderItems = this.$scope.entity.items.length == 0;
@@ -122,6 +102,14 @@ export module controller.order {
         }
 
         populateScope() {
+            this.$scope.total = 0;
+            this.$scope.$watch("entity.payment.quantity", () => {
+                this.$scope.exchange = this.OrderService.getExchange(this.$scope.entity);
+            });
+            this.$scope.$watch("entity.payment.status", () => {
+                if(this.$scope.entity.payment.status == enums.PaymentStatus.PENDING)
+                    this.$scope.entity.payment.quantity = 0;
+            });
             this.$scope.saveChanges = (order) => this.saveChanges(order);
             this.$scope.addItem = (item) => this.addItem(item);
             this.$scope.removeItem = (item) => this.removeItem(item);

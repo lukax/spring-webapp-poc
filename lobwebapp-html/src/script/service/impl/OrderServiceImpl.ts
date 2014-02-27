@@ -11,6 +11,18 @@ export module service.impl {
             super("order", $http, this);
         }
 
+        getExchange(order: domain.Order){
+            return order.payment.quantity - this.getTotal(order);
+        }
+
+        getTotal(order: domain.Order){
+            var sum = 0;
+            order.items.forEach((x) => {
+                sum += x.quantity * x.product.price;
+            });
+            return sum;
+        }
+
         getDefault(): domain.Order{
             return { id: 0, customer: { id: 0, name: "" }, items: [], payment: { id: 0, quantity: 0, status: enums.PaymentStatus.OK, mode: enums.PaymentMode.MONEY }, date: new Date().getTime() };
         }

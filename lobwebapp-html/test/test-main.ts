@@ -12,7 +12,7 @@ for (var file in (<any>window).__karma__.files) {
 requirejs.config({
     baseUrl: "/base/src",
     paths: {
-        jquery: "lib/jquery/jquery.min",
+        jquery: "lib/jquery/dist/jquery.min",
         angular: "lib/angular/angular.min",
         angularUiRouter: "lib/angular-ui-router/release/angular-ui-router.min",
         angularMocks: "lib/angular-mocks/angular-mocks",

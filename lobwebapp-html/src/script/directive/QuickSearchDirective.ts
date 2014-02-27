@@ -16,8 +16,7 @@ export module directive {
 
         controller = ["$scope", "$location", ($scope: any, $location: ng.ILocationService) => {
             $scope.search = () => {
-                //TODO: Support previous url parameters
-                $location.url("/" + $scope.resourceUrl + "/list?redirect=" + $location.path());
+                $location.url("/" + $scope.resourceUrl + "/list?redirect=" + encodeURIComponent($location.url()));
             };
             
             $scope.fetchEntity = () => {

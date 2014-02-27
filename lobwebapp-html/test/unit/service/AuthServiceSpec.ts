@@ -12,6 +12,7 @@ describe("service: AuthService", () => {
         });
     });
 
+    var contextUrl: string = "/api/oauth/token";
     var sampleUser: domain.User = { id: 1, name: "John Metallation", username: "orion", password: "masterofpuppets", roles: [] };
     var sampleAuthToken: domain.AuthToken = { access_token: "xx", token_type: "Bearer", refresh_token: "yy", expires_in: new Date("2015").getTime() };
 
@@ -19,7 +20,7 @@ describe("service: AuthService", () => {
         var sucSpy = jasmine.createSpy("sucLogin"),
             errSpy = jasmine.createSpy("errLogin");
 
-        $httpBackend.expectGET(new RegExp("/api/oauth/token")).respond(200, sampleAuthToken);
+        $httpBackend.expectPOST(new RegExp(contextUrl)).respond(200, sampleAuthToken);
         AuthService.login(sampleUser, sucSpy, errSpy);
         $httpBackend.flush();
 

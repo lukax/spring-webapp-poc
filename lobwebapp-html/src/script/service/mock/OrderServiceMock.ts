@@ -25,6 +25,18 @@ export module service.mock {
             });
         }
 
+        getExchange(order: domain.Order){
+            return order.payment.quantity - this.getTotal(order);
+        }
+
+        getTotal(order: domain.Order){
+            var sum = 0;
+            order.items.forEach((x) => {
+                sum += x.quantity * x.product.price;
+            });
+            return sum;
+        }
+        
     }
 }
 

@@ -1,4 +1,4 @@
-package com.espindola.lobwebapp;
+package com.espindola.lobwebapp.util;
 
 import java.nio.charset.Charset;
 
