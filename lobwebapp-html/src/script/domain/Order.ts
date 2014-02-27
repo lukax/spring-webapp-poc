@@ -1,11 +1,11 @@
-///<reference path='./base/AbstractEntity.ts'/>
+///<reference path="../reference.d.ts"/>
 
 module domain {
     export interface Order extends domain.base.AbstractEntity {
         customer: domain.Customer;
         items: domain.OrderItem[];
-        payment: Payment;
-        date: Date;
+        payment: domain.Payment;
+        date: number;
     }
 
     export interface OrderItem {

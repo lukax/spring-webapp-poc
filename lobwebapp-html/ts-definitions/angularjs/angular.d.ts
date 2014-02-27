@@ -117,7 +117,14 @@ declare module ng {
         // Properties
         name: string;
         requires: string[];
-        lazy: any;
+        lazy: ILazyModule;
+    }
+    
+    interface ILazyModule{
+        controller(name: string, controllerConstructor: any): void;
+        service(name: string, constructor: any): ng.IServiceProvider;
+        filter(name: string, filterFactory: any): IServiceProvider;
+        directive(name: string, directiveFactory: any): ICompileProvider;
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -680,7 +687,7 @@ declare module ng {
         scope?: any;
         link?: Function;
         compile?: Function;
-        controller?: Function;
+        controller?: any;
     }
 
     ///////////////////////////////////////////////////////////////////////////

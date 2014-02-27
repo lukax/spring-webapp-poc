@@ -5,32 +5,25 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
+import javax.persistence.UniqueConstraint;
 
 import com.espindola.lobwebapp.domain.base.AbstractEntity;
 
 @Entity
-@Table(name = "TB_STOCK")
+@Table(name = "TB_STOCK", uniqueConstraints = { @UniqueConstraint(columnNames = "PRODUCT_ID") })
 public class Stock extends AbstractEntity {
-	
+
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "PRODUCT_ID")
 	private Product product;
-	
-	@NotNull
-	@Min(0)
+
 	private Integer quantity;
-	
-	@Min(0)
+
 	private Integer minQuantity;
-	
-	@Min(0)
+
 	private Integer maxQuantity;
 
-	@NotNull
 	private String unit;
-
 
 	public Integer getQuantity() {
 		return quantity;

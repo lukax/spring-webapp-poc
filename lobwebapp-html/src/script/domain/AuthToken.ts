@@ -1,5 +1,4 @@
-///<reference path='./base/AbstractEntity.ts'/>
-///<reference path='./base/Person.ts'/>
+///<reference path="../reference.d.ts"/>
 
 module domain {
     export interface AuthToken {

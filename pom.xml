@@ -3,9 +3,18 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.espindola</groupId>
   <artifactId>lobwebapp</artifactId>
-  <version>0.1.0</version>
+  <version>0.2.0</version>
   <packaging>pom</packaging>
+  
   <modules>
-          <module>lobwebapp-core</module>
+    <module>lobwebapp-html</module>
+    <module>lobwebapp-core</module>
   </modules>
+
+  <repositories>
+    <repository>
+      <id>jboss-public</id>
+      <url>http://repository.jboss.org/nexus/content/groups/public/</url>
+    </repository>
+  </repositories>
 </project>

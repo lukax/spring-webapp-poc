@@ -1,5 +1,6 @@
 package com.espindola.lobwebapp.domain;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -15,7 +16,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
 
 import com.espindola.lobwebapp.domain.base.AbstractEntity;
 
@@ -23,24 +23,17 @@ import com.espindola.lobwebapp.domain.base.AbstractEntity;
 @Table(name = "TB_ORDER")
 public class Order extends AbstractEntity {
 
-	@NotNull
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "CUSTOMER_ID")
-	private Customer customer;	
-	
-	@NotNull
-	@ElementCollection(fetch= FetchType.EAGER)
-	@CollectionTable(
-	        name="TB_ORDER_ITEM",
-	        joinColumns= @JoinColumn(name = "ORDER_ID")
-	  )
+	private Customer customer;
+
+	@ElementCollection(fetch = FetchType.EAGER)
+	@CollectionTable(name = "TB_ORDER_ITEM", joinColumns = @JoinColumn(name = "ORDER_ID"))
 	private Set<OrderItem> items = new HashSet<OrderItem>();
 
-	@NotNull
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date date;
-	
-	@NotNull
+
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "PAYMENT_ID")
 	private Payment payment;
@@ -77,4 +70,15 @@ public class Order extends AbstractEntity {
 		this.items = items;
 	}
 
+	public BigDecimal computeTotalPrice() {
+		BigDecimal qt = new BigDecimal(0);
+		try {
+			for (OrderItem i : getItems()) {
+				qt = qt.add(i.computeTotalPrice());
+			}
+		} catch (NullPointerException ex) {
+		}
+
+		return qt;
+	}
 }

@@ -1,30 +1,21 @@
 ///<reference path="../reference.d.ts"/>
 
 import a = require("./../service/mock/AlertServiceMock");
-import d = require("./../service/impl/AuthServiceImpl");
-import f = require("./../service/impl/NavigationServiceImpl");
+import b = require("./../service/impl/AuthServiceImpl");
+import c = require("./../util/Progress");
+import d = require("./../util/Navigator");
 
 export module modularity {
     export class ServiceModule {
-        private module: ng.IModule;
-
         constructor() {
-            this.module = angular.module("lwa.service", []);
-            this.module.config(["$provide", ($provide: ng.auto.IProvideService) => {
-                this.module.lazy = {
-                    service: $provide.service
-                };
-            }]);
+            angular.module("lwa.service", [])
+            	//Global usage services                
+                .service("AlertService", <Function>a.service.mock.AlertServiceMock)
+                .service("AuthService", <Function>b.service.impl.AuthServiceImpl)
+                .service("Progress", <Function>c.util.Progress)
+                .service("Navigator", <Function>d.util.Navigator)
+                ;
         }
 
-        configure() {
-            //Global usage services configuration
-            this.module
-                .service("AuthService", <Function>d.service.impl.AuthServiceImpl)
-                .service("AlertService", <Function>a.service.mock.AlertServiceMock)
-                .service("NavigationService", <Function>f.service.impl.NavigationServiceImpl)
-            ;
-            return this;
-        }
     }
 }

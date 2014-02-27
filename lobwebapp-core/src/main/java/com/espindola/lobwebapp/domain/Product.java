@@ -1,53 +1,43 @@
 package com.espindola.lobwebapp.domain;
 
+import java.math.BigDecimal;
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 
 import com.espindola.lobwebapp.domain.base.AbstractEntity;
 
 @Entity
-@Table(name = "TB_PRODUCT", uniqueConstraints = {
-		@UniqueConstraint(columnNames = "NAME")
-	})
+@Table(name = "TB_PRODUCT", uniqueConstraints = { @UniqueConstraint(columnNames = "NAME") })
 public class Product extends AbstractEntity {
 
-	@NotNull
-	@Size(min = 3)
 	private String name;
 
 	private String description;
-	
-	@Min(0)
-	private Double costPrice;
 
-	@NotNull
-	@Min(0)
-	private Double price;
+	private BigDecimal costPrice;
+
+	private BigDecimal price;
 
 	private String category;
 
 	private String ncm;
 
+	@JsonIgnore
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	private FileMeta image;
+
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date registerDate;
-	
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "product")
-	@JsonIgnore
-	private List<Stock> stocks;
 
 	public String getName() {
 		return name;
@@ -65,19 +55,19 @@ public class Product extends AbstractEntity {
 		this.description = description;
 	}
 
-	public Double getCostPrice() {
+	public BigDecimal getCostPrice() {
 		return costPrice;
 	}
 
-	public void setCostPrice(Double costPrice) {
+	public void setCostPrice(BigDecimal costPrice) {
 		this.costPrice = costPrice;
 	}
 
-	public Double getPrice() {
+	public BigDecimal getPrice() {
 		return price;
 	}
 
-	public void setPrice(Double price) {
+	public void setPrice(BigDecimal price) {
 		this.price = price;
 	}
 
@@ -105,12 +95,17 @@ public class Product extends AbstractEntity {
 		this.registerDate = registerDate;
 	}
 
-	public List<Stock> getStocks() {
-		return stocks;
+	@Override
+	public String toString() {
+		return "[" + getId() + ", " + getName() + "]";
 	}
 
-	public void setStocks(List<Stock> stocks) {
-		this.stocks = stocks;
+	public FileMeta getImage() {
+		return image;
+	}
+
+	public void setImage(FileMeta image) {
+		this.image = image;
 	}
 
 }

@@ -1,4 +1,4 @@
-///<reference path="./../../reference.d.ts"/>
+///<reference path="../../reference.d.ts"/>
 
 import enums = require("./../../util/EnumUtil");
 
@@ -10,12 +10,14 @@ export module controller.base{
 	}
 
 	export class AbstractEditEntityController<T extends domain.base.AbstractEntity> implements d.controller.base.Controller{
-		
 		constructor(public $scope: EditEntityViewModel<T>, 
 		            public contextUrl: string, 
 		            public EntityService: d.service.contract.base.EntityService<T>,
 		            public AlertService: d.service.contract.AlertService){
-            this.watchEntity();
+		                
+            this.$scope.$watch("entity.id", () => {
+                this.$scope.isEntityNew = this.isEntityNew();
+            });
 		}
 		
 		saveChanges(entity: T) {
@@ -27,11 +29,11 @@ export module controller.base{
             this.lock();
             this.EntityService.save(entity,
                 (successData, successStatus, successHeaders) => {
-                    this.$scope.navigator.$location.url((successHeaders("Location").split('http://lobwebapp.herokuapp.com'))[1]);
+                    this.$scope.navigator.$location.url("/" + this.contextUrl + "/" + successHeaders("Entity-Id"));
                 },
-                (errorData, errorStatus) => {
+                (errorData) => {
                     console.log(errorData);
-                    this.AlertService.add({ title: "Erro", content: "item não pôde ser salvado", type: enums.AlertType.DANGER });
+                    this.AlertService.add({ content: errorData.message, title: "Item não pôde ser salvo", type: enums.AlertType.DANGER });
                     this.unlock();
                 });
         }
@@ -39,12 +41,12 @@ export module controller.base{
         updateEntity(entity: T) {
             this.lock();
             this.EntityService.update(entity,
-                (successData, successStatus) => {
+                () => {
                     this.unlock();
                 },
-                (errorData, errorStatus) => {
+                (errorData) => {
                     console.log(errorData);
-                    this.AlertService.add({ title: "Erro", content: "item não pôde ser atualizado", type: enums.AlertType.DANGER });
+                    this.AlertService.add({ content: errorData.message, title: "Item não pôde ser atualizado", type: enums.AlertType.DANGER });
                     this.unlock();
                 });
         }
@@ -52,26 +54,31 @@ export module controller.base{
         removeEntity(entity: T) {
             this.lock();
             this.EntityService.remove(entity,
-                (successData, successStatus) => {
+                () => {
                     this.newEntity();
                 },
-                (errorData, errorStatus) => {
+                (errorData) => {
                     console.log(errorData);
-                    this.AlertService.add({ title: "Erro", content: "item não pôde ser removido", type: enums.AlertType.DANGER });
+                    this.AlertService.add({ content: errorData.message, title: "Item não pôde ser removido", type: enums.AlertType.DANGER });
                     this.unlock();
                 });
         }
 
-        findEntity(id: number) {
+        findEntity(prettyId: string, done?: ()=> void) {
+            var actualId;
+            if(prettyId == "new") actualId = 0;
+            else actualId = Number(prettyId);
+            
             this.lock();
-            this.EntityService.find(id,
-                (successData, successStatus) => {
+            this.EntityService.find(actualId,
+                (successData) => {
                     this.$scope.entity = successData;
+                    if(done) done();
                     this.unlock();
                 },
-                (errorData, errorStatus) => {
+                (errorData) => {
                     console.log(errorData);
-                    this.AlertService.add({ title: "Erro", content: "item não pôde ser encontrado", type: enums.AlertType.DANGER });
+                    this.AlertService.add({ content: errorData.message, title: "Item não pôde ser encontrado", type: enums.AlertType.DANGER });
                     this.newEntity();
                 });
         }
@@ -82,22 +89,17 @@ export module controller.base{
 
 		lock(){
 			this.$scope.readMode = true;
-		    this.$scope.navigator.progress.start();
+		    this.$scope.navigator.Progress.start();
 		}
 
 		unlock(){
 			this.$scope.readMode = false;
-			this.$scope.navigator.progress.done();
+			this.$scope.navigator.Progress.done();
 		}
 
 		isEntityNew() {
             return (this.$scope.entity && this.$scope.entity.id == 0);
         }
         
-        private watchEntity(){
-            this.$scope.$watch("entity.id", (newValue: number, oldValue: number) => {
-                this.$scope.isEntityNew = this.isEntityNew();
-            });
-        }
 	}
 }

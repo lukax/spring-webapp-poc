@@ -1,12 +1,13 @@
 <div class="form-group" ng-class="{'has-error': error}">
-    <label for="entityId{{label}}" class="col-md-1 control-label">{{label}}</label>
+    <label class="col-md-1 control-label" for="{{label}}QuickSearch">{{label}}</label>
     <div class="col-md-2 input-group">
         <div class="input-group-btn">
-            <button type="button" class="btn btn-default" title="Buscar Rápida" ng-click="quickSearch()">
+            <button class="btn btn-default" type="button" title="Buscar Rápida" ng-click="search()">
                 <span class="glyphicon glyphicon-search"></span>
             </button>
         </div>
-        <input type="number" required min="1" class="form-control" id="entityId{{label}}" placeholder="ID" ng-model="entityId" ui-keyup="{'enter': 'fetch()'}" ui-event="{blur: 'fetch()'}">
+        <input class="form-control" id="{{label}}QuickSearch" type="number" placeholder="ID" ng-model="entityId" min="1"
+            ui-keyup="{enter: 'fetchEntity()'}" ui-event="{blur: 'fetchEntity()'}">
     </div>
     <div class="col-md-9" ng-transclude>
     </div>

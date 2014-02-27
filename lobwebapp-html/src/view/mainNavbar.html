@@ -1,0 +1,65 @@
+<div ng-controller="MainNavbarController">
+<nav class="navbar navbar-default" role="navigation">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+    </div>
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown">
+                    Pedido <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a ng-href="/order/new">Novo</a></li>
+                    <li><a ng-href="/order/list">Listar</a></li>
+                    <li><a ng-href="/order/graph">Estatísticas</a></li>
+                </ul>
+            </li>
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown">
+                    Produto <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a ng-href="/product/new">Novo</a></li>
+                    <li><a ng-href="/product/list">Listar</a></li>
+                </ul>
+            </li>
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown">
+                    Estoque <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a ng-href="/stock/new">Novo</a></li>
+                    <li><a ng-href="/stock/list">Listar</a></li>
+                </ul>
+            </li>
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown">
+                    Cliente <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a ng-href="/customer/new">Novo</a></li>
+                    <li><a ng-href="/customer/list">Listar</a></li>
+                </ul>
+            </li>
+        </ul>
+        <div class="navbar-right">
+            <ul class="nav navbar-nav">
+                <li ng-if="!isUserLogged"><a class="link" ng-href="/user/auth">Entrar</a></li>
+                <li ng-if="isUserLogged" class="dropdown">
+                    <a class="dropdown-toggle">
+                        Olá <strong>{{user.name}}</strong>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a ng-href="/user/auth?logout=true" ng-hide="!isUserLogged">Sair</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+</div>

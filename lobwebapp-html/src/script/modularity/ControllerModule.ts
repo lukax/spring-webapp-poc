@@ -1,7 +1,6 @@
-///<reference path="./../reference.d.ts"/>
-///<amd-dependency path="angularRoute"/>
-///<amd-dependency path="angularUiRouter"/>
+///<reference path="../reference.d.ts"/>
 
+///<amd-dependency path="angularUiRouter"/>
 import f = require("./../controller/MainNavbarController");
 import g = require("./../controller/AlertController");
 import h = require("./../util/DependencyManager");
@@ -9,15 +8,36 @@ import AppRoutes = require("./AppRoutes");
 
 export module modularity {
     export class ControllerModule {
-        private module: ng.IModule;
-        private $provide: ng.auto.IProvideService;
+        constructor() {
+            var mod = angular.module("lwa.controller", ["lwa.service", "ui.router"]);
+            
+            mod .config(["$controllerProvider", "$provide", "$compileProvider", "$filterProvider", ($controllerProvider: ng.IControllerProvider, $provide: ng.auto.IProvideService,
+                         $compileProvider: ng.ICompileProvider, $filterProvider: ng.IFilterProvider) => {
+                    mod.lazy = {
+                        controller: $controllerProvider.register,
+                        service: $provide.service,
+                        directive: $compileProvider.directive,
+                        filter: $filterProvider.register
+                    };
+                }])
+                .config(["$stateProvider", "$urlRouterProvider", this.stateProviderCfg])
+                .config(["$httpProvider", this.intercept401])
+                .config(["$locationProvider", this.html5Cfg])
 
-        private stateProviderCfg = ($stateProvider: ng.ui.IStateProvider, $urlRouterProvider: any) => {
+                .run(["$rootScope","Navigator", this.setRootScopeVariables])
+                .run(["$rootScope", "$location", "AuthService", this.blockNotAllowedStates])
+
+                .controller("MainNavbarController", <Function>f.controller.MainNavbarController)
+                .controller("AlertController", <Function>g.controller.AlertController)
+                ;
+        }
+
+        stateProviderCfg = ($stateProvider: ng.ui.IStateProvider, $urlRouterProvider: any) => {
             $urlRouterProvider.otherwise("/user/auth");
 
             AppRoutes.routes.forEach((x)=> {
                 $stateProvider.state(x.name, {
-                    url: x.url.replace(x.baseUrl,""),
+                    url: x.url,
                     templateUrl: x.templateUrl,
                     controller: x.controller,
                     resolve: this.loadDependencies(x.deps)
@@ -25,27 +45,30 @@ export module modularity {
             });
 
         };
+
+        html5Cfg = ($locationProvider: ng.ILocationProvider) => {
+            $locationProvider.html5Mode(true);
+        };
         
-        private userAuthCfg = ($rootScope: ng.IRootScopeService, $location: ng.ILocationService, AuthService: d.service.contract.AuthService) => {
-            var allowedRoutes = ["/user/auth"];
-            var isAllowedRoute = (route: string) => {
-                return allowedRoutes.some((x) => {
+        blockNotAllowedStates = ($rootScope: ng.IRootScopeService, $location: ng.ILocationService, AuthService: d.service.contract.AuthService) => {
+            var allowedStates = ["userAuth"];
+            var isAllowedState = (route: string) => {
+                return allowedStates.some((x) => {
                     return x === route;
                 });
             };
-            $rootScope.$on("$stateChangeStart", (event: any, to: string, toParams: any, from: string, fromParams: any) => {
+            $rootScope.$on("$stateChangeStart", (event: any, to: any, toParams: any, from: any, fromParams: any) => {
                 // if route requires auth and user is not logged in
-                var from = $location.path();
-                if (!isAllowedRoute(from) && !AuthService.isLoggedIn()) {
+                if (!isAllowedState(to.name) && !AuthService.isLoggedIn()) {
                     // redirect back to login
                     event.preventDefault();
-                    console.log("State Watcher: user not authenticated, redirecting ...");
-                    $location.path("/user/auth");
+                    console.log("User not authenticated, redirecting ...");
+                    $location.url("/user/auth");
                 }
             });
         };
         
-        private intercept401Cfg = ($httpProvider) => {
+        intercept401 = ($httpProvider) => {
             var logoutUserOn401 = ["$q", "$location", ($q: ng.IQService, $location: ng.ILocationService) => {
                 return{
                     "responseError" : (response) => {
@@ -65,41 +88,15 @@ export module modularity {
             $httpProvider.interceptors.push(logoutUserOn401);
         }
 
-        private rootscopeVariables = ($rootScope: d.controller.base.ViewModel, NavigationService: d.service.contract.NavigationService) => {
-            $rootScope.navigator = NavigationService;
-        }
-
-        constructor() {
-            this.module = angular.module("lwa.controller", ["lwa.service", "ui.router"]);
-            this.module.config(["$controllerProvider", "$provide", ($controllerProvider: ng.IControllerProvider, $provide: ng.auto.IProvideService) => {
-                this.module.lazy = {
-                    controller: $controllerProvider.register,
-                    service: $provide.service
-                };
-            }]);
-        }
-
-        configure() {
-            //Global usage controllers configuration
-            this.module
-                .config(["$stateProvider", "$urlRouterProvider", this.stateProviderCfg])
-                .config(["$httpProvider", this.intercept401Cfg])
-
-                .run(["$rootScope","NavigationService", this.rootscopeVariables])
-                .run(["$rootScope", "$location", "AuthService", this.userAuthCfg])
-
-                .controller("MainNavbarController", <Function>f.controller.MainNavbarController)
-                .controller("AlertController", <Function>g.controller.AlertController)
-                ;
-
-            return this;
+        setRootScopeVariables = ($rootScope: d.controller.base.ViewModel, Navigator: d.service.contract.Navigator) => {
+            $rootScope.navigator = Navigator;
         }
 
         loadDependencies(deps: Array<string>){
             if(deps.length === 0) return;
             var definition = {
-                resolver: ["$q", "$rootScope", ($q: ng.IQService, $rootScope: ng.IRootScopeService) => {
-                    return (new h.util.DependencyManager($q, $rootScope)).resolve(deps, "lwa.controller");
+                resolver: ["$q", "$rootScope", "Progress", ($q: ng.IQService, $rootScope: ng.IRootScopeService, Progress: d.service.contract.Progress) => {
+                    return (new h.util.DependencyManager($q, $rootScope, Progress)).resolve(deps, "lwa.controller");
                 }]
             }
             return definition;

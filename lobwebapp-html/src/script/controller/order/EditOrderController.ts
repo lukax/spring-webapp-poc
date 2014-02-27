@@ -1,4 +1,4 @@
-///<reference path="./../../reference.d.ts"/>
+///<reference path="../../reference.d.ts"/>
 
 import i0 = require("./../base/AbstractEditEntityController");
 import enums = require("./../../util/EnumUtil");
@@ -6,20 +6,17 @@ import enums = require("./../../util/EnumUtil");
 export module controller.order {
     export interface EditOrderViewModel extends i0.controller.base.EditEntityViewModel<domain.Order> {
         item: domain.OrderItem;
-        customer: domain.Customer;
         exchange: number;
         total: number;
         saveChanges(order: domain.Order): void;
         addItem(item: domain.OrderItem): void;
         removeItem(item: domain.OrderItem): void;
-        quickSearchProduct(): void;
-        quickSearchCustomer(): void;
         fetchProduct(id: number): void;
         fetchCustomer(id: number): void;
+        invalid: any;
     }
 
     export class EditOrderController extends i0.controller.base.AbstractEditEntityController<domain.Order> {
-
         static $inject = ["$scope", "ProductService", "$timeout", "AlertService", "CustomerService", "OrderService"];
         constructor(public $scope: EditOrderViewModel,
                     public ProductService: d.service.contract.ProductService,
@@ -28,8 +25,17 @@ export module controller.order {
                     public CustomerService: d.service.contract.CustomerService,
                     public OrderService: d.service.contract.OrderService) {
             super($scope, "order", OrderService, AlertService);
-            this.populateScope();
-            this.processArgs();
+            
+            var orderId = this.$scope.navigator.$stateParams.orderId;
+            var customerId = this.$scope.navigator.$stateParams.customerId;
+            var productId = this.$scope.navigator.$stateParams.productId;
+
+            this.findEntity(orderId, () => { 
+                if(customerId != null) this.fetchCustomer(customerId);
+                if(productId != null) this.fetchProduct(productId);
+                this.populateScope(); 
+                this.setupValidations();
+            });
         }
 
         addItem(item: domain.OrderItem) {
@@ -44,125 +50,69 @@ export module controller.order {
                 this.$scope.entity.items.push(this.$scope.item);        
             }
             this.emptyItem();
+            this.$scope.total = this.OrderService.getTotal(this.$scope.entity);
+        }
+        
+        emptyItem(){
+            this.$scope.item = { product: null, quantity: 0 };
         }
 
         removeItem(orderItem: domain.OrderItem) {
             this.$scope.entity.items = _.without(this.$scope.entity.items, orderItem);
         }
 
-        quickSearchCustomer() {
-            var preparedUrl = "/order/" + (this.isEntityNew() ? "new" : String(this.$scope.entity.id));
-            this.$scope.navigator.navigateTo("/customer/list?redirect=" + preparedUrl);
-        }
-
-        quickSearchProduct() {
-            var preparedUrl = "/order/" + (this.isEntityNew() ? "new" : String(this.$scope.entity.id));
-            this.$scope.navigator.navigateTo("/product/list?redirect=" + preparedUrl);
-        }
-        
-        total() {
-            this.$timeout(() => { //TODO: Fix this ugly hack
-                var sum: number = 0;
-                this.$scope.entity.items.forEach((x) => {
-                    sum += x.quantity * x.product.price;
-                });
-                this.$scope.total = sum;
-            }, 100);
-        }
-
-        emptyOrder() {
-            this.$scope.entity = { id: 0, customer: null, items: [], payment: { id: 0, quantity: 0, status: enums.PaymentStatus.PENDING, mode: enums.PaymentMode.MONEY }, date: new Date() };
-        }
-
-        emptyItem() {
-            this.$scope.item = {product: { id: 0, name: "", description: "", quantity: 0, price: 0 }, quantity: 0};
-        }
-
-        emptyCustomer() {
-            this.$scope.customer = { id: 0, name: "" };
-        }
-
-        fetchOrder(id: number) {
-            this.lock();
-            this.OrderService.find(id,
-                (successData) => {
-                    this.$scope.entity = successData;
-                    this.$scope.customer = successData.customer;
-                    this.unlock();
-                }, (errorData) => {
-                    this.AlertService.add({ title: "Buscar Pedido", content: "Não foi possível achar um pedido com o ID informado", type: enums.AlertType.WARNING });
-                    super.newEntity();
-                });
-            
-        }
-
         fetchCustomer(id: number) {
-            if(id <= 0) return;
             this.lock();
             this.CustomerService.find(id,
-                (successData: domain.Customer) => {
-                    this.$scope.customer = successData;
+                (successData) => {
                     this.$scope.entity.customer = successData;
                     this.unlock();
-                }, (errorData: domain.util.Error) => {
-                    this.AlertService.add({ title: "Buscar Cliente", content: "Não foi possível achar um cliente com o ID informado", type: enums.AlertType.WARNING });
-                    this.emptyCustomer();
+                }, (errorData) => {
+                    console.log(errorData);
+                    this.AlertService.add({ title: "Não foi possível buscar cliente", content: errorData.message, type: enums.AlertType.WARNING });
+                    this.$scope.entity.customer.id = 0;
                     this.unlock();
                 });
             
         }
 
         fetchProduct(id: number) {
-            if(id <= 0) return;
             this.lock();
             this.ProductService.find(id,
-                (successData: domain.Product) => {
+                (successData) => {
+                    if(!this.$scope.item) this.emptyItem();
                     this.$scope.item.product = successData;
                     this.unlock();
-                }, (errorData: domain.util.Error) => {
-                    this.AlertService.add({ title: "Buscar Produto", content: "Não foi possível achar um produto com o ID informado", type: enums.AlertType.WARNING });
+                }, (errorData) => {
+                    console.log(errorData);
+                    this.AlertService.add({ title: "Não foi possível buscar produto", content: errorData.message, type: enums.AlertType.WARNING });
                     this.emptyItem();
                     this.unlock();
                 });
         }
         
-        watchOrder() {
-            this.$scope.$watch("payment", (newValue: domain.Order, oldValue: domain.Order) => {
-                if (this.$scope.total > 0) {
-                    var sum = this.$scope.entity.payment.quantity - this.$scope.total;
-                    if (sum > 0) this.$scope.exchange = sum;
-                    else this.$scope.exchange = 0;
-                } else {
-                    this.$scope.exchange = 0;
-                }
+        setupValidations() {
+            this.$scope.invalid = {};
+            this.$scope.$watchCollection("entity.items", ()=>{
+                this.$scope.invalid.orderItems = this.$scope.entity.items.length == 0;
             });
-            this.$scope.$watchCollection("order.items", (newValue: domain.Product[], oldValue: domain.Product[]) => {
-                this.total();
+            this.$scope.$watch("exchange", () =>{
+                this.$scope.invalid.paymentQuantity = this.$scope.entity.payment.status != enums.PaymentStatus.PENDING && this.$scope.exchange < 0;
             });
-        }
-
-        processArgs() {
-            var orderId = this.$scope.navigator.params().orderId;
-            var customerId = this.$scope.navigator.params().customerId;
-            var productId = this.$scope.navigator.params().productId;
-
-            if(orderId > 0) this.fetchOrder(orderId);
-            if(customerId > 0) this.fetchProduct(productId);
-            if(productId > 0) this.fetchCustomer(customerId);
         }
 
         populateScope() {
-            this.emptyOrder();
-            this.emptyCustomer();
-            this.emptyItem();
-
-            this.watchOrder();
-
+            this.$scope.total = 0;
+            this.$scope.$watch("entity.payment.quantity", () => {
+                this.$scope.exchange = this.OrderService.getExchange(this.$scope.entity);
+            });
+            this.$scope.$watch("entity.payment.status", () => {
+                if(this.$scope.entity.payment.status == enums.PaymentStatus.PENDING)
+                    this.$scope.entity.payment.quantity = 0;
+            });
             this.$scope.saveChanges = (order) => this.saveChanges(order);
             this.$scope.addItem = (item) => this.addItem(item);
             this.$scope.removeItem = (item) => this.removeItem(item);
-            this.$scope.quickSearchCustomer = () => this.quickSearchCustomer();
-            this.$scope.quickSearchProduct = () => this.quickSearchProduct();
             this.$scope.fetchProduct = (id) => this.fetchProduct(id);
             this.$scope.fetchCustomer = (id) => this.fetchCustomer(id);
         }

@@ -1,6 +1,7 @@
 ﻿<!doctype html>
 <html>
 <head>
+    <base href="/">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <title>LOBWebApp</title>
@@ -8,13 +9,12 @@
     <meta name="viewport" content="width=device-width">
     <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="css/main.css">
-
 </head>
 <body>
 
-    <div data-ng-include="'view/mainNavbarView.html'"></div>
-    <div class="container" data-ui-view=""></div>
-    <div class="container" data-ng-include="'view/alertView.html'"></div>
+    <div ng-include="'view/mainNavbar.html'"></div>
+    <div class="container" ui-view></div>
+    <div class="container" ng-include="'view/alert.html'"></div>
 
     <script data-main="script/main.js" src="lib/requirejs/require.js"></script>
 </body>

@@ -1,4 +1,4 @@
-///<reference path="./../../reference.d.ts"/>
+///<reference path="../../reference.d.ts"/>
 
 export module service.mock {
     export class AlertServiceMock implements d.service.contract.AlertService {

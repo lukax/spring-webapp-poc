@@ -1,52 +1,52 @@
-﻿<form class="form-horizontal" role="form" name="formStock" ng-submit="saveChanges(entity)" novalidate>
-    
+<form class="form-horizontal" role="form" name="stockForm" ng-submit="saveChanges(entity)" novalidate>
     <div class="form-group">
-        <label for="stockId" class="col-md-1 control-label">ID</label>
+        <label for="inputId" class="col-md-1 control-label">ID</label>
         <div class="col-md-11">
-            <input type="text" class="form-control" id="stockId" name="stockId" readonly ng-model="entity.id">
+            <input type="text" class="form-control" id="inputId" readonly ng-model="entity.id">
         </div>
     </div>
-    
-    <quick-search lock="readMode" error="entity.product.id <= 0" label="'Produto'" entity-id="entity.product.id" fetch="fetchProduct(entity.product.id)" quickSearch="quickSearchProduct()">
+    <quick-search label="Produto" resource-url="product" entity-id="entity.product.id" fetch="fetchProduct(entity.product.id)">
         <p class="form-control-static">
-                <product-detail product="entity.product"></product-detail>
+            <product-detail product="entity.product"></product-detail>
         </p>
     </quick-search>
-
-    <div class="form-group" ng-class="{'has-error': formStock.quantity.$invalid}">
-        <label for="quantity" class="col-md-1 control-label">Qt.</label>
-        <div class="col-md-5">
-            <input type="number" class="form-control" id="quantity" name="quantity" autofocus ng-model="entity.quantity" required min="0">
+    <div class="form-group">
+        <div ng-class="{'has-error': stockForm.quantity.$invalid || invalid.quantity }">
+            <label for="quantity" class="col-md-1 control-label">Qt.</label>
+            <div class="col-md-5">
+                <input type="number" class="form-control" id="quantity" name="quantity" autofocus ng-model="entity.quantity" required min="0" max="1000">
+            </div>
         </div>
-        <div ng-class="{'has-error': productForm.inputMin.$invalid}">
+        <div ng-class="{'has-error': stockForm.minQuantity.$invalid || invalid.minQuantity }">
             <label for="minQuantity" class="col-md-1 control-label">Min</label>
             <div class="col-md-2">
-                <input type="number" class="form-control" id="minQuantity" name="minQuantity" ng-model="entity.minQuantity" min="0">
+                <input type="number" class="form-control" id="minQuantity" name="minQuantity" ng-model="entity.minQuantity" min="0" max="1000">
             </div>
         </div>
-        <div ng-class="{'has-error': productForm.inputMax.$invalid}">
+        <div ng-class="{'has-error': stockForm.maxQuantity.$invalid || invalid.maxQuantity }">
             <label for="maxQuantity" class="col-md-1 control-label">Max</label>
             <div class="col-md-2">
-                <input type="number" class="form-control" id="maxQuantity" name="maxQuantity" ng-model="entity.maxQuantity" min="0">
+                <input type="number" class="form-control" id="maxQuantity" name="maxQuantity" ng-model="entity.maxQuantity" min="0" max="1000">
             </div>
         </div>
     </div>
-    
-    <div class="form-group" ng-class="{'has-error': formStock.unit.$invalid}">
+    <div class="form-group" ng-class="{'has-error': stockForm.unit.$invalid}">
         <label for="unit" class="col-md-1 control-label">Unid.</label>
         <div class="col-md-11">
-            <input type="text" class="form-control" id="unit" name="unit" autofocus ng-model="entity.unit" required>
+            <input type="text" class="form-control" id="unit" name="unit" autofocus ng-model="entity.unit" required ng-maxlength="10">
         </div>
     </div>
-
     <save-changes save-disabled="readMode ||
-                            formStock.quantity.$invalid ||
-                            formStock.unit.$invalid ||
-                            formStock.minQuantity.$invalid ||
-                            formStock.maxQuantity.$invalid ||
-                            formStock.quantity.$pristine &&
-                            formStock.unit.$pristine &&
-                            formStock.minQuantity.$pristine &&
-                            formStock.maxQuantity.$pristine" 
+                            invalid.quantity ||
+                            invalid.minQuantity ||
+                            invalid.maxQuantity ||
+                            stockForm.quantity.$invalid ||
+                            stockForm.minQuantity.$invalid ||
+                            stockForm.maxQuantity.$invalid ||
+                            stockForm.unit.$invalid ||
+                            stockForm.quantity.$pristine &&
+                            stockForm.minQuantity.$pristine &&
+                            stockForm.maxQuantity.$pristine &&
+                            stockForm.unit.$pristine" 
                             remove="removeStock(entity)" remove-disabled="isEntityNew || readMode"></save-changes>
 </form>

@@ -1,11 +1,11 @@
 package com.espindola.lobwebapp.domain;
 
+import java.math.BigDecimal;
+
 import javax.persistence.Embeddable;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
 
 @Embeddable
 public class OrderItem {
@@ -13,11 +13,9 @@ public class OrderItem {
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "PRODUCT_ID")
 	private Product product;
-	
-	@NotNull
-	@Min(0)
+
 	private Integer quantity;
-	
+
 	public Product getProduct() {
 		return product;
 	}
@@ -32,5 +30,14 @@ public class OrderItem {
 
 	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
+	}
+
+	public BigDecimal computeTotalPrice() {
+		BigDecimal qt = new BigDecimal(0);
+		try {
+			qt = product.getPrice().multiply(new BigDecimal(quantity));
+		} catch (NullPointerException ex) {
+		}
+		return qt;
 	}
 }

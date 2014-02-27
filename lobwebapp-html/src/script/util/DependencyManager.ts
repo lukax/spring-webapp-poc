@@ -1,30 +1,30 @@
-///<reference path="./../reference.d.ts"/>
-
-import p = require("./Progress");
+///<reference path="../reference.d.ts"/>
 
 export module util {
     export class DependencyManager {
 
-        constructor(public $q: ng.IQService, public $rootScope: ng.IRootScopeService) {
+        constructor(public $q: ng.IQService, 
+                    public $rootScope: ng.IRootScopeService,
+                    public Progress: d.service.contract.Progress) {
 
         }
 
-        public resolve(paths: string[], registerProvider: any) {
+        public resolve(paths: string[], moduleName: string) {
             var deferred = this.$q.defer();
-            p.util.Progress.start();
+            this.Progress.start();
 
-            if (registerProvider) {
+            if (moduleName) {
                 paths.forEach((x: string) => {
                     require([x], (dep) => {
-                        if (dep.register) dep.register(registerProvider);
+                        if (dep.register) dep.register(moduleName);
                     });
                 });
             }
 
-            require(paths, (deps) => {
+            require(paths, () => {
                 this.$rootScope.$apply(() => {
-                    console.log("Dependency Manager: resolved " + paths);
-                    p.util.Progress.done();
+                    console.log("Resolved: " + paths.join(", "));
+                    this.Progress.done();
                     deferred.resolve();
                 });
             });

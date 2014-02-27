@@ -2,7 +2,7 @@
     <div class="input-group">
         <input type="search" ng-model="searchText" id="inputSearch" placeholder="Procurar" class="form-control" autofocus>
         <div class="input-group-btn">
-            <label class="btn btn-primary" for="inputSearch" data-ng-click="listCustomer()">
+            <label class="btn btn-primary" for="inputSearch" data-ng-click="listEntity(0)">
                 <span class="glyphicon glyphicon-refresh"></span>
             </label>
         </div>
@@ -15,11 +15,11 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="customer in customers | filter:searchText | orderBy:predicate:reverse"
-                ng-click="editCustomer(customer.id)" style="cursor: pointer;" class="product-list">
+            <tr class="lwa-list" ng-repeat="customer in entities | filter:searchText | orderBy:predicate:reverse" ng-click="editEntity(customer.id)">
                 <td>{{customer.id}}</td>
                 <td>{{customer.name}}</td>
             </tr>
         </tbody>
     </table>
+    <list-pager page="page" change-page="listEntity"></list-pager>
 </div>

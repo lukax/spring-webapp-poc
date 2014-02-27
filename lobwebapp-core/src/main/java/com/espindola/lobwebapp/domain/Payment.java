@@ -1,31 +1,27 @@
 package com.espindola.lobwebapp.domain;
 
+import java.math.BigDecimal;
+
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
 
 import com.espindola.lobwebapp.domain.base.AbstractEntity;
 
 @Entity
 @Table(name = "TB_PAYMENT")
 public class Payment extends AbstractEntity {
-	
-	@NotNull
-	@Min(0)
-	private Double quantity;
-	
-	@NotNull
+
+	private BigDecimal quantity;
+
 	private PaymentStatus status;
-	
-	@NotNull
+
 	private PaymentMode mode;
 
-	public Double getQuantity() {
+	public BigDecimal getQuantity() {
 		return quantity;
 	}
 
-	public void setQuantity(Double quantity) {
+	public void setQuantity(BigDecimal quantity) {
 		this.quantity = quantity;
 	}
 

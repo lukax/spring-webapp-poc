@@ -1,24 +1,24 @@
 package com.espindola.lobwebapp.service.impl;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.espindola.lobwebapp.domain.User;
-import com.espindola.lobwebapp.repository.contract.UserRepository;
+import com.espindola.lobwebapp.exception.InvalidArgumentException;
+import com.espindola.lobwebapp.l10n.MessageKey;
+import com.espindola.lobwebapp.repository.UserRepository;
 import com.espindola.lobwebapp.service.contract.UserService;
 import com.espindola.lobwebapp.service.impl.base.AbstractPersonServiceImpl;
 
 @Service
-@Transactional
-public class UserServiceImpl extends AbstractPersonServiceImpl<User> implements UserService {
+public class UserServiceImpl extends AbstractPersonServiceImpl<User> implements
+		UserService {
 
 	private UserRepository repository;
 
 	@Autowired
 	public UserServiceImpl(UserRepository repository) {
-		super(repository);
+		super(repository, MessageKey.USER);
 		this.repository = repository;
 	}
 
@@ -26,15 +26,20 @@ public class UserServiceImpl extends AbstractPersonServiceImpl<User> implements 
 	public User findByUsername(String username) {
 		return this.repository.findByUsername(username);
 	}
-	
+
 	@Override
-	public Boolean authenticate(User user){
+	public Boolean authenticate(User user) {
 		User x = this.repository.findByUsername(user.getUsername());
-		if(x != null && x.getPassword().equals(user.getPassword())) {
+		if (x != null && x.getPassword().equals(user.getPassword())) {
 			return true;
-		}
-		else { 
+		} else {
 			return false;
 		}
 	}
+
+	@Override
+	protected void throwIfInvalid(User entity) throws InvalidArgumentException {
+		// TODO: Business logic
+	}
+
 }

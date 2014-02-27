@@ -3,7 +3,8 @@
 #################
 
 ## core
-/target
+target/
+logs/
 .springBeans
 
 ## html

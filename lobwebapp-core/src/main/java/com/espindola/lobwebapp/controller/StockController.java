@@ -6,15 +6,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.espindola.lobwebapp.controller.base.AbstractEntityController;
 import com.espindola.lobwebapp.domain.Stock;
-import com.espindola.lobwebapp.service.contract.StockService;
+import com.espindola.lobwebapp.facade.StockFacade;
+import com.espindola.lobwebapp.l10n.MessageKey;
+import com.espindola.lobwebapp.validation.StockValidator;
 
 @Controller
-@RequestMapping(value="/stock")
+@RequestMapping(value = "/stock")
 public class StockController extends AbstractEntityController<Stock> {
 
 	@Autowired
-	public StockController(StockService service) {
-		super(service);
+	public StockController(StockFacade facade, StockValidator validator) {
+		super(facade, validator, MessageKey.STOCK);
 	}
 
 }

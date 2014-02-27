@@ -1,16 +1,16 @@
-///<reference path="./../../../reference.d.ts"/>
+///<reference path="../../../reference.d.ts"/>
 
 export module service.mock.base {
     export class EntityServiceMock<T extends domain.base.AbstractEntity> implements d.service.contract.base.EntityService<T> {
         private repository: T[];
 
         constructor(public $timeout: ng.ITimeoutService) {
-            this.repository = new Array<T>();
+            this.repository = [];
         }
 
-        public save(entity: T,
+        save(entity: T,
             successCallback: (data: T, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
-            errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
+            errorCallback: (data: domain.util.MessageResponse, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
                 this.$timeout(() => {
                     if (entity.id != 0) errorCallback({ message: "ID Inválido"}, 403, null, null);
                     var storId = 0;
@@ -18,16 +18,16 @@ export module service.mock.base {
                         (item: T) => {
                             if (item.id > storId) storId = item.id;
                         });
-                    entity.id = ++storId;
+                    (<T>entity).id = ++storId;
                     this.getRepository().push(angular.copy(entity));
 
                     successCallback(entity, 200, null, null);
                 });
         }
 
-        public update(entity: T,
+        update(entity: T,
             successCallback: (data: T, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
-            errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
+            errorCallback: (data: domain.util.MessageResponse, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
                 this.$timeout(() => {
                     if (entity.id == 0) errorCallback({ message: "ID Inválido"}, 403, null, null);
                     var success = false;
@@ -45,9 +45,9 @@ export module service.mock.base {
                 }, 100);
         }
 
-        public remove(entity: T,
+        remove(entity: T,
             successCallback: (data: T, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
-            errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
+            errorCallback: (data: domain.util.MessageResponse, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
                 this.$timeout(() => {
                     var success = false;
                     this.getRepository().some(
@@ -64,9 +64,9 @@ export module service.mock.base {
                 }, 100);
         }
 
-        public find(id: number,
+        find(id: number,
             successCallback: (data: T, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
-            errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
+            errorCallback: (data: domain.util.MessageResponse, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
                 this.$timeout(() => {
                     var success = false;
                     var retrievedEntity = <T>{};
@@ -84,23 +84,23 @@ export module service.mock.base {
                 }, 100);
         }
 
-        public list(
+        list(
             successCallback: (data: T[], status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
-            errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
-            pageable?: domain.util.Pageable) {
+            errorCallback: (data: domain.util.MessageResponse, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
+            pageable?: domain.util.Page) {
                 this.$timeout(() => {
                     var repo = this.getRepository();
                     if (pageable) {
-                        repo.splice(0, pageable.page_index);
-                        repo.splice(pageable.page_index + pageable.page_size, repo.length - 1);
+                        repo.splice(0, pageable.index);
+                        repo.splice(pageable.index + pageable.size, repo.length - 1);
                     }
-                    successCallback(repo, 200, null, null);
+                    successCallback(repo, 200, (h) => { if (h == "page_total") return ""+pageable.size; }, null);
                 }, 1000);
         }
 
-        public exists(entity: T,
+        exists(entity: T,
             successCallback: (data: boolean, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
-            errorCallback: (data: domain.util.Error, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
+            errorCallback: (data: domain.util.MessageResponse, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
                 this.$timeout(() => {
                     var success = false;
                     this.getRepository().some((x: T) => {
@@ -112,12 +112,16 @@ export module service.mock.base {
                     });
 
                     if(success) successCallback(true, 200, null, null);
-                    else errorCallback({ message: "Entidade Inexistente"}, 200, null, null);
+                    else errorCallback({ message: "Entidade Inexistente" }, 200, (h) => "", { method: "", url: "" });
                 }, 100);
         }
 
-        public getRepository() {
+        getRepository() {
             return angular.copy(this.repository);
+        }
+
+        addToRepository(entity: T) {
+            this.repository.push(entity);
         }
     }
 }

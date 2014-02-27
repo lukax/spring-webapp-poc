@@ -6,12 +6,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import com.espindola.lobwebapp.domain.Product;
-import com.espindola.lobwebapp.exception.EntityNotFoundException;
+import com.espindola.lobwebapp.exception.NotFoundException;
 import com.espindola.lobwebapp.service.contract.base.EntityService;
 
 public interface ProductService extends EntityService<Product> {
-	List<Product> findByName(String name) throws EntityNotFoundException;
+	Product findByName(String name) throws NotFoundException;
+
 	Page<Product> findByNameLike(String name, Pageable pageable);
+
 	List<String> findAllCategory();
+
 	List<String> findCategoryByName(String name);
 }

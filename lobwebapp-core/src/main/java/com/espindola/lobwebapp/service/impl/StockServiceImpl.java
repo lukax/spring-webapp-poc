@@ -1,30 +1,48 @@
 package com.espindola.lobwebapp.service.impl;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.espindola.lobwebapp.domain.Stock;
-import com.espindola.lobwebapp.repository.contract.StockRepository;
+import com.espindola.lobwebapp.exception.AlreadyExistsException;
+import com.espindola.lobwebapp.exception.InvalidArgumentException;
+import com.espindola.lobwebapp.exception.NotFoundException;
+import com.espindola.lobwebapp.l10n.MessageKey;
+import com.espindola.lobwebapp.repository.StockRepository;
 import com.espindola.lobwebapp.service.contract.StockService;
 import com.espindola.lobwebapp.service.impl.base.AbstractEntityServiceImpl;
 
 @Service
-@Transactional
-public class StockServiceImpl extends AbstractEntityServiceImpl<Stock> implements StockService {
+public class StockServiceImpl extends AbstractEntityServiceImpl<Stock>
+		implements StockService {
 
 	private StockRepository repository;
 
 	@Autowired
 	public StockServiceImpl(StockRepository repository) {
-		super(repository);
+		super(repository, MessageKey.STOCK);
 		this.repository = repository;
 	}
 
 	@Override
-	public List<Stock> findByProductId(Long productId) {
-		return this.repository.findByProductId(productId);
+	public Stock findByProductId(Long productId) throws NotFoundException {
+		Stock s = this.repository.findByProductId(productId);
+		if (s == null)
+			throw new NotFoundException(entityMessageKey, productId);
+		return s;
 	}
+
+	@Override
+	protected void throwIfInvalid(Stock entity) throws InvalidArgumentException {
+		// TODO: Business logic
+	}
+
+	@Override
+	protected void throwIfAlreadyExists(Stock entity)
+			throws AlreadyExistsException {
+		super.throwIfAlreadyExists(entity);
+		if (repository.findByProductId(entity.getProduct().getId()) != null)
+			throw new AlreadyExistsException(MessageKey.STOCK, entity);
+	}
+
 }

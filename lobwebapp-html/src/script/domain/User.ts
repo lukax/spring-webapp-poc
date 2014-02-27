@@ -1,10 +1,9 @@
-///<reference path='./base/AbstractEntity.ts'/>
-///<reference path='./base/Person.ts'/>
+///<reference path="../reference.d.ts"/>
 
 module domain {
     export interface User extends domain.base.Person {
         username: string; 
         password: string; 
-        roles?: string[];
+        roles: string[];
     }
 }

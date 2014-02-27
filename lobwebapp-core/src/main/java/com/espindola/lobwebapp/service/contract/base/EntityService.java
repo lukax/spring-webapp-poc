@@ -4,21 +4,24 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.access.prepost.PreAuthorize;
 
 import com.espindola.lobwebapp.domain.base.AbstractEntity;
-import com.espindola.lobwebapp.exception.EntityExistsException;
-import com.espindola.lobwebapp.exception.EntityInvalidException;
-import com.espindola.lobwebapp.exception.EntityNotFoundException;
+import com.espindola.lobwebapp.exception.InvalidArgumentException;
+import com.espindola.lobwebapp.exception.NotFoundException;
 
-@PreAuthorize("hasRole('ROLE_USER')")
 public interface EntityService<T extends AbstractEntity> {
-	
-	T save(T entity) throws EntityExistsException, EntityInvalidException;
-	T update(T entity) throws EntityNotFoundException, EntityInvalidException;
-	T remove(Long id) throws EntityNotFoundException;
-	T find(Long id) throws EntityNotFoundException;
-	Boolean exists(T entity) throws EntityInvalidException;
+
+	T save(T entity) throws NotFoundException, InvalidArgumentException;
+
+	T update(T entity) throws NotFoundException, InvalidArgumentException;
+
+	T remove(Long id) throws NotFoundException;
+
+	T find(Long id) throws NotFoundException;
+
 	List<T> findAll();
+
 	Page<T> findAll(Pageable p);
+
+	boolean exists(Long id);
 }

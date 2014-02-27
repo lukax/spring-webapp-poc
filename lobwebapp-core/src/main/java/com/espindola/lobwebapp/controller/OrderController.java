@@ -6,16 +6,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.espindola.lobwebapp.controller.base.AbstractEntityController;
 import com.espindola.lobwebapp.domain.Order;
-import com.espindola.lobwebapp.service.contract.OrderService;
+import com.espindola.lobwebapp.facade.OrderFacade;
+import com.espindola.lobwebapp.l10n.MessageKey;
+import com.espindola.lobwebapp.validation.OrderValidator;
 
 @Controller
-@RequestMapping(value="/order")
+@RequestMapping(value = "/order")
 public class OrderController extends AbstractEntityController<Order> {
 
 	@Autowired
-	public OrderController(OrderService service) {
-		super(service);
-
+	public OrderController(OrderFacade facade, OrderValidator validator) {
+		super(facade, validator, MessageKey.ORDER);
 	}
 
 }

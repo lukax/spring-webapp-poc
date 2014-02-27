@@ -1,58 +1,110 @@
 package com.espindola.lobwebapp.service.impl;
 
-import java.util.ArrayList;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.net.URLConnection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.espindola.lobwebapp.domain.Product;
-import com.espindola.lobwebapp.exception.EntityNotFoundException;
-import com.espindola.lobwebapp.repository.contract.ProductRepository;
+import com.espindola.lobwebapp.exception.AlreadyExistsException;
+import com.espindola.lobwebapp.exception.InvalidArgumentException;
+import com.espindola.lobwebapp.exception.NotFoundException;
+import com.espindola.lobwebapp.l10n.MessageKey;
+import com.espindola.lobwebapp.repository.ProductRepository;
 import com.espindola.lobwebapp.service.contract.ProductService;
 import com.espindola.lobwebapp.service.impl.base.AbstractEntityServiceImpl;
+import com.espindola.lobwebapp.validation.util.CustomObjectError;
+import com.espindola.lobwebapp.validation.util.ErrorCode;
 
 @Service
-@Transactional
-public class ProductServiceImpl extends AbstractEntityServiceImpl<Product> implements ProductService {
+public class ProductServiceImpl extends AbstractEntityServiceImpl<Product>
+		implements ProductService {
+
+	private MessageKey entityMessageKey = MessageKey.PRODUCT;
 
 	private ProductRepository repository;
-	
+
 	@Autowired
 	public ProductServiceImpl(ProductRepository repository) {
-		super(repository);
+		super(repository, MessageKey.PRODUCT);
 		this.repository = repository;
 	}
 
 	@Override
-	public List<Product> findByName(String name) throws EntityNotFoundException {
-		return this.repository.findByName(name);
+	public Product findByName(String name) throws NotFoundException {
+		return repository.findByName(name);
 	}
 
 	@Override
 	public List<String> findAllCategory() {
-		return this.repository.findAllCategory();
+		return repository.findAllCategory();
 	}
-	
+
 	@Override
 	public List<String> findCategoryByName(String name) {
-		String compareName = name.toLowerCase();
-		List<String> current = this.repository.findAllCategory();
-		List<String> filtered = new ArrayList<String>();
-		for(String x : current){
-			if(x != null && x.toLowerCase().contains(compareName)){
-				filtered.add(x);
-			}
-		}
-		return filtered;
+		return repository.findAllCategoryLike(name);
 	}
-	
+
 	@Override
 	public Page<Product> findByNameLike(String name, Pageable pageable) {
-		return this.repository.findByNameLike(name, pageable);
+		return repository.findByNameLike(name, pageable);
 	}
-	
+
+	@Override
+	protected void throwIfInvalid(Product entity)
+			throws InvalidArgumentException {
+		// TODO: Business logic
+		throwIfPriceIsLessThanCostPrice(entity);
+		throwIfInvalidOrTooBigImage(entity);
+	}
+
+	@Override
+	protected void throwIfAlreadyExists(Product entity)
+			throws AlreadyExistsException {
+		Product p = repository.findOne(entity.getId());
+		if (p != null)
+			throw new AlreadyExistsException(entityMessageKey, p);
+
+		Product q = repository.findByName(entity.getName());
+		if (q != null)
+			throw new AlreadyExistsException(entityMessageKey, q);
+	}
+
+	private void throwIfPriceIsLessThanCostPrice(Product entity) {
+		if (entity.getCostPrice().compareTo(entity.getPrice()) >= 0)
+			throw new InvalidArgumentException(entityMessageKey,
+					new CustomObjectError(ErrorCode.REQUIRED,
+							MessageKey.VALIDATION_INVALID, "price"));
+	}
+
+	private void throwIfInvalidOrTooBigImage(Product entity) {
+		if (entity.getImage() != null && entity.getImage().getBytes() != null) {
+			try {
+				String type = URLConnection
+						.guessContentTypeFromStream(new ByteArrayInputStream(
+								entity.getImage().getBytes()));
+				if (type == null || !type.contains("image")) {
+					throw new InvalidArgumentException(entityMessageKey,
+							new CustomObjectError(ErrorCode.REQUIRED,
+									MessageKey.VALIDATION_INVALID, "image",
+									"5 MB"));
+				}
+				if (entity.getImage().getBytes().length > 5000000) {
+					throw new InvalidArgumentException(entityMessageKey,
+							new CustomObjectError(ErrorCode.INVALID,
+									MessageKey.VALIDATION_INVALID, "image",
+									"5 MB"));
+				}
+			} catch (IOException ex) {
+				throw new InvalidArgumentException(entityMessageKey,
+						new CustomObjectError(ErrorCode.REQUIRED,
+								MessageKey.VALIDATION_INVALID, "image", "5 MB"));
+			}
+		}
+	}
 }

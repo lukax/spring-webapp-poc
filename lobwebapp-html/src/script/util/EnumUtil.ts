@@ -1,4 +1,4 @@
-///<reference path="./../reference.d.ts"/>
+///<reference path="../reference.d.ts"/>
 
 export class PaymentStatus {
     public static OK = "OK";
@@ -17,4 +17,8 @@ export class AlertType {
     public static DANGER = "danger";
     public static OK = "success";
     public static INFO = "info";
+}
+
+export class Headers {
+    public static PAGE_TOTAL = "page_total";
 }

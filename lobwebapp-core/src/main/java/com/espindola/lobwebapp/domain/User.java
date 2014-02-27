@@ -10,30 +10,19 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 import com.espindola.lobwebapp.domain.base.Person;
 
 @Entity
-@Table(name = "TB_USER", uniqueConstraints = {
-		@UniqueConstraint(columnNames = "USERNAME")
-})
+@Table(name = "TB_USER", uniqueConstraints = { @UniqueConstraint(columnNames = "USERNAME") })
 public class User extends Person {
 
-	@NotNull
-	@Size(min = 4)
 	private String username;
 
-	@NotNull
-	@Size(min = 4)
 	private String password;
 
 	@ElementCollection(fetch = FetchType.EAGER)
-	@CollectionTable(
-	        name="TB_USER_ROLE",
-	        joinColumns= @JoinColumn(name="USER_ID")
-	  )
+	@CollectionTable(name = "TB_USER_ROLE", joinColumns = @JoinColumn(name = "USER_ID"))
 	private Set<String> roles = new HashSet<String>();
 
 	public String getUsername() {

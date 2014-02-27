@@ -1,55 +1,64 @@
-///<reference path="./../../reference.d.ts"/>
+///<reference path="../../reference.d.ts"/>
+///<amd-dependency path="angular"/>
+///<amd-dependency path="angularMocks"/>
+///<amd-dependency path="underscore"/>
 import i0 = require("script/controller/product/ListProductController");
 import i1 = require("script/service/mock/ProductServiceMock");
 import i2 = require("script/service/mock/AlertServiceMock");
-import i3 = require("script/service/impl/NavigationServiceImpl");
+import i3 = require("script/util/Navigator");
 import i4 = require("script/modularity/ControllerModule");
 
 describe("controller: ListProductController", () => {
-    new i4.modularity.ControllerModule();
+
     var $scope: any;
+
     beforeEach(() => {
-        module("lwa.service", ($provide: ng.auto.IProvideService, $controllerProvider: ng.IControllerProvider)=>{
+        module(($provide: ng.auto.IProvideService, $controllerProvider: ng.IControllerProvider)=>{
             $provide.service("ProductService", i1.service.mock.ProductServiceMock);
             $provide.service("AlertService", i2.service.mock.AlertServiceMock);
-            $provide.service("NavigationService", i3.service.impl.NavigationServiceImpl);
             $provide.service("$stateParams", () => {
                 return { }
             });
+            $provide.service("Progress", () => {
+                return { start: () => {}, done: () => {}, set: () => {} }
+            });
+            $provide.service("Navigator", i3.util.Navigator);
             $controllerProvider.register("ProductController", i0.controller.product.ListProductController);
         });
-        inject(($rootScope: ng.IRootScopeService)=> {
-           $scope = $rootScope.$new();
+        inject(($rootScope: ng.IRootScopeService, Navigator)=> {
+            $scope = $rootScope.$new();
+            $scope.navigator = Navigator;
         });
     });
 
-    it("should list products", inject(($controller: ng.IControllerService, $timeout: ng.ITimeoutService) => {
+    it("should list products", inject(($controller: ng.IControllerService, $timeout: ng.ITimeoutService, $stateParams: any) => {
+        $stateParams.search = "";
         var ctrl = $controller("ProductController", {
             $scope: $scope
         });
-        ctrl.listProduct();
+
+        ctrl.listProduct(0);
         $timeout.flush();
-        expect($scope.products).toEqual(jasmine.any(Array));
+        expect($scope.entities).toEqual(jasmine.any(Array));
     }));
 
     it("should edit a product", inject(($controller: ng.IControllerService, $timeout: ng.ITimeoutService, $location: ng.ILocationService) => {
         var ctrl = $controller("ProductController", {
             $scope: $scope
         });
-        $timeout.flush();
-        ctrl.editProduct(0);
+
+        ctrl.editEntity(0);
         $timeout.flush();
         expect($location.path()).toBe("/product/0");
     }));
 
-    it("should get searchText from url Params", inject(($controller: ng.IControllerService, $timeout: ng.ITimeoutService, NavigationService:d.service.contract.NavigationService) => {
-        var text = "SSD";
-        spyOn(NavigationService, "params").andReturn({ search: text });
+    xit("should get searchText from url Params", inject(($controller: ng.IControllerService, $timeout: ng.ITimeoutService, $stateParams: any) => {
+        $stateParams.search = "SSD";
         var ctrl = $controller("ProductController", {
-            $scope: $scope,
-            NavigationService: NavigationService
+            $scope: $scope
         });
+
         $timeout.flush();
-        expect($scope.searchText).toBe(text);
+        expect($scope.searchText).toBe("SSD");
     }))
 });

@@ -1,4 +1,4 @@
-///<reference path="./../../reference.d.ts"/>
+///<reference path="../../reference.d.ts"/>
 
 import a = require("./base/PersonServiceMock");
 
@@ -8,9 +8,10 @@ export module service.mock {
         static $inject = ["$timeout"];
         constructor(public $timeout: ng.ITimeoutService) {
             super($timeout);
-            super.getRepository().push({ id: 1, name: "John Doe" });
-            super.getRepository().push({ id: 2, name: "Jane Doe" });
-            super.getRepository().push({ id: 3, name: "Jonnie Doe" });
+
+            this.addToRepository({ id: 1, name: "John Doe" });
+            this.addToRepository({ id: 2, name: "Jane Doe" });
+            this.addToRepository({ id: 3, name: "Jonnie Doe" });
         }
 
     }
