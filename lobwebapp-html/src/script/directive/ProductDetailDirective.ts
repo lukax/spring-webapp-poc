@@ -3,18 +3,13 @@
 export module directive {
     export class ProductDetailDirective implements ng.IDirective {
 
-        restrict = 'E';
+        restrict = "E";
         replace = true;
         scope = {
-            product: '=',
-            quantity: '='
+            product: "=",
+            quantity: "="
         };
-        template =
-            '<div ng-if="product.id != 0">' +
-                '<label ng-if="quantity">{{quantity}} Unid, R${{quantity * product.price}} - </label>' +
-                ' {{product.name}} {{product.description}}'
-        +   '</div>'
-        ;
+        templateUrl = "/template/directive/ProductDetailTemplate.html";
 
     }
 }

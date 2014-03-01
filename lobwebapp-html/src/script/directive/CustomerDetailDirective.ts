@@ -3,16 +3,12 @@
 export module directive {
     export class CustomerDetailDirective implements ng.IDirective {
 
-        restrict = 'E';
+        restrict = "E";
         replace = true;
         scope = {
-            ref: '='
+            ref: "="
         };
-        template =
-            '<div ng-if="ref.id != 0">'
-            +       '{{ref.name}}'
-        +   '</div>'
-        ;
+        templateUrl = "/template/directive/CustomerDetailTemplate.html";
 
     }
 }
