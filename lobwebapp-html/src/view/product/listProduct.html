@@ -12,16 +12,14 @@
             <tr ng-init="reverse = false">
                 <th><a class="link" ng-click="predicate = 'id'; reverse = !reverse">ID</a></th>
                 <th><a class="link" ng-click="predicate = 'name'; reverse = !reverse">Nome</a></th>
-                <th><a class="link" ng-click="predicate = 'quantity'; reverse = !reverse">Qt.</a></th>
                 <th><a class="link" ng-click="predicate = 'price'; reverse = !reverse">Preço</a></th>
-                <th><a class="link" ng-click="predicate = 'category'; reverse = !reverse">Grupo</a></th>
+                <th><a class="link" ng-click="predicate = 'category'; reverse = !reverse">Categoria</a></th>
             </tr>
         </thead>
         <tbody>
             <tr class="lwa-list" ng-repeat="prod in entities | filter:searchText | orderBy:predicate:reverse" ng-click="editEntity(prod.id)">
                 <td>{{prod.id}}</td>
                 <td>{{prod.name}}</td>
-                <td>{{prod.quantity}} {{prod.unit}}</td>
                 <td>R${{prod.price | number:2}}</td>
                 <td>{{prod.category}}</td>
             </tr>
