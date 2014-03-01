@@ -23,7 +23,6 @@ export module util {
 
             require(paths, () => {
                 this.$rootScope.$apply(() => {
-                    console.log("Resolved: " + paths.join(", "));
                     this.Progress.done();
                     deferred.resolve();
                 });
