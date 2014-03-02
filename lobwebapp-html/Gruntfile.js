@@ -134,7 +134,8 @@ module.exports = function (grunt) {
             },
             dist: {
                 options: {
-                    paths: ['<%= yeoman.app %>/css']
+                    paths: ['<%= yeoman.app %>/css'],
+                    cleancss: true
                 },
                 files: {
                     '<%= yeoman.dist %>/css/main.css': '<%= yeoman.app %>/css/main.less'
