@@ -53,8 +53,7 @@ export var routes: AppRoute[] =
                 "directive/QuickSearchDirective",
                 "directive/CustomerDetailDirective",
                 "directive/ProductDetailDirective",
-                "directive/PaymentDetailDirective",
-                "filter/PaymentFilter"
+                "directive/PaymentDetailDirective"
             ]
         }, {
             name: "orderList",
@@ -64,7 +63,8 @@ export var routes: AppRoute[] =
             deps: [
                 "controller/order/ListOrderController",
                 "service/impl/OrderServiceImpl",
-                "directive/ListPagerDirective"
+                "directive/ListPagerDirective",
+                "directive/PaymentDetailDirective"
             ]
         }, {
             name: "orderGraph",
@@ -116,7 +116,8 @@ export var routes: AppRoute[] =
             deps: [
                 "controller/stock/ListStockController",
                 "service/impl/StockServiceImpl",
-                "directive/ListPagerDirective"
+                "directive/ListPagerDirective",
+                "directive/ProductDetailDirective"
             ]
         }
     ];

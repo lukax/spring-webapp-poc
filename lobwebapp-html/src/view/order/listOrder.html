@@ -22,7 +22,7 @@
                 <td>{{order.id}}</td>
                 <td><customer-detail ref="order.customer"></customer-detail></td>
                 <td>{{order.items.length}}</td>
-                <td><payment-detail ref="order.payment"></payment-detail></td>
+                <td><payment-detail payment="order.payment"></payment-detail></td>
                 <td>{{order.date | date}}</td>
             </tr>
         </tbody>
