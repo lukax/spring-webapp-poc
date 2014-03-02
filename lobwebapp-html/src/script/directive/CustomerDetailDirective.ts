@@ -6,7 +6,7 @@ export module directive {
         restrict = "E";
         replace = true;
         scope = {
-            ref: "="
+            customer: "="
         };
         templateUrl = "/template/directive/CustomerDetailTemplate.html";
 

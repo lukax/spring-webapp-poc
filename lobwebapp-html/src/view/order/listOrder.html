@@ -20,7 +20,7 @@
         <tbody>
             <tr class="lwa-list" ng-repeat="order in entities | filter:searchText | orderBy:predicate:reverse" ng-click="editEntity(order.id)">
                 <td>{{order.id}}</td>
-                <td><customer-detail ref="order.customer"></customer-detail></td>
+                <td><customer-detail customer="order.customer"></customer-detail></td>
                 <td>{{order.items.length}}</td>
                 <td><payment-detail payment="order.payment"></payment-detail></td>
                 <td>{{order.date | date}}</td>
