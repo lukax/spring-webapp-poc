@@ -33,7 +33,7 @@ export module controller.base{
                 },
                 (errorData) => {
                     console.log(errorData);
-                    this.AlertService.add({ content: errorData.message, title: "Item não pôde ser salvo", type: enums.AlertType.DANGER });
+                    this.AlertService.addMessageResponse(errorData, "Item não pôde ser salvo");
                     this.unlock();
                 });
         }
@@ -46,7 +46,7 @@ export module controller.base{
                 },
                 (errorData) => {
                     console.log(errorData);
-                    this.AlertService.add({ content: errorData.message, title: "Item não pôde ser atualizado", type: enums.AlertType.DANGER });
+                    this.AlertService.addMessageResponse(errorData, "Item não pôde ser atualizado");
                     this.unlock();
                 });
         }
@@ -59,7 +59,7 @@ export module controller.base{
                 },
                 (errorData) => {
                     console.log(errorData);
-                    this.AlertService.add({ content: errorData.message, title: "Item não pôde ser removido", type: enums.AlertType.DANGER });
+                    this.AlertService.addMessageResponse(errorData, "Item não pôde ser removido");
                     this.unlock();
                 });
         }
@@ -78,7 +78,7 @@ export module controller.base{
                 },
                 (errorData) => {
                     console.log(errorData);
-                    this.AlertService.add({ content: errorData.message, title: "Item não pôde ser encontrado", type: enums.AlertType.DANGER });
+                    this.AlertService.addMessageResponse(errorData, "Item não pôde ser encontrado");
                     this.newEntity();
                 });
         }

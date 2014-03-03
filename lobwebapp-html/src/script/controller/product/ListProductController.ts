@@ -34,7 +34,7 @@ export module controller.product {
                     },
                     (errorData) => {
                         console.log(errorData);
-                        this.AlertService.add({ title: "Não foi possível listar produtos", content: errorData.message, type: enums.AlertType.DANGER });
+                        this.AlertService.addMessageResponse(errorData, "Não foi possível listar produtos");
                         this.$scope.navigator.Progress.done();
                     },
                     { index: pageIndex, size: this.defaultPageSize });

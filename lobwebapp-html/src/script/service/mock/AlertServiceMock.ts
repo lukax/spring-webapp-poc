@@ -1,5 +1,7 @@
 ///<reference path="../../reference.d.ts"/>
 
+import enums = require("./../../util/EnumUtil");
+
 export module service.mock {
     export class AlertServiceMock implements d.service.contract.AlertService {
         private alerts: domain.util.Alert[];
@@ -7,15 +9,22 @@ export module service.mock {
         static $inject = ['$timeout'];
         constructor(public $timeout: ng.ITimeoutService) {
             this.alerts = [];
-            this.removeOld();
+            this.continuouslyRemoveOld();
         }
 
         add(alert: domain.util.Alert) {
-            if (this.alerts.length >= 3) {
-                this.alerts.splice(0, 1);
-            }
             if (!alert.date) alert.date = new Date();
-            if (!alert.type) alert.type = "success";
+            if (!alert.type) alert.type = enums.AlertType.OK;
+            this.alerts.push(alert);
+            return alert;
+        }
+
+        addMessageResponse(messageResponse: domain.util.MessageResponse, title: string) {
+            var alert: domain.util.Alert = { content: messageResponse.message, title: title, type: enums.AlertType.DANGER, date: new Date() }
+            if((<domain.util.ValidationMessageResponse>messageResponse).validations)
+                (<domain.util.ValidationMessageResponse>messageResponse).validations.forEach((x) => {
+                    alert.content += ", " + x.message;
+                    });
             this.alerts.push(alert);
             return alert;
         }
@@ -27,23 +36,31 @@ export module service.mock {
                     return true;
                 }
                 return false;
-            });
+                });
+        }
+
+        removeFirst(){
+            this.alerts.splice(0, 1);
         }
 
         list() {
             return this.alerts;
         }
 
-        private removeOld() {
+        private continuouslyRemoveOld() {
             this.$timeout(() => {
+                if (this.alerts.length >= 3) {
+                    this.removeFirst();
+                }
                 this.alerts.forEach((currAlert, index) => {
                     var diffInSecs = Math.abs((new Date().getTime() - currAlert.date.getTime()) / 1000);
                     if (diffInSecs > 10) {
-                        this.alerts.splice(index, 1);
+                        if(currAlert.type != enums.AlertType.DANGER)
+                            this.alerts.splice(index, 1);
                     }
-                });
-                this.removeOld();
-            }, 1000);
+                    });
+                this.continuouslyRemoveOld();
+                }, 500);
         }
 
     }

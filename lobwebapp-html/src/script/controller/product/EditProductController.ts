@@ -39,7 +39,7 @@ export module controller.product {
                     this.unlock();
                 },
                 (errorData) => {
-                    this.AlertService.add({ title: "Não foi possível carregar categorias", content: errorData.message, type: enums.AlertType.DANGER });
+                    this.AlertService.addMessageResponse(errorData, "Não foi possível carregar categorias");
                     this.unlock();
                 });
         }
