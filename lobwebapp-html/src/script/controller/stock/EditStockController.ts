@@ -19,6 +19,7 @@ export module controller.stock {
                     public ProductService: d.service.contract.ProductService,
                     public AlertService: d.service.contract.AlertService) {
             super($scope, "stock", StockService, AlertService);
+            super.setEntityName("Estoque");
             
             var stockId = this.$scope.navigator.$stateParams.stockId;
             var productId = this.$scope.navigator.$stateParams.productId;

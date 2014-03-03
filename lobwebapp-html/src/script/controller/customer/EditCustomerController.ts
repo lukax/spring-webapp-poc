@@ -15,6 +15,7 @@ export module controller.customer {
                     public CustomerService: d.service.contract.CustomerService,
                     public AlertService: d.service.contract.AlertService) {
             super($scope, "customer", CustomerService, AlertService);
+            super.setEntityName("Cliente");
             
             var customerId = this.$scope.navigator.$stateParams.customerId;
 

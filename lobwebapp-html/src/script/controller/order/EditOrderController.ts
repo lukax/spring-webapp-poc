@@ -25,6 +25,7 @@ export module controller.order {
                     public CustomerService: d.service.contract.CustomerService,
                     public OrderService: d.service.contract.OrderService) {
             super($scope, "order", OrderService, AlertService);
+            super.setEntityName("Pedido");
             
             var orderId = this.$scope.navigator.$stateParams.orderId;
             var customerId = this.$scope.navigator.$stateParams.customerId;

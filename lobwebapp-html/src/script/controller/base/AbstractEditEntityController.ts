@@ -10,7 +10,9 @@ export module controller.base{
 	}
 
 	export class AbstractEditEntityController<T extends domain.base.AbstractEntity> implements d.controller.base.Controller{
-		constructor(public $scope: EditEntityViewModel<T>, 
+		private entityName: string = "Item";
+        
+        constructor(public $scope: EditEntityViewModel<T>, 
 		            public contextUrl: string, 
 		            public EntityService: d.service.contract.base.EntityService<T>,
 		            public AlertService: d.service.contract.AlertService){
@@ -33,7 +35,7 @@ export module controller.base{
                 },
                 (errorData) => {
                     console.log(errorData);
-                    this.AlertService.addMessageResponse(errorData, "Item não pôde ser salvo");
+                    this.AlertService.addMessageResponse(errorData, this.entityName + " não pôde ser salvo");
                     this.unlock();
                 });
         }
@@ -46,7 +48,7 @@ export module controller.base{
                 },
                 (errorData) => {
                     console.log(errorData);
-                    this.AlertService.addMessageResponse(errorData, "Item não pôde ser atualizado");
+                    this.AlertService.addMessageResponse(errorData, this.entityName + " não pôde ser atualizado");
                     this.unlock();
                 });
         }
@@ -59,7 +61,7 @@ export module controller.base{
                 },
                 (errorData) => {
                     console.log(errorData);
-                    this.AlertService.addMessageResponse(errorData, "Item não pôde ser removido");
+                    this.AlertService.addMessageResponse(errorData, this.entityName + " não pôde ser removido");
                     this.unlock();
                 });
         }
@@ -78,7 +80,7 @@ export module controller.base{
                 },
                 (errorData) => {
                     console.log(errorData);
-                    this.AlertService.addMessageResponse(errorData, "Item não pôde ser encontrado");
+                    this.AlertService.addMessageResponse(errorData, this.entityName + " não pôde ser encontrado");
                     this.newEntity();
                 });
         }
@@ -101,5 +103,8 @@ export module controller.base{
             return (this.$scope.entity && this.$scope.entity.id == 0);
         }
         
+        setEntityName(name: string){
+            this.entityName = name;
+        }
 	}
 }
