@@ -51,7 +51,6 @@ export module controller.order {
                 this.$scope.entity.items.push(this.$scope.item);        
             }
             this.emptyItem();
-            this.$scope.total = this.OrderService.getTotal(this.$scope.entity);
         }
         
         emptyItem(){
@@ -111,6 +110,9 @@ export module controller.order {
                 if(this.$scope.entity.payment.status == enums.PaymentStatus.PENDING)
                     this.$scope.entity.payment.quantity = 0;
             });
+            this.$scope.$watch("entity.items", ()=>{
+                this.$scope.total = this.OrderService.getTotal(this.$scope.entity);
+            }, true);
             this.$scope.saveChanges = (order) => this.saveChanges(order);
             this.$scope.addItem = (item) => this.addItem(item);
             this.$scope.removeItem = (item) => this.removeItem(item);
