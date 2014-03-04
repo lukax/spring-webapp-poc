@@ -1,21 +1,16 @@
 @import "./../lib/lesshat/build/lesshat.less";
 @import "./../lib/bootstrap/less/bootstrap.less";
-@import "./../lib/bootstrap/less/theme.less";
 @import "./../lib/nprogress/nprogress.css";
 @import "./../lib/animate.css/animate.css";
 @import "typeahead.less";
+@import "bootstrap-theme.less";
 
-/* CONFIG */
+//== CONFIG 
+
 @icon-font-path: "./../lib/bootstrap/dist/fonts/";
 
 
-/* IMPORTANT */
-
-body {
-    background: #fafafa;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    color: #333;
-}
+//== IMPORTANT
 
 .modal {
   display: block;
@@ -46,18 +41,7 @@ body {
 }
 
 
-/* NAVBAR */
-
-ul.nav li.dropdown:hover > ul.dropdown-menu {
-    cursor: default;
-}
-ul.nav li.dropdown:hover {
-    background: #fafafa;
-    cursor: default;
-}
-
-
-/* ANIMATIONS */
+//== ANIMATIONS
 
 .lwa-fade-left.ng-enter, .lwa-fade-left.ng-hide-remove{
     .animation(fadeInLeft 500ms);
