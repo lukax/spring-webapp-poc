@@ -21,6 +21,8 @@ export module controller.base {
                     public contextUrl: string,
                     public redirectParam: string) {
 
+            this.redirectString = this.$scope.navigator.$stateParams.redirect;
+            
             this.$scope.searchText = (this.$scope.navigator.$stateParams.search || "");
             this.$scope.editEntity = (id: number) => this.editEntity(id);
             this.$scope.listEntity = (page) => this.listEntity(page);
@@ -44,7 +46,6 @@ export module controller.base {
         }
 
         editEntity(id: number) {
-            this.redirectString = this.$scope.navigator.$stateParams.redirect;
             if (this.redirectString) {
                 this.redirectString = this.replaceUrlParam(decodeURIComponent(this.redirectString), this.redirectParam, String(id));
                 console.log(this.redirectString);
