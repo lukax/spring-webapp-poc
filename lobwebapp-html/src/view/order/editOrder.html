@@ -95,7 +95,10 @@
                 <li><a class="link" ng-click="entity.payment.status = 'CANCELLED';" ng-if="entity.status.payment != 'CANCELLED'">Cancelado</a></li>
             </ul>
         </div>
-        <div class="col-md-8 form-control-static">
+        <div class="col-md-1 form-control-static">
+            <span class="label label-default">{{entity.date | date:'dd MMM yy HH:mm'}}</span>
+        </div>
+        <div class="col-md-9 form-control-static">
             <payment-detail payment="entity.payment"></payment-detail>
         </div>
     </div>
