@@ -1,10 +1,5 @@
 <form class="form-horizontal" role="form" name="stockForm" ng-submit="saveChanges(entity)" novalidate>
-    <div class="form-group">
-        <label for="inputId" class="col-md-1 control-label">ID</label>
-        <div class="col-md-11">
-            <input type="text" class="form-control" id="inputId" readonly ng-model="entity.id">
-        </div>
-    </div>
+    <entity-id id="entity.id"></entity-id>
     <quick-search label="Produto" resource-url="product" entity-id="entity.product.id" fetch="fetchProduct(entity.product.id)">
         <p class="form-control-static">
             <product-detail product="entity.product"></product-detail>

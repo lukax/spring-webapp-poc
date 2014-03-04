@@ -10,12 +10,7 @@
     </div>
     <div class="col-md-10">
         <form class="form-horizontal" role="form" name="productForm" ng-submit="saveChanges(entity)" novalidate>
-            <div class="form-group">
-                <label for="inputId" class="col-md-1 control-label">ID</label>
-                <div class="col-md-11">
-                    <input type="text" class="form-control" id="inputId" readonly ng-model="entity.id">
-                </div>
-            </div>
+            <entity-id id="entity.id"></entity-id>
             <div class="form-group" ng-class="{'has-error': productForm.inputName.$invalid}">
                 <label for="inputName" class="col-md-1 control-label">Nome</label>
                 <div class="col-md-11">

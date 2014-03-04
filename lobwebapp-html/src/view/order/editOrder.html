@@ -1,19 +1,6 @@
 <form class="form-horizontal form-validation" role="form" name="orderForm" novalidate ng-submit="saveChanges(entity)">
     
-    <div class="form-group">
-        <label for="inputId" class="col-md-1 control-label">ID</label>
-        <div class="col-md-9">
-            <input type="text" class="form-control" id="inputId" readonly value="{{entity.id}}">
-        </div>
-        <div class="col-md-2">
-            <div class="input-group">
-                <input type="text" class="form-control" ng-model="entity.date" datepicker-popup="dd MMM HH:mm" required>
-                <div class="input-group-addon">
-                    <span class="glyphicon glyphicon-calendar"></span>
-                </div>
-            </div>
-        </div>
-    </div>
+    <entity-id id="entity.id"></entity-id>
     
     <quick-search label="Cliente" resource-url="customer" entity-id="entity.customer.id" fetch="fetchCustomer(entity.customer.id)">
         <p class="form-control-static">{{entity.customer.name}}</p>
