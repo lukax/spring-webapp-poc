@@ -9,15 +9,18 @@ export module controller.stock {
         removeStock: (stock: domain.Stock) => void;
         fetchProduct: (productId: number) => void;
         invalid: any;
+        units: string[];
     }
 
     export class EditStockController extends i0.controller.base.AbstractEditEntityController<domain.Stock> {
+        allUnits: string[] = [];
 
-        static $inject = ["$scope", "StockService", "ProductService", "AlertService"];
+        static $inject = ["$scope", "StockService", "ProductService", "AlertService", "$filter"];
         constructor(public $scope: EditStockViewModel,
                     public StockService: d.service.contract.StockService,
                     public ProductService: d.service.contract.ProductService,
-                    public AlertService: d.service.contract.AlertService) {
+                    public AlertService: d.service.contract.AlertService,
+                    public $filter: ng.IFilterService) {
             super($scope, "stock", StockService, AlertService);
             super.setEntityName("Estoque");
             
@@ -46,17 +49,40 @@ export module controller.stock {
                 });
         }
 
+        fetchUnits() {
+            this.StockService.list(
+                (successData) => {
+                    var units = _.map(successData, (x)=>{
+                        return x.unit;
+                        });
+                    this.allUnits = _.uniq(units);
+                },
+                (errorData) => {
+                    console.log(errorData);    
+                    this.AlertService.addMessageResponse(errorData, "Não foi possível carregar as unidades");
+                });
+        }
+
+        filterUnits(){
+            if(this.$scope.entity.unit != null)
+                this.$scope.units = this.$filter("filter")(this.allUnits, this.$scope.entity.unit);
+        }
+
         setupValidations(){
             this.$scope.invalid = {};
             this.$scope.$watch("entity.quantity", ()=>{
                 this.$scope.invalid.quantity = this.$scope.entity.quantity < this.$scope.entity.minQuantity;
-            });
+                });
             this.$scope.$watch("entity.minQuantity", ()=>{
                 this.$scope.invalid.minQuantity = this.$scope.entity.minQuantity >= this.$scope.entity.maxQuantity;
-            });
+                });
             this.$scope.$watch("entity.maxQuantity", ()=>{
                 this.$scope.invalid.maxQuantity = this.$scope.entity.maxQuantity <= this.$scope.entity.minQuantity;
-            });
+                });
+            this.$scope.$watch("entity.unit", ()=>{
+                this.filterUnits();
+                });
+            this.fetchUnits();
         }
 
         populateScope() {

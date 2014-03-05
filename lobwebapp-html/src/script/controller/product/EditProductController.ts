@@ -14,7 +14,7 @@ export module controller.product {
     }
 
     export class EditProductController extends i0.controller.base.AbstractEditEntityController<domain.Product> {
-        allCategories: string[];
+        allCategories: string[] = [];
 
         static $inject = ["$scope", "ProductService", "AlertService", "$filter"];
         constructor(public $scope: EditProductViewModel,
@@ -32,21 +32,19 @@ export module controller.product {
         }
         
         fetchCategories() {
-            this.lock();
             this.ProductService.listCategory(
                 (successData) => {
-                    this.$scope.categories = [];
                     this.allCategories = successData;
-                    this.unlock();
                 },
                 (errorData) => {
-                    this.AlertService.addMessageResponse(errorData, "Não foi possível carregar categorias");
-                    this.unlock();
+                    console.log(errorData);
+                    this.AlertService.addMessageResponse(errorData, "Não foi possível carregar as categorias");
                 });
         }
 
         filterCategories(){
-            this.$scope.categories = this.$filter("filter")(this.allCategories, this.$scope.entity.category);
+            if(this.$scope.entity.category != null)
+                this.$scope.categories = this.$filter("filter")(this.allCategories, this.$scope.entity.category);
         }
         
         populateScope() {

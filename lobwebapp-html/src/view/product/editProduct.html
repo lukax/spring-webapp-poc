@@ -66,7 +66,7 @@
                 <div ng-class="{'has-error': productForm.inputCategory.$invalid}">
                     <label for="inputCategory" class="col-md-1 control-label">Categoria</label>
                     <div class="col-md-6">
-                        <input type="text" class="form-control" id="inputCategory" name="inputCategory" ng-model="entity.category" ng-minlength="5" ng-maxlength="20">
+                        <input type="text" class="form-control" id="inputCategory" name="inputCategory" ng-model="entity.category" ng-maxlength="20" data-typeahead="category for category in categories | limitTo:5">
                     </div>
                 </div>
             </div>
