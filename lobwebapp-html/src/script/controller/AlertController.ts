@@ -14,6 +14,11 @@ export module controller{
             $scope.$on("ALERTS_CHANGED", (event, data: domain.util.Alert[])=> {
             	$scope.alerts = data;
             	});
+
+            //Remove alerts after location change
+            $scope.$on("$locationChangeSuccess", () => {
+                this.AlertService.removeAll();
+                });    
         }
 
         remove(alert: domain.util.Alert){

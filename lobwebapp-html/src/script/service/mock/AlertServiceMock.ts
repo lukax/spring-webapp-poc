@@ -10,7 +10,6 @@ export module service.mock {
         static $inject = ["$rootScope", "$interval"];
         constructor(public $rootScope: ng.IRootScopeService, public $interval: any) {
             this.removeExpiredAlertsOnInterval();
-            this.removeAllOnLocationChange();
         }
 
         add(alert: domain.util.Alert) {
@@ -46,6 +45,10 @@ export module service.mock {
             this.setAlerts(alerts);
         }
 
+        removeAll(){
+            this.setAlerts([]);
+        }
+
         list() {
             return <domain.util.Alert[]> angular.copy(this.alerts);
         }
@@ -61,6 +64,7 @@ export module service.mock {
             this.$interval(() => {
                 var alerts = this.list();
                 if (alerts.length >= 3) {
+                    //Remove first alert to keep list from getting big
                     alerts = _.rest(this.list());
                 }
                 alerts.forEach((x, index) => {
@@ -72,13 +76,6 @@ export module service.mock {
                     });
                 this.setAlerts(alerts);
                 }, 1000);
-        }
-
-        private removeAllOnLocationChange(){
-            //Remove all alerts after a location change
-            this.$rootScope.$on("$locationChangeSuccess", () => {
-                this.setAlerts([]);
-                });    
         }
 
     }
