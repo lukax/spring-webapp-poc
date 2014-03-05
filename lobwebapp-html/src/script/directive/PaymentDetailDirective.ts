@@ -19,10 +19,10 @@ export module directive {
                             labelClass = "label-default";
                             break;
                         case "PENDING":
-                            labelClass = "label-info";
+                            labelClass = "label-warning";
                             break;
                         case "CANCELLED":
-                            labelClass = "label-warning";
+                            labelClass = "label-danger";
                             break;
                     }
                     scope.labelClass = labelClass;

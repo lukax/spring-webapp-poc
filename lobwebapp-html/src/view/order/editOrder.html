@@ -49,24 +49,33 @@
         </div>
     </div>
     
-    <div class="form-group lwa-fade-left" 
-        ng-class="{'has-error': orderForm.inputPayment.$invalid || invalid.paymentQuantity || invalid.exchange }" 
-        ng-hide="total <= 0 || entity.payment.status == 'PENDING'">
+    <div class="form-group lwa-fade-left" ng-hide="total <= 0" ng-class="{'has-error': orderForm.inputPaymend.$invalid || invalid.paymentQuantity }">
         <label for="inputPayment" class="col-md-1 col-md-offset-1 control-label">Pagamento</label>
         <div class="col-md-10">
             <div class="input-group">
                 <span class="input-group-addon">R$</span>
                 <input type="number" class="form-control" id="inputPayment" name="inputPayment" ng-model="entity.payment.quantity" 
-                ng-pattern="/^(?=.*[1-9])\d*(?:\.\d{1,2})?$/">
+                ng-pattern="/^(?=.*[0-9])\d*(?:\.\d{1,2})?$/" ng-disabled="entity.payment.status != 'OK'">
                 <div class="input-group-btn">
                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                        {{entity.payment.mode | paymentMode}}
-                        <span class="caret"></span>
+                        {{entity.payment.mode | paymentMode}} <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu" role="menu">
-                        <li><a class="link" ng-hide="entity.payment.mode == 'MONEY'" ng-click="entity.payment.mode = 'MONEY';">Dinheiro</a></li>
-                        <li><a class="link" ng-hide="entity.payment.mode == 'CREDIT_CARD'" ng-click="entity.payment.mode = 'CREDIT_CARD';">Cartão</a></li>
-                        <li><a class="link" ng-hide="entity.payment.mode == 'CHECK'" ng-click="entity.payment.mode = 'CHECK';">Cheque</a></li>
+                        <li role="presentation" class="dropdown-header">Modo</li>
+                        <li><a class="link"  ng-click="entity.payment.mode = 'MONEY';" ng-hide="entity.payment.mode == 'MONEY'">Dinheiro</a></li>
+                        <li><a class="link" ng-click="entity.payment.mode = 'CREDIT_CARD';" ng-hide="entity.payment.mode == 'CREDIT_CARD'">Cartão</a></li>
+                        <li><a class="link" ng-click="entity.payment.mode = 'CHECK';" ng-hide="entity.payment.mode == 'CHECK'">Cheque</a></li>
+                    </ul>
+                </div>
+                <div class="input-group-btn">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                        {{entity.payment.status | paymentStatus }} <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li role="presentation" class="dropdown-header">Status</li>
+                        <li><a class="link" ng-click="entity.payment.status = 'OK';" ng-hide="entity.payment.status == 'OK'">OK</a></li>
+                        <li><a class="link" ng-click="entity.payment.status = 'PENDING';" ng-hide="entity.payment.status == 'PENDING'">Pendente</a></li>
+                        <li><a class="link" ng-click="entity.payment.status = 'CANCELLED';" ng-hide="entity.payment.status == 'CANCELLED'">Cancelado</a></li>
                     </ul>
                 </div>
             </div>
@@ -84,19 +93,8 @@
     </div>
     
     <div class="form-group">
-        <div class="col-md-1 btn-group">
-            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                Status <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu" role="menu">
-                <li role="presentation" class="dropdown-header">Pagamento</li>
-                <li><a class="link" ng-click="entity.payment.status = 'OK';" ng-if="entity.status.payment != 'OK'">OK</a></li>
-                <li><a class="link" ng-click="entity.payment.status = 'PENDING';" ng-if="entity.status.payment != 'PENDING'">Pendente</a></li>
-                <li><a class="link" ng-click="entity.payment.status = 'CANCELLED';" ng-if="entity.status.payment != 'CANCELLED'">Cancelado</a></li>
-            </ul>
-        </div>
-        <div class="col-md-1 form-control-static">
-            <span class="label label-default">{{entity.date | date:'dd MMM yy HH:mm'}}</span>
+        <div class="col-md-offset-1 col-md-1 form-control-static">
+            <span class="label label-default">{{entity.date | date:'dd/MM/yy HH:mm'}}</span>
         </div>
         <div class="col-md-9 form-control-static">
             <payment-detail payment="entity.payment"></payment-detail>

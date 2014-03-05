@@ -50,15 +50,15 @@ export module controller.order {
             if (!exists) {
                 this.$scope.entity.items.push(this.$scope.item);        
             }
-            this.emptyItem();
-        }
-        
-        emptyItem(){
-            this.$scope.item = { product: null, quantity: 0 };
+            this.removeCurrentItem();
         }
 
         removeItem(orderItem: domain.OrderItem) {
             this.$scope.entity.items = _.without(this.$scope.entity.items, orderItem);
+        }
+        
+        removeCurrentItem(){
+            this.$scope.item = { product: null, quantity: 0 };
         }
 
         fetchCustomer(id: number) {
@@ -80,13 +80,13 @@ export module controller.order {
             this.lock();
             this.ProductService.find(id,
                 (successData) => {
-                    if(!this.$scope.item) this.emptyItem();
+                    if(!this.$scope.item) this.removeCurrentItem();
                     this.$scope.item.product = successData;
                     this.unlock();
                 }, (errorData) => {
                     console.log(errorData);
                     this.AlertService.addMessageResponse(errorData, "Não foi possível buscar produto");
-                    this.emptyItem();
+                    this.removeCurrentItem();
                     this.unlock();
                 });
         }
@@ -96,28 +96,41 @@ export module controller.order {
             this.$scope.$watchCollection("entity.items", ()=>{
                 this.$scope.invalid.orderItems = this.$scope.entity.items.length == 0;
             });
-            this.$scope.$watch("exchange", () =>{
-                this.$scope.invalid.paymentQuantity = this.$scope.entity.payment.status != enums.PaymentStatus.PENDING && this.$scope.exchange < 0;
+            this.$scope.$watch("entity.payment.status + exchange", () =>{
+                this.$scope.invalid.paymentQuantity = (this.$scope.entity.payment.status == enums.PaymentStatus.OK) && 
+                    (this.$scope.exchange == null || this.$scope.exchange < 0);
             });
         }
 
-        populateScope() {
-            this.$scope.total = 0;
+        syncExchange(){
             this.$scope.$watch("entity.payment.quantity", () => {
                 this.$scope.exchange = this.OrderService.getExchange(this.$scope.entity);
             });
+        }
+
+        syncPaymentQuantity(){
             this.$scope.$watch("entity.payment.status", () => {
                 if(this.$scope.entity.payment.status == enums.PaymentStatus.PENDING)
                     this.$scope.entity.payment.quantity = 0;
             });
+        }
+
+        syncTotal(){
             this.$scope.$watch("entity.items", ()=>{
                 this.$scope.total = this.OrderService.getTotal(this.$scope.entity);
             }, true);
+        }
+
+        populateScope() {
+            this.$scope.total = 0;
             this.$scope.saveChanges = (order) => this.saveChanges(order);
             this.$scope.addItem = (item) => this.addItem(item);
             this.$scope.removeItem = (item) => this.removeItem(item);
             this.$scope.fetchProduct = (id) => this.fetchProduct(id);
             this.$scope.fetchCustomer = (id) => this.fetchCustomer(id);
+            this.syncExchange();
+            this.syncPaymentQuantity();
+            this.syncTotal();
         }
     }
 }

@@ -66,6 +66,7 @@ export var routes: AppRoute[] =
                 "controller/order/ListOrderController",
                 "service/impl/OrderServiceImpl",
                 "directive/ListPagerDirective",
+                "directive/CustomerDetailDirective",
                 "directive/PaymentDetailDirective"
             ]
         }, {

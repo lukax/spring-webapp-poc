@@ -8,7 +8,7 @@ export module directive {
         scope = {
             customer: "="
         };
-        templateUrl = "/template/directive/CustomerDetailTemplate.html";
+        template = "<div>{{customer.name}}</div>";
 
     }
 }

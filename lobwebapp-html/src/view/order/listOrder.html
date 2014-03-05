@@ -23,7 +23,7 @@
                 <td><customer-detail customer="order.customer"></customer-detail></td>
                 <td>{{order.items.length}}</td>
                 <td><payment-detail payment="order.payment"></payment-detail></td>
-                <td>{{order.date | date}}</td>
+                <td>{{order.date | date:'dd/MM/yy HH:mm'}}</td>
             </tr>
         </tbody>
     </table>
