@@ -3,9 +3,10 @@ import a = require("./UserServiceImpl");
 
 export module service.impl {
     export class AuthServiceImpl implements d.service.contract.AuthService {
-        private defaultUser: domain.User = { id: 1, name: "Usuário", isLogged: true, username: "user", password: "", roles: ["ROLE_USER"] };
+        private url = "/api/oauth/token";
         private client_id = "da39a3ee5e6b4b0d3255bfef95601890afd80709";
-
+        private defaultUser: domain.User = { id: 1, name: "Usuário", isLogged: true, username: "user", password: "", roles: ["ROLE_USER"] };
+        
         static $inject = ["$http", "$rootScope", "$window"];
         constructor(public $http: ng.IHttpService, 
                     public $rootScope: ng.IRootScopeService,
@@ -16,11 +17,18 @@ export module service.impl {
         login(user: domain.User,
             successCallback: (data: domain.User, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
             errorCallback: (error: domain.util.MessageResponse, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
-                var param = "grant_type=password" + 
+                var authData = "grant_type=password" + 
                             "&client_id=" + this.client_id +  
                             "&username=" + user.username + 
                             "&password=" + user.password;
-                this.$http.post("/api/oauth/token", param, {headers: {"Content-Type": "application/x-www-form-urlencoded"}})
+                var headers = {
+                    "Content-Type": "application/x-www-form-urlencoded"
+                };
+                
+                this.$http({method: "POST", 
+                             url: this.url, 
+                             data: authData, 
+                             headers: headers})
                     .success((data: domain.AuthToken, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => {
                         var user = angular.copy(this.defaultUser); //TODO: make server return user information after login...
                         this.setUser(user);

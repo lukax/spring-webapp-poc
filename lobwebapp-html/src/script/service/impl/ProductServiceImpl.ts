@@ -13,15 +13,26 @@ export module service.impl {
         findByName(name: string,
             successCallback: (data: domain.Product[], status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
             errorCallback: (data: domain.util.MessageResponse, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
-            pageable: domain.util.Page) {
-                var header = "%" + name + "%";
-                this.$http.get(this.url + this.getPageableUri(pageable), { headers: { product_name: header } }).success(successCallback).error(errorCallback);
+            page: domain.util.Page) {
+                var headers = {
+                    product_name: "%" + name + "%"
+                };
+
+                this.$http({method: "GET",
+                            url: this.url,
+                            params: this.getPageableRequestParams(page), 
+                            headers: headers })
+                    .success(successCallback)
+                    .error(errorCallback);
         }
 
         listCategory(
             successCallback: (data: string[], status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
             errorCallback: (data: domain.util.MessageResponse, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
-                this.$http.get(this.url + "category").success(successCallback).error(errorCallback);
+                this.$http({method: "GET",
+                            url: this.url + "category"})
+                    .success(successCallback)
+                    .error(errorCallback);
         }
 
         getImageUrl(productId: number){

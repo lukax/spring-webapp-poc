@@ -15,19 +15,30 @@ export module service.impl.base {
         save(entity: T,
             successCallback: (data: T, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
             errorCallback: (data: domain.util.MessageResponse, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
-                this.$http.post(this.url, entity).success(successCallback).error(errorCallback);
+                this.$http({method: "POST", 
+                            url: this.url, 
+                            data: entity})
+                    .success(successCallback)
+                    .error(errorCallback);
         }
 
         update(entity: T,
             successCallback: (data: T, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
             errorCallback: (data: domain.util.MessageResponse, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
-                this.$http.put(this.url + entity.id, entity).success(successCallback).error(errorCallback);
+                this.$http({method: "PUT", 
+                            url: this.url + entity.id, 
+                            data: entity})
+                    .success(successCallback)
+                    .error(errorCallback);
         }
 
         remove(entity: T,
             successCallback: (data: T, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
             errorCallback: (data: domain.util.MessageResponse, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
-                this.$http.delete(this.url + entity.id).success(successCallback).error(errorCallback);
+                this.$http({method: "DELETE", 
+                            url: this.url + entity.id})
+                    .success(successCallback)
+                    .error(errorCallback);
         }
 
         find(id: number,
@@ -36,17 +47,21 @@ export module service.impl.base {
                 if(id == 0 && this.hasDefault)
                     successCallback(this.hasDefault.getDefault(), 200, () => { return ""; }, <any>{});
                 else
-                    this.$http.get(this.url + id).success(successCallback).error(errorCallback);
+                    this.$http({method: "GET",
+                                url: this.url + id})
+                        .success(successCallback)
+                        .error(errorCallback);
         }
 
         list(
             successCallback: (data: T[], status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
             errorCallback: (data: domain.util.MessageResponse, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
             page?: domain.util.Page) {
-                if (page)
-                    this.$http({ method: "GET", url: this.url, headers: this.getPageableHeader(page) }).success(successCallback).error(errorCallback);
-                else
-                    this.$http.get(this.url).success(successCallback).error(errorCallback);
+                this.$http({method: "GET", 
+                            url: this.url, 
+                            headers: this.getPageablePostHeaders(page) })
+                    .success(successCallback)
+                    .error(errorCallback);
         }
 
         exists(entity: T,
@@ -63,12 +78,16 @@ export module service.impl.base {
             
         }
 
-        getPageableUri(p: domain.util.Page) {
-            return "?page=" + p.index + "&size=" + p.size;
+        getPageableRequestParams(page: domain.util.Page) {
+            if(page)
+                return { page: page.index, size: page.size };
+            return {};
         }
 
-        getPageableHeader(page: domain.util.Page) {
-            return { page_index: page.index, page_size: page.size };
+        getPageablePostHeaders(page: domain.util.Page) {
+            if(page)
+                return { page_index: page.index, page_size: page.size };
+            return {};
         }
 
     }
