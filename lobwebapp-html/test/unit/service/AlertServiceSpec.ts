@@ -28,17 +28,17 @@ describe("service: AlertService", () => {
         expect(AlertService.list().length).toBe(0);
     }));
 
-    it("should remove old alerts", inject((AlertService: d.service.contract.AlertService, $timeout: ng.ITimeoutService) => {
+    it("should remove old alerts", inject((AlertService: d.service.contract.AlertService, $interval: any) => {
         AlertService.add({ content: "some content", date: new Date(2013, 5, 13, 0, 0, 0, 0) });
         expect(AlertService.list().length).toBe(1);
-        $timeout.flush();
+        $interval.flush(1000);
         expect(AlertService.list().length).toBe(0);
     }));
 
-    it("should not remove new alerts", inject((AlertService: d.service.contract.AlertService, $timeout: ng.ITimeoutService) => {
+    it("should not remove new alerts", inject((AlertService: d.service.contract.AlertService, $interval: any) => {
         AlertService.add({ content: "some content", time: new Date() });
         expect(AlertService.list().length).toBe(1);
-        $timeout.flush();
+        $interval.flush(1000);
         expect(AlertService.list().length).toBe(1);
     }));
 });

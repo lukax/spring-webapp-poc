@@ -7,9 +7,9 @@ export module service.mock {
         private alerts: domain.util.Alert[] = [];
         private lifeSecs: number = 10;
         
-        static $inject = ["$timeout", "$rootScope"];
-        constructor(public $timeout: ng.ITimeoutService, public $rootScope: ng.IRootScopeService) {
-            this.removeOldAlertsContinuously();
+        static $inject = ["$rootScope", "$interval"];
+        constructor(public $rootScope: ng.IRootScopeService, public $interval: any) {
+            this.removeExpiredAlertsOnInterval();
             this.removeAllOnLocationChange();
         }
 
@@ -57,8 +57,8 @@ export module service.mock {
             }
         }
 
-        private removeOldAlertsContinuously() {
-            this.$timeout(() => {
+        private removeExpiredAlertsOnInterval() {
+            this.$interval(() => {
                 var alerts = this.list();
                 if (alerts.length >= 3) {
                     alerts = _.rest(this.list());
@@ -71,8 +71,6 @@ export module service.mock {
                     }
                     });
                 this.setAlerts(alerts);
-
-                this.removeOldAlertsContinuously();
                 }, 1000);
         }
 
