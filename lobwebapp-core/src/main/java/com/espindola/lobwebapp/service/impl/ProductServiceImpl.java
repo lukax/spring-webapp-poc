@@ -3,7 +3,6 @@ package com.espindola.lobwebapp.service.impl;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.URLConnection;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -38,16 +37,6 @@ public class ProductServiceImpl extends AbstractEntityServiceImpl<Product>
 	@Override
 	public Product findByName(String name) throws NotFoundException {
 		return repository.findByName(name);
-	}
-
-	@Override
-	public List<String> findAllCategory() {
-		return repository.findAllCategory();
-	}
-
-	@Override
-	public List<String> findCategoryByName(String name) {
-		return repository.findAllCategoryLike(name);
 	}
 
 	@Override

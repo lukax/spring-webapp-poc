@@ -40,26 +40,28 @@ export module controller.product {
                     console.log(errorData);
                     this.AlertService.addMessageResponse(errorData, "Não foi possível carregar as categorias");
                 });
+            this.$scope.$watch("entity.category", () => {
+                this.filterCategories();
+            });
         }
 
         filterCategories(){
             if(this.$scope.entity.category != null)
                 this.$scope.categories = this.$filter("filter")(this.allCategories, this.$scope.entity.category);
         }
-        
-        populateScope() {
-            this.$scope.$watch("entity.category", () => {
-                this.filterCategories();
-            });
+
+        syncMarkup(){
             this.$scope.$watch("entity.price + entity.costPrice", () => {
                 this.$scope.markUp = 100 * this.ProductService.getMarkUp(this.$scope.entity);
             });
-            this.$scope.$watch("entity.id", () => {
-                this.$scope.imageUrl = this.ProductService.getImageUrl(this.$scope.entity.id);
-            });
-            this.fetchCategories();
+        }
+        
+        populateScope() {
             this.$scope.saveChanges = (entity) => this.saveChanges(entity);
             this.$scope.removeProduct = (entity) => this.removeEntity(entity);
+            this.$scope.imageUrl = this.ProductService.getImageUrl(this.$scope.entity.id);
+            this.fetchCategories();
+            this.syncMarkup();
         }
     }
 }

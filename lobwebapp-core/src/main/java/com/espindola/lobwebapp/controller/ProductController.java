@@ -67,13 +67,6 @@ public class ProductController extends AbstractEntityController<Product> {
 		return products.getContent();
 	}
 
-	@RequestMapping(value = "/category", method = RequestMethod.GET)
-	@ResponseStatus(value = HttpStatus.OK)
-	@ResponseBody
-	public List<String> findAllCategory() {
-		return this.facade.findAllCategory();
-	}
-
 	@RequestMapping(value = "/{productId:[\\d]+}/image", method = RequestMethod.POST)
 	@ResponseStatus(value = HttpStatus.OK)
 	@ResponseBody

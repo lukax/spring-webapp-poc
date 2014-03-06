@@ -29,10 +29,11 @@ export module service.impl {
         listCategory(
             successCallback: (data: string[], status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
             errorCallback: (data: domain.util.MessageResponse, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
-                this.$http({method: "GET",
-                            url: this.url + "category"})
-                    .success(successCallback)
-                    .error(errorCallback);
+                this.list((successData, status, headers, config) => {
+                        var categories = _.uniq(_.map(successData, (x) => { return x.category; }));
+                        successCallback(categories, status, headers, config);
+                    },
+                    errorCallback);
         }
 
         getImageUrl(productId: number){

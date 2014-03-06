@@ -18,7 +18,7 @@ describe('service: ProductService', () => {
         var sucSpy = jasmine.createSpy("sucList"),
             errSpy = jasmine.createSpy("errList");
 
-        $httpBackend.expectGET(contextUrl + "category").respond(200, sampleProduct.category);
+        $httpBackend.expectGET(contextUrl).respond(200, sampleProduct.category);
         ProductService.listCategory(sucSpy, errSpy);
         $httpBackend.flush();
 

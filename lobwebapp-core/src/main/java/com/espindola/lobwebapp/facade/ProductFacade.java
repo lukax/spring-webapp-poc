@@ -1,7 +1,5 @@
 package com.espindola.lobwebapp.facade;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -29,10 +27,6 @@ public class ProductFacade extends AbstractEntityFacade<Product> {
 	public ProductFacade(ProductService productService) {
 		super(productService);
 		this.productService = productService;
-	}
-
-	public List<String> findAllCategory() {
-		return productService.findAllCategory();
 	}
 
 	public Page<Product> findByNameLike(String name, Pageable pageable) {

@@ -50,16 +50,16 @@ export module controller.stock {
         }
 
         fetchUnits() {
-            this.StockService.list(
+            this.StockService.listUnit(
                 (successData) => {
-                    var units = _.map(successData, (x)=>{
-                        return x.unit;
-                        });
-                    this.allUnits = _.uniq(units);
+                    this.allUnits = successData;
                 },
                 (errorData) => {
                     console.log(errorData);    
                     this.AlertService.addMessageResponse(errorData, "Não foi possível carregar as unidades");
+                });
+            this.$scope.$watch("entity.unit", ()=>{
+                this.filterUnits();
                 });
         }
 
@@ -79,16 +79,13 @@ export module controller.stock {
             this.$scope.$watch("entity.maxQuantity", ()=>{
                 this.$scope.invalid.maxQuantity = this.$scope.entity.maxQuantity <= this.$scope.entity.minQuantity;
                 });
-            this.$scope.$watch("entity.unit", ()=>{
-                this.filterUnits();
-                });
-            this.fetchUnits();
         }
 
         populateScope() {
             this.$scope.saveChanges = (stock) => this.saveChanges(stock);
             this.$scope.removeStock = (stock) => this.removeEntity(stock);
             this.$scope.fetchProduct = (productId) => this.fetchProduct(productId);
+            this.fetchUnits();
         }
         
     }
