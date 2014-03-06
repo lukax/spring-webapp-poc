@@ -1,6 +1,7 @@
 ///<reference path="../reference.d.ts"/>
 
 ///<amd-dependency path="angularUiRouter"/>
+import a = require("./ServiceModule");
 import f = require("./../controller/MainNavbarController");
 import g = require("./../controller/AlertController");
 import h = require("./../util/DependencyManager");
@@ -9,6 +10,7 @@ import AppRoutes = require("./AppRoutes");
 export module modularity {
     export class ControllerModule {
         constructor() {
+            new a.modularity.ServiceModule();
             var mod = angular.module("lwa.controller", ["lwa.service", "ui.router"]);
             
             mod .config(["$controllerProvider", "$provide", "$compileProvider", "$filterProvider", ($controllerProvider: ng.IControllerProvider, $provide: ng.auto.IProvideService,

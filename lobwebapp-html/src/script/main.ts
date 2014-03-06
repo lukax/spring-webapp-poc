@@ -65,14 +65,15 @@ require.config({
 });
 
 require.onError = (err: RequireError) => {
-        window.location.replace("500.html?message=" + err.requireType + " | " + err.requireModules + " | " + err.originalError);
+    window.location.replace("500.html?message=" + encodeURIComponent(err.message) +
+        "&details=" + encodeURIComponent(err.requireType + ", " + err.requireModules));
 };
 
 require(["util/Progress"], (progress: any)=> {
     new progress.util.Progress().start();
 });
 
-require(["angular", "util/Progress", "modularity/AppModule"], (angular: ng.IAngularStatic, progress: any, app: any) => {
+require(["util/Progress", "modularity/AppModule"], (progress: any, app: any) => {
     new app.modularity.AppModule().bootstrap(document);
     new progress.util.Progress().done();
 });

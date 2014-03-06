@@ -1,16 +1,23 @@
 ///<reference path="../reference.d.ts"/>
-import a = require("./ControllerModule");
-import b = require("./DirectiveModule");
-import d = require("./ServiceModule");
+
+///<amd-dependency path="angular"/>
+import a = require("./DirectiveModule");
+import b = require("./ControllerModule");
 
 export module modularity {
     export class AppModule {
         constructor() {
-            new a.modularity.ControllerModule();
-            new b.modularity.DirectiveModule();
-            new d.modularity.ServiceModule();
-
-            angular.module("lwa", ["lwa.directive", "lwa.controller"]);
+            new a.modularity.DirectiveModule();
+            new b.modularity.ControllerModule();
+            
+            angular.module("lwa", ["lwa.directive", "lwa.controller"])
+                //Throw hard exception on angular errors
+                .factory('$exceptionHandler', function () {
+                    return (exception, cause) => {
+                        exception.message += ' (caused by "' + cause + '")';
+                        throw exception;
+                    };
+                });
         }
 
         bootstrap(rootElement: any) {
