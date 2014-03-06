@@ -43,5 +43,5 @@
                             stockForm.minQuantity.$pristine &&
                             stockForm.maxQuantity.$pristine &&
                             stockForm.unit.$pristine" 
-                            remove="removeStock(entity)" remove-disabled="isEntityNew || readMode"></save-changes>
+                remove-disabled="isEntityNew || readMode" on-remove="removeStock(entity)"></save-changes>
 </form>

@@ -6,9 +6,32 @@ export module directive {
         scope = {
             saveDisabled: '=',
             removeDisabled: '=',
-            remove: '&'
+            onRemove: '&'
         };
         templateUrl = '/template/directive/SaveChangesTemplate.html';
+        link = (scope, element, attrs) => {
+            scope.saveLabel = "Salvar";
+            
+            scope.save = () => {
+                scope.saveLabel = "Salvando...";
+                };
+            scope.$watch("saveDisabled", () => {
+                if(!scope.saveDisabled)
+                    scope.saveLabel = "Salvar";
+                });
+
+            scope.remove = () => {
+                scope.saveLabel = "";
+                scope.removeLabel = "Removendo..."
+                scope.onRemove();
+                };
+            scope.$watch("removeDisabled", () => {
+                if(!scope.removeDisabled){
+                    scope.saveLabel = "Salvar";
+                    scope.removeLabel = "";
+                }
+                });
+        };
     }
 }
 

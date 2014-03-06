@@ -105,6 +105,6 @@
                                  invalid.orderItems ||
                                  invalid.paymentQuantity ||
                                  orderForm.inputPayment.$invalid" 
-                  remove-disabled="isEntityNew || readMode" remove="removeOrder(entity)"></save-changes>
+                  remove-disabled="isEntityNew || readMode" on-remove="removeOrder(entity)"></save-changes>
 
 </form>

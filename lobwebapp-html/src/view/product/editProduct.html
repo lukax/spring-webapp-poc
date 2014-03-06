@@ -89,7 +89,7 @@
             productForm.inputNcm.$pristine &&
             productForm.inputCategory.$pristine &&
             productForm.inputDescription.$pristine" 
-            remove-disabled="isEntityNew || readMode" remove="removeProduct(entity)"></save-changes>
+            remove-disabled="isEntityNew || readMode" on-remove="removeProduct(entity)"></save-changes>
         </form>
     </div>
 </div>
