@@ -3,13 +3,10 @@
 export module directive {
     export class EntityIdDirective implements ng.IDirective {
         restrict = "E";
-        replace = true;
-        transclude = true;
         scope = {
             id: "="
         };
         templateUrl = "/template/directive/EntityIdTemplate.html";
-
     }
 }
 

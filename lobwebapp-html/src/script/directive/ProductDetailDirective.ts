@@ -2,9 +2,7 @@
 
 export module directive {
     export class ProductDetailDirective implements ng.IDirective {
-
         restrict = "E";
-        replace = true;
         scope = {
             product: "=",
             quantity: "="

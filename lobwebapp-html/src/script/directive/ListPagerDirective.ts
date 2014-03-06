@@ -3,8 +3,6 @@
 export module directive {
     export class ListPagerDirective implements ng.IDirective {
         restrict = 'E';
-        replace = true;
-        transclude = true;
         scope = {
             page: '=',
             changePage: '='

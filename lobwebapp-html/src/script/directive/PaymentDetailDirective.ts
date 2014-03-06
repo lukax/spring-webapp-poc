@@ -5,7 +5,6 @@ import enums = require("./../util/EnumUtil");
 export module directive {
     export class PaymentDetailDirective implements ng.IDirective {
         restrict = 'E';
-        replace = true;
         scope = {
             payment: '='
         };

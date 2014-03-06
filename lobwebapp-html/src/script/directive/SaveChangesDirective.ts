@@ -1,19 +1,14 @@
-
-
 ///<reference path="../reference.d.ts"/>
 
 export module directive {
     export class SaveChangesDirective implements ng.IDirective {
-
         restrict = 'E';
-        replace = true;
         scope = {
             saveDisabled: '=',
             removeDisabled: '=',
             remove: '&'
         };
         templateUrl = '/template/directive/SaveChangesTemplate.html';
-
     }
 }
 

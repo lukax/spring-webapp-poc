@@ -4,17 +4,11 @@ import enums = require("./../util/EnumUtil");
 
 export module directive {
     export class ImageUploadDirective implements ng.IDirective {
-
         restrict = 'E';
-
-        replace = true;
-
         scope = {
             imageUrl: "="
         };
-
         templateUrl = '/template/directive/ImageUploadTemplate.html';
-
         link = (scope: any, element: any, attrs: any)=>{
             element.find("#imageUploadIncludeImage").on("click", ()=>{
                 element.find("#imageUploadInput").click();    
@@ -58,7 +52,6 @@ export module directive {
             }); 
             
         };
-
         controller = ["AlertService", "Progress", "$scope", (AlertService, Progress, $scope) => {
             $scope.Progress = Progress;
 
@@ -74,7 +67,6 @@ export module directive {
             });
 
         }];
-
     }
 }
 
