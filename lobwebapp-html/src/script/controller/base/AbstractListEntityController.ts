@@ -29,11 +29,10 @@ export module controller.base {
         }
 
         listEntity(pageIndex: number) {
-            this.$scope.page = { index: pageIndex, size: 1 };
             this.$scope.navigator.Progress.start();
                 this.EntityService.list(
                     (successData, successStatus, headers) => {
-                        this.$scope.page.size = Number(headers(enums.Headers.PAGE_TOTAL));
+                        this.$scope.page = { index: pageIndex, size: Number(headers(enums.Headers.PAGE_TOTAL)) };
                         this.$scope.entities = successData;
                         this.$scope.navigator.Progress.done();
                         if (this.redirectString) this.AlertService.add({ title: "Busca Rápida", content: "Clique em um item da lista para voltar para a página anterior", type: enums.AlertType.INFO });
