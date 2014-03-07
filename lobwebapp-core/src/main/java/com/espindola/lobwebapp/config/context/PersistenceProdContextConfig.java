@@ -28,7 +28,7 @@ public class PersistenceProdContextConfig {
 	
 	@Bean
 	public URI dbUrl() throws URISyntaxException{
-		String clearDbUrl = environment.getProperty("CLEARDB_DATABASE_URL");
+		String clearDbUrl = environment.getProperty("DATABASE_URL");
 		return new URI(clearDbUrl);
 	}
 	
@@ -36,7 +36,7 @@ public class PersistenceProdContextConfig {
 	public BoneCPDataSource dataSource() throws URISyntaxException{
 		BoneCPDataSource dataSource = new BoneCPDataSource();
 		dataSource.setDriverClass(environment.getProperty("jdbc.driverClassName"));
-		dataSource.setJdbcUrl("jdbc:mysql://" + dbUrl().getHost() + dbUrl().getPath());
+		dataSource.setJdbcUrl(environment.getProperty("jdbc.protocol") + dbUrl().getHost() + dbUrl().getPath());
 		dataSource.setUsername(dbUrl().getUserInfo().split(":")[0]);
 		dataSource.setPassword(dbUrl().getUserInfo().split(":")[1]);
 		dataSource.setMaxConnectionAgeInSeconds(15L);
@@ -61,7 +61,6 @@ public class PersistenceProdContextConfig {
 			jpaProperties.setProperty("hibernate.dialect", environment.getProperty("hibernate.dialect"));
 			jpaProperties.setProperty("hibernate.ejb.naming_strategy", environment.getProperty("hibernate.ejb.naming_strategy"));
 			jpaProperties.setProperty("hibernate.hbm2ddl.auto", environment.getProperty("hibernate.hbm2ddl.auto"));
-			jpaProperties.setProperty("hibernate.format_sql", environment.getProperty("hibernate.format_sql"));
 			jpaProperties.setProperty("hibernate.show_sql", environment.getProperty("hibernate.show_sql"));
 		bean.setJpaProperties(jpaProperties);
 		return bean;

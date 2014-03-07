@@ -3,7 +3,6 @@
 export module directive {
     export class QuickSearchDirective implements ng.IDirective {
         restrict = 'E';
-        replace = true;
         transclude = true;
         scope = {
             label: '@',
@@ -13,7 +12,6 @@ export module directive {
             fetch: '&'
         };
         templateUrl = '/template/directive/QuickSearchTemplate.html';
-
         controller = ["$scope", "$location", ($scope: any, $location: ng.ILocationService) => {
             $scope.search = () => {
                 $location.url("/" + $scope.resourceUrl + "/list?redirect=" + encodeURIComponent($location.url()));

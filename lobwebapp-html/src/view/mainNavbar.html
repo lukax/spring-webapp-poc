@@ -52,7 +52,7 @@
                 <li ng-if="!isUserLogged"><a class="link" ng-href="/user/auth">Entrar</a></li>
                 <li ng-if="isUserLogged" class="dropdown">
                     <a class="dropdown-toggle">
-                        Olá <strong>{{user.name}}</strong>
+                        {{user.name}}
                     </a>
                     <ul class="dropdown-menu">
                         <li><a ng-href="/user/auth?logout=true" ng-hide="!isUserLogged">Sair</a></li>

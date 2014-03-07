@@ -13,15 +13,25 @@ export module service.impl {
         findByName(name: string,
             successCallback: (data: domain.Product[], status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
             errorCallback: (data: domain.util.MessageResponse, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
-            pageable: domain.util.Page) {
-                var header = "%" + name + "%";
-                this.$http.get(this.url + this.getPageableUri(pageable), { headers: { product_name: header } }).success(successCallback).error(errorCallback);
+            page: domain.util.Page) {
+                var headers = <any>this.getPageableRequestHeaders(page);
+                headers.product_name = "%" + name + "%";
+                
+                this.$http({method: "GET",
+                            url: this.url,
+                            headers: headers })
+                    .success(successCallback)
+                    .error(errorCallback);
         }
 
         listCategory(
             successCallback: (data: string[], status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
             errorCallback: (data: domain.util.MessageResponse, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
-                this.$http.get(this.url + "category").success(successCallback).error(errorCallback);
+                this.list((successData, status, headers, config) => {
+                        var categories = _.uniq(_.map(successData, (x) => { return x.category; }));
+                        successCallback(categories, status, headers, config);
+                    },
+                    errorCallback);
         }
 
         getImageUrl(productId: number){

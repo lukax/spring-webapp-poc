@@ -1,7 +1,5 @@
 <div>
-    <a ng-href="{{imageSrc}}">
-        <img ng-src="{{imageSrc}}" class="img-thumbnail">
-    </a>
+    <img ng-src="{{imageSrc}}" class="img-thumbnail">
     <div class="btn-group">
     	<a class="btn btn-default lwa-fade-left" id="imageUploadIncludeImage" title="Inserir nova imagem" ng-disabled="loading">
     	    <strong ng-hide="!loading">{{percentage | number:1}}% </strong>

@@ -1,10 +1,5 @@
 <form class="form-horizontal" role="form" name="stockForm" ng-submit="saveChanges(entity)" novalidate>
-    <div class="form-group">
-        <label for="inputId" class="col-md-1 control-label">ID</label>
-        <div class="col-md-11">
-            <input type="text" class="form-control" id="inputId" readonly ng-model="entity.id">
-        </div>
-    </div>
+    <entity-id id="entity.id"></entity-id>
     <quick-search label="Produto" resource-url="product" entity-id="entity.product.id" fetch="fetchProduct(entity.product.id)">
         <p class="form-control-static">
             <product-detail product="entity.product"></product-detail>
@@ -33,7 +28,7 @@
     <div class="form-group" ng-class="{'has-error': stockForm.unit.$invalid}">
         <label for="unit" class="col-md-1 control-label">Unid.</label>
         <div class="col-md-11">
-            <input type="text" class="form-control" id="unit" name="unit" autofocus ng-model="entity.unit" required ng-maxlength="10">
+            <input type="text" class="form-control" id="unit" name="unit" autofocus ng-model="entity.unit" required ng-maxlength="10"data-typeahead="unit for unit in units | limitTo:5">
         </div>
     </div>
     <save-changes save-disabled="readMode ||
@@ -48,5 +43,5 @@
                             stockForm.minQuantity.$pristine &&
                             stockForm.maxQuantity.$pristine &&
                             stockForm.unit.$pristine" 
-                            remove="removeStock(entity)" remove-disabled="isEntityNew || readMode"></save-changes>
+                remove-disabled="isEntityNew || readMode" on-remove="removeStock(entity)"></save-changes>
 </form>

@@ -21,30 +21,30 @@ export module controller.base {
                     public contextUrl: string,
                     public redirectParam: string) {
 
+            this.redirectString = this.$scope.navigator.$stateParams.redirect;
+            
             this.$scope.searchText = (this.$scope.navigator.$stateParams.search || "");
             this.$scope.editEntity = (id: number) => this.editEntity(id);
             this.$scope.listEntity = (page) => this.listEntity(page);
         }
 
         listEntity(pageIndex: number) {
-            this.$scope.page = { index: pageIndex, size: 1 };
             this.$scope.navigator.Progress.start();
                 this.EntityService.list(
                     (successData, successStatus, headers) => {
-                        this.$scope.page.size = Number(headers(enums.Headers.PAGE_TOTAL));
+                        this.$scope.page = { index: pageIndex, size: Number(headers(enums.Headers.PAGE_TOTAL)) };
                         this.$scope.entities = successData;
                         this.$scope.navigator.Progress.done();
                         if (this.redirectString) this.AlertService.add({ title: "Busca Rápida", content: "Clique em um item da lista para voltar para a página anterior", type: enums.AlertType.INFO });
                     },
                     (errorData) => {
                         console.log(errorData);
-                        this.AlertService.add({ title: "Não foi possível listar", content: errorData.message, type: enums.AlertType.DANGER });
+                        this.AlertService.addMessageResponse(errorData, "Não foi possível listar");
                         this.$scope.navigator.Progress.done();
                     }, { index: pageIndex, size: this.defaultPageSize });
         }
 
         editEntity(id: number) {
-            this.redirectString = this.$scope.navigator.$stateParams.redirect;
             if (this.redirectString) {
                 this.redirectString = this.replaceUrlParam(decodeURIComponent(this.redirectString), this.redirectParam, String(id));
                 console.log(this.redirectString);

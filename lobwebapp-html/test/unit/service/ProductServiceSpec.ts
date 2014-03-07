@@ -18,7 +18,7 @@ describe('service: ProductService', () => {
         var sucSpy = jasmine.createSpy("sucList"),
             errSpy = jasmine.createSpy("errList");
 
-        $httpBackend.expectGET(contextUrl + "category").respond(200, sampleProduct.category);
+        $httpBackend.expectGET(contextUrl).respond(200, sampleProduct.category);
         ProductService.listCategory(sucSpy, errSpy);
         $httpBackend.flush();
 
@@ -30,10 +30,15 @@ describe('service: ProductService', () => {
         var sucSpy = jasmine.createSpy("sucList"),
             errSpy = jasmine.createSpy("errList");
         var page: domain.util.Page = { index: 0, size: 50 };
-        var pageUrl = "?page=" + page.index + "&size=" + page.size;
         var productNameHeader = "%" + sampleProduct.name + "%";
 
-        $httpBackend.expectGET(contextUrl + pageUrl, { product_name: productNameHeader, Accept: "application/json, text/plain, */*" }).respond(200, sampleProduct);
+        $httpBackend.expectGET(contextUrl, { 
+                page_index: page.index,
+                page_size: page.size,
+                product_name: productNameHeader, 
+                Accept: "application/json, text/plain, */*" })
+            .respond(200, sampleProduct);
+            
         ProductService.findByName(sampleProduct.name, sucSpy, errSpy, page);
         $httpBackend.flush();
 

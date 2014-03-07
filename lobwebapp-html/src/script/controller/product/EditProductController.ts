@@ -14,7 +14,7 @@ export module controller.product {
     }
 
     export class EditProductController extends i0.controller.base.AbstractEditEntityController<domain.Product> {
-        allCategories: string[];
+        allCategories: string[] = [];
 
         static $inject = ["$scope", "ProductService", "AlertService", "$filter"];
         constructor(public $scope: EditProductViewModel,
@@ -22,6 +22,7 @@ export module controller.product {
                     public AlertService: d.service.contract.AlertService,
                     public $filter: ng.IFilterService) {
             super($scope, "product", ProductService, AlertService);
+            super.setEntityName("Produto");
 
             var productId = this.$scope.navigator.$stateParams.productId;
             
@@ -31,36 +32,36 @@ export module controller.product {
         }
         
         fetchCategories() {
-            this.lock();
             this.ProductService.listCategory(
                 (successData) => {
-                    this.$scope.categories = [];
                     this.allCategories = successData;
-                    this.unlock();
                 },
                 (errorData) => {
-                    this.AlertService.add({ title: "Não foi possível carregar categorias", content: errorData.message, type: enums.AlertType.DANGER });
-                    this.unlock();
+                    console.log(errorData);
+                    this.AlertService.addMessageResponse(errorData, "Não foi possível carregar as categorias");
                 });
-        }
-
-        filterCategories(){
-            this.$scope.categories = this.$filter("filter")(this.allCategories, this.$scope.entity.category);
-        }
-        
-        populateScope() {
             this.$scope.$watch("entity.category", () => {
                 this.filterCategories();
             });
+        }
+
+        filterCategories(){
+            if(this.$scope.entity.category != null)
+                this.$scope.categories = this.$filter("filter")(this.allCategories, this.$scope.entity.category);
+        }
+
+        syncMarkup(){
             this.$scope.$watch("entity.price + entity.costPrice", () => {
                 this.$scope.markUp = 100 * this.ProductService.getMarkUp(this.$scope.entity);
             });
-            this.$scope.$watch("entity.id", () => {
-                this.$scope.imageUrl = this.ProductService.getImageUrl(this.$scope.entity.id);
-            });
-            this.fetchCategories();
+        }
+        
+        populateScope() {
             this.$scope.saveChanges = (entity) => this.saveChanges(entity);
             this.$scope.removeProduct = (entity) => this.removeEntity(entity);
+            this.$scope.imageUrl = this.ProductService.getImageUrl(this.$scope.entity.id);
+            this.fetchCategories();
+            this.syncMarkup();
         }
     }
 }

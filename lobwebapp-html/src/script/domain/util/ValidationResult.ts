@@ -1,8 +1,8 @@
 
 module domain.util{
 	export interface ValidationResult {
-		propertyName: string;
 		code: number;
+		propertyName: string;
 		message: string;
 	}
 }

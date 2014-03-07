@@ -20,24 +20,6 @@
 	</appender>
 
 	<logger name="com.espindola.lobwebapp" level="DEBUG">
-		<appender-ref ref="FILE" />
-	</logger>
-
-	<logger name="org.springframework.beans" level="INFO" />
-	<logger name="org.springframework.beans" level="WARN">
-		<appender-ref ref="FILE" />
-	</logger>
-	<logger name="org.springframework.web" level="INFO" />
-	<logger name="org.springframework.web" level="WARN">
-		<appender-ref ref="FILE" />
-	</logger>
-
-	<logger name="org.codehaus.jackson" level="DEBUG" >
-		<appender-ref ref="FILE" />
-	</logger>
-
-	<logger name="org.hibernate" level="WARN" >
-		<appender-ref ref="FILE" />
 	</logger>
 
 	<root level="INFO">

@@ -26,7 +26,7 @@ export var routes: AppRoute[] =
             deps: [
                 "controller/product/ListProductController",
                 "service/impl/ProductServiceImpl",
-                "directive/ListPagerDirective"
+                "directive/ListUtilsDirective"
             ]
         }, {
             name: "productEdit",
@@ -36,8 +36,8 @@ export var routes: AppRoute[] =
             deps: [
                 "controller/product/EditProductController",
                 "service/impl/ProductServiceImpl",
-                "directive/ImageUploadDirective",
-                "directive/SaveChangesDirective"
+                "directive/FormUtilsDirective",
+                "directive/ImageUploadDirective"
             ]
         }, {
             name: "orderEdit",
@@ -49,12 +49,11 @@ export var routes: AppRoute[] =
                 "service/impl/OrderServiceImpl",
                 "service/impl/ProductServiceImpl",
                 "service/impl/CustomerServiceImpl",
-                "directive/SaveChangesDirective",
+                "directive/FormUtilsDirective",
                 "directive/QuickSearchDirective",
                 "directive/CustomerDetailDirective",
                 "directive/ProductDetailDirective",
-                "directive/PaymentDetailDirective",
-                "filter/PaymentFilter"
+                "directive/PaymentDetailDirective"
             ]
         }, {
             name: "orderList",
@@ -64,7 +63,9 @@ export var routes: AppRoute[] =
             deps: [
                 "controller/order/ListOrderController",
                 "service/impl/OrderServiceImpl",
-                "directive/ListPagerDirective"
+                "directive/ListUtilsDirective",
+                "directive/CustomerDetailDirective",
+                "directive/PaymentDetailDirective"
             ]
         }, {
             name: "orderGraph",
@@ -83,7 +84,7 @@ export var routes: AppRoute[] =
             deps: [
                 "controller/customer/EditCustomerController",
                 "service/impl/CustomerServiceImpl",
-                "directive/SaveChangesDirective"
+                "directive/FormUtilsDirective"
             ]
         }, {
             name: "customerList",
@@ -93,7 +94,7 @@ export var routes: AppRoute[] =
             deps: [
                 "controller/customer/ListCustomerController",
                 "service/impl/CustomerServiceImpl",
-                "directive/ListPagerDirective"
+                "directive/ListUtilsDirective"
             ]
         }, {
             name: "stockEdit",
@@ -104,7 +105,7 @@ export var routes: AppRoute[] =
                 "controller/stock/EditStockController",
                 "service/impl/StockServiceImpl",
                 "service/impl/ProductServiceImpl",
-                "directive/SaveChangesDirective",
+                "directive/FormUtilsDirective",
                 "directive/QuickSearchDirective",
                 "directive/ProductDetailDirective"
             ]
@@ -116,7 +117,8 @@ export var routes: AppRoute[] =
             deps: [
                 "controller/stock/ListStockController",
                 "service/impl/StockServiceImpl",
-                "directive/ListPagerDirective"
+                "directive/ListUtilsDirective",
+                "directive/ProductDetailDirective"
             ]
         }
     ];

@@ -46,7 +46,6 @@ export module controller.user {
             this.lock();
             this.AuthService.login(this.$scope.user,
                 (successData) => {
-                    this.AlertService.add({ title: "Login", content: "Bem vindo " + successData.name });
                     this.toDefaultPage();
                 },
                 () => {
@@ -59,7 +58,6 @@ export module controller.user {
             this.lock();
             this.AuthService.logout(
                 (successData) => {
-                    this.AlertService.add({ title: "Logout", content: successData.name + " saiu" });
                     this.$scope.user = successData;
                     this.unlock();
                 },

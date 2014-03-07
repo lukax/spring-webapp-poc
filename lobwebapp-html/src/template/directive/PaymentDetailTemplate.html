@@ -1,8 +1,8 @@
 <div>
-    <span class="label {{labelClass}}" ng-if="ref.status">
-        {{ref.status | paymentStatus}}
+    <span class="label {{labelClass}}" ng-if="payment.status">
+        Status: {{payment.status | paymentStatus}}
     </span>
-    <span class="label label-default" ng-if="ref.mode">
-        {{ref.mode | paymentMode}}
+    <span class="label label-default" ng-if="payment.mode">
+        Modo: {{payment.mode | paymentMode}}
     </span>
 </div>

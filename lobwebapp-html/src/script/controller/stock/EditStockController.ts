@@ -9,16 +9,20 @@ export module controller.stock {
         removeStock: (stock: domain.Stock) => void;
         fetchProduct: (productId: number) => void;
         invalid: any;
+        units: string[];
     }
 
     export class EditStockController extends i0.controller.base.AbstractEditEntityController<domain.Stock> {
+        allUnits: string[] = [];
 
-        static $inject = ["$scope", "StockService", "ProductService", "AlertService"];
+        static $inject = ["$scope", "StockService", "ProductService", "AlertService", "$filter"];
         constructor(public $scope: EditStockViewModel,
                     public StockService: d.service.contract.StockService,
                     public ProductService: d.service.contract.ProductService,
-                    public AlertService: d.service.contract.AlertService) {
+                    public AlertService: d.service.contract.AlertService,
+                    public $filter: ng.IFilterService) {
             super($scope, "stock", StockService, AlertService);
+            super.setEntityName("Estoque");
             
             var stockId = this.$scope.navigator.$stateParams.stockId;
             var productId = this.$scope.navigator.$stateParams.productId;
@@ -40,28 +44,48 @@ export module controller.stock {
                 },
                 (errorData) => {
                     console.log(errorData);
-                    this.AlertService.add({ title: "Não foi possível buscar produto", content: errorData.message, type: enums.AlertType.WARNING });
+                    this.AlertService.addMessageResponse(errorData, "Não foi possível buscar produto");
                     this.unlock();
                 });
+        }
+
+        fetchUnits() {
+            this.StockService.listUnit(
+                (successData) => {
+                    this.allUnits = successData;
+                },
+                (errorData) => {
+                    console.log(errorData);    
+                    this.AlertService.addMessageResponse(errorData, "Não foi possível carregar as unidades");
+                });
+            this.$scope.$watch("entity.unit", ()=>{
+                this.filterUnits();
+                });
+        }
+
+        filterUnits(){
+            if(this.$scope.entity.unit != null)
+                this.$scope.units = this.$filter("filter")(this.allUnits, this.$scope.entity.unit);
         }
 
         setupValidations(){
             this.$scope.invalid = {};
             this.$scope.$watch("entity.quantity", ()=>{
                 this.$scope.invalid.quantity = this.$scope.entity.quantity < this.$scope.entity.minQuantity;
-            });
+                });
             this.$scope.$watch("entity.minQuantity", ()=>{
                 this.$scope.invalid.minQuantity = this.$scope.entity.minQuantity >= this.$scope.entity.maxQuantity;
-            });
+                });
             this.$scope.$watch("entity.maxQuantity", ()=>{
                 this.$scope.invalid.maxQuantity = this.$scope.entity.maxQuantity <= this.$scope.entity.minQuantity;
-            });
+                });
         }
 
         populateScope() {
             this.$scope.saveChanges = (stock) => this.saveChanges(stock);
             this.$scope.removeStock = (stock) => this.removeEntity(stock);
             this.$scope.fetchProduct = (productId) => this.fetchProduct(productId);
+            this.fetchUnits();
         }
         
     }
