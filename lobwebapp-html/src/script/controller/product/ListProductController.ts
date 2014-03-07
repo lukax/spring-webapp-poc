@@ -22,7 +22,6 @@ export module controller.product {
 
         listProduct(pageIndex: number) {
             var searchText = this.$scope.searchText;
-            
             if (searchText == "") {
                 this.listEntity(pageIndex);
             } else {

@@ -57,7 +57,7 @@ export module service.impl.base {
             page?: domain.util.Page) {
                 this.$http({method: "GET", 
                             url: this.url, 
-                            headers: this.getPageablePostHeaders(page) })
+                            headers: this.getPageableRequestHeaders(page) })
                     .success(successCallback)
                     .error(errorCallback);
         }
@@ -76,13 +76,7 @@ export module service.impl.base {
             
         }
 
-        getPageableRequestParams(page: domain.util.Page) {
-            if(page)
-                return { page: page.index, size: page.size };
-            return {};
-        }
-
-        getPageablePostHeaders(page: domain.util.Page) {
+        getPageableRequestHeaders(page: domain.util.Page) {
             if(page)
                 return { page_index: page.index, page_size: page.size };
             return {};

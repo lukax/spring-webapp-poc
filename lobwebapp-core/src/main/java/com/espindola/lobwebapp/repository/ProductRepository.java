@@ -16,6 +16,6 @@ public interface ProductRepository extends EntityRepository<Product> {
 
 	public List<Product> findByNameLike(String name);
 
-	public Page<Product> findByNameLike(String name, Pageable pageable);
+	public Page<Product> findAllByNameLike(String name, Pageable pageable);
 
 }

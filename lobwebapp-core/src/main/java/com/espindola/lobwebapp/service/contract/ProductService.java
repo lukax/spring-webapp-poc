@@ -11,6 +11,6 @@ public interface ProductService extends EntityService<Product> {
 	
 	Product findByName(String name) throws NotFoundException;
 	
-	Page<Product> findByNameLike(String name, Pageable pageable);
+	Page<Product> findAllByNameLike(String name, Pageable pageable);
 
 }

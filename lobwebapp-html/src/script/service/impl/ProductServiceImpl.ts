@@ -14,13 +14,11 @@ export module service.impl {
             successCallback: (data: domain.Product[], status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
             errorCallback: (data: domain.util.MessageResponse, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
             page: domain.util.Page) {
-                var headers = {
-                    product_name: "%" + name + "%"
-                };
-
+                var headers = <any>this.getPageableRequestHeaders(page);
+                headers.product_name = "%" + name + "%";
+                
                 this.$http({method: "GET",
                             url: this.url,
-                            params: this.getPageableRequestParams(page), 
                             headers: headers })
                     .success(successCallback)
                     .error(errorCallback);

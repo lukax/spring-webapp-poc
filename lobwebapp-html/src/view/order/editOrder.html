@@ -3,7 +3,9 @@
     <entity-id id="entity.id"></entity-id>
     
     <quick-search label="Cliente" resource-url="customer" entity-id="entity.customer.id" fetch="fetchCustomer(entity.customer.id)">
-        <p class="form-control-static">{{entity.customer.name}}</p>
+        <div class="form-control-static">
+            <customer-detail customer="entity.customer"></customer-detail>
+        </div>
     </quick-search>
 
     <quick-search label="Produtos" resource-url="product" invalid="invalid.orderItems" entity-id="item.product.id" fetch="fetchProduct(item.product.id)">
@@ -18,9 +20,9 @@
             </div>
         </div>
         <div class="col-md-9">
-            <p class="form-control-static">
+            <div class="form-control-static">
                 <product-detail product="item.product"></product-detail>
-            </p>
+            </div>
         </div>
     </quick-search>
         

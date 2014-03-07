@@ -29,8 +29,8 @@ public class ProductFacade extends AbstractEntityFacade<Product> {
 		this.productService = productService;
 	}
 
-	public Page<Product> findByNameLike(String name, Pageable pageable) {
-		return productService.findByNameLike(name, pageable);
+	public Page<Product> findAllByNameLike(String name, Pageable pageable) {
+		return productService.findAllByNameLike(name, pageable);
 	}
 
 	public FileMeta getImage(Long id) {

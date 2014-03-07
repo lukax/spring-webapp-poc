@@ -40,8 +40,8 @@ public class ProductServiceImpl extends AbstractEntityServiceImpl<Product>
 	}
 
 	@Override
-	public Page<Product> findByNameLike(String name, Pageable pageable) {
-		return repository.findByNameLike(name, pageable);
+	public Page<Product> findAllByNameLike(String name, Pageable pageable) {
+		return repository.findAllByNameLike(name, pageable);
 	}
 
 	@Override

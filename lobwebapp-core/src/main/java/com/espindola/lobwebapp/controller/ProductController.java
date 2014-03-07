@@ -53,14 +53,15 @@ public class ProductController extends AbstractEntityController<Product> {
 		this.facade = facade;
 	}
 
-	@RequestMapping(method = RequestMethod.GET, headers = { HeaderKey.PRODUCT_NAME })
+	@RequestMapping(method = RequestMethod.GET, headers = {
+			HeaderKey.PRODUCT_NAME, HeaderKey.PAGE_INDEX, HeaderKey.PAGE_SIZE })
 	@ResponseStatus(value = HttpStatus.OK)
 	@ResponseBody
-	public List<Product> findByNameLike(HttpServletResponse response,
+	public List<Product> findAllByNameLike(HttpServletResponse response,
 			@RequestHeader(HeaderKey.PRODUCT_NAME) String productName,
 			@RequestHeader(HeaderKey.PAGE_INDEX) Integer pageIndex,
 			@RequestHeader(HeaderKey.PAGE_SIZE) Integer pageSize) {
-		Page<Product> products = this.facade.findByNameLike(productName,
+		Page<Product> products = this.facade.findAllByNameLike(productName,
 				new PageRequest(pageIndex, pageSize));
 		super.eventPublisher.publishEvent(new PageReturnEvent(products,
 				response));
