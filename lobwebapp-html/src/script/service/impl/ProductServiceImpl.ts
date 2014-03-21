@@ -35,7 +35,8 @@ export module service.impl {
         }
 
         getImageUrl(productId: number){
-            return "/api/product/" + productId + "/image";
+            var accessToken = this.$http.defaults.headers.common.Authorization.split(" ")[1];
+            return this.url + productId + "/image?access_token=" + accessToken;
         }
 
         getMarkUp(product: domain.Product){
