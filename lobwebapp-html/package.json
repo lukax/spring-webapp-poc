@@ -2,13 +2,12 @@
   "name": "lobwebapp-html",
   "version": "0.2.1",
   "description": "Line of Business Web application Front End, based on AngularJS",
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "karma": "~0.10.4",
     "karma-phantomjs-launcher": "~0.1.0",
     "karma-jasmine": "~0.1.0",
-    "karma-requirejs": "~0.1.0",
+    "karma-requirejs": "~0.2.0",
     "grunt": "~0.4.2",
     "grunt-karma": "~0.6.2",
     "grunt-contrib-copy": "~0.4.1",
