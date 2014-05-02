@@ -8,7 +8,6 @@ export module controller.order {
         item: domain.OrderItem;
         exchange: number;
         total: number;
-        saveChanges(order: domain.Order): void;
         addItem(item: domain.OrderItem): void;
         removeItem(item: domain.OrderItem): void;
         fetchProduct(id: number): void;
@@ -123,7 +122,6 @@ export module controller.order {
 
         populateScope() {
             this.$scope.total = 0;
-            this.$scope.saveChanges = (order) => this.saveChanges(order);
             this.$scope.addItem = (item) => this.addItem(item);
             this.$scope.removeItem = (item) => this.removeItem(item);
             this.$scope.fetchProduct = (id) => this.fetchProduct(id);

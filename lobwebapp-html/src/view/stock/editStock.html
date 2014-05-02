@@ -1,4 +1,4 @@
-<form class="form-horizontal" role="form" name="stockForm" ng-submit="saveChanges(entity)" novalidate>
+<form class="form-horizontal" role="form" name="stockForm" ng-submit="saveOrUpdateEntity(entity)" novalidate>
     <entity-id id="entity.id"></entity-id>
     <quick-search label="Produto" resource-url="product" entity-id="entity.product.id" fetch="fetchProduct(entity.product.id)">
         <p class="form-control-static">
@@ -31,17 +31,21 @@
             <input type="text" class="form-control" id="unit" name="unit" autofocus ng-model="entity.unit" required ng-maxlength="10"data-typeahead="unit for unit in units | limitTo:5">
         </div>
     </div>
-    <save-changes save-disabled="readMode ||
-                            invalid.quantity ||
-                            invalid.minQuantity ||
-                            invalid.maxQuantity ||
-                            stockForm.quantity.$invalid ||
-                            stockForm.minQuantity.$invalid ||
-                            stockForm.maxQuantity.$invalid ||
-                            stockForm.unit.$invalid ||
-                            stockForm.quantity.$pristine &&
-                            stockForm.minQuantity.$pristine &&
-                            stockForm.maxQuantity.$pristine &&
-                            stockForm.unit.$pristine" 
-                remove-disabled="isEntityNew || readMode" on-remove="removeStock(entity)"></save-changes>
+    <save-changes disabled="readMode"
+        save-disabled="invalid.quantity ||
+                        invalid.minQuantity ||
+                        invalid.maxQuantity ||
+                        stockForm.quantity.$invalid ||
+                        stockForm.minQuantity.$invalid ||
+                        stockForm.maxQuantity.$invalid ||
+                        stockForm.unit.$invalid ||
+                        stockForm.quantity.$pristine &&
+                        stockForm.minQuantity.$pristine &&
+                        stockForm.maxQuantity.$pristine &&
+                        stockForm.unit.$pristine" 
+        remove-disabled="isEntityNew" 
+        on-remove="removeStock(entity)"
+        discard-changes-enabled="isPreviousChanges" 
+        on-discard-changes="discardChanges()">
+    </save-changes>
 </form>

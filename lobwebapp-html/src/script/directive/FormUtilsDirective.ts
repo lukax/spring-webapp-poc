@@ -12,9 +12,12 @@ export module directive {
     export class SaveChangesDirective implements ng.IDirective {
         restrict = 'E';
         scope = {
+            disabled: '=',
             saveDisabled: '=',
             removeDisabled: '=',
-            onRemove: '&'
+            onRemove: '&',
+            discardChangesEnabled: '=',
+            onDiscardChanges: '&'
         };
         templateUrl = '/template/directive/SaveChangesTemplate.html';
         link = (scope, element, attrs) => {
@@ -23,22 +26,28 @@ export module directive {
             scope.save = () => {
                 scope.saveLabel = "Salvando...";
                 };
-            scope.$watch("saveDisabled", () => {
-                if(!scope.saveDisabled)
-                    scope.saveLabel = "Salvar";
-                });
 
             scope.remove = () => {
                 scope.saveLabel = "";
                 scope.removeLabel = "Removendo..."
                 scope.onRemove();
                 };
-            scope.$watch("removeDisabled", () => {
-                if(!scope.removeDisabled){
+
+            scope.discardChanges = () => {
+                scope.saveLabel = "";
+                scope.discardChangesLabel = "Descartando alterações...";
+                if(scope.onDiscardChanges) 
+                    scope.onDiscardChanges();
+                };
+
+            scope.$watch("saveDisabled + removeDisabled + discardChangesEnabled", () => {
+                if(!scope.saveDisabled || !scope.removeDisabled || scope.discardChangesEnabled){
                     scope.saveLabel = "Salvar";
                     scope.removeLabel = "";
+                    scope.discardChangesLabel = "";
                 }
                 });
+   
         };
     }
 }

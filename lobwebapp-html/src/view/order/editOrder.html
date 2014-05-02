@@ -1,4 +1,4 @@
-<form class="form-horizontal form-validation" role="form" name="orderForm" novalidate ng-submit="saveChanges(entity)">
+<form class="form-horizontal form-validation" role="form" name="orderForm" novalidate ng-submit="saveOrUpdateEntity(entity)">
     
     <entity-id id="entity.id"></entity-id>
     
@@ -103,10 +103,14 @@
         </div>
     </div>
 
-    <save-changes save-disabled="readMode ||
-                                 invalid.orderItems ||
-                                 invalid.paymentQuantity ||
-                                 orderForm.inputPayment.$invalid" 
-                  remove-disabled="isEntityNew || readMode" on-remove="removeOrder(entity)"></save-changes>
+    <save-changes disabled="readMode" 
+        save-disabled="invalid.orderItems ||
+                       invalid.paymentQuantity ||
+                       orderForm.inputPayment.$invalid" 
+        remove-disabled="isEntityNew || readMode" 
+        on-remove="removeOrder(entity)" 
+        discard-changes-enabled="isPreviousChanges" 
+        on-discard-changes="discardChanges()">
+    </save-changes>
 
 </form>

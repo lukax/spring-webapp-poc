@@ -1,9 +1,15 @@
 <div>
 	<div class="btn-group pull-right">
-		<button class="btn btn-primary" type="submit" title="Salvar alterações" ng-disabled="saveDisabled" ng-click="save()">
+		<button class="btn btn-primary" type="submit" title="Salvar" ng-click="save()" 
+			ng-disabled="disabled || saveDisabled">
 			<span class="glyphicon glyphicon-floppy-disk"></span> {{saveLabel}}
 		</button>
-		<button class="btn btn-default" type="button" data-toggle="tooltip" title="Remover alterações" ng-click="remove()" ng-disabled="removeDisabled">
+		<button class="btn btn-default" type="button" data-toggle="tooltip" title="Descartar alterações atuais" ng-click="discardChanges()"
+			ng-disabled="disabled" ng-hide="!discardChangesEnabled">
+			<span class="glyphicon glyphicon-remove"></span> {{discardChangesLabel}}
+		</button>
+		<button class="btn btn-default" type="button" data-toggle="tooltip" title="Remover" ng-click="remove()" 
+			ng-disabled="disabled || removeDisabled" ng-hide="discardChangesEnabled">
 			<span class="glyphicon glyphicon-trash"></span> {{removeLabel}}
 		</button>
 	</div>

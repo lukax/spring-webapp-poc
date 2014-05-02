@@ -5,8 +5,6 @@ import enums = require("./../../util/EnumUtil");
 
 export module controller.customer {
     export interface EditCustomerViewModel extends i0.controller.base.EditEntityViewModel<domain.Customer> {
-        saveChanges: (customer: domain.Customer) => void;
-        removeCustomer: (customer: domain.Customer) => void;
     }
 
     export class EditCustomerController extends i0.controller.base.AbstractEditEntityController<domain.Customer> {
@@ -17,17 +15,9 @@ export module controller.customer {
             super($scope, "customer", CustomerService, AlertService);
             super.setEntityName("Cliente");
             
-            var customerId = this.$scope.navigator.$stateParams.customerId;
-
-            this.findEntity(customerId, ()=> {
-                this.populateScope();
-            });
+            this.findEntity(this.$scope.navigator.$stateParams.customerId);
         }
 
-        populateScope() {
-            this.$scope.saveChanges = (customer: domain.Customer) => this.saveChanges(customer);
-            this.$scope.removeCustomer = (customer: domain.Customer) => this.removeEntity(customer);
-        }
     }
 }
 

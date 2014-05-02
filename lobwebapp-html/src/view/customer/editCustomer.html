@@ -1,15 +1,19 @@
-<form class="form-horizontal" role="form" name="customerForm" ng-submit="saveChanges(entity)" novalidate>
-    <entity-id id="entity.id"></entity-id>
+<form class="form-horizontal" role="form" name="customerForm" ng-submit="saveOrUpdateEntity(entity)" novalidate>
+		<entity-id id="entity.id"></entity-id>
 
-    <div class="form-group" ng-class="{'has-error': customerForm.inputName.$invalid}">
-        <label for="inputName" class="col-md-1 control-label">Nome</label>
-        <div class="col-md-11">
-            <input type="text" class="form-control" id="inputName" name="inputName" autofocus ng-model="entity.name" required ng-minlength="5" ng-maxlength="100">
-        </div>
-    </div>
-    
-    <save-changes save-disabled="readMode ||
-                                 customerForm.inputName.$invalid ||
-                                 customerForm.inputName.$pristine" 
-                  remove-disabled="isEntityNew || readMode" on-remove="removeCustomer(entity)"></save-changes>
+		<div class="form-group" ng-class="{'has-error': customerForm.inputName.$invalid}">
+				<label for="inputName" class="col-md-1 control-label">Nome</label>
+				<div class="col-md-11">
+						<input type="text" class="form-control" id="inputName" name="inputName" autofocus ng-model="entity.name" required ng-minlength="5" ng-maxlength="100">
+				</div>
+		</div>
+		
+		<save-changes disabled="readMode"
+			save-disabled="customerForm.inputName.$invalid ||
+										 customerForm.inputName.$pristine" 
+			remove-disabled="isEntityNew || readMode" 
+			on-remove="removeCustomer(entity)"                
+			discard-changes-enabled="isPreviousChanges" 
+			on-discard-changes="discardChanges()">
+		</save-changes>
 </form>
