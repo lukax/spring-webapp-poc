@@ -164,14 +164,14 @@ module.exports = function (grunt) {
                 files: [{
                     expand: true,
                     cwd: '<%= yeoman.app %>/script/',
-                    src: '**/*.js',
+                    src: 'app.js',
                     dest: '<%= yeoman.dist %>/script/'
                 }]
             }
         },
         ts: {
             dev: {
-                src: ['<%= yeoman.app%>/script/**/*.ts'],
+                src: ['<%= yeoman.app %>/script/**/*.ts'],
                 options: {
                     target: 'es5',
                     declaration: false,
@@ -179,14 +179,14 @@ module.exports = function (grunt) {
                 }
             },
             dist: {
-                src: ['<%= yeoman.app%>/script/**/*.ts'],
+                src: ['<%= yeoman.app %>/script/**/*.ts'],
                 options: {
                     target: 'es5',
                     sourcemap: false
                 }
             },
             test: {
-                src: ['<%= yeoman.app%>/script/**/*.ts', '<%= yeoman.test%>/**/*.ts'],
+                src: ['<%= yeoman.app %>/script/**/*.ts', '<%= yeoman.test%>/**/*.ts'],
                 options: {
                     target: 'es5'
                 }

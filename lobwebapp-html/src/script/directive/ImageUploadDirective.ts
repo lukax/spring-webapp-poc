@@ -1,15 +1,25 @@
 ///<reference path="../reference.d.ts"/>
 
+import URI = require("urijs");
 import enums = require("./../util/EnumUtil");
 
 export module directive {
+    export interface ImageUploadViewModel extends ng.IScope {
+        Progress: d.service.contract.Progress;
+        imageUrl: string;
+        localImageUrl: string;
+        percentage: number;
+        loading: boolean;
+        uploadFailed: () => void;
+    }
+
     export class ImageUploadDirective implements ng.IDirective {
         restrict = 'E';
-        scope = {
+        scope: ImageUploadViewModel = <ImageUploadViewModel>{
             imageUrl: "="
         };
         templateUrl = '/template/directive/ImageUploadTemplate.html';
-        link = (scope: any, element: any, attrs: any)=>{
+        link = (scope: ImageUploadViewModel, element: any, attrs: any)=>{
             element.find("#imageUploadIncludeImage").on("click", ()=>{
                 element.find("#imageUploadInput").click();    
             });
@@ -18,14 +28,10 @@ export module directive {
                 dataType: 'json',
                 acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
                 maxFileSize: 5000000,
-                minFileSize: 1,
+                minFileSize: 1000,
                 done: (e, data) => {
                     console.log(data);
-
-                    if(scope.imageUrl.indexOf("?") == -1)
-                        scope.imageUrl += "?"+ new Date().getTime();
-                    scope.imageUrl += "&" + new Date().getTime();
-                
+                    scope.imageUrl = new URI(scope.imageUrl).addSearch("cache", new Date().getTime().toString()).toString();                
                 },
                 fail: (e, data) =>{
                     scope.uploadFailed();
@@ -37,22 +43,22 @@ export module directive {
                 }
             });
 
-            scope.$watch("imageUrl", (newValue, oldValue)=>{
+            scope.$watch("imageUrl", (newValue: string)=>{
                 if(newValue == null || newValue == "") return;
 
                 element.find("#imageUploadInput").fileupload("option","url",newValue);
 
                 $.ajax(newValue)
                     .done((data)=>{
-                        scope.imageSrc = newValue;
+                        scope.localImageUrl = newValue;
                     })
                     .fail(()=>{
-                        scope.imageSrc = "/img/imageplaceholder.png";
+                        scope.localImageUrl = "/img/imageplaceholder.png";
                     });
             }); 
             
         };
-        controller = ["AlertService", "Progress", "$scope", (AlertService, Progress, $scope) => {
+        controller = ["AlertService", "Progress", "$scope", (AlertService, Progress, $scope: ImageUploadViewModel) => {
             $scope.Progress = Progress;
 
             $scope.uploadFailed = () => {

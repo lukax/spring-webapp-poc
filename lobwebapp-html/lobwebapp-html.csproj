@@ -92,29 +92,11 @@
     <Content Include="ts-definitions\angularjs\angular-resource.d.ts" />
     <Content Include="ts-definitions\angularjs\angular-sanitize.d.ts" />
     <Content Include="ts-definitions\angularjs\angular-scenario.d.ts" />
-    <Content Include="ts-definitions\angularjs\angular-tests.js" />
-    <Content Include="ts-definitions\angularjs\angular-tests.ts" />
     <Content Include="ts-definitions\angularjs\angular.d.ts" />
     <Content Include="ts-definitions\angularui\angular-ui.d.ts" />
-    <Content Include="ts-definitions\d3\d3-tests.ts" />
     <Content Include="ts-definitions\d3\d3.d.ts" />
-    <Content Include="ts-definitions\d3\plugins\d3.superformula-tests.ts" />
-    <Content Include="ts-definitions\d3\plugins\d3.superformula.d.ts" />
     <Content Include="ts-definitions\jquery\jquery.d.ts" />
-    <Content Include="ts-definitions\requirejs\require-tests.ts" />
     <Content Include="ts-definitions\requirejs\require.d.ts" />
-    <Content Include="ts-definitions\underscore\underscore-tests.js" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="ts-definitions\angularjs\angular-tests.js.map" />
-    <Content Include="ts-definitions\angularjs\angular.d.key" />
-    <Content Include="ts-definitions\angularjs\README.md" />
-    <Content Include="ts-definitions\d3\d3-tests.ts.tscparams" />
-    <Content Include="ts-definitions\d3\d3.d.ts.tscparams" />
-    <Content Include="ts-definitions\d3\plugins\d3.superformula-tests.ts.tscparams" />
-    <Content Include="ts-definitions\d3\plugins\d3.superformula.d.ts.tscparams" />
-    <Content Include="ts-definitions\jquery\jquery.d.key" />
-    <Content Include="ts-definitions\requirejs\README.md" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="src\css\main.less" />
@@ -137,13 +119,13 @@
     <TypeScriptCompile Include="src\script\controller\stock\EditStockController.ts" />
     <TypeScriptCompile Include="src\script\controller\stock\ListStockController.ts" />
     <TypeScriptCompile Include="src\script\controller\user\AuthUserController.ts" />
+    <TypeScriptCompile Include="src\script\directive\FormUtilsDirective.ts" />
     <TypeScriptCompile Include="src\script\directive\ImageUploadDirective.ts" />
-    <TypeScriptCompile Include="src\script\directive\ListPagerDirective.ts" />
+    <TypeScriptCompile Include="src\script\directive\ListUtilsDirective.ts" />
     <TypeScriptCompile Include="src\script\directive\PaymentDetailDirective.ts" />
     <TypeScriptCompile Include="src\script\directive\CustomerDetailDirective.ts" />
     <TypeScriptCompile Include="src\script\directive\ProductDetailDirective.ts" />
     <TypeScriptCompile Include="src\script\directive\QuickSearchDirective.ts" />
-    <TypeScriptCompile Include="src\script\directive\SaveChangesDirective.ts" />
     <TypeScriptCompile Include="src\script\domain\base\AbstractEntity.ts" />
     <TypeScriptCompile Include="src\script\domain\base\Person.ts" />
     <TypeScriptCompile Include="src\script\domain\Payment.ts" />
@@ -192,6 +174,7 @@
     <TypeScriptCompile Include="src\script\service\mock\CustomerServiceMock.ts" />
     <TypeScriptCompile Include="src\script\service\mock\UserServiceMock.ts" />
     <TypeScriptCompile Include="src\script\util\DependencyManager.ts" />
+    <TypeScriptCompile Include="src\script\util\Navigator.ts" />
     <TypeScriptCompile Include="src\script\util\Progress.ts" />
     <TypeScriptCompile Include="src\script\util\EnumUtil.ts" />
     <TypeScriptCompile Include="test\reference.d.ts" />
@@ -202,14 +185,10 @@
     <TypeScriptCompile Include="test\unit\service\base\EntityServiceSpec.ts" />
     <TypeScriptCompile Include="test\unit\service\ProductServiceSpec.ts" />
     <TypeScriptCompile Include="test\unit\service\UserServiceSpec.ts" />
-    <TypeScriptCompile Include="ts-definitions\jasmine\jasmine-tests.ts" />
+    <TypeScriptCompile Include="ts-definitions\crossfilter\crossfilter.d.ts" />
     <TypeScriptCompile Include="ts-definitions\jasmine\jasmine.d.ts" />
-    <TypeScriptCompile Include="ts-definitions\underscore\underscore-tests.ts" />
     <TypeScriptCompile Include="ts-definitions\underscore\underscore.d.ts" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="ts-definitions\underscore\underscore-tests.js.map" />
-    <Content Include="ts-definitions\underscore\underscore-tests.ts.tscparams" />
+    <TypeScriptCompile Include="ts-definitions\urijs\URI.d.ts" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TypeScript\Microsoft.TypeScript.targets" />
 </Project>

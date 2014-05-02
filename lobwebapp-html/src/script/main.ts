@@ -1,10 +1,5 @@
 ///<reference path="reference.d.ts"/>
 
-var ApplyCSS = ($: JQueryStatic, css: any) => {
-    var el = $("<style></style>").append(css);
-    $("head").append(el);
-}
-
 require.config({
     waitSeconds: 10,
     paths: {
@@ -25,13 +20,13 @@ require.config({
         NProgress: "../lib/nprogress/nprogress"
     },
     map:{
-        '*':{
+        '*': {
+            "urijs": "../lib/uri.js/src/URI",
             "fileupload": "../lib/jquery-file-upload/js/jquery.fileupload",
             "jquery.ui.widget": "../lib/jquery-file-upload/js/vendor/jquery.ui.widget",
             "jquery.iframe.transport": "lib/jquery-file-upload/js/jquery.iframe-transport.js"
         }
     },
-    baseUrl: "script",
     shim: {
         "angular": {
             deps: ["jquery", "bootstrap", "underscore"],
@@ -59,7 +54,10 @@ require.config({
         "dc": {
             deps: ["jquery","text!../lib/dcjs/dc.css","d3","crossfilter"],
             exports: "dc",
-            init: ApplyCSS
+            init: ($: JQueryStatic, css: any) => {
+                var el = $("<style></style>").append(css);
+                $("head").append(el);
+            }
         }
     }
 });
@@ -77,4 +75,3 @@ require(["util/Progress", "modularity/AppModule"], (progress: any, app: any) => 
     new app.modularity.AppModule().bootstrap(document);
     new progress.util.Progress().done();
 });
-
