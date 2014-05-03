@@ -1,5 +1,6 @@
 ///<reference path="../../reference.d.ts"/>
 
+import URI = require("urijs");
 import enums = require("./../../util/EnumUtil");
 
 export module controller.base{
@@ -14,16 +15,19 @@ export module controller.base{
 	}
 
 	export class AbstractEditEntityController<T extends domain.base.AbstractEntity> implements d.controller.base.Controller{
-		private entityName: string = "Item";
+		private entityName: string;
+        private tempObjKey: string;
 
 		setEntityName(name: string){
 			this.entityName = name;
 		}
 
-		constructor(public $scope: EditEntityViewModel<T>, 
-					public contextUrl: string, 
-					public EntityService: d.service.contract.base.EntityService<T>,
-					public AlertService: d.service.contract.AlertService){
+        constructor(public $scope: EditEntityViewModel<T>,
+                    public EntityService: d.service.contract.base.EntityService<T>,
+                    public AlertService: d.service.contract.AlertService,
+                    public contextUrl: string) {
+            this.entityName = "Item";
+            this.tempObjKey = "TMP_" + this.contextUrl.toUpperCase();
 
 			this.$scope.saveOrUpdateEntity = (entity) => this.saveOrUpdateEntity(entity);
 			this.$scope.removeEntity = (entity) => this.removeEntity(entity);
@@ -46,7 +50,7 @@ export module controller.base{
 			this.lock();
 			this.EntityService.save(entity,
 				(successData, successStatus, successHeaders) => {
-					this.$scope.navigator.$location.url("/" + this.contextUrl + "/" + successHeaders("Entity-Id"));
+					this.$scope.navigator.$location.url(new URI(this.contextUrl).segment(successHeaders("Entity-Id")).toString());
 				},
 				(errorData) => {
 					console.log(errorData);
@@ -108,7 +112,7 @@ export module controller.base{
 		}
 
 		newEntity() {
-			this.$scope.navigator.$location.url("/"+this.contextUrl+"/new");
+			this.$scope.navigator.$location.url(new URI(this.contextUrl).segment("new").toString());
 		}
 
 		lock(){
@@ -125,17 +129,17 @@ export module controller.base{
 			return (this.$scope.entity && this.$scope.entity.id == 0);
 		}
 		
-		private tmpObjKey = "TMP_" + this.contextUrl.toUpperCase();
 		private saveTemporaryChanges(removeChanges?: boolean){
 			if(removeChanges)
-				delete localStorage[this.tmpObjKey];
+				delete localStorage[this.tempObjKey];
 			else{
-				localStorage[this.tmpObjKey] = angular.toJson(this.$scope.entity);
+				localStorage[this.tempObjKey] = angular.toJson(this.$scope.entity);
 			}
-		}
+        }
+
 		private restoreTemporaryChanges(fetchedEntity: T){
 			var previousEntity = null;
-			try{ previousEntity = angular.fromJson(localStorage[this.tmpObjKey]); }
+			try{ previousEntity = angular.fromJson(localStorage[this.tempObjKey]); }
 			catch(e){}
 			if(previousEntity != null && previousEntity.id == fetchedEntity.id && !_.isEqual(previousEntity, fetchedEntity)){
 				this.$scope.entity = previousEntity;

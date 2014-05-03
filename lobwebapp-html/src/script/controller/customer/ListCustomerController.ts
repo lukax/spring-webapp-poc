@@ -12,7 +12,7 @@ export module controller.customer {
         constructor(public $scope: ListCustomerViewModel,
                     public CustomerService: d.service.contract.CustomerService,
                     public AlertService: d.service.contract.AlertService) {
-            super($scope, CustomerService, AlertService, "/customer/", "customerId");
+            super($scope, CustomerService, AlertService, "/customer", "customerId");
             
             this.listEntity(0);
         }

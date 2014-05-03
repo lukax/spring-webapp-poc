@@ -23,7 +23,7 @@ export module controller.order {
                     public AlertService: d.service.contract.AlertService,
                     public CustomerService: d.service.contract.CustomerService,
                     public OrderService: d.service.contract.OrderService) {
-            super($scope, "order", OrderService, AlertService);
+            super($scope, OrderService, AlertService, "/order");
             super.setEntityName("Pedido");
             
             var orderId = this.$scope.navigator.$stateParams.orderId;

@@ -14,7 +14,7 @@ export module controller.product {
         constructor(public $scope: ListProductViewModel,
                     public ProductService: d.service.contract.ProductService,
                     public AlertService: d.service.contract.AlertService) {
-            super($scope, ProductService, AlertService, "/product/", "productId");
+            super($scope, ProductService, AlertService, "/product", "productId");
             
             this.listProduct(0);
             this.$scope.listProduct = (page) => this.listProduct(page);

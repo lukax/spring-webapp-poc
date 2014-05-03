@@ -12,7 +12,7 @@ export module controller.order {
         constructor(public $scope: ListOrderViewModel,
                     public OrderService: d.service.contract.OrderService,
                     public AlertService: d.service.contract.AlertService) {
-            super($scope, OrderService, AlertService, "/order/", "orderId");
+            super($scope, OrderService, AlertService, "/order", "orderId");
             
             this.listEntity(0);
         }

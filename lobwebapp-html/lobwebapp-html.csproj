@@ -57,36 +57,28 @@
   <ItemGroup>
     <Content Include="src\404.html" />
     <Content Include="src\500.html" />
-    <Content Include="src\css\.gitignore" />
-    <Content Include="src\css\main.min.css">
-      <DependentUpon>main.less</DependentUpon>
-    </Content>
-    <Content Include="src\img\favicon.ico" />
     <Content Include="src\index.html" />
     <Content Include="src\script\.gitignore" />
+    <Content Include="src\template\directive\EntityIdTemplate.html" />
     <Content Include="src\template\directive\ImageUploadTemplate.html" />
     <Content Include="src\template\directive\ListPagerTemplate.html" />
     <Content Include="src\template\directive\PaymentDetailTemplate.html" />
+    <Content Include="src\template\directive\ProductDetailTemplate.html" />
     <Content Include="src\template\directive\QuickSearchTemplate.html" />
     <Content Include="src\template\directive\SaveChangesTemplate.html" />
+    <Content Include="src\template\directive\SearchBarTemplate.html" />
     <Content Include="src\view\alert.html" />
     <Content Include="src\view\customer\editCustomer.html" />
-    <Content Include="src\view\customer\customer.html" />
     <Content Include="src\view\customer\listCustomer.html" />
     <Content Include="src\view\mainNavbar.html" />
     <Content Include="src\view\order\editOrder.html" />
     <Content Include="src\view\order\graphOrder.html" />
     <Content Include="src\view\order\listOrder.html" />
-    <Content Include="src\view\order\order.html" />
     <Content Include="src\view\product\editProduct.html" />
     <Content Include="src\view\stock\editStock.html" />
     <Content Include="src\view\product\listProduct.html" />
-    <Content Include="src\view\product\product.html" />
     <Content Include="src\view\stock\listStock.html" />
-    <Content Include="src\view\stock\stock.html" />
     <Content Include="src\view\user\authUser.html" />
-    <Content Include="src\view\user\user.html" />
-    <Content Include="test\.gitignore" />
     <Content Include="ts-definitions\angularjs\angular-cookies.d.ts" />
     <Content Include="ts-definitions\angularjs\angular-mocks.d.ts" />
     <Content Include="ts-definitions\angularjs\angular-resource.d.ts" />
@@ -97,10 +89,6 @@
     <Content Include="ts-definitions\d3\d3.d.ts" />
     <Content Include="ts-definitions\jquery\jquery.d.ts" />
     <Content Include="ts-definitions\requirejs\require.d.ts" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="src\css\main.less" />
-    <Content Include="src\css\typeahead.less" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="src\script\controller\AlertController.ts" />
@@ -136,9 +124,9 @@
     <TypeScriptCompile Include="src\script\domain\Stock.ts" />
     <TypeScriptCompile Include="src\script\domain\User.ts" />
     <TypeScriptCompile Include="src\script\domain\util\Alert.ts" />
-    <TypeScriptCompile Include="src\script\domain\util\Pageable.ts" />
-    <TypeScriptCompile Include="src\script\domain\util\Error.ts" />
-    <TypeScriptCompile Include="src\script\filter\PaymentFilter.ts" />
+    <TypeScriptCompile Include="src\script\domain\util\MessageResponse.ts" />
+    <TypeScriptCompile Include="src\script\domain\util\Page.ts" />
+    <TypeScriptCompile Include="src\script\domain\util\ValidationResult.ts" />
     <TypeScriptCompile Include="src\script\main.ts" />
     <TypeScriptCompile Include="src\script\modularity\AppModule.ts" />
     <TypeScriptCompile Include="src\script\modularity\AppRoutes.ts" />
@@ -150,7 +138,7 @@
     <TypeScriptCompile Include="src\script\service\contract\AuthService.ts" />
     <TypeScriptCompile Include="src\script\service\contract\base\PersonService.ts" />
     <TypeScriptCompile Include="src\script\service\contract\base\EntityService.ts" />
-    <TypeScriptCompile Include="src\script\service\contract\NavigationService.ts" />
+    <TypeScriptCompile Include="src\script\service\contract\Navigator.ts" />
     <TypeScriptCompile Include="src\script\service\contract\OrderService.ts" />
     <TypeScriptCompile Include="src\script\service\contract\ProductService.ts" />
     <TypeScriptCompile Include="src\script\service\contract\CustomerService.ts" />
@@ -189,6 +177,9 @@
     <TypeScriptCompile Include="ts-definitions\jasmine\jasmine.d.ts" />
     <TypeScriptCompile Include="ts-definitions\underscore\underscore.d.ts" />
     <TypeScriptCompile Include="ts-definitions\urijs\URI.d.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="src\script\filter\" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TypeScript\Microsoft.TypeScript.targets" />
 </Project>

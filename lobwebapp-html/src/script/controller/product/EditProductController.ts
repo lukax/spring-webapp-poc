@@ -20,7 +20,7 @@ export module controller.product {
                     public ProductService: d.service.contract.ProductService,
                     public AlertService: d.service.contract.AlertService,
                     public $filter: ng.IFilterService) {
-            super($scope, "product", ProductService, AlertService);
+            super($scope, ProductService, AlertService, "/product");
             super.setEntityName("Produto");
 
             var productId = this.$scope.navigator.$stateParams.productId;

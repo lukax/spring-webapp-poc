@@ -20,7 +20,7 @@ export module controller.stock {
                     public ProductService: d.service.contract.ProductService,
                     public AlertService: d.service.contract.AlertService,
                     public $filter: ng.IFilterService) {
-            super($scope, "stock", StockService, AlertService);
+            super($scope, StockService, AlertService, "/stock");
             super.setEntityName("Estoque");
             
             var stockId = this.$scope.navigator.$stateParams.stockId;

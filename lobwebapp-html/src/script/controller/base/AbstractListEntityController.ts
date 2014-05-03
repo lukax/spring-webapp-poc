@@ -1,6 +1,7 @@
 ///<reference path="../../reference.d.ts"/>
 
 import enums = require("./../../util/EnumUtil");
+import URI = require("urijs");
 
 export module controller.base {
     export interface ListEntityViewModel<T extends domain.base.AbstractEntity> extends d.controller.base.ViewModel {
@@ -12,7 +13,7 @@ export module controller.base {
     }
 
     export class AbstractListEntityController<T extends domain.base.AbstractEntity> implements d.controller.base.Controller{
-        redirectString: string;
+        redirectUrl: string;
         defaultPageSize: number = 50;
 
         constructor(public $scope: ListEntityViewModel<T>,
@@ -20,8 +21,7 @@ export module controller.base {
                     public AlertService: d.service.contract.AlertService,
                     public contextUrl: string,
                     public redirectParam: string) {
-
-            this.redirectString = this.$scope.navigator.$stateParams.redirect;
+            this.redirectUrl = decodeURIComponent($scope.navigator.$stateParams.redirect);
             
             this.$scope.searchText = (this.$scope.navigator.$stateParams.search || "");
             this.$scope.editEntity = (id: number) => this.editEntity(id);
@@ -35,7 +35,7 @@ export module controller.base {
                         this.$scope.page = { index: pageIndex, size: Number(headers(enums.Headers.PAGE_TOTAL)) };
                         this.$scope.entities = successData;
                         this.$scope.navigator.Progress.done();
-                        if (this.redirectString) this.AlertService.add({ title: "Busca Rápida", content: "Clique em um item da lista para voltar para a página anterior", type: enums.AlertType.INFO });
+                        if (this.redirectUrl) this.AlertService.add({ title: "Busca Rápida", content: "Clique em um item da lista para voltar para a página anterior", type: enums.AlertType.INFO });
                     },
                     (errorData) => {
                         console.log(errorData);
@@ -45,25 +45,13 @@ export module controller.base {
         }
 
         editEntity(id: number) {
-            if (this.redirectString) {
-                this.redirectString = this.replaceUrlParam(decodeURIComponent(this.redirectString), this.redirectParam, String(id));
-                console.log(this.redirectString);
-                this.$scope.navigator.$location.url(this.redirectString);
+            if (this.redirectUrl) {
+                this.redirectUrl = new URI(this.redirectUrl).addSearch(this.redirectParam, String(id)).toString();
+                this.$scope.navigator.$location.url(this.redirectUrl);
             }
             else 
-                this.$scope.navigator.$location.url(this.contextUrl + id);
-        }
+                this.$scope.navigator.$location.url(new URI(this.contextUrl).segment(String(id)).toString());
 
-        private replaceUrlParam(url: string, paramName: string, paramVal: string) {
-            var newUrl;
-            if(url.indexOf(paramName) != -1)
-                newUrl = url.replace(new RegExp("([?&])"+ paramName + "=\\d+"), "$1" + paramName + "=" + paramVal);
-            else
-                if(url.indexOf("?") > 0)
-                    newUrl = url + "&" + paramName + "=" + paramVal;
-                else
-                    newUrl = url + "?" + paramName + "=" + paramVal;
-            return newUrl;
         }
 
     }

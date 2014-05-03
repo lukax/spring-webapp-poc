@@ -12,7 +12,7 @@ export module controller.stock {
         constructor(public $scope: ListStockViewModel,
                     public StockService: d.service.contract.StockService,
                     public AlertService: d.service.contract.AlertService) {
-            super($scope, StockService, AlertService, "/stock/", "stockId");
+            super($scope, StockService, AlertService, "/stock", "stockId");
             
             this.listEntity(0);
         }
