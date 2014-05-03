@@ -148,7 +148,6 @@
     <TypeScriptCompile Include="src\script\service\impl\base\PersonServiceImpl.ts" />
     <TypeScriptCompile Include="src\script\service\impl\base\EntityServiceImpl.ts" />
     <TypeScriptCompile Include="src\script\service\impl\StockServiceImpl.ts" />
-    <TypeScriptCompile Include="src\script\service\impl\NavigationServiceImpl.ts" />
     <TypeScriptCompile Include="src\script\service\impl\OrderServiceImpl.ts" />
     <TypeScriptCompile Include="src\script\service\impl\UserServiceImpl.ts" />
     <TypeScriptCompile Include="src\script\service\impl\CustomerServiceImpl.ts" />

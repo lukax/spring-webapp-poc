@@ -23,7 +23,7 @@ describe("controller: ListProductController", () => {
                 return { start: () => {}, done: () => {}, set: () => {} }
             });
             $provide.service("Navigator", i3.util.Navigator);
-            $controllerProvider.register("ProductController", i0.controller.product.ListProductController);
+            $controllerProvider.register("ListProductController", i0.controller.product.ListProductController);
         });
         inject(($rootScope: ng.IRootScopeService, Navigator)=> {
             $scope = $rootScope.$new();
@@ -33,7 +33,7 @@ describe("controller: ListProductController", () => {
 
     it("should list products", inject(($controller: ng.IControllerService, $timeout: ng.ITimeoutService, $stateParams: any) => {
         $stateParams.search = "";
-        var ctrl = $controller("ProductController", {
+        var ctrl = $controller("ListProductController", {
             $scope: $scope
         });
 
@@ -43,7 +43,7 @@ describe("controller: ListProductController", () => {
     }));
 
     it("should edit a product", inject(($controller: ng.IControllerService, $timeout: ng.ITimeoutService, $location: ng.ILocationService) => {
-        var ctrl = $controller("ProductController", {
+        var ctrl = $controller("ListProductController", {
             $scope: $scope
         });
 
@@ -54,7 +54,7 @@ describe("controller: ListProductController", () => {
 
     xit("should get searchText from url Params", inject(($controller: ng.IControllerService, $timeout: ng.ITimeoutService, $stateParams: any) => {
         $stateParams.search = "SSD";
-        var ctrl = $controller("ProductController", {
+        var ctrl = $controller("ListProductController", {
             $scope: $scope
         });
 

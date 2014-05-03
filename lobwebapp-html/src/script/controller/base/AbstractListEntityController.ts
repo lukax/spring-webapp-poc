@@ -21,7 +21,7 @@ export module controller.base {
                     public AlertService: d.service.contract.AlertService,
                     public contextUrl: string,
                     public redirectParam: string) {
-            this.redirectUrl = decodeURIComponent($scope.navigator.$stateParams.redirect);
+            this.redirectUrl = $scope.navigator.$stateParams.redirect != null ? decodeURIComponent($scope.navigator.$stateParams.redirect) : null;
             
             this.$scope.searchText = (this.$scope.navigator.$stateParams.search || "");
             this.$scope.editEntity = (id: number) => this.editEntity(id);

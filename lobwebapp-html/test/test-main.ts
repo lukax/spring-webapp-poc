@@ -18,6 +18,11 @@ requirejs.config({
         angularMocks: "lib/angular-mocks/angular-mocks",
         underscore: "lib/underscore/underscore-min"
     },
+    map: {
+        "*": {
+            "urijs": "lib/uri.js/src/URI",
+        }
+    },
     shim: {
         "angular": {
             deps: ["jquery"],
