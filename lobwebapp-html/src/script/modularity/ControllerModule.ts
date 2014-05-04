@@ -27,7 +27,7 @@ export module modularity {
                 .config(["$locationProvider", this.html5Cfg])
 
                 .run(["$rootScope","Navigator", this.setRootScopeVariables])
-                .run(["$rootScope", "$location", "AuthService", this.blockNotAllowedStates])
+                .run(["$rootScope", "$location", "AuthService", "$timeout", this.blockNotAllowedStates])
 
                 .controller("MainNavbarController", <Function>f.controller.MainNavbarController)
                 .controller("AlertController", <Function>g.controller.AlertController)
@@ -52,7 +52,7 @@ export module modularity {
             $locationProvider.html5Mode(true);
         };
         
-        blockNotAllowedStates = ($rootScope: ng.IRootScopeService, $location: ng.ILocationService, AuthService: d.service.contract.AuthService) => {
+        blockNotAllowedStates = ($rootScope: ng.IRootScopeService, $location: ng.ILocationService, AuthService: d.service.contract.AuthService, $timeout: ng.ITimeoutService) => {
             var allowedStates = ["userAuth"];
             var isAllowedState = (route: string) => {
                 return allowedStates.some((x) => {
@@ -65,7 +65,8 @@ export module modularity {
                     // redirect back to login
                     event.preventDefault();
                     console.log("User not authenticated, redirecting ...");
-                    $location.url("/user/auth");
+                    //TODO: find out why url isn't changing here...
+                    $timeout(() => $location.url("/user/auth").replace()); 
                 }
             });
         };
