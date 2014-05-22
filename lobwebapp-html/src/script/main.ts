@@ -12,7 +12,7 @@ require.config({
         angularUiUtils: "../lib/angular-ui-utils/ui-utils",
         angularUiRouter: "../lib/angular-ui-router/release/angular-ui-router.min",
         angularUiBootstrap: "../lib/angular-ui-bootstrap-bower/ui-bootstrap.min",
-        underscore: "../lib/underscore/underscore-min",
+        underscore: "../lib/underscore-amd/underscore-min",
         dc: "../lib/dcjs/dc.min",
         d3: "../lib/d3/d3.min",
         crossfilter: "../lib/crossfilter/crossfilter.min",

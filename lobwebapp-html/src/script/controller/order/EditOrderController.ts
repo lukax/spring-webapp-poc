@@ -1,5 +1,6 @@
 ///<reference path="../../reference.d.ts"/>
 
+import _ = require("underscore");
 import i0 = require("./../base/AbstractEditEntityController");
 import enums = require("./../../util/EnumUtil");
 

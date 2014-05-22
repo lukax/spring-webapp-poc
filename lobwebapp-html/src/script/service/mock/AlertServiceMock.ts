@@ -1,5 +1,6 @@
 ///<reference path="../../reference.d.ts"/>
 
+import _ = require("underscore");
 import enums = require("./../../util/EnumUtil");
 
 export module service.mock {

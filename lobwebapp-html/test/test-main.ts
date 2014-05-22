@@ -16,7 +16,7 @@ requirejs.config({
         angular: "lib/angular/angular.min",
         angularUiRouter: "lib/angular-ui-router/release/angular-ui-router.min",
         angularMocks: "lib/angular-mocks/angular-mocks",
-        underscore: "lib/underscore/underscore-min"
+        underscore: "lib/underscore-amd/underscore-min"
     },
     map: {
         "*": {

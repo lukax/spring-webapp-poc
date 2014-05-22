@@ -1,5 +1,7 @@
 ///<reference path="../../../reference.d.ts"/>
 
+import _ = require("underscore");
+
 export module service.mock.base {
     export class EntityServiceMock<T extends domain.base.AbstractEntity> implements d.service.contract.base.EntityService<T> {
         private repository: T[];

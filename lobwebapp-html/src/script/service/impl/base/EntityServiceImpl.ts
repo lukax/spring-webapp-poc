@@ -1,5 +1,7 @@
 ///<reference path="../../../reference.d.ts"/>
 
+import _ = require("underscore");
+
 export module service.impl.base {
     export class EntityServiceImpl<T extends domain.base.AbstractEntity> implements d.service.contract.base.EntityService<T> {
 

@@ -1,5 +1,6 @@
 ///<reference path="../../reference.d.ts"/>
 
+import _ = require("underscore");
 import URI = require("urijs");
 import enums = require("./../../util/EnumUtil");
 

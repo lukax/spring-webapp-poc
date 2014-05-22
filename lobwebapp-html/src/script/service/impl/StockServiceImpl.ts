@@ -1,4 +1,6 @@
 ///<reference path="../../reference.d.ts"/>
+
+import _ = require("underscore");
 import i0 = require("./base/EntityServiceImpl");
 
 export module service.impl {

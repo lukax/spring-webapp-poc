@@ -12,7 +12,7 @@
     "jquery-file-upload": "~9.5.2",
     "requirejs": "~2.1.10",
     "requirejs-text": "~2.0.10",
-    "underscore": "~1.5.2",
+    "underscore-amd": "~1.5.2",
     "dcjs": "~1.6.0",
     "nprogress": "~0.1.2",
     "bootstrap": "~3.1.1",
