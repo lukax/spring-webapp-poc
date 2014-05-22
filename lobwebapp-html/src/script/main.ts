@@ -1,7 +1,6 @@
 ///<reference path="reference.d.ts"/>
 
 require.config({
-    waitSeconds: 10,
     paths: {
         text: "../lib/requirejs-text/text",
         jquery: "../lib/jquery/dist/jquery.min",
@@ -20,7 +19,7 @@ require.config({
         NProgress: "../lib/nprogress/nprogress"
     },
     map:{
-        '*': {
+        "*": {
             "urijs": "../lib/uri.js/src/URI",
             "fileupload": "../lib/jquery-file-upload/js/jquery.fileupload",
             "jquery.ui.widget": "../lib/jquery-file-upload/js/vendor/jquery.ui.widget",
@@ -61,11 +60,6 @@ require.config({
         }
     }
 });
-
-require.onError = (err: RequireError) => {
-    window.location.replace("500.html?message=" + encodeURIComponent(err.message) +
-        "&details=" + encodeURIComponent(err.requireType + ", " + err.requireModules));
-};
 
 require(["util/Progress"], (progress: any)=> {
     new progress.util.Progress().start();

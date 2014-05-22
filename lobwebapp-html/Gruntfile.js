@@ -158,13 +158,15 @@ module.exports = function (grunt) {
             options: {
                 banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - <%= grunt.template.today("yyyy-mm-dd") %> */\n',
                 compress: true,
-                preserveComments: false
+                preserveComments: false,
+                mangle: true,
+                wrap: true
             },
             dist: {
                 files: [{
                     expand: true,
                     cwd: '<%= yeoman.app %>/script/',
-                    src: 'app.js',
+                    src: '**/*.js',
                     dest: '<%= yeoman.dist %>/script/'
                 }]
             }
@@ -197,6 +199,24 @@ module.exports = function (grunt) {
                 configFile: 'karma.conf.js',
                 singleRun: true
             }
+        },
+        requirejs: {
+            dev: {
+                options: {
+                    name: "main",                  
+                    mainConfigFile: "<%= yeoman.app %>/script/main.js",
+                    out: "<%= yeoman.app %>/script/app.js",
+                    //normalizeDirDefines: "all",
+                    optimize: "none"
+                }
+            },
+            dist: {
+                options: {
+                    name: "main",                  
+                    mainConfigFile: "<%= yeoman.app %>/script/main.js",
+                    out: "<%= yeoman.dist %>/script/app.js"
+                }
+            }
         }
     });
 
@@ -207,6 +227,7 @@ module.exports = function (grunt) {
         grunt.task.run([
             'less:dev',
             'ts:dev',
+            'requirejs:dev',
             'connect:livereload',
             'open',
             'watch'
@@ -230,6 +251,7 @@ module.exports = function (grunt) {
             'htmlmin:dist',
             'less:dist',
             'ts:dist',
+            'requirejs:dist',
             'uglify:dist'
             ]);
     });
@@ -246,6 +268,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks("grunt-contrib-clean");
     grunt.loadNpmTasks("grunt-contrib-watch");
     grunt.loadNpmTasks("grunt-contrib-less");
+    grunt.loadNpmTasks('grunt-contrib-requirejs');
     grunt.loadNpmTasks("grunt-open");
     grunt.loadNpmTasks("grunt-ts");
 };
