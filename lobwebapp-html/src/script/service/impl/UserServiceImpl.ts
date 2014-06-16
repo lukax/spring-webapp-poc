@@ -13,13 +13,13 @@ export module service.impl {
         findByUsername(username: string,
             successCallback: (data: domain.User, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
             errorCallback: (data: domain.util.MessageResponse, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
-                var headers = {
-                    user_username: "%" + username + "%"
+                var params = {
+                    username: "%" + username + "%"
                 };
                 
                 this.$http({method: "GET", 
                             url: this.url, 
-                            headers: headers })
+                            params: params })
                     .success(successCallback)
                     .error(errorCallback);
         }

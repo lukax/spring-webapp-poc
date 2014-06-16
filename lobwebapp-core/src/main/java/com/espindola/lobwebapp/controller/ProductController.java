@@ -21,13 +21,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.espindola.lobwebapp.controller.base.AbstractEntityController;
-import com.espindola.lobwebapp.controller.util.HeaderKey;
+import com.espindola.lobwebapp.controller.util.RequestKey;
 import com.espindola.lobwebapp.domain.FileMeta;
 import com.espindola.lobwebapp.domain.Product;
 import com.espindola.lobwebapp.exception.InvalidArgumentException;
@@ -52,17 +53,15 @@ public class ProductController extends AbstractEntityController<Product> {
 		this.facade = facade;
 	}
 
-	@RequestMapping(method = RequestMethod.GET, headers = {
-			HeaderKey.PRODUCT_NAME, HeaderKey.PAGE_INDEX, HeaderKey.PAGE_SIZE })
+	@RequestMapping(method = RequestMethod.GET, params = { RequestKey.PRODUCT_NAME }, headers = { RequestKey.PAGE_INDEX, RequestKey.PAGE_SIZE })
 	@ResponseStatus(value = HttpStatus.OK)
 	@ResponseBody
 	public List<Product> findAllByNameLike(HttpServletResponse response,
-			@RequestHeader(HeaderKey.PRODUCT_NAME) String productName,
-			@RequestHeader(HeaderKey.PAGE_INDEX) Integer pageIndex,
-			@RequestHeader(HeaderKey.PAGE_SIZE) Integer pageSize) {
-		Page<Product> products = this.facade.findAllByNameLike(productName,
-				new PageRequest(pageIndex, pageSize));
-		response.addHeader(HeaderKey.PAGE_TOTAL, "" + products.getTotalPages());
+			@RequestParam(RequestKey.PRODUCT_NAME) String productName,
+			@RequestHeader(RequestKey.PAGE_INDEX) Integer pageIndex,
+			@RequestHeader(RequestKey.PAGE_SIZE) Integer pageSize) {
+		Page<Product> products = this.facade.findAllByNameLike(productName, new PageRequest(pageIndex, pageSize));
+		response.addHeader(RequestKey.PAGE_TOTAL, "" + products.getTotalPages());
 		return products.getContent();
 	}
 

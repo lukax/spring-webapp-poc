@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.espindola.lobwebapp.controller.util.HeaderKey;
+import com.espindola.lobwebapp.controller.util.RequestKey;
 import com.espindola.lobwebapp.domain.base.AbstractEntity;
 import com.espindola.lobwebapp.exception.InvalidArgumentException;
 import com.espindola.lobwebapp.exception.NotFoundException;
@@ -69,14 +69,14 @@ public abstract class AbstractEntityController<T extends AbstractEntity> {
 	}
 
 	@RequestMapping(method = RequestMethod.GET, headers = {
-			HeaderKey.PAGE_INDEX, HeaderKey.PAGE_SIZE })
+			RequestKey.PAGE_INDEX, RequestKey.PAGE_SIZE })
 	@ResponseStatus(value = HttpStatus.OK)
 	@ResponseBody
 	public List<T> findAll(HttpServletResponse response,
-			@RequestHeader(HeaderKey.PAGE_INDEX) Integer pageIndex,
-			@RequestHeader(HeaderKey.PAGE_SIZE) Integer pageSize) {
+			@RequestHeader(RequestKey.PAGE_INDEX) Integer pageIndex,
+			@RequestHeader(RequestKey.PAGE_SIZE) Integer pageSize) {
 		Page<T> entities = facade.findAll(new PageRequest(pageIndex, pageSize));
-		response.addHeader(HeaderKey.PAGE_TOTAL, "" + entities.getTotalPages());
+		response.addHeader(RequestKey.PAGE_TOTAL, "" + entities.getTotalPages());
 		return entities.getContent();
 	}
 
