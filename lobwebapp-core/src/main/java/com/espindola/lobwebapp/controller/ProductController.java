@@ -30,7 +30,6 @@ import com.espindola.lobwebapp.controller.base.AbstractEntityController;
 import com.espindola.lobwebapp.controller.util.HeaderKey;
 import com.espindola.lobwebapp.domain.FileMeta;
 import com.espindola.lobwebapp.domain.Product;
-import com.espindola.lobwebapp.event.PageReturnEvent;
 import com.espindola.lobwebapp.exception.InvalidArgumentException;
 import com.espindola.lobwebapp.exception.NotFoundException;
 import com.espindola.lobwebapp.facade.ProductFacade;
@@ -63,8 +62,7 @@ public class ProductController extends AbstractEntityController<Product> {
 			@RequestHeader(HeaderKey.PAGE_SIZE) Integer pageSize) {
 		Page<Product> products = this.facade.findAllByNameLike(productName,
 				new PageRequest(pageIndex, pageSize));
-		super.eventPublisher.publishEvent(new PageReturnEvent(products,
-				response));
+		response.addHeader(HeaderKey.PAGE_TOTAL, "" + products.getTotalPages());
 		return products.getContent();
 	}
 

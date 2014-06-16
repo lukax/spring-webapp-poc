@@ -27,8 +27,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import com.espindola.lobwebapp.controller.util.HeaderKey;
 import com.espindola.lobwebapp.domain.base.AbstractEntity;
-import com.espindola.lobwebapp.event.LobWebAppEventPublisher;
-import com.espindola.lobwebapp.event.PageReturnEvent;
 import com.espindola.lobwebapp.exception.InvalidArgumentException;
 import com.espindola.lobwebapp.exception.NotFoundException;
 import com.espindola.lobwebapp.facade.base.AbstractEntityFacade;
@@ -39,7 +37,6 @@ import com.espindola.lobwebapp.validation.base.AbstractEntityValidator;
 public abstract class AbstractEntityController<T extends AbstractEntity> {
 
 	@Autowired
-	protected LobWebAppEventPublisher eventPublisher;
 	private AbstractEntityFacade<T> facade;
 	private AbstractEntityValidator<T> validator;
 	private MessageKey entityMessageKey;
@@ -79,7 +76,7 @@ public abstract class AbstractEntityController<T extends AbstractEntity> {
 			@RequestHeader(HeaderKey.PAGE_INDEX) Integer pageIndex,
 			@RequestHeader(HeaderKey.PAGE_SIZE) Integer pageSize) {
 		Page<T> entities = facade.findAll(new PageRequest(pageIndex, pageSize));
-		eventPublisher.publishEvent(new PageReturnEvent(entities, response));
+		response.addHeader(HeaderKey.PAGE_TOTAL, "" + entities.getTotalPages());
 		return entities.getContent();
 	}
 
