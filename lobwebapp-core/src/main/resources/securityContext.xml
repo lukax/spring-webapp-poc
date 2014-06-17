@@ -8,7 +8,7 @@
 						http://www.springframework.org/schema/security
 						http://www.springframework.org/schema/security/spring-security-3.2.xsd
 						http://www.springframework.org/schema/security/oauth2 
-						http://www.springframework.org/schema/security/spring-security-oauth2-1.0.xsd">
+						http://www.springframework.org/schema/security/spring-security-oauth2-2.0.xsd">
 	
 	<sec:global-method-security pre-post-annotations="enabled">
 		<!--you could also wire in the expression handler up at the layer of the http filters. See https://jira.springsource.org/browse/SEC-1452 -->
@@ -47,7 +47,7 @@
  
  	<!-- ClientsDetailsService: Entry Point to clients database (given is in memory implementation) -->
 	<oauth:client-details-service id="clientDetails">
-		<oauth:client client-id="da39a3ee5e6b4b0d3255bfef95601890afd80709" authorized-grant-types="password,refresh_token"
+		<oauth:client client-id="da39a3ee5e6b4b0d3255bfef95601890afd80709" authorized-grant-types="password,refresh_token" scope="admin"
 				authorities="ROLE_USER" />
 	</oauth:client-details-service>
 	
@@ -59,7 +59,7 @@
 	</bean>
 
 	<!-- Used for the persistence of tokens (currently an in memory implementation) -->
-	<bean id="tokenStore" class="org.springframework.security.oauth2.provider.token.InMemoryTokenStore" />
+	<bean id="tokenStore" class="org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore" />
 
  	<bean id="oauthAuthenticationEntryPoint" class="org.springframework.security.oauth2.provider.error.OAuth2AuthenticationEntryPoint">
 		<property name="realmName" value="rest" />
@@ -100,12 +100,12 @@
 		<property name="requestFactory" ref="requestFactory"/>
 	</bean>
 	
-	<bean id="requestFactory" class="org.springframework.security.oauth2.provider.DefaultOAuth2RequestFactory">
+	<bean id="requestFactory" class="org.springframework.security.oauth2.provider.request.DefaultOAuth2RequestFactory">
 		<constructor-arg name="clientDetailsService" ref="clientDetails" />
 	</bean>
 	
 	<!-- authorization-server aka AuthorizationServerTokenServices is an interface that defines everything necessary for token management -->
-	<oauth:authorization-server client-details-service-ref="clientDetails" token-services-ref="tokenServices" 
+	<oauth:authorization-server client-details-service-ref="clientDetails" token-services-ref="tokenServices"
 		user-approval-handler-ref="userApprovalHandler">
 		<oauth:authorization-code disabled="true" />
 		<oauth:implicit disabled="true"/>
@@ -113,11 +113,10 @@
 		<oauth:client-credentials disabled="true"/>
 		<oauth:password />
 	</oauth:authorization-server>
-
+	
 	<oauth:resource-server id="resourceServerFilter" resource-id="test" token-services-ref="tokenServices" />
 
 	<oauth:expression-handler id="oauthExpressionHandler" />
 
 	<oauth:web-expression-handler id="oauthWebExpressionHandler" />
-	
 </beans>

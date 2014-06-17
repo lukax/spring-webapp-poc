@@ -20,7 +20,8 @@ export module service.impl {
                 var authData = "grant_type=password" + 
                             "&client_id=" + this.client_id +  
                             "&username=" + user.username + 
-                            "&password=" + user.password;
+                            "&password=" + user.password + 
+                            "&scope=admin";
                 var headers = {
                     "Content-Type": "application/x-www-form-urlencoded"
                 };
