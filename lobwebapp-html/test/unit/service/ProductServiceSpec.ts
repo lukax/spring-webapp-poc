@@ -3,6 +3,7 @@
 ///<amd-dependency path="angularMocks"/>
 ///<amd-dependency path="underscore"/>
 import i0 = require("script/service/impl/ProductServiceImpl")
+import $ = require("jquery");
 
 describe('service: ProductService', () => {
     beforeEach(() => {
@@ -11,7 +12,7 @@ describe('service: ProductService', () => {
         });
     });
 
-    var contextUrl: string = "/api/v1/product/";
+    var contextUrl: string = "/api/v1/product";
     var sampleProduct: domain.Product = { id: 1, name: "Notebook", description: "Dell Inspiron 15R Special Edition Intel Core i5-3230M 2.6 GHz 6144 MB 750 GB", quantity: 9, costPrice: 2102.30, price: 2699.00, category: "Informática/Computadores", registerDate: new Date(12, 12, 12).getTime(), ncm: "8471.30.19" };
 
     it("should retrieve a list of category", inject((ProductService: d.service.contract.ProductService, $httpBackend: ng.IHttpBackendService) => {
@@ -30,12 +31,12 @@ describe('service: ProductService', () => {
         var sucSpy = jasmine.createSpy("sucList"),
             errSpy = jasmine.createSpy("errList");
         var page: domain.util.Page = { index: 0, size: 50 };
-        var productNameHeader = "%" + sampleProduct.name + "%";
+        var params = { name: "%" + sampleProduct.name + "%" };
+        var url = contextUrl + "?" + $.param(params);
 
-        $httpBackend.expectGET(contextUrl, { 
+        $httpBackend.expectGET(url, { 
                 page_index: page.index,
                 page_size: page.size,
-                product_name: productNameHeader, 
                 Accept: "application/json, text/plain, */*" })
             .respond(200, sampleProduct);
             

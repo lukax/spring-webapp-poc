@@ -13,7 +13,7 @@ describe('service: EntityService', () => {
         
     });
 
-    var contextUrl: string = "/api/v1/product/";
+    var contextUrl: string = "/api/v1/product";
     var sampleNewEntity: domain.base.AbstractEntity = { id: 0 };
     var sampleExistantEntity: domain.base.AbstractEntity = { id: 213121 };
 
@@ -34,7 +34,7 @@ describe('service: EntityService', () => {
     it("should save an entity", inject((EntityService: d.service.contract.base.EntityService<domain.base.AbstractEntity>, $httpBackend: ng.IHttpBackendService) => {
         var sucSpy = jasmine.createSpy("sucSpy"),
             errSpy = jasmine.createSpy("errSpy");
-        var headers = { Location: contextUrl + sampleNewEntity.id, "Entity-Id": '' + sampleNewEntity.id };
+        var headers = { Location: contextUrl + "/" + sampleNewEntity.id, "Entity-Id": '' + sampleNewEntity.id };
         
         $httpBackend.expectPOST(contextUrl, sampleNewEntity).respond(201, null, headers);
         EntityService.save(sampleNewEntity, sucSpy, errSpy);
@@ -51,7 +51,7 @@ describe('service: EntityService', () => {
         var sucSpy = jasmine.createSpy("sucSpy"),
             errSpy = jasmine.createSpy("errSpy");
 
-        $httpBackend.expectPUT(contextUrl + sampleExistantEntity.id, sampleExistantEntity).respond(200, sampleExistantEntity);
+        $httpBackend.expectPUT(contextUrl + "/" + sampleExistantEntity.id, sampleExistantEntity).respond(200, sampleExistantEntity);
         EntityService.update(sampleExistantEntity, sucSpy, errSpy);
         $httpBackend.flush();
 
@@ -64,7 +64,7 @@ describe('service: EntityService', () => {
         var sucSpy = jasmine.createSpy("sucSpy"),
             errSpy = jasmine.createSpy("errSpy");
 
-        $httpBackend.expectDELETE(contextUrl + sampleExistantEntity.id).respond(200);
+        $httpBackend.expectDELETE(contextUrl + "/" + sampleExistantEntity.id).respond(200);
         EntityService.remove(sampleExistantEntity, sucSpy, errSpy);
         $httpBackend.flush();
 
@@ -77,7 +77,7 @@ describe('service: EntityService', () => {
         var sucSpy = jasmine.createSpy("sucSpy"),
             errSpy = jasmine.createSpy("errSpy");
 
-        $httpBackend.expectGET(contextUrl + sampleExistantEntity.id).respond(200, sampleExistantEntity);
+        $httpBackend.expectGET(contextUrl + "/" + sampleExistantEntity.id).respond(200, sampleExistantEntity);
         EntityService.find(sampleExistantEntity.id, sucSpy, errSpy);
         $httpBackend.flush();
 
@@ -90,7 +90,7 @@ describe('service: EntityService', () => {
         var sucSpy = jasmine.createSpy("sucSpy"),
             errSpy = jasmine.createSpy("errSpy");
 
-        $httpBackend.expectGET(contextUrl + sampleExistantEntity.id).respond(200, sampleExistantEntity);
+        $httpBackend.expectGET(contextUrl + "/" + sampleExistantEntity.id).respond(200, sampleExistantEntity);
         EntityService.exists(sampleExistantEntity, sucSpy, errSpy);
         $httpBackend.flush();
 

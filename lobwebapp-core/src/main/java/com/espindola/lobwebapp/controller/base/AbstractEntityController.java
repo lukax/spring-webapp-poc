@@ -36,7 +36,6 @@ import com.espindola.lobwebapp.validation.base.AbstractEntityValidator;
 @Controller
 public abstract class AbstractEntityController<T extends AbstractEntity> {
 
-	@Autowired
 	private AbstractEntityFacade<T> facade;
 	private AbstractEntityValidator<T> validator;
 	private MessageKey entityMessageKey;

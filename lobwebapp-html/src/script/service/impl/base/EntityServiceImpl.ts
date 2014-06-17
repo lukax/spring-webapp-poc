@@ -9,7 +9,7 @@ export module service.impl.base {
         public url: string;
 
         constructor(contextUrl: string, public $http: ng.IHttpService, public hasDefault?: d.service.contract.base.HasDefaultValue<T>) {
-            this.url = this.rootUrl + contextUrl + "/";
+            this.url = this.rootUrl + contextUrl;
         }
 
         save(entity: T,
@@ -26,7 +26,7 @@ export module service.impl.base {
             successCallback: (data: T, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
             errorCallback: (data: domain.util.MessageResponse, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
                 this.$http({method: "PUT", 
-                            url: this.url + entity.id, 
+                            url: this.url + "/" + entity.id, 
                             data: entity})
                     .success(successCallback)
                     .error(errorCallback);
@@ -36,7 +36,7 @@ export module service.impl.base {
             successCallback: (data: T, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
             errorCallback: (data: domain.util.MessageResponse, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
                 this.$http({method: "DELETE", 
-                            url: this.url + entity.id})
+                            url: this.url + "/" + entity.id})
                     .success(successCallback)
                     .error(errorCallback);
         }
@@ -48,7 +48,7 @@ export module service.impl.base {
                     successCallback(this.hasDefault.getDefault(), 200, () => { return ""; }, <any>{});
                 else
                     this.$http({method: "GET",
-                                url: this.url + id})
+                                url: this.url + "/" + id})
                         .success(successCallback)
                         .error(errorCallback);
         }
