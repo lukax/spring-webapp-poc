@@ -4,7 +4,7 @@ import a = require("./UserServiceImpl");
 export module service.impl {
     export class AuthServiceImpl implements d.service.contract.AuthService {
         private url = "/api/oauth/token";
-        private client_id = "da39a3ee5e6b4b0d3255bfef95601890afd80709";
+        private clientCredentials = "bG9id2ViYXBwLWh0bWw6";
         private defaultUser: domain.User = { id: 1, name: "Usuário", isLogged: true, username: "user", password: "", roles: ["ROLE_USER"] };
         
         static $inject = ["$http", "$rootScope", "$window"];
@@ -17,18 +17,18 @@ export module service.impl {
         login(user: domain.User,
             successCallback: (data: domain.User, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
             errorCallback: (error: domain.util.MessageResponse, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
-                var authData = "grant_type=password" + 
-                            "&client_id=" + this.client_id +  
+                var data = "grant_type=password" + 
                             "&username=" + user.username + 
                             "&password=" + user.password + 
-                            "&scope=admin";
+                            "&scope=write";
                 var headers = {
+                    "Authorization": "Basic " + this.clientCredentials,
                     "Content-Type": "application/x-www-form-urlencoded"
                 };
                 
                 this.$http({method: "POST", 
                              url: this.url, 
-                             data: authData, 
+                             data: data, 
                              headers: headers})
                     .success((data: domain.AuthToken, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => {
                         var user = angular.copy(this.defaultUser); //TODO: make server return user information after login...
