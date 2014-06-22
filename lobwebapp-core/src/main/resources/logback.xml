@@ -18,7 +18,7 @@
 	    </filter>
 		<file>${logging.file.path}/lobwebapp-core.log</file>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<fileNamePattern>lobwebapp-core.%d{YY-MM-dd}.%i.log</fileNamePattern>
+			<fileNamePattern>${logging.file.path}/lobwebapp-core.%d{YY-MM-dd}.%i.log</fileNamePattern>
 			<maxHistory>${logging.file.number}</maxHistory>
 			<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
 		        <maxFileSize>${logging.file.size}</maxFileSize>
