@@ -47,8 +47,8 @@ public class PersistenceDevContextConfig {
 			jpaProperties.setProperty("hibernate.dialect", "org.hibernate.dialect.HSQLDialect");
 			jpaProperties.setProperty("hibernate.ejb.naming_strategy", "org.hibernate.cfg.ImprovedNamingStrategy");
 			jpaProperties.setProperty("hibernate.hbm2ddl.auto", "create-drop");
-			jpaProperties.setProperty("hibernate.format_sql", "true");
-			jpaProperties.setProperty("hibernate.show_sql", "true");
+			jpaProperties.setProperty("hibernate.format_sql", "false");
+			jpaProperties.setProperty("hibernate.show_sql", "false");
 		bean.setJpaProperties(jpaProperties);
 		return bean;
 	}
