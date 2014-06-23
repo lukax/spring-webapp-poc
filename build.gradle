@@ -1,0 +1,13 @@
+group = "com.espindola"
+version = "0.2.1"
+
+defaultTasks("clean", "build")
+
+allprojects {
+	repositories { 
+		mavenCentral()
+		maven {
+			url("http://repository.jboss.org/nexus/content/groups/public")
+		}
+	}
+}

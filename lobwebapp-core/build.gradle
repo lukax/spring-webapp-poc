@@ -1,18 +1,10 @@
-apply plugin: "java"
-apply plugin: "war"
+evaluationDependsOn(":lobwebapp-html")
 
-group = "com.espindola"
-version = "0.2.1"
+apply(plugin: "java")
+apply(plugin: "war")
 
 project.ext.spring_version = "3.2.5.RELEASE"
 project.ext.spring_security_version = "3.2.3.RELEASE"
-
-repositories {
-	mavenCentral()
-	maven {
-		url "http://repository.jboss.org/nexus/content/groups/public"
-	}
-}
 
 dependencies {
 	compile "org.springframework:spring-core:${spring_version}"
@@ -25,31 +17,22 @@ dependencies {
 	compile "org.springframework:spring-webmvc:${spring_version}"
 	compile "org.springframework:spring-orm:${spring_version}"
 	compile "org.springframework:spring-tx:${spring_version}"
-	
 	compile "org.springframework.security:spring-security-core:${spring_security_version}"
 	compile "org.springframework.security:spring-security-web:${spring_security_version}"
 	compile "org.springframework.security:spring-security-config:${spring_security_version}"
 	compile "org.springframework.security.oauth:spring-security-oauth2:2.0.0.RC2"
-
 	compile "org.springframework.data:spring-data-jpa:1.2.0.RELEASE"
-		
 	compile "org.codehaus.jackson:jackson-core-asl:1.9.9"
 	compile "org.codehaus.jackson:jackson-mapper-asl:1.9.9"
-	
 	compile "org.hibernate:hibernate-core:4.1.4.Final"
 	runtime "org.hibernate:hibernate-entitymanager:4.1.4.Final"
-	
 	compile "com.jolbox:bonecp:0.8.0.RELEASE"
-	
-	runtime "postgresql:postgresql:9.1-901.jdbc4"
-	runtime "org.hsqldb:hsqldb:2.3.1"
-	
 	compile "commons-fileupload:commons-fileupload:1.3"
-	
 	compile "org.slf4j:slf4j-api:1.6.4"
 	compile "ch.qos.logback:logback-classic:1.1.1"
 	compile "ch.qos.logback:logback-core:1.1.1"
-	
+	runtime "postgresql:postgresql:9.1-901.jdbc4"
+	runtime "org.hsqldb:hsqldb:2.3.1"
 	providedCompile "javax.servlet:javax.servlet-api:3.0.1"
 	
 	testCompile "org.springframework:spring-test:${spring_version}"
