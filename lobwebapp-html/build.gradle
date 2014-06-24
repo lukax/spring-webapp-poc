@@ -1,6 +1,19 @@
+apply(plugin: "distribution")
+
+distributions {
+    main {
+        contents {
+            from { "dist" }
+        }
+    }
+}
 
 task build(type: Exec, dependsOn: "processResources") {
 	commandLine("grunt", "build")
+
+	doLast {
+		tasks.distZip.execute()
+	}
 }
 
 task test(type: Exec, dependsOn: "build") {

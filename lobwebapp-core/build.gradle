@@ -1,7 +1,5 @@
-evaluationDependsOn(":lobwebapp-html")
-
-apply(plugin: "java")
 apply(plugin: "war")
+evaluationDependsOn(":lobwebapp-html")
 
 ext.spring_version = "3.2.5.RELEASE"
 ext.spring_security_version = "3.2.3.RELEASE"
