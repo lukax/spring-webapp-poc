@@ -52,9 +52,9 @@ war {
 	destinationDir = file("${buildDir}")
 }
 
-task deploy(dependsOn: [war, "copyLibs"])
+task deploy(dependsOn: ["build", "copyLibs"])
 
 task copyLibs(type: Sync) {
-    from configurations.libs
-    into "$buildDir/libs"
+    from(configurations.libs)
+    into("$buildDir/libs")
 }

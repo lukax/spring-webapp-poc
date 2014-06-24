@@ -1,0 +1,13 @@
+
+task build(type: Exec, dependsOn: "processResources") {
+	commandLine("grunt", "build")
+}
+
+task test(type: Exec, dependsOn: "build") {
+	commandLine("grunt", "test")
+}
+
+task processResources(type: Exec) {
+	commandLine("npm", "install")
+	commandLine("bower", "install")
+}
