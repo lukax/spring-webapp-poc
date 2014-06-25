@@ -49,9 +49,22 @@ war {
 	destinationDir = file("${buildDir}")
 }
 
-task deploy(dependsOn: ["build", "copyLibs"])
+task run(dependsOn: ["build", "copyLibs"]) << {
+	def jarName
+	configurations.libs.files({dep ->  dep.name == "webapp-runner"}).each({file -> 
+		if(file.name.contains("webapp-runner")){
+			jarName = file.name
+		}
+	})
+	javaexec { 
+		main = "-jar"
+		args = [project.ext.libsPath + "/" + jarName, tasks.war.archivePath]		
+	}
+}
 
-task copyLibs(type: Sync) {
+task copyLibs(type: Copy) {
+	project.ext.libsPath = "$buildDir/libs"
+    
     from(configurations.libs)
-    into("$buildDir/libs")
+    into(libsPath)
 }
