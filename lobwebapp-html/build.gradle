@@ -1,5 +1,7 @@
 apply(plugin: "distribution")
 
+defaultTasks("build", "test")
+
 distributions {
     main {
         contents {
@@ -15,6 +17,8 @@ task build(type: Exec, dependsOn: "processResources") {
 		tasks.distZip.execute()
 	}
 }
+
+task deploy(dependsOn: "build")
 
 task test(type: Exec, dependsOn: "build") {
 	commandLine("grunt", "test")
