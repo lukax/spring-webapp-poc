@@ -65,10 +65,21 @@ public class ProductServiceImpl extends AbstractEntityServiceImpl<Product>
 	}
 
 	private void throwIfPriceIsLessThanCostPrice(Product entity) {
-		if (entity.getCostPrice().compareTo(entity.getPrice()) >= 0)
+		ErrorCode errorCode = ErrorCode.REQUIRED;
+		if (entity.getCostPrice() != null){
+			int costPriceComparison = entity.getCostPrice().compareTo(entity.getPrice());
+			
+			if(costPriceComparison == 0)
+				errorCode = ErrorCode.REQUIRED;
+			else if(costPriceComparison > 0)
+				errorCode = ErrorCode.INVALID;
+			else
+				return;
+
 			throw new InvalidArgumentException(entityMessageKey,
-					new CustomObjectError(ErrorCode.REQUIRED,
-							MessageKey.VALIDATION_INVALID, "price"));
+					new CustomObjectError(errorCode,
+							MessageKey.VALIDATION_INVALID, "costPrice"));
+		}
 	}
 
 	private void throwIfInvalidOrTooBigImage(Product entity) {
