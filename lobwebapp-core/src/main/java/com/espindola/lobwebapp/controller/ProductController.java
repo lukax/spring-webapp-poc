@@ -1,21 +1,17 @@
 package com.espindola.lobwebapp.controller;
 
-import java.io.File;
+import java.io.IOException;
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileUploadException;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.oauth2.common.exceptions.InvalidRequestException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -24,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -53,14 +51,16 @@ public class ProductController extends AbstractEntityController<Product> {
 		this.facade = facade;
 	}
 
-	@RequestMapping(method = RequestMethod.GET, params = { RequestKey.PRODUCT_NAME }, headers = { RequestKey.PAGE_INDEX, RequestKey.PAGE_SIZE })
+	@RequestMapping(method = RequestMethod.GET, params = { RequestKey.PRODUCT_NAME }, headers = {
+			RequestKey.PAGE_INDEX, RequestKey.PAGE_SIZE })
 	@ResponseStatus(value = HttpStatus.OK)
 	@ResponseBody
 	public List<Product> findAllByNameLike(HttpServletResponse response,
 			@RequestParam(RequestKey.PRODUCT_NAME) String productName,
 			@RequestHeader(RequestKey.PAGE_INDEX) Integer pageIndex,
 			@RequestHeader(RequestKey.PAGE_SIZE) Integer pageSize) {
-		Page<Product> products = this.facade.findAllByNameLike(productName, new PageRequest(pageIndex, pageSize));
+		Page<Product> products = this.facade.findAllByNameLike(productName,
+				new PageRequest(pageIndex, pageSize));
 		response.addHeader(RequestKey.PAGE_TOTAL, "" + products.getTotalPages());
 		return products.getContent();
 	}
@@ -69,48 +69,33 @@ public class ProductController extends AbstractEntityController<Product> {
 	@ResponseStatus(value = HttpStatus.OK)
 	@ResponseBody
 	public FileMeta uploadImage(@PathVariable("productId") Long productId,
-			UriComponentsBuilder ucb, HttpServletRequest request,
+			UriComponentsBuilder ucb, MultipartHttpServletRequest request,
 			HttpServletResponse response) throws InvalidArgumentException,
 			NotFoundException {
-		if (!ServletFileUpload.isMultipartContent(request))
-			throw new InvalidRequestException(
-					"request for this url should be multipart");
-		// Create a factory for disk-based file items
-		DiskFileItemFactory factory = new DiskFileItemFactory();
-		// Configure a repository (to ensure a secure temp location is used)
-		File repository = (File) context
-				.getAttribute("javax.servlet.context.tempdir");
-		factory.setRepository(repository);
-		// Create a new file upload handler
-		ServletFileUpload upload = new ServletFileUpload(factory);
-		upload.setSizeMax(5100000);
+		Collection<MultipartFile> files = request.getFileMap().values();
+		if (files.isEmpty())
+			throw new InvalidArgumentException(MessageKey.PRODUCT,
+					new CustomObjectError(ErrorCode.REQUIRED,
+							MessageKey.VALIDATION_REQUIRED, "image"));
 
 		try {
-			// Parse the request
-			List<FileItem> items = upload.parseRequest(request);
-			for (FileItem x : items) {
-				if (!x.isFormField()) {
-					// Update Product
-					Product product = facade.find(productId);
-					product.setImage(FileMeta.from(x));
-					product = facade.update(product);
+			FileMeta fileMeta = new FileMeta(files.iterator().next());
 
-					// Set Location header
-					UriComponents build = ucb.path(request.getPathInfo())
-							.buildAndExpand(product.getId());
-					response.setHeader("Location", build.toUriString());
+			Product product = facade.find(productId);
+			product.setImage(fileMeta);
+			product = facade.update(product);
 
-					return product.getImage();
-				}
-			}
-		} catch (FileUploadException e) {
+			// Set Location header
+			UriComponents build = ucb.path(request.getPathInfo())
+					.buildAndExpand(product.getId());
+			response.setHeader("Location", build.toUriString());
+
+			return product.getImage();
+		} catch (IOException e) {
 			throw new InvalidArgumentException(MessageKey.PRODUCT,
 					new CustomObjectError(ErrorCode.REQUIRED,
 							MessageKey.VALIDATION_INVALIDFORMAT, "image"));
 		}
-		throw new InvalidArgumentException(MessageKey.PRODUCT,
-				new CustomObjectError(ErrorCode.INVALID,
-						MessageKey.VALIDATION_SIZE, "image", "5 MB"));
 	}
 
 	@RequestMapping(value = "/{productId:[\\d]+}/image", method = RequestMethod.GET)

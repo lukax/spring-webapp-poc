@@ -1,14 +1,11 @@
 package com.espindola.lobwebapp.service.impl;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.net.URLConnection;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.espindola.lobwebapp.domain.FileMeta;
 import com.espindola.lobwebapp.domain.Product;
 import com.espindola.lobwebapp.exception.AlreadyExistsException;
 import com.espindola.lobwebapp.exception.InvalidArgumentException;
@@ -65,13 +62,14 @@ public class ProductServiceImpl extends AbstractEntityServiceImpl<Product>
 	}
 
 	private void throwIfPriceIsLessThanCostPrice(Product entity) {
-		ErrorCode errorCode = ErrorCode.REQUIRED;
-		if (entity.getCostPrice() != null){
-			int costPriceComparison = entity.getCostPrice().compareTo(entity.getPrice());
-			
-			if(costPriceComparison == 0)
+		if (entity.getCostPrice() != null) {
+			int costPriceComparison = entity.getCostPrice().compareTo(
+					entity.getPrice());
+
+			ErrorCode errorCode = ErrorCode.REQUIRED;
+			if (costPriceComparison == 0)
 				errorCode = ErrorCode.REQUIRED;
-			else if(costPriceComparison > 0)
+			else if (costPriceComparison > 0)
 				errorCode = ErrorCode.INVALID;
 			else
 				return;
@@ -83,28 +81,22 @@ public class ProductServiceImpl extends AbstractEntityServiceImpl<Product>
 	}
 
 	private void throwIfInvalidOrTooBigImage(Product entity) {
-		if (entity.getImage() != null && entity.getImage().getBytes() != null) {
-			try {
-				String type = URLConnection
-						.guessContentTypeFromStream(new ByteArrayInputStream(
-								entity.getImage().getBytes()));
-				if (type == null || !type.contains("image")) {
-					throw new InvalidArgumentException(entityMessageKey,
-							new CustomObjectError(ErrorCode.REQUIRED,
-									MessageKey.VALIDATION_INVALID, "image",
-									"5 MB"));
-				}
-				if (entity.getImage().getBytes().length > 5000000) {
-					throw new InvalidArgumentException(entityMessageKey,
-							new CustomObjectError(ErrorCode.INVALID,
-									MessageKey.VALIDATION_INVALID, "image",
-									"5 MB"));
-				}
-			} catch (IOException ex) {
-				throw new InvalidArgumentException(entityMessageKey,
-						new CustomObjectError(ErrorCode.REQUIRED,
-								MessageKey.VALIDATION_INVALID, "image", "5 MB"));
-			}
+		if (entity.getImage() != null) {
+			FileMeta image = entity.getImage();
+
+			ErrorCode errorCode = ErrorCode.REQUIRED;
+			if (image.getFileType() == null
+					|| !image.getFileType().contains("image"))
+				errorCode = ErrorCode.REQUIRED;
+			else if (image.getBytes() == null
+					|| image.getBytes().length > 5100000)
+				errorCode = ErrorCode.INVALID;
+			else
+				return;
+
+			throw new InvalidArgumentException(entityMessageKey,
+					new CustomObjectError(errorCode,
+							MessageKey.VALIDATION_INVALID, "image", "5 MB"));
 		}
 	}
 }

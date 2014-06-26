@@ -1,10 +1,14 @@
 package com.espindola.lobwebapp.domain;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.net.URLConnection;
+
 import javax.persistence.Entity;
 import javax.persistence.Lob;
 
-import org.apache.commons.fileupload.FileItem;
 import org.codehaus.jackson.annotate.JsonIgnore;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.espindola.lobwebapp.domain.base.AbstractEntity;
 
@@ -20,6 +24,29 @@ public class FileMeta extends AbstractEntity {
 	@JsonIgnore
 	@Lob
 	private byte[] bytes;
+
+	public FileMeta() {
+
+	}
+
+	public FileMeta(MultipartFile multipartFile) throws IOException {
+		setId(0L);
+		setFileName(multipartFile.getName());
+		setFileSize(multipartFile.getSize());
+		setBytes(multipartFile.getBytes());
+		setFileType(multipartFile.getContentType());
+
+		if (getFileType() == null) {
+			try {
+				String fileType = URLConnection
+						.guessContentTypeFromStream(new ByteArrayInputStream(
+								getBytes()));
+				setFileType(fileType);
+			} catch (IOException ex) {
+
+			}
+		}
+	}
 
 	public String getFileName() {
 		return fileName;
@@ -52,15 +79,4 @@ public class FileMeta extends AbstractEntity {
 	public void setBytes(byte[] bytes) {
 		this.bytes = bytes;
 	}
-
-	public static FileMeta from(FileItem fileItem) {
-		FileMeta fileMeta = new FileMeta();
-		fileMeta.setId(0L);
-		fileMeta.setFileName(fileItem.getName());
-		fileMeta.setFileSize(fileItem.getSize());
-		fileMeta.setFileType(fileItem.getContentType());
-		fileMeta.setBytes(fileItem.get());
-		return fileMeta;
-	}
-
 }
