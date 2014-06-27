@@ -21,11 +21,12 @@ export module directive {
         templateUrl = '/template/directive/ImageUploadTemplate.html';
         link = (scope: ImageUploadViewModel, element: any, attrs: any)=>{
             element.find("#imageUploadIncludeImage").on("click", ()=>{
-                element.find("#imageUploadInput").click();    
+                if(!scope.loading)
+                    element.find("#imageUploadInput").click();    
             });
             
             element.find("#imageUploadInput").fileupload({
-                dataType: 'json',
+                dataType: "json", //server return type
                 acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
                 maxFileSize: 5000000,
                 minFileSize: 1000,
@@ -46,6 +47,7 @@ export module directive {
             scope.$watch("imageUrl", (newValue: string)=>{
                 if(newValue == null || newValue == "") return;
 
+                //update url
                 element.find("#imageUploadInput").fileupload("option","url",newValue);
 
                 $.ajax(newValue)
