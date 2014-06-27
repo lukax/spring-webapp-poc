@@ -2,16 +2,18 @@ package com.espindola.lobwebapp.config.context;
 
 import java.util.Properties;
 
+import javax.sql.DataSource;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-
-import com.jolbox.bonecp.BoneCPDataSource;
 
 @Profile("dev")
 @EnableTransactionManagement
@@ -20,13 +22,10 @@ import com.jolbox.bonecp.BoneCPDataSource;
 public class PersistenceDevContextConfig {
 
 	@Bean
-	public BoneCPDataSource dataSource(){
-		BoneCPDataSource dataSource = new BoneCPDataSource();
-		dataSource.setDriverClass("org.hsqldb.jdbcDriver");
-		dataSource.setJdbcUrl("jdbc:hsqldb:mem:lobwebapp");
-		dataSource.setUsername("sa");
-		dataSource.setPassword("");
-		return dataSource;
+	public DataSource dataSource(){
+		EmbeddedDatabase db = new EmbeddedDatabaseBuilder()
+			.addScript("schema.sql").build();
+		return db;
 	}
 	
 	@Bean

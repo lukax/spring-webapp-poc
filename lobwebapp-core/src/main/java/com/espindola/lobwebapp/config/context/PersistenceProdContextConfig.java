@@ -4,6 +4,8 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Properties;
 
+import javax.sql.DataSource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -33,7 +35,7 @@ public class PersistenceProdContextConfig {
 	}
 	
 	@Bean
-	public BoneCPDataSource dataSource() throws URISyntaxException{
+	public DataSource dataSource() throws URISyntaxException{
 		BoneCPDataSource dataSource = new BoneCPDataSource();
 		dataSource.setDriverClass(environment.getProperty("jdbc.driverClassName"));
 		dataSource.setJdbcUrl(environment.getProperty("jdbc.protocol") + dbUrl().getHost() + dbUrl().getPath());

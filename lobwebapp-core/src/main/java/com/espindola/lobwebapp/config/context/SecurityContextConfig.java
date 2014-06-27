@@ -1,5 +1,7 @@
 package com.espindola.lobwebapp.config.context;
 
+import javax.sql.DataSource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,7 +22,7 @@ import org.springframework.security.oauth2.provider.approval.UserApprovalHandler
 import org.springframework.security.oauth2.provider.error.OAuth2AccessDeniedHandler;
 import org.springframework.security.oauth2.provider.request.DefaultOAuth2RequestFactory;
 import org.springframework.security.oauth2.provider.token.TokenStore;
-import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
+import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 
 @Configuration
 public class SecurityContextConfig {
@@ -57,9 +59,8 @@ public class SecurityContextConfig {
 	@EnableAuthorizationServer
 	protected static class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
 		@Autowired AuthenticationManager authenticationManagerBean;
-		@Autowired TokenStore tokenStore;
 		@Autowired ClientDetailsService clientDetailsService;
-		@Autowired UserApprovalHandler userApprovalHandler;
+		@Autowired DataSource dataSource;
 		
 		@Override
 		public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
@@ -73,19 +74,19 @@ public class SecurityContextConfig {
 		@Override
 		public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
 			endpoints.authenticationManager(authenticationManagerBean)
-					 .userApprovalHandler(userApprovalHandler)
-					 .tokenStore(tokenStore);
+					 .userApprovalHandler(userApprovalHandler())
+					 .tokenStore(tokenStore());
 		}
 		
 		@Bean
 		public TokenStore tokenStore(){
-			return new InMemoryTokenStore();
+			return new JdbcTokenStore(dataSource);
 		}
 		
 		@Bean
-		public UserApprovalHandler approvalHandler(){
+		public UserApprovalHandler userApprovalHandler(){
 			TokenStoreUserApprovalHandler userApprovalHandler = new TokenStoreUserApprovalHandler();
-			userApprovalHandler.setTokenStore(tokenStore);
+			userApprovalHandler.setTokenStore(tokenStore());
 			userApprovalHandler.setClientDetailsService(clientDetailsService);
 			userApprovalHandler.setRequestFactory(new DefaultOAuth2RequestFactory(clientDetailsService));
 			return userApprovalHandler;
