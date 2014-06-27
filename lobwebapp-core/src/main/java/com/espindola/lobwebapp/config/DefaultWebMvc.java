@@ -5,11 +5,11 @@ import org.springframework.context.annotation.Import;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
-import com.espindola.lobwebapp.config.context.SecurityContextConfig;
+import com.espindola.lobwebapp.config.context.SecurityConfig;
 
 @Configuration
 @EnableWebMvc
-@Import(SecurityContextConfig.class)
-public class DefaultServletConfig extends WebMvcConfigurerAdapter {
+@Import(SecurityConfig.class)
+public class DefaultWebMvc extends WebMvcConfigurerAdapter {
 
 }

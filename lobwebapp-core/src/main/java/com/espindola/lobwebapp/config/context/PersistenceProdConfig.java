@@ -19,11 +19,11 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.jolbox.bonecp.BoneCPDataSource;
 
+@Configuration
 @Profile("prod")
 @EnableTransactionManagement
 @EnableJpaRepositories("com.espindola.lobwebapp.repository")
-@Configuration
-public class PersistenceProdContextConfig {
+public class PersistenceProdConfig {
 	
 	@Autowired
 	private Environment environment;

@@ -11,7 +11,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @Configuration
 @EnableWebMvc
 @ComponentScan("com.espindola.lobwebapp.controller")
-public class Restv1ServletConfig extends WebMvcConfigurerAdapter {
+public class RestV1WebMvc extends WebMvcConfigurerAdapter {
 	@Bean
     public MultipartResolver multipartResolver() {
         CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();

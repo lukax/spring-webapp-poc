@@ -1,20 +1,18 @@
 package com.espindola.lobwebapp.config;
 
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
-import com.espindola.lobwebapp.config.context.InfrastructureContextConfig;
-import com.espindola.lobwebapp.config.context.LocalizationContextConfig;
-import com.espindola.lobwebapp.config.context.PersistenceDevContextConfig;
+import com.espindola.lobwebapp.config.context.InfrastructureConfig;
+import com.espindola.lobwebapp.config.context.LocalizationConfig;
+import com.espindola.lobwebapp.config.context.PersistenceDevConfig;
 
-@EnableWebMvc
-@ComponentScan("com.espindola.lobwebapp.controller")
-@Import({LocalizationContextConfig.class,
-		 InfrastructureContextConfig.class,
-		 PersistenceDevContextConfig.class})
 @Configuration
+@EnableWebMvc
+@Import({InfrastructureConfig.class,
+		 LocalizationConfig.class,
+		 PersistenceDevConfig.class})
 public class TestContextConfig {
 
 }

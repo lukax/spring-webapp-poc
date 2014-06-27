@@ -15,11 +15,11 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+@Configuration
 @Profile("dev")
 @EnableTransactionManagement
 @EnableJpaRepositories("com.espindola.lobwebapp.repository")
-@Configuration
-public class PersistenceDevContextConfig {
+public class PersistenceDevConfig {
 
 	@Bean
 	public DataSource dataSource(){

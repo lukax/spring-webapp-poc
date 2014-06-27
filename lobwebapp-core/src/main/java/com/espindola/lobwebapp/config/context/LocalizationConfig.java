@@ -5,10 +5,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ResourceBundleMessageSource;
 
 @Configuration
-public class LocalizationContextConfig {
-	
+public class LocalizationConfig {
 	@Bean
-	public ResourceBundleMessageSource messageSource(){
+	public ResourceBundleMessageSource messageSource() {
 		ResourceBundleMessageSource source = new ResourceBundleMessageSource();
 		source.setBasename("l10n/messages");
 		source.setUseCodeAsDefaultMessage(true);

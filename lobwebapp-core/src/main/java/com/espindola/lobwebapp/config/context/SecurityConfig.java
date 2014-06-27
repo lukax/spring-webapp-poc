@@ -25,11 +25,11 @@ import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 
 @Configuration
-public class SecurityContextConfig {
+public class SecurityConfig {
 
 	@Configuration
 	@EnableWebSecurity
-	protected static class SecurityConfig extends WebSecurityConfigurerAdapter {
+	protected static class BasicSecurityConfig extends WebSecurityConfigurerAdapter {
 		@Override
 		protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 			auth.inMemoryAuthentication()

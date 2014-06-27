@@ -10,7 +10,7 @@ import org.springframework.web.context.support.AnnotationConfigWebApplicationCon
 import org.springframework.web.filter.DelegatingFilterProxy;
 import org.springframework.web.servlet.DispatcherServlet;
 
-import com.espindola.lobwebapp.config.context.ApplicationContextConfig;
+import com.espindola.lobwebapp.config.context.AppConfig;
 
 public class WebAppInitializer implements WebApplicationInitializer {
 
@@ -18,11 +18,11 @@ public class WebAppInitializer implements WebApplicationInitializer {
 	public void onStartup(ServletContext servletContext)
 			throws ServletException {
 		AnnotationConfigWebApplicationContext rootContext = new AnnotationConfigWebApplicationContext();
-		rootContext.register(ApplicationContextConfig.class);
+		rootContext.register(AppConfig.class);
 		servletContext.addListener(new ContextLoaderListener(rootContext));
-		
-		//Default Profile is production
-		servletContext.setInitParameter("spring.profiles.default", "prod");
+
+		// Default Profile is production
+		servletContext.setInitParameter("spring.profiles.default", "dev");
 
 		registerDefaultServlet(servletContext);
 		registerRestv1Servlet(servletContext);
@@ -31,7 +31,7 @@ public class WebAppInitializer implements WebApplicationInitializer {
 
 	private void registerDefaultServlet(ServletContext servletContext) {
 		AnnotationConfigWebApplicationContext defaultContext = new AnnotationConfigWebApplicationContext();
-		defaultContext.register(DefaultServletConfig.class);
+		defaultContext.register(DefaultWebMvc.class);
 		ServletRegistration.Dynamic defaultServlet = servletContext.addServlet(
 				"default", new DispatcherServlet(defaultContext));
 		defaultServlet.setLoadOnStartup(1);
@@ -40,7 +40,7 @@ public class WebAppInitializer implements WebApplicationInitializer {
 
 	private void registerRestv1Servlet(ServletContext servletContext) {
 		AnnotationConfigWebApplicationContext restv1Context = new AnnotationConfigWebApplicationContext();
-		restv1Context.register(Restv1ServletConfig.class);
+		restv1Context.register(RestV1WebMvc.class);
 		ServletRegistration.Dynamic restv1Servlet = servletContext.addServlet(
 				"restv1", new DispatcherServlet(restv1Context));
 		restv1Servlet.setLoadOnStartup(1);
