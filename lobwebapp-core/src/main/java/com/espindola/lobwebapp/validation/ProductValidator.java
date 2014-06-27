@@ -18,12 +18,6 @@ public class ProductValidator extends AbstractEntityValidator<Product> {
 		validatePrice("price");
 		validateCategory("category");
 		validateNcm("ncm");
-		validateRegisterDate("registerDate");
-	}
-
-	private void validateRegisterDate(String propertyName) {
-		required(propertyName);
-		dateMin(propertyName, 1357005600000L); // 1/1/2013
 	}
 
 	private void validateNcm(String propertyName) {

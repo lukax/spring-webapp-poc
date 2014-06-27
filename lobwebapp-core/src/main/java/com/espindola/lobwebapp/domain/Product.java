@@ -1,15 +1,12 @@
 package com.espindola.lobwebapp.domain;
 
 import java.math.BigDecimal;
-import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
@@ -35,9 +32,6 @@ public class Product extends AbstractEntity {
 	@JsonIgnore
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	private FileMeta image;
-
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date registerDate;
 
 	public String getName() {
 		return name;
@@ -85,14 +79,6 @@ public class Product extends AbstractEntity {
 
 	public void setNcm(String ncm) {
 		this.ncm = ncm;
-	}
-
-	public Date getRegisterDate() {
-		return registerDate;
-	}
-
-	public void setRegisterDate(Date registerDate) {
-		this.registerDate = registerDate;
 	}
 
 	@Override
