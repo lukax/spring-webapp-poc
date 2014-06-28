@@ -103,8 +103,8 @@ public class GlobalExceptionHandler {
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 	@ResponseBody
 	public MessageResponse handleOther(Exception ex, Locale locale) {
-		logger.warn(ex.getMessage());
-		return new MessageResponse(ex.getMessage());
+		logger.error(ex.getMessage());
+		return new MessageResponse("Erro interno");
 	}
 
 }
