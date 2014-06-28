@@ -11,21 +11,24 @@ public class PaymentValidator extends AbstractEntityValidator<Payment> {
 
 	@Override
 	protected void validateEntity(Payment t, Errors e) {
-		validateQuantity("quantity");
-		validateStatus("status");
-		validateMode("mode");
+		validateProperty("mode", e);
+		validateProperty("status", e);
+		validateProperty("quantity", e);
 	}
 
-	private void validateStatus(String propertyName) {
-		required(propertyName);
-	}
-
-	private void validateMode(String propertyName) {
-		required(propertyName);
-	}
-
-	private void validateQuantity(String propertyName) {
-		required(propertyName);
-		min(propertyName, 0);
+	@Override
+	protected void validateProperty(String property, Errors e) {
+		switch (property) {
+		case "mode":
+			required(property);
+			break;
+		case "status":
+			required(property);
+			break;
+		case "quantity":
+			required(property);
+			min(property, 0);
+			break;
+		}
 	}
 }

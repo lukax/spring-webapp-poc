@@ -3,11 +3,15 @@ package com.espindola.lobwebapp.validation.validator.base;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 import org.springframework.util.StringUtils;
+import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
+import org.springframework.validation.MapBindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.validation.Validator;
 
 import com.espindola.lobwebapp.domain.base.AbstractEntity;
@@ -16,10 +20,11 @@ import com.espindola.lobwebapp.validation.CustomObjectError;
 import com.espindola.lobwebapp.validation.ErrorCode;
 
 public abstract class AbstractEntityValidator<T extends AbstractEntity>
-		implements Validator {
+		implements Validator, PropertyValidator {
 
 	protected String defaultMessage = "message not found";
-	private Errors errors;
+	protected Object target;
+	protected Errors errors;
 
 	@Override
 	public boolean supports(Class<?> clazz) {
@@ -29,14 +34,46 @@ public abstract class AbstractEntityValidator<T extends AbstractEntity>
 	@SuppressWarnings("unchecked")
 	@Override
 	public void validate(Object target, Errors errors) {
-		this.errors = errors;
 		if (target == null) {
 			errors.reject(MessageKey.VALIDATION_INVALID.getKey());
 			return;
 		}
-		T entity = (T) target;
 
-		validateEntity(entity, errors);
+		if(target instanceof AbstractEntity)
+			validate((T) target, errors);
+		else if(target instanceof Map<?, ?>)
+			validate((Map<String, String>) target, errors);
+	}
+	
+	public void validate(T target, Errors errors){		
+		this.target = target;
+		this.errors = errors;
+		validateEntity(target, errors);	
+	}
+	
+	@Override
+	public void validate(Map<String, String> target, Errors errors){		
+		this.target = target;
+		this.errors = errors;
+		for(String property : target.keySet()){
+			validateProperty(property, errors);
+		}
+	}
+	
+	protected void validateSub(AbstractEntityValidator<?> validator, String objectName, Object target, Errors errors){
+		BindingResult bindingResult = null;
+		if(target instanceof AbstractEntity)
+			bindingResult = new BindException(target, objectName);
+		else if(target instanceof Map<?,?>)
+			bindingResult = new MapBindingResult((Map<?,?>)target, objectName);
+		
+		validator.validate(target, errors);
+		
+		for (ObjectError subObjErr : bindingResult.getAllErrors()) {
+			errors.rejectValue(objectName + "." + subObjErr.getObjectName(),
+					subObjErr.getCode(), subObjErr.getArguments(),
+					defaultMessage);
+		}
 	}
 
 	protected void required(String propertyName) {
@@ -90,7 +127,7 @@ public abstract class AbstractEntityValidator<T extends AbstractEntity>
 		}
 	}
 
-	protected void dateMin(String propertyName, double min) {
+	protected void dateMin(String propertyName, long min) {
 		Object value = this.errors.getFieldValue(propertyName);
 		if (value == null || !StringUtils.hasText(value.toString()))
 			return;
@@ -163,6 +200,6 @@ public abstract class AbstractEntityValidator<T extends AbstractEntity>
 		}
 	}
 
-	protected abstract void validateEntity(T t, Errors e);
-
+	protected abstract void validateEntity(T entity, Errors e);
+	protected abstract void validateProperty(String property, Errors e);
 }

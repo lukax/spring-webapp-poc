@@ -13,33 +13,33 @@ public class ProductValidator extends AbstractEntityValidator<Product> {
 
 	@Override
 	protected void validateEntity(Product t, Errors e) {
-		validateName("name");
-		validateCostPrice("costPrice");
-		validatePrice("price");
-		validateCategory("category");
-		validateNcm("ncm");
+		validateProperty("ncm", e);
+		validateProperty("category", e);
+		validateProperty("price", e);
+		validateProperty("costPrice", e);
+		validateProperty("name", e);
 	}
 
-	private void validateNcm(String propertyName) {
-		pattern(propertyName, Pattern.compile("^\\d\\d\\d\\d.\\d\\d.\\d\\d$"));
-	}
-
-	private void validateCategory(String propertyName) {
-		stringLength(propertyName, 5, 20);
-	}
-
-	private void validatePrice(String propertyName) {
-		required(propertyName);
-		range(propertyName, 0, 10000);
-	}
-
-	private void validateCostPrice(String propertyName) {
-		range(propertyName, 0, 10000);
-	}
-
-	private void validateName(String propertyName) {
-		required(propertyName);
-		stringLength(propertyName, 5, 100);
+	protected void validateProperty(String property, Errors e) {
+		switch (property) {
+		case "ncm":
+			pattern(property, Pattern.compile("^\\d\\d\\d\\d.\\d\\d.\\d\\d$"));
+			break;
+		case "category":
+			stringLength(property, 5, 20);
+			break;
+		case "price":
+			required(property);
+			range(property, 0, 10000);
+			break;
+		case "costPrice":
+			range(property, 0, 10000);
+			break;
+		case "name":
+			required(property);
+			stringLength(property, 5, 100);
+			break;
+		}
 	}
 
 }
