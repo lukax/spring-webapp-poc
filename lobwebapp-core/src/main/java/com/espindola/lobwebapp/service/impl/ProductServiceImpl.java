@@ -85,11 +85,11 @@ public class ProductServiceImpl extends AbstractEntityServiceImpl<Product>
 			FileMeta image = entity.getImage();
 
 			ErrorCode errorCode = ErrorCode.REQUIRED;
-			if (image.getFileType() == null
-					|| !image.getFileType().contains("image"))
-				errorCode = ErrorCode.REQUIRED;
-			else if (image.getBytes() == null
+			if (image.getBytes() == null
 					|| image.getBytes().length > 5100000)
+				errorCode = ErrorCode.INVALID;
+			else if (image.getFileType() == null
+					|| !image.getFileType().contains("image"))
 				errorCode = ErrorCode.INVALID;
 			else
 				return;

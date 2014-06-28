@@ -35,17 +35,6 @@ public class FileMeta extends AbstractEntity {
 		setFileSize(multipartFile.getSize());
 		setBytes(multipartFile.getBytes());
 		setFileType(multipartFile.getContentType());
-
-		if (getFileType() == null) {
-			try {
-				String fileType = URLConnection
-						.guessContentTypeFromStream(new ByteArrayInputStream(
-								getBytes()));
-				setFileType(fileType);
-			} catch (IOException ex) {
-
-			}
-		}
 	}
 
 	public String getFileName() {
