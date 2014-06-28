@@ -92,7 +92,7 @@ public abstract class AbstractEntityController<T extends AbstractEntity> {
 		UriComponents build = ucb.path(request.getPathInfo() + "/{id}")
 				.buildAndExpand(entity.getId());
 		response.setHeader("Location", build.toUriString());
-		response.setHeader("Entity-Id", entity.getId().toString());
+		response.setHeader("Entity-Id", String.valueOf(entity.getId()));
 	}
 
 	@RequestMapping(value = "/{id:[\\d]+}", method = RequestMethod.PUT)

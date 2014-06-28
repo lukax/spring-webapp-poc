@@ -95,8 +95,7 @@ public class OrderFacade extends AbstractEntityFacade<Order> {
 					newQuantity = itemStock.getQuantity() - item.getQuantity();
 				} else {
 					for (OrderItem previousItem : previousOrder.getItems()) {
-						if (previousItem.getProduct().getId()
-								.equals(item.getProduct().getId())) {
+						if (previousItem.getProduct().getId() == item.getProduct().getId()) {
 							int restoredQuantity = itemStock.getQuantity()
 									+ previousItem.getQuantity();
 							newQuantity = restoredQuantity - item.getQuantity();
