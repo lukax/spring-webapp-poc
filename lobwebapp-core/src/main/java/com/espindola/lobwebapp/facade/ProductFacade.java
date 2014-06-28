@@ -34,9 +34,13 @@ public class ProductFacade extends AbstractEntityFacade<Product> {
 	}
 
 	public FileMeta getImage(Long id) {
-		FileMeta fileMeta = productService.find(id).getImage();
-		if (fileMeta == null || fileMeta.getFileName() == null) // lazy initialize
-			throw new NotFoundException(MessageKey.IMAGE, id);
-		return fileMeta;
+		if(productService.exists(id)){
+			Product product = productService.find(id);
+			if (product.getImage() != null && product.getImage().getFileName() != null) {
+				//Check file name so lazy object is initialized
+				return product.getImage();
+			}
+		}
+		throw new NotFoundException(MessageKey.IMAGE, id);
 	}
 }

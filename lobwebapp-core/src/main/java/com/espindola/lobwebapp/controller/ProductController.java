@@ -101,13 +101,9 @@ public class ProductController extends AbstractEntityController<Product> {
 	@ResponseStatus(value = HttpStatus.OK)
 	public void downloadImage(@PathVariable("productId") Long productId,
 			HttpServletResponse response) throws InvalidArgumentException,
-			NotFoundException {
+			NotFoundException, IOException {
 		FileMeta fileMeta = facade.getImage(productId);
-		try {
-			response.getOutputStream().write(fileMeta.getBytes());
-		} catch (Exception ex) {
-			throw new NotFoundException(MessageKey.IMAGE, productId);
-		}
+		response.getOutputStream().write(fileMeta.getBytes());
 	}
 
 }

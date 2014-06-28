@@ -40,12 +40,18 @@ export module service.impl {
         }
 
         getImageUrl(productId: number){
-            var accessToken = this.$http.defaults.headers.common.Authorization.split(" ")[1];
-            return this.url + "/" + productId + "/image?access_token=" + accessToken;
+            var authHeader = this.$http.defaults.headers.common.Authorization;
+            var params = "";
+            if(authHeader != null){
+                var accessToken = authHeader.split(" ")[1];
+                params = "?access_token=" + accessToken;
+            }
+            return this.url + "/" + productId + "/image" + params;
         }
 
         getMarkUp(product: domain.Product){
-            if (product.costPrice == 0) return null;
+            if (product.costPrice == 0) 
+                return 0;
             return (product.price - product.costPrice) / product.costPrice;
         }
         
