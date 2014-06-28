@@ -4,11 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.espindola.lobwebapp.controller.base.AbstractEntityController;
 import com.espindola.lobwebapp.domain.Stock;
 import com.espindola.lobwebapp.facade.StockFacade;
 import com.espindola.lobwebapp.l10n.MessageKey;
-import com.espindola.lobwebapp.validation.StockValidator;
+import com.espindola.lobwebapp.validation.validator.StockValidator;
 
 @Controller
 @RequestMapping(value = "/stock")

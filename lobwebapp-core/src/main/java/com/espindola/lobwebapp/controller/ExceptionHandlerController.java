@@ -1,4 +1,4 @@
-package com.espindola.lobwebapp.controller.util;
+package com.espindola.lobwebapp.controller;
 
 import java.util.Locale;
 
@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import com.espindola.lobwebapp.controller.response.MessageResponse;
 import com.espindola.lobwebapp.exception.AlreadyExistsException;
 import com.espindola.lobwebapp.exception.InvalidArgumentException;
 import com.espindola.lobwebapp.exception.LobWebAppException;
@@ -25,9 +26,9 @@ import com.espindola.lobwebapp.l10n.MessageKey;
 
 @ControllerAdvice
 // Allows the exception handling to operate on all controllers
-public class GlobalExceptionHandler {
+public class ExceptionHandlerController {
 
-	private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
+	private static final Logger logger = LoggerFactory.getLogger(ExceptionHandlerController.class);
 
 	@Autowired
 	private MessageSource messageSource;

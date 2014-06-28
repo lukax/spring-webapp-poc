@@ -1,4 +1,4 @@
-package com.espindola.lobwebapp.validation.base;
+package com.espindola.lobwebapp.validation.validator.base;
 
 import org.springframework.validation.Errors;
 

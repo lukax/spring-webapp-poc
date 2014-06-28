@@ -24,17 +24,16 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.espindola.lobwebapp.controller.base.AbstractEntityController;
-import com.espindola.lobwebapp.controller.util.RequestKey;
+import com.espindola.lobwebapp.controller.request.RequestKey;
 import com.espindola.lobwebapp.domain.FileMeta;
 import com.espindola.lobwebapp.domain.Product;
 import com.espindola.lobwebapp.exception.InvalidArgumentException;
 import com.espindola.lobwebapp.exception.NotFoundException;
 import com.espindola.lobwebapp.facade.ProductFacade;
 import com.espindola.lobwebapp.l10n.MessageKey;
-import com.espindola.lobwebapp.validation.ProductValidator;
-import com.espindola.lobwebapp.validation.util.CustomObjectError;
-import com.espindola.lobwebapp.validation.util.ErrorCode;
+import com.espindola.lobwebapp.validation.CustomObjectError;
+import com.espindola.lobwebapp.validation.ErrorCode;
+import com.espindola.lobwebapp.validation.validator.ProductValidator;
 
 @Controller
 @RequestMapping(value = "/product")

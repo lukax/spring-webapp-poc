@@ -1,9 +1,9 @@
-package com.espindola.lobwebapp.controller.util;
+package com.espindola.lobwebapp.controller.response;
 
 import java.util.Collections;
 import java.util.List;
 
-import com.espindola.lobwebapp.validation.util.ValidationResult;
+import com.espindola.lobwebapp.validation.ValidationResult;
 
 public class ValidationMessageResponse extends MessageResponse {
 	private List<ValidationResult> validations = Collections.emptyList();

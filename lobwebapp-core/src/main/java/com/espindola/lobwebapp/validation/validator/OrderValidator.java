@@ -1,4 +1,4 @@
-package com.espindola.lobwebapp.validation;
+package com.espindola.lobwebapp.validation.validator;
 
 import java.util.Set;
 
@@ -12,8 +12,8 @@ import com.espindola.lobwebapp.domain.Order;
 import com.espindola.lobwebapp.domain.OrderItem;
 import com.espindola.lobwebapp.domain.Payment;
 import com.espindola.lobwebapp.l10n.MessageKey;
-import com.espindola.lobwebapp.validation.base.AbstractEntityValidator;
-import com.espindola.lobwebapp.validation.util.ErrorCode;
+import com.espindola.lobwebapp.validation.ErrorCode;
+import com.espindola.lobwebapp.validation.validator.base.AbstractEntityValidator;
 
 @Component
 public class OrderValidator extends AbstractEntityValidator<Order> {

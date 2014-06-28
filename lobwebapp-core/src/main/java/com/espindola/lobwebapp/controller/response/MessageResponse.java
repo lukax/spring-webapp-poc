@@ -1,4 +1,4 @@
-package com.espindola.lobwebapp.controller.util;
+package com.espindola.lobwebapp.controller.response;
 
 public class MessageResponse {
 	private String message;

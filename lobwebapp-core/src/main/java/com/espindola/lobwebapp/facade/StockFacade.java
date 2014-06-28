@@ -12,8 +12,8 @@ import com.espindola.lobwebapp.facade.base.AbstractEntityFacade;
 import com.espindola.lobwebapp.l10n.MessageKey;
 import com.espindola.lobwebapp.service.contract.ProductService;
 import com.espindola.lobwebapp.service.contract.StockService;
-import com.espindola.lobwebapp.validation.util.CustomObjectError;
-import com.espindola.lobwebapp.validation.util.ErrorCode;
+import com.espindola.lobwebapp.validation.CustomObjectError;
+import com.espindola.lobwebapp.validation.ErrorCode;
 
 @Transactional
 @Component

@@ -1,10 +1,10 @@
-package com.espindola.lobwebapp.validation;
+package com.espindola.lobwebapp.validation.validator;
 
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 
 import com.espindola.lobwebapp.domain.Payment;
-import com.espindola.lobwebapp.validation.base.AbstractEntityValidator;
+import com.espindola.lobwebapp.validation.validator.base.AbstractEntityValidator;
 
 @Component
 public class PaymentValidator extends AbstractEntityValidator<Payment> {

@@ -1,4 +1,4 @@
-package com.espindola.lobwebapp.validation.base;
+package com.espindola.lobwebapp.validation.validator.base;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -12,8 +12,8 @@ import org.springframework.validation.Validator;
 
 import com.espindola.lobwebapp.domain.base.AbstractEntity;
 import com.espindola.lobwebapp.l10n.MessageKey;
-import com.espindola.lobwebapp.validation.util.CustomObjectError;
-import com.espindola.lobwebapp.validation.util.ErrorCode;
+import com.espindola.lobwebapp.validation.CustomObjectError;
+import com.espindola.lobwebapp.validation.ErrorCode;
 
 public abstract class AbstractEntityValidator<T extends AbstractEntity>
 		implements Validator {

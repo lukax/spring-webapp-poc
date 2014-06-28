@@ -4,11 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.espindola.lobwebapp.controller.base.AbstractEntityController;
 import com.espindola.lobwebapp.domain.Order;
 import com.espindola.lobwebapp.facade.OrderFacade;
 import com.espindola.lobwebapp.l10n.MessageKey;
-import com.espindola.lobwebapp.validation.OrderValidator;
+import com.espindola.lobwebapp.validation.validator.OrderValidator;
 
 @Controller
 @RequestMapping(value = "/order")

@@ -1,4 +1,4 @@
-package com.espindola.lobwebapp.validation.util;
+package com.espindola.lobwebapp.validation;
 
 import java.util.ArrayList;
 import java.util.Arrays;

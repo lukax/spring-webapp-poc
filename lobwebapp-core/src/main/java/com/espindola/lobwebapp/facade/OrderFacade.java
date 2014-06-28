@@ -16,8 +16,8 @@ import com.espindola.lobwebapp.service.contract.CustomerService;
 import com.espindola.lobwebapp.service.contract.OrderService;
 import com.espindola.lobwebapp.service.contract.ProductService;
 import com.espindola.lobwebapp.service.contract.StockService;
-import com.espindola.lobwebapp.validation.util.CustomObjectError;
-import com.espindola.lobwebapp.validation.util.ErrorCode;
+import com.espindola.lobwebapp.validation.CustomObjectError;
+import com.espindola.lobwebapp.validation.ErrorCode;
 
 @Transactional
 @Component

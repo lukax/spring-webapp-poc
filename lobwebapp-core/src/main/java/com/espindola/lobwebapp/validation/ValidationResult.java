@@ -1,4 +1,4 @@
-package com.espindola.lobwebapp.validation.util;
+package com.espindola.lobwebapp.validation;
 
 public class ValidationResult {
 	private String propertyName;

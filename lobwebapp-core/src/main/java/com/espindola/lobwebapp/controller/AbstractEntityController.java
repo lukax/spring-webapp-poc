@@ -1,4 +1,4 @@
-package com.espindola.lobwebapp.controller.base;
+package com.espindola.lobwebapp.controller;
 
 import java.util.List;
 
@@ -25,13 +25,13 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.espindola.lobwebapp.controller.util.RequestKey;
+import com.espindola.lobwebapp.controller.request.RequestKey;
 import com.espindola.lobwebapp.domain.base.AbstractEntity;
 import com.espindola.lobwebapp.exception.InvalidArgumentException;
 import com.espindola.lobwebapp.exception.NotFoundException;
 import com.espindola.lobwebapp.facade.base.AbstractEntityFacade;
 import com.espindola.lobwebapp.l10n.MessageKey;
-import com.espindola.lobwebapp.validation.base.AbstractEntityValidator;
+import com.espindola.lobwebapp.validation.validator.base.AbstractEntityValidator;
 
 @Controller
 public abstract class AbstractEntityController<T extends AbstractEntity> {

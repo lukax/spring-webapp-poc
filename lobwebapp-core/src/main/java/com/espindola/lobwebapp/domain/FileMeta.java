@@ -1,8 +1,6 @@
 package com.espindola.lobwebapp.domain;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.net.URLConnection;
 
 import javax.persistence.Entity;
 import javax.persistence.Lob;

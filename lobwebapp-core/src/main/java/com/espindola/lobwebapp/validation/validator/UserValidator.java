@@ -1,10 +1,10 @@
-package com.espindola.lobwebapp.validation;
+package com.espindola.lobwebapp.validation.validator;
 
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 
 import com.espindola.lobwebapp.domain.User;
-import com.espindola.lobwebapp.validation.base.PersonValidator;
+import com.espindola.lobwebapp.validation.validator.base.PersonValidator;
 
 @Component
 public class UserValidator extends PersonValidator<User> {

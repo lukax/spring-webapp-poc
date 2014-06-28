@@ -4,7 +4,7 @@ import java.util.Locale;
 
 import org.springframework.context.MessageSource;
 
-import com.espindola.lobwebapp.controller.util.MessageResponse;
+import com.espindola.lobwebapp.controller.response.MessageResponse;
 import com.espindola.lobwebapp.l10n.MessageKey;
 
 public class LobWebAppException extends RuntimeException {

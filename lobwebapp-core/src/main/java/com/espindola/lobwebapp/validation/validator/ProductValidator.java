@@ -1,4 +1,4 @@
-package com.espindola.lobwebapp.validation;
+package com.espindola.lobwebapp.validation.validator;
 
 import java.util.regex.Pattern;
 
@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 
 import com.espindola.lobwebapp.domain.Product;
-import com.espindola.lobwebapp.validation.base.AbstractEntityValidator;
+import com.espindola.lobwebapp.validation.validator.base.AbstractEntityValidator;
 
 @Component
 public class ProductValidator extends AbstractEntityValidator<Product> {

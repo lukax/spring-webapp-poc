@@ -9,12 +9,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-import com.espindola.lobwebapp.controller.base.AbstractEntityController;
-import com.espindola.lobwebapp.controller.util.RequestKey;
+import com.espindola.lobwebapp.controller.request.RequestKey;
 import com.espindola.lobwebapp.domain.User;
 import com.espindola.lobwebapp.facade.UserFacade;
 import com.espindola.lobwebapp.l10n.MessageKey;
-import com.espindola.lobwebapp.validation.UserValidator;
+import com.espindola.lobwebapp.validation.validator.UserValidator;
 
 @Controller
 @RequestMapping(value = "/user")
