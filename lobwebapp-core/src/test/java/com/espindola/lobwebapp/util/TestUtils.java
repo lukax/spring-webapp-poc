@@ -6,7 +6,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 import org.springframework.http.MediaType;
 
-public class TestUtil {
+public class TestUtils {
 
 	public static final MediaType APPLICATION_JSON_UTF8 = new MediaType(
 			MediaType.APPLICATION_JSON.getType(),
