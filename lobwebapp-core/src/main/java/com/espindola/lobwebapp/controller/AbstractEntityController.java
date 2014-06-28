@@ -1,6 +1,9 @@
 package com.espindola.lobwebapp.controller;
 
+import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -11,6 +14,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.MapBindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
@@ -111,6 +115,24 @@ public abstract class AbstractEntityController<T extends AbstractEntity> {
 	@ResponseBody
 	public void remove(@PathVariable("id") Long id) throws NotFoundException {
 		facade.remove(id);
+	}
+
+	@RequestMapping(value = "/validate", method = RequestMethod.GET)
+	@ResponseStatus(value = HttpStatus.OK)
+	@ResponseBody
+	public void validateProperties(HttpServletRequest request) {
+		Enumeration<String> parameterNames = request.getParameterNames();
+
+		Map<String, String> properties = new HashMap<>();
+		while (parameterNames.hasMoreElements()) {
+			String name = parameterNames.nextElement();
+			properties.put(name, request.getParameter(name));
+		}
+		MapBindingResult bindingResult = new MapBindingResult(properties,
+				entityMessageKey.getKey());
+
+		validator.validate(properties, bindingResult);
+		validationResult(bindingResult);
 	}
 
 	protected void validationResult(BindingResult bindingResult)
