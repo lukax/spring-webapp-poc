@@ -144,7 +144,7 @@ export module controller.base{
 			catch(e){ console.log("[INFO]: could not restore previous changes")}
 			if(previousEntity != null && previousEntity.id == fetchedEntity.id && !_.isEqual(previousEntity, fetchedEntity)){
 				this.$scope.entity = previousEntity;
-				this.AlertService.add({ content: "Últimas mudanças foram carregadas", type: enums.AlertType.INFO });
+				console.log("[INFO]: previous changes restored");
 				this.$scope.isPreviousChanges = true;
 				return true;
 			}
