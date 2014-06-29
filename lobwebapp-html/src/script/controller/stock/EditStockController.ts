@@ -5,7 +5,6 @@ import enums = require("./../../util/EnumUtil");
 
 export module controller.stock {
     export interface EditStockViewModel extends i0.controller.base.EditEntityViewModel<domain.Stock> {
-        removeStock: (stock: domain.Stock) => void;
         fetchProduct: (productId: number) => void;
         invalid: any;
         units: string[];
@@ -81,7 +80,6 @@ export module controller.stock {
         }
 
         populateScope() {
-            this.$scope.removeStock = (stock) => this.removeEntity(stock);
             this.$scope.fetchProduct = (productId) => this.fetchProduct(productId);
             this.fetchUnits();
         }

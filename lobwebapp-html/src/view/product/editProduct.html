@@ -1,99 +1,96 @@
 <div class="row">
-    <div class="col-md-2">
-        <div class="list-group">
-            <a class="list-group-item link active">Detalhes</a>
-            <a class="list-group-item link" ng-href="/stock/list?search={{entity.name}}">Estoque</a>
-        </div>
-        <div class="lwa-fade-left" ng-if="!isEntityNew">
-            <image-upload url="imageUrl" placeholder="'/img/imageplaceholder.png'"></image-upload>
-        </div>
-    </div>
-    <div class="col-md-10">
-        <form class="form-horizontal" role="form" name="productForm" ng-submit="saveOrUpdateEntity(entity)" novalidate>
-            <entity-id id="entity.id"></entity-id>
-            <div class="form-group" ng-class="{'has-error': productForm.inputName.$invalid}">
-                <label for="inputName" class="col-md-1 control-label">Nome</label>
-                <div class="col-md-11">
-                    <input type="text" class="form-control" id="inputName" name="inputName" placeholder="Digite o nome do Produto" autofocus ng-model="entity.name" required ng-minlength="5" ng-maxlength="100">
-                </div>
-            </div>
-            <div class="form-group" ng-class="{'has-error': productForm.inputPrice.$invalid}">
-                <label for="inputPrice" class="col-md-1 control-label">Preço</label>
-                <div class="col-md-7">
-                    <div class="input-group">
-                        <span class="input-group-addon">R$</span>
-                        <input type="text" class="form-control" id="inputPrice" name="inputPrice"
-                        ng-model="entity.price" required ng-pattern="/^(?=.*[1-9])\d*(?:\.\d{1,2})?$/">
-                        <div class="input-group-btn">
-                            <button type="button" class="btn btn-default dropdown-toggle" id="btnPriceInfoId" ng-click="togglePriceInfo = !togglePriceInfo" ui-jq="tooltip" title="Detalhar Cálculo de Preço" ng-disabled="entity.price == 0">
-                                <span class="glyphicon glyphicon-chevron-down" ng-class="{'glyphicon-chevron-down': !togglePriceInfo, 'glyphicon-chevron-up': togglePriceInfo}"></span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="lwa-fade-left" ng-show="togglePriceInfo">
-                <div class="form-group">
-                    <div ng-class="{'has-error': productForm.inputCostPrice.$invalid}">
-                        <label for="inputCostPrice" class="col-md-3 control-label">Custo</label>
-                        <div class="col-md-9">
-                            <div class="input-group">
-                                <span class="input-group-addon">R$</span>
-                                <input type="text" class="form-control" id="inputCostPrice" name="inputCostPrice" ng-model="entity.costPrice" ng-pattern="/^(?=.*[0-9])\d*(?:\.\d{1,2})?$/">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div ng-class="{'has-error': markUp <= 0}">
-                        <label for="inputMarkUp" class="col-md-3 control-label">Lucro</label>
-                        <div class="col-md-9">
-                            <div class="input-group">
-                                <span class="input-group-addon">%</span>
-                                <input type="text" class="form-control" id="inputMarkUp" name="inputMarkUp" readonly value="{{ markUp | number:2 }}">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">
-                <div ng-class="{'has-error': productForm.inputNcm.$invalid}">
-                    <label for="inputNcm" class="col-md-1 control-label">NCM</label>
-                    <div class="col-md-4">
-                        <input type="text" class="form-control" id="inputNcm" name="inputNcm" ng-model="entity.ncm" ui-jq="mask" ui-options="'9999.99.99'">
-                    </div>
-                </div>
-                <div ng-class="{'has-error': productForm.inputCategory.$invalid}">
-                    <label for="inputCategory" class="col-md-1 control-label">Categoria</label>
-                    <div class="col-md-6">
-                        <input type="text" class="form-control" id="inputCategory" name="inputCategory" ng-model="entity.category" ng-maxlength="20" data-typeahead="category for category in categories | limitTo:5">
-                    </div>
-                </div>
-            </div>
-            <div class="form-group" ng-class="{'has-error': productForm.inputDescription.$invalid}">
-                <div class="col-md-offset-1 col-md-11">
-                    <textarea class="form-control" id="inputDescription" name="inputDescription"
-                    placeholder="Digite uma Descrição" rows="2" ng-model="entity.description"></textarea>
-                </div>
-            </div>
-            <save-changes disabled="readMode" 
-                save-disabled="productForm.inputName.$invalid ||
-                                productForm.inputPrice.$invalid ||
-                                productForm.inputCostPrice.$invalid ||
-                                productForm.inputNcm.$invalid ||
-                                productForm.inputCategory.$invalid ||
-                                productForm.inputDescription.$invalid ||
-                                productForm.inputName.$pristine &&
-                                productForm.inputPrice.$pristine &&
-                                productForm.inputCostPrice.$pristine &&
-                                productForm.inputNcm.$pristine &&
-                                productForm.inputCategory.$pristine &&
-                                productForm.inputDescription.$pristine" 
-                remove-disabled="isEntityNew" 
-                on-remove="removeProduct(entity)" 
-                discard-changes-enabled="isPreviousChanges" 
-                on-discard-changes="discardChanges()">
-            </save-changes>
-        </form>
-    </div>
+	<div class="col-md-2">
+		<div class="list-group">
+			<a class="list-group-item link active">Detalhes</a>
+			<a class="list-group-item link" ng-href="/stock/list?search={{entity.name}}">Estoque</a>
+		</div>
+		<div class="lwa-fade-left" ng-if="!isEntityNew">
+			<image-upload url="imageUrl" placeholder="'/img/imageplaceholder.png'"></image-upload>
+		</div>
+	</div>
+	<div class="col-md-10">
+		<form class="form-horizontal" role="form" name="productForm" novalidate ng-submit="saveOrUpdateEntity(entity)">
+
+			<entity-id id="entity.id"></entity-id>
+			
+			<div class="form-group" ng-class="{'has-error': productForm.inputName.$invalid}">
+				<label for="inputName" class="col-md-1 control-label">Nome</label>
+				<div class="col-md-11">
+					<input type="text" class="form-control" id="inputName" name="inputName" placeholder="Digite o nome do Produto" autofocus ng-model="entity.name" required ng-minlength="5" ng-maxlength="100">
+				</div>
+			</div>
+
+			<div class="form-group" ng-class="{'has-error': productForm.inputPrice.$invalid}">
+				<label for="inputPrice" class="col-md-1 control-label">Preço</label>
+				<div class="col-md-7">
+					<div class="input-group">
+						<span class="input-group-addon">R$</span>
+						<input type="text" class="form-control" id="inputPrice" name="inputPrice"
+						ng-model="entity.price" required ng-pattern="/^(?=.*[1-9])\d*(?:\.\d{1,2})?$/">
+						<div class="input-group-btn">
+							<button type="button" class="btn btn-default dropdown-toggle" id="btnPriceInfoId" ng-click="togglePriceInfo = !togglePriceInfo" ui-jq="tooltip" title="Detalhar Cálculo de Preço" ng-disabled="entity.price == 0">
+								<span class="glyphicon glyphicon-chevron-down" ng-class="{'glyphicon-chevron-down': !togglePriceInfo, 'glyphicon-chevron-up': togglePriceInfo}"></span>
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="lwa-fade-left" ng-show="togglePriceInfo">
+				<div class="form-group">
+					<div ng-class="{'has-error': productForm.inputCostPrice.$invalid}">
+						<label for="inputCostPrice" class="col-md-3 control-label">Custo</label>
+						<div class="col-md-9">
+							<div class="input-group">
+								<span class="input-group-addon">R$</span>
+								<input type="text" class="form-control" id="inputCostPrice" name="inputCostPrice" ng-model="entity.costPrice" ng-pattern="/^(?=.*[0-9])\d*(?:\.\d{1,2})?$/">
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<div ng-class="{'has-error': markUp <= 0}">
+						<label for="inputMarkUp" class="col-md-3 control-label">Lucro</label>
+						<div class="col-md-9">
+							<div class="input-group">
+								<span class="input-group-addon">%</span>
+								<input type="text" class="form-control" id="inputMarkUp" name="inputMarkUp" readonly value="{{ markUp | number:2 }}">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div ng-class="{'has-error': productForm.inputNcm.$invalid}">
+					<label for="inputNcm" class="col-md-1 control-label">NCM</label>
+					<div class="col-md-4">
+						<input type="text" class="form-control" id="inputNcm" name="inputNcm" ng-model="entity.ncm" ui-jq="mask" ui-options="'9999.99.99'">
+					</div>
+				</div>
+				<div ng-class="{'has-error': productForm.inputCategory.$invalid}">
+					<label for="inputCategory" class="col-md-1 control-label">Categoria</label>
+					<div class="col-md-6">
+						<input type="text" class="form-control" id="inputCategory" name="inputCategory" ng-model="entity.category" ng-maxlength="20" data-typeahead="category for category in categories | limitTo:5">
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group" ng-class="{'has-error': productForm.inputDescription.$invalid}">
+				<div class="col-md-offset-1 col-md-11">
+					<textarea class="form-control" id="inputDescription" name="inputDescription"
+					placeholder="Digite uma Descrição" rows="2" ng-model="entity.description"></textarea>
+				</div>
+			</div>
+
+			<save-changes disabled="readMode"
+			save-disabled="productForm.$invalid || productForm.$pristine"
+			remove-disabled="isEntityNew"
+			discard-disabled="!isPreviousChanges"
+			on-remove="removeEntity(entity)"
+			on-discard="discardChanges()">
+			</save-changes>
+
+		</form>
+	</div>
 </div>

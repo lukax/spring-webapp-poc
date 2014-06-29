@@ -14,7 +14,7 @@
                 <input type="number" required min="1" class="form-control" id="productQuantity" name="productQuantity" placeholder="Qt" ng-model="item.quantity" ui-keyup="{'enter': 'addItem(item)'}" ng-disabled="!item.product.id">
                 <div class="input-group-btn">
                     <button type="button" class="btn btn-primary" data-toggle="tooltip" title="Adicionar produto à lista" ng-click="addItem(item)" ng-disabled="orderForm.productQuantity.$invalid || orderForm.productId.$invalid || readMode">
-                        <span class="glyphicon glyphicon-plus"></span>
+                    <span class="glyphicon glyphicon-plus"></span>
                     </button>
                 </div>
             </div>
@@ -25,7 +25,7 @@
             </div>
         </div>
     </quick-search>
-        
+    
     <div class="form-group">
         <div class="col-md-offset-1 col-md-11">
             <ul class="list-group">
@@ -56,11 +56,11 @@
         <div class="col-md-10">
             <div class="input-group">
                 <span class="input-group-addon">R$</span>
-                <input type="number" class="form-control" id="inputPayment" name="inputPayment" ng-model="entity.payment.quantity" 
+                <input type="number" class="form-control" id="inputPayment" name="inputPayment" ng-model="entity.payment.quantity"
                 ng-pattern="/^(?=.*[0-9])\d*(?:\.\d{1,2})?$/" ng-disabled="entity.payment.status != 'OK'">
                 <div class="input-group-btn">
                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                        {{entity.payment.mode | paymentMode}} <span class="caret"></span>
+                    {{entity.payment.mode | paymentMode}} <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu" role="menu">
                         <li role="presentation" class="dropdown-header">Modo</li>
@@ -71,7 +71,7 @@
                 </div>
                 <div class="input-group-btn">
                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                        {{entity.payment.status | paymentStatus }} <span class="caret"></span>
+                    {{entity.payment.status | paymentStatus }} <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu" role="menu">
                         <li role="presentation" class="dropdown-header">Status</li>
@@ -103,14 +103,14 @@
         </div>
     </div>
 
-    <save-changes disabled="readMode" 
-        save-disabled="invalid.orderItems ||
-                       invalid.paymentQuantity ||
-                       orderForm.inputPayment.$invalid" 
-        remove-disabled="isEntityNew || readMode" 
-        on-remove="removeOrder(entity)" 
-        discard-changes-enabled="isPreviousChanges" 
-        on-discard-changes="discardChanges()">
+    <save-changes disabled="readMode"
+    save-disabled="invalid.orderItems || 
+                    invalid.paymentQuantity || 
+                    orderForm.$invalid || orderForm.$pristine"
+    remove-disabled="isEntityNew"
+    discard-disabled="!isPreviousChanges"
+    on-remove="removeEntity(entity)"
+    on-discard="discardChanges()">
     </save-changes>
-
+    
 </form>

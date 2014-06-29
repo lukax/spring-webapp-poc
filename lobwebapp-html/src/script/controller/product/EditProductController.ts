@@ -8,7 +8,6 @@ export module controller.product {
     export interface EditProductViewModel extends i0.controller.base.EditEntityViewModel<domain.Product> {  
         markUp: number;
         categories: string[];
-        removeProduct(product: domain.Product): void;
         imageUrl: string;
     }
 
@@ -56,7 +55,6 @@ export module controller.product {
         }
         
         populateScope() {
-            this.$scope.removeProduct = (entity) => this.removeEntity(entity);
             this.$scope.imageUrl = this.ProductService.getImageUrl(this.$scope.entity.id);
             this.fetchCategories();
             this.syncMarkup();
