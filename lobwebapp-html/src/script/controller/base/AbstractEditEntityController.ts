@@ -108,7 +108,7 @@ export module controller.base{
 		}
 
 		discardChanges(){
-			this.saveTemporaryChanges(true);
+			this.discardTemporaryChanges();
 			this.findEntity(""+this.$scope.entity.id);
 		}
 
@@ -130,18 +130,18 @@ export module controller.base{
 			return (this.$scope.entity && this.$scope.entity.id == 0);
 		}
 		
-		private saveTemporaryChanges(removeChanges?: boolean){
-			if(removeChanges)
-				delete localStorage[this.tempObjKey];
-			else{
-				localStorage[this.tempObjKey] = angular.toJson(this.$scope.entity);
-			}
+		private saveTemporaryChanges(){
+			localStorage[this.tempObjKey] = angular.toJson(this.$scope.entity);
+        }
+
+        private discardTemporaryChanges(){
+			delete localStorage[this.tempObjKey];
         }
 
 		private restoreTemporaryChanges(fetchedEntity: T){
 			var previousEntity = null;
 			try{ previousEntity = angular.fromJson(localStorage[this.tempObjKey]); }
-			catch(e){}
+			catch(e){ console.log("[INFO]: could not restore previous changes")}
 			if(previousEntity != null && previousEntity.id == fetchedEntity.id && !_.isEqual(previousEntity, fetchedEntity)){
 				this.$scope.entity = previousEntity;
 				this.AlertService.add({ content: "Últimas mudanças foram carregadas", type: enums.AlertType.INFO });
