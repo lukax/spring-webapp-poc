@@ -1,7 +1,7 @@
 export interface AppRoute {
     name: string;
     url: string;
-    abstract?: boolean;
+    secured: boolean;
     templateUrl: string;
     controller: string;
     deps: string[];
@@ -24,6 +24,7 @@ export var routes: AppRoute[] =
         {
             name: "userAuth",
             url: "/user/auth",
+            secured: false,
             errorUrl: "/user/auth?error=0",
             templateUrl: "view/user/authUser.html",
             controller: "AuthUserController",
@@ -34,6 +35,7 @@ export var routes: AppRoute[] =
         }, {
             name: "productList",
             url: "/product/list",
+            secured: true,
             templateUrl: "view/product/listProduct.html",
             controller: "ListProductController",
             deps: [
@@ -43,7 +45,8 @@ export var routes: AppRoute[] =
             ]
         }, {
             name: "productEdit",
-            url: "/product/:productId", //0-9 numbers in 1-8 digits long match
+            url: "/product/:productId",
+            secured: true,
             templateUrl: "view/product/editProduct.html",
             controller: "EditProductController",
             deps: [
@@ -55,6 +58,7 @@ export var routes: AppRoute[] =
         }, {
             name: "orderGraph",
             url: "/order/graph",
+            secured: true,
             templateUrl: "view/order/graphOrder.html",
             controller: "GraphOrderController",
             deps: [
@@ -64,6 +68,7 @@ export var routes: AppRoute[] =
         }, {
             name: "orderList",
             url: "/order/list",
+            secured: true,
             templateUrl: "view/order/listOrder.html",
             controller: "ListOrderController",
             deps: [
@@ -76,6 +81,7 @@ export var routes: AppRoute[] =
         }, {
             name: "orderEdit",
             url: "/order/:orderId",
+            secured: true,
             templateUrl: "view/order/editOrder.html",
             controller: "EditOrderController",
             deps: [
@@ -92,6 +98,7 @@ export var routes: AppRoute[] =
         }, {
             name: "customerList",
             url: "/customer/list",
+            secured: true,
             templateUrl: "view/customer/listCustomer.html",
             controller: "ListCustomerController",
             deps: [
@@ -102,6 +109,7 @@ export var routes: AppRoute[] =
         }, {
             name: "customerEdit",
             url: "/customer/:customerId",
+            secured: true,
             templateUrl: "view/customer/editCustomer.html",
             controller: "EditCustomerController",
             deps: [
@@ -112,6 +120,7 @@ export var routes: AppRoute[] =
         }, {
             name: "stockList",
             url: "/stock/list",
+            secured: true,
             templateUrl: "view/stock/listStock.html",
             controller: "ListStockController",
             deps: [
@@ -123,6 +132,7 @@ export var routes: AppRoute[] =
         }, {
             name: "stockEdit",
             url: "/stock/:stockId",
+            secured: true,
             templateUrl: "view/stock/editStock.html",
             controller: "EditStockController",
             deps: [

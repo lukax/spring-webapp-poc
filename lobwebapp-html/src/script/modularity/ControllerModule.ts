@@ -23,11 +23,11 @@ export module modularity {
                     };
                 }])
                 .config(["$routeProvider", this.routeProviderCfg])
-                .config(["$locationProvider", this.enableHtml5])
-                .config(["$httpProvider", this.intercept401])
+                .config(["$locationProvider", this.html5Cfg])
+                .config(["$httpProvider", this.httpInterceptorsCfg])
 
-                .run(["$rootScope","NavigatorService", this.setRootScopeVariables])
-                .run(["$rootScope", "$location", "AuthService", "$timeout", this.blockNotAllowedUrls])
+                .run(["$rootScope","NavigatorService", this.scopeVariablesCfg])
+                .run(["$rootScope", "$location", "AuthService", "$timeout", this.eventListenersCfg])
 
                 .controller("MainNavbarController", <Function>f.controller.MainNavbarController)
                 .controller("AlertController", <Function>g.controller.AlertController)
@@ -35,41 +35,44 @@ export module modularity {
         }
 
         routeProviderCfg = ($routeProvider: ng.IRouteProvider) => {
-            AppRoutes.routes.forEach((x)=> {
-                $routeProvider.when(x.url, {
-                    controller: x.controller,
-                    templateUrl: x.templateUrl,
-                    resolve: this.loadDependencies(x.deps) 
+            (<any>$routeProvider).whenAppRoute = (route: AppRoutes.AppRoute) => {
+                var resolve = {};
+                if(route.secured)
+                    angular.extend(resolve, this.authenticationResolver());
+                if(route.deps)
+                    angular.extend(resolve, this.dependencyResolver(route.deps));
+                return $routeProvider.when(route.url, {
+                    controller: route.controller,
+                    templateUrl: route.templateUrl,
+                    resolve: resolve
                     });
+                }
+
+            AppRoutes.routes.forEach((x)=> {
+                (<any>$routeProvider).whenAppRoute(x);
                 });
+
             $routeProvider.otherwise({ redirectTo: AppRoutes.main().url });
         };
 
-        enableHtml5 = ($locationProvider: ng.ILocationProvider) => {
+        html5Cfg = ($locationProvider: ng.ILocationProvider) => {
             $locationProvider.html5Mode(true);
         };
         
-        blockNotAllowedUrls = ($rootScope: ng.IRootScopeService, $location: ng.ILocationService, AuthService: d.service.contract.AuthService, $timeout: ng.ITimeoutService) => {
-            var isAllowedUrl = (route: string) => {
-                return (route == null || route == AppRoutes.main().url);
-            };
-            $rootScope.$on("$routeChangeStart", (event: any, to: any, toParams: any, from: any, fromParams: any) => {
-                if(!isAllowedUrl(to.originalPath) && !AuthService.isLoggedIn()){
-                    event.preventDefault();
-                    $location.url(AppRoutes.main().errorUrl);
-                    $location.replace();
-                }
+        eventListenersCfg = ($rootScope: ng.IRootScopeService, $location: ng.ILocationService, AuthService: d.service.contract.AuthService, $timeout: ng.ITimeoutService) => {
+            $rootScope.$on("$routeChangeError", (event: any, current: any, previous: any, rejection: any) => {
+                $location.url(AppRoutes.main().errorUrl)
+                    .search(rejection)
+                    .replace();
             });
         };
         
-        intercept401 = ($httpProvider) => {
+        httpInterceptorsCfg = ($httpProvider) => {
             var logoutUserOn401 = ["$q", "$location", ($q: ng.IQService, $location: ng.ILocationService) => {
                 return{
                     "responseError" : (response) => {
                         if(response.status == 401){
-                            $location.url(AppRoutes.main().errorUrl);
-                            $location.replace();
-                            return $q.reject(response);
+                            return $q.reject({ error: 1 });
                         }
                         if (response.status == 500) {
                             return $q.reject(response);
@@ -83,14 +86,27 @@ export module modularity {
             $httpProvider.interceptors.push(logoutUserOn401);
         }
 
-        setRootScopeVariables = ($rootScope: d.controller.base.ViewModel, NavigatorService: d.service.contract.NavigatorService) => {
+        scopeVariablesCfg = ($rootScope: d.controller.base.ViewModel, NavigatorService: d.service.contract.NavigatorService) => {
             $rootScope.navigator = NavigatorService;
         }
 
-        loadDependencies(deps: Array<string>){
-            if(deps.length === 0) return;
+        authenticationResolver(){
             var definition = {
-                resolver: ["$q", "$rootScope", "Progress", ($q: ng.IQService, $rootScope: ng.IRootScopeService, Progress: d.service.contract.Progress) => {
+                authentication: ["$q", "AuthService", ($q: ng.IQService, AuthService: d.service.contract.AuthService) => {
+                    var deferred = $q.defer();
+                    if(AuthService.isLoggedIn()) 
+                        deferred.resolve();
+                    else 
+                        deferred.reject({ error: 0 });
+                    return (deferred.promise);
+                    }]
+            }
+            return definition;
+        }
+
+        dependencyResolver(deps: Array<string>){
+            var definition = {
+                dependencies: ["$q", "$rootScope", "Progress", ($q: ng.IQService, $rootScope: ng.IRootScopeService, Progress: d.service.contract.Progress) => {
                     return (new h.util.DependencyManager($q, $rootScope, Progress)).resolve(deps, "lwa.controller");
                 }]
             }
