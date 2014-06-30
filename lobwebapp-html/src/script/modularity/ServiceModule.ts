@@ -2,8 +2,8 @@
 
 import a = require("./../service/mock/AlertServiceMock");
 import b = require("./../service/impl/AuthServiceImpl");
-import c = require("./../util/Progress");
-import d = require("./../util/Navigator");
+import c = require("./../service/impl/NavigatorServiceImpl");
+import d = require("./../util/Progress");
 
 export module modularity {
     export class ServiceModule {
@@ -12,8 +12,8 @@ export module modularity {
             	//Global usage services                
                 .service("AlertService", <Function>a.service.mock.AlertServiceMock)
                 .service("AuthService", <Function>b.service.impl.AuthServiceImpl)
-                .service("Progress", <Function>c.util.Progress)
-                .service("Navigator", <Function>d.util.Navigator)
+                .service("NavigatorService", <Function>c.service.impl.NavigatorServiceImpl)
+                .service("Progress", <Function>d.util.Progress)
                 ;
         }
 

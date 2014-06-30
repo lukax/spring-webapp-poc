@@ -1,7 +1,7 @@
-///<reference path="../reference.d.ts"/>
+///<reference path="../../reference.d.ts"/>
 
-export module util {
-    export class Navigator implements d.service.contract.Navigator {
+export module service.impl {
+    export class NavigatorServiceImpl implements d.service.contract.NavigatorService {
 
         static $inject = ["$location", "$routeParams", "Progress"];
         constructor(public $location: ng.ILocationService, 

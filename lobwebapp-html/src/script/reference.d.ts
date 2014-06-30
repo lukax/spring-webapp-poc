@@ -24,7 +24,7 @@
 ///<reference path="service/contract/base/EntityService.ts"/>
 ///<reference path="service/contract/base/PersonService.ts"/>
 ///<reference path="service/contract/AlertService.ts"/>
-///<reference path="service/contract/Navigator.ts"/>
+///<reference path="service/contract/NavigatorService.ts"/>
 ///<reference path="service/contract/AuthService.ts"/>
 ///<reference path="service/contract/OrderService.ts"/>
 ///<reference path="service/contract/CustomerService.ts"/>

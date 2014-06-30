@@ -1,7 +1,7 @@
 ///<reference path="../../reference.d.ts"/>
 
 module d.service.contract {
-    export interface Navigator {
+    export interface NavigatorService {
         Progress: Progress;
         params(): any;
         url(to: string): void;

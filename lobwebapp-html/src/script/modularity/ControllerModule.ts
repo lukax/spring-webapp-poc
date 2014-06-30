@@ -26,7 +26,7 @@ export module modularity {
                 .config(["$locationProvider", this.enableHtml5])
                 .config(["$httpProvider", this.intercept401])
 
-                .run(["$rootScope","Navigator", this.setRootScopeVariables])
+                .run(["$rootScope","NavigatorService", this.setRootScopeVariables])
                 .run(["$rootScope", "$location", "AuthService", "$timeout", this.blockNotAllowedUrls])
 
                 .controller("MainNavbarController", <Function>f.controller.MainNavbarController)
@@ -83,8 +83,8 @@ export module modularity {
             $httpProvider.interceptors.push(logoutUserOn401);
         }
 
-        setRootScopeVariables = ($rootScope: d.controller.base.ViewModel, Navigator: d.service.contract.Navigator) => {
-            $rootScope.navigator = Navigator;
+        setRootScopeVariables = ($rootScope: d.controller.base.ViewModel, NavigatorService: d.service.contract.NavigatorService) => {
+            $rootScope.navigator = NavigatorService;
         }
 
         loadDependencies(deps: Array<string>){

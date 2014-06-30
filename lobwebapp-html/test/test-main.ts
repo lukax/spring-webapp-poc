@@ -14,7 +14,7 @@ requirejs.config({
     paths: {
         jquery: "lib/jquery/dist/jquery.min",
         angular: "lib/angular/angular.min",
-        angularUiRouter: "lib/angular-ui-router/release/angular-ui-router.min",
+        angularRoute: "lib/angular-route/angular-route.min",
         angularMocks: "lib/angular-mocks/angular-mocks",
         underscore: "lib/underscore-amd/underscore-min"
     },
@@ -28,7 +28,7 @@ requirejs.config({
             deps: ["jquery"],
             exports: "angular"
         },
-        "angularUiRouter": ["angular"],
+        "angularRoute": ["angular"],
         "angularMocks": ["angular"],
         "underscore": {
             exports: "_"

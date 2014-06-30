@@ -5,7 +5,7 @@
 import i0 = require("script/controller/product/ListProductController");
 import i1 = require("script/service/mock/ProductServiceMock");
 import i2 = require("script/service/mock/AlertServiceMock");
-import i3 = require("script/util/Navigator");
+import i3 = require("script/service/impl/NavigatorServiceImpl");
 import i4 = require("script/modularity/ControllerModule");
 
 describe("controller: ListProductController", () => {
@@ -22,12 +22,12 @@ describe("controller: ListProductController", () => {
             $provide.service("Progress", () => {
                 return { start: () => {}, done: () => {}, set: () => {} }
             });
-            $provide.service("Navigator", i3.util.Navigator);
+            $provide.service("NavigatorService", i3.service.impl.NavigatorServiceImpl);
             $controllerProvider.register("ListProductController", i0.controller.product.ListProductController);
         });
-        inject(($rootScope: ng.IRootScopeService, Navigator)=> {
+        inject(($rootScope: ng.IRootScopeService, NavigatorService)=> {
             $scope = $rootScope.$new();
-            $scope.navigator = Navigator;
+            $scope.navigator = NavigatorService;
         });
     });
 
