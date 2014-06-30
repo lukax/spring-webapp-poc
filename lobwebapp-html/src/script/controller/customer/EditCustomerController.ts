@@ -15,7 +15,7 @@ export module controller.customer {
             super($scope, CustomerService, AlertService, "/customer");
             super.setEntityName("Cliente");
             
-            this.findEntity(this.$scope.navigator.$stateParams.customerId);
+            this.findEntity(this.$scope.navigator.params().customerId);
         }
 
     }

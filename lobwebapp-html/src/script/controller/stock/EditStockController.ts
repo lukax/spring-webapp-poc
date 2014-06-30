@@ -22,8 +22,8 @@ export module controller.stock {
             super($scope, StockService, AlertService, "/stock");
             super.setEntityName("Estoque");
             
-            var stockId = this.$scope.navigator.$stateParams.stockId;
-            var productId = this.$scope.navigator.$stateParams.productId;
+            var stockId = this.$scope.navigator.params().stockId;
+            var productId = this.$scope.navigator.params().productId;
 
             this.findEntity(stockId, ()=>{
                 if(productId != null) this.fetchProduct(productId);

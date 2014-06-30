@@ -7,10 +7,10 @@ require.config({
         jqueryMaskedInput: "../lib/jquery.maskedinput/jquery.maskedinput.min",
         bootstrap: "../lib/bootstrap/dist/js/bootstrap.min",
         angular: "../lib/angular/angular.min",
+        angularRoute: "../lib/angular-route/angular-route.min",
         angularAnimate: "../lib/angular-animate/angular-animate.min",
         angularUi: "../lib/angular-ui/build/angular-ui.min",
         angularUiUtils: "../lib/angular-ui-utils/ui-utils",
-        angularUiRouter: "../lib/angular-ui-router/release/angular-ui-router.min",
         angularUiBootstrap: "../lib/angular-ui-bootstrap-bower/ui-bootstrap.min",
         underscore: "../lib/underscore-amd/underscore-min",
         dc: "../lib/dcjs/dc.min",
@@ -39,10 +39,10 @@ require.config({
             deps: ["jquery"],
             exports: "$.fn.alert"
         },
+        "angularRoute": ["angular"],
         "angularAnimate": ["angular"],
         "angularUi": ["angular"],
         "angularUiUtils": ["jqueryMaskedInput","angular"],
-        "angularUiRouter": ["angular"],
         "angularUiBootstrap": ["angular"],
         "NProgress": {
             deps: ["jquery"],

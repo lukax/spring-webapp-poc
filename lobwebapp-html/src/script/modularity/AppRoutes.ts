@@ -6,12 +6,25 @@ export interface AppRoute {
     controller: string;
     deps: string[];
 }
+export interface MainAppRoute extends AppRoute {
+    errorUrl: string;
+}
+
+export var main: () => MainAppRoute = () => {
+    var mainRoute = "userAuth";
+    for(var i = 0; i < routes.length; i++){
+        if(routes[i].name == mainRoute)
+            return (<MainAppRoute>routes[i]);
+    }
+}
 
 export var routes: AppRoute[] =
     [
+        <MainAppRoute>
         {
             name: "userAuth",
-            url: "/user/auth?logout&error",
+            url: "/user/auth",
+            errorUrl: "/user/auth?error=0",
             templateUrl: "view/user/authUser.html",
             controller: "AuthUserController",
             deps: [
@@ -20,7 +33,7 @@ export var routes: AppRoute[] =
             ]
         }, {
             name: "productList",
-            url: "/product/list?search&redirect",
+            url: "/product/list",
             templateUrl: "view/product/listProduct.html",
             controller: "ListProductController",
             deps: [
@@ -30,7 +43,7 @@ export var routes: AppRoute[] =
             ]
         }, {
             name: "productEdit",
-            url: "/product/{productId:[0-9]{1,8}|new}", //0-9 numbers in 1-8 digits long match
+            url: "/product/:productId", //0-9 numbers in 1-8 digits long match
             templateUrl: "view/product/editProduct.html",
             controller: "EditProductController",
             deps: [
@@ -40,8 +53,29 @@ export var routes: AppRoute[] =
                 "directive/ImageUploadDirective"
             ]
         }, {
+            name: "orderGraph",
+            url: "/order/graph",
+            templateUrl: "view/order/graphOrder.html",
+            controller: "GraphOrderController",
+            deps: [
+                "controller/order/GraphOrderController",
+                "service/impl/OrderServiceImpl"
+            ]
+        }, {
+            name: "orderList",
+            url: "/order/list",
+            templateUrl: "view/order/listOrder.html",
+            controller: "ListOrderController",
+            deps: [
+                "controller/order/ListOrderController",
+                "service/impl/OrderServiceImpl",
+                "directive/ListUtilsDirective",
+                "directive/CustomerDetailDirective",
+                "directive/PaymentDetailDirective"
+            ]
+        }, {
             name: "orderEdit",
-            url: "/order/{orderId:[0-9]{1,8}|new}?customerId&productId", //0-9 numbers in 1-8 digits long match
+            url: "/order/:orderId",
             templateUrl: "view/order/editOrder.html",
             controller: "EditOrderController",
             deps: [
@@ -56,39 +90,8 @@ export var routes: AppRoute[] =
                 "directive/PaymentDetailDirective"
             ]
         }, {
-            name: "orderList",
-            url: "/order/list?search&redirect",
-            templateUrl: "view/order/listOrder.html",
-            controller: "ListOrderController",
-            deps: [
-                "controller/order/ListOrderController",
-                "service/impl/OrderServiceImpl",
-                "directive/ListUtilsDirective",
-                "directive/CustomerDetailDirective",
-                "directive/PaymentDetailDirective"
-            ]
-        }, {
-            name: "orderGraph",
-            url: "/order/graph",
-            templateUrl: "view/order/graphOrder.html",
-            controller: "GraphOrderController",
-            deps: [
-                "controller/order/GraphOrderController",
-                "service/impl/OrderServiceImpl"
-            ]
-        }, {
-            name: "customerEdit",
-            url: "/customer/{customerId:[0-9]{1,8}|new}",
-            templateUrl: "view/customer/editCustomer.html",
-            controller: "EditCustomerController",
-            deps: [
-                "controller/customer/EditCustomerController",
-                "service/impl/CustomerServiceImpl",
-                "directive/FormUtilsDirective"
-            ]
-        }, {
             name: "customerList",
-            url: "/customer/list?search&redirect",
+            url: "/customer/list",
             templateUrl: "view/customer/listCustomer.html",
             controller: "ListCustomerController",
             deps: [
@@ -97,8 +100,29 @@ export var routes: AppRoute[] =
                 "directive/ListUtilsDirective"
             ]
         }, {
+            name: "customerEdit",
+            url: "/customer/:customerId",
+            templateUrl: "view/customer/editCustomer.html",
+            controller: "EditCustomerController",
+            deps: [
+                "controller/customer/EditCustomerController",
+                "service/impl/CustomerServiceImpl",
+                "directive/FormUtilsDirective"
+            ]
+        }, {
+            name: "stockList",
+            url: "/stock/list",
+            templateUrl: "view/stock/listStock.html",
+            controller: "ListStockController",
+            deps: [
+                "controller/stock/ListStockController",
+                "service/impl/StockServiceImpl",
+                "directive/ListUtilsDirective",
+                "directive/ProductDetailDirective"
+            ]
+        }, {
             name: "stockEdit",
-            url: "/stock/{stockId:[0-9]{1,8}|new}?productId",
+            url: "/stock/:stockId",
             templateUrl: "view/stock/editStock.html",
             controller: "EditStockController",
             deps: [
@@ -109,16 +133,6 @@ export var routes: AppRoute[] =
                 "directive/QuickSearchDirective",
                 "directive/ProductDetailDirective"
             ]
-        }, {
-            name: "stockList",
-            url: "/stock/list?search&redirect",
-            templateUrl: "view/stock/listStock.html",
-            controller: "ListStockController",
-            deps: [
-                "controller/stock/ListStockController",
-                "service/impl/StockServiceImpl",
-                "directive/ListUtilsDirective",
-                "directive/ProductDetailDirective"
-            ]
         }
     ];
+

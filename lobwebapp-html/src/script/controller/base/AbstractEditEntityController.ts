@@ -51,7 +51,7 @@ export module controller.base{
 			this.lock();
 			this.EntityService.save(entity,
 				(successData, successStatus, successHeaders) => {
-					this.$scope.navigator.$location.url(new URI(this.contextUrl).segment(successHeaders("Entity-Id")).toString());
+					this.$scope.navigator.url(new URI(this.contextUrl).segment(successHeaders("Entity-Id")).toString());
 				},
 				(errorData) => {
 					console.log(errorData);
@@ -113,7 +113,7 @@ export module controller.base{
 		}
 
 		newEntity() {
-			this.$scope.navigator.$location.url(new URI(this.contextUrl).segment("new").toString());
+			this.$scope.navigator.url(new URI(this.contextUrl).segment("new").toString());
 		}
 
 		lock(){

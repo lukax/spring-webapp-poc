@@ -3,11 +3,18 @@
 export module util {
     export class Navigator implements d.service.contract.Navigator {
 
-        static $inject = ["$location", "$stateParams", "Progress"];
+        static $inject = ["$location", "$routeParams", "Progress"];
         constructor(public $location: ng.ILocationService, 
-                    public $stateParams: ng.ui.IStateParams,
+                    public $routeParams: any,
                     public Progress: d.service.contract.Progress) {
-            
+        }
+
+        public params() {
+        	return this.$routeParams;
+        }
+
+        public url(to : string){
+        	this.$location.url(to);
         }
     }
 }

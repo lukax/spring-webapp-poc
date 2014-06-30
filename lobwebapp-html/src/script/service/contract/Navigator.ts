@@ -3,8 +3,8 @@
 module d.service.contract {
     export interface Navigator {
         Progress: Progress;
-        $location: ng.ILocationService;
-        $stateParams: any;
+        params(): any;
+        url(to: string): void;
     }
 
     export interface Progress {

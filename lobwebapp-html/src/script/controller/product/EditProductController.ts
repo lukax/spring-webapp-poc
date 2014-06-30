@@ -22,7 +22,7 @@ export module controller.product {
             super($scope, ProductService, AlertService, "/product");
             super.setEntityName("Produto");
 
-            var productId = this.$scope.navigator.$stateParams.productId;
+            var productId = this.$scope.navigator.params().productId;
             
             this.findEntity(productId, ()=> { 
                 this.populateScope(); 

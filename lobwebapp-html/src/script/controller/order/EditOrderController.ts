@@ -27,9 +27,9 @@ export module controller.order {
             super($scope, OrderService, AlertService, "/order");
             super.setEntityName("Pedido");
             
-            var orderId = this.$scope.navigator.$stateParams.orderId;
-            var customerId = this.$scope.navigator.$stateParams.customerId;
-            var productId = this.$scope.navigator.$stateParams.productId;
+            var orderId = this.$scope.navigator.params().orderId;
+            var customerId = this.$scope.navigator.params().customerId;
+            var productId = this.$scope.navigator.params().productId;
 
             this.findEntity(orderId, () => { 
                 if(customerId != null) this.fetchCustomer(customerId);

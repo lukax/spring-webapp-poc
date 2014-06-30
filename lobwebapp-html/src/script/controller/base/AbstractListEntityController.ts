@@ -21,9 +21,9 @@ export module controller.base {
                     public AlertService: d.service.contract.AlertService,
                     public contextUrl: string,
                     public redirectParam: string) {
-            this.redirectUrl = $scope.navigator.$stateParams.redirect != null ? decodeURIComponent($scope.navigator.$stateParams.redirect) : null;
+            this.redirectUrl = $scope.navigator.params().redirect != null ? decodeURIComponent($scope.navigator.params().redirect) : null;
             
-            this.$scope.searchText = (this.$scope.navigator.$stateParams.search || "");
+            this.$scope.searchText = (this.$scope.navigator.params().search || "");
             this.$scope.editEntity = (id: number) => this.editEntity(id);
             this.$scope.listEntity = (page) => this.listEntity(page);
         }
@@ -47,10 +47,10 @@ export module controller.base {
         editEntity(id: number) {
             if (this.redirectUrl) {
                 this.redirectUrl = new URI(this.redirectUrl).addSearch(this.redirectParam, String(id)).toString();
-                this.$scope.navigator.$location.url(this.redirectUrl);
+                this.$scope.navigator.url(this.redirectUrl);
             }
             else 
-                this.$scope.navigator.$location.url(new URI(this.contextUrl).segment(String(id)).toString());
+                this.$scope.navigator.url(new URI(this.contextUrl).segment(String(id)).toString());
 
         }
 
