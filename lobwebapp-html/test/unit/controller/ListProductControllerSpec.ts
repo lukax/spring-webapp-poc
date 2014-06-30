@@ -16,7 +16,7 @@ describe("controller: ListProductController", () => {
         module(($provide: ng.auto.IProvideService, $controllerProvider: ng.IControllerProvider)=>{
             $provide.service("ProductService", i1.service.mock.ProductServiceMock);
             $provide.service("AlertService", i2.service.mock.AlertServiceMock);
-            $provide.service("$stateParams", () => {
+            $provide.service("$routeParams", () => {
                 return { }
             });
             $provide.service("Progress", () => {
@@ -31,8 +31,8 @@ describe("controller: ListProductController", () => {
         });
     });
 
-    it("should list products", inject(($controller: ng.IControllerService, $timeout: ng.ITimeoutService, $stateParams: any) => {
-        $stateParams.search = "";
+    it("should list products", inject(($controller: ng.IControllerService, $timeout: ng.ITimeoutService, $routeParams: any) => {
+        $routeParams.search = "";
         var ctrl = $controller("ListProductController", {
             $scope: $scope
         });
@@ -52,8 +52,8 @@ describe("controller: ListProductController", () => {
         expect($location.path()).toBe("/product/0");
     }));
 
-    xit("should get searchText from url Params", inject(($controller: ng.IControllerService, $timeout: ng.ITimeoutService, $stateParams: any) => {
-        $stateParams.search = "SSD";
+    xit("should get searchText from url Params", inject(($controller: ng.IControllerService, $timeout: ng.ITimeoutService, $routeParams: any) => {
+        $routeParams.search = "SSD";
         var ctrl = $controller("ListProductController", {
             $scope: $scope
         });
