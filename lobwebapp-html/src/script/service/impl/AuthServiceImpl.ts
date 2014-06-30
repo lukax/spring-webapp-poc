@@ -5,7 +5,7 @@ export module service.impl {
     export class AuthServiceImpl implements d.service.contract.AuthService {
         private url = "/api/oauth/token";
         private clientCredentials = "bG9id2ViYXBwLWh0bWw6";
-        private defaultUser: domain.User = { id: 1, name: "Usuário", isLogged: true, username: "user", password: "", roles: ["ROLE_USER"] };
+        private defaultUser: domain.User = { id: 1, name: "Lucas", isLogged: true, username: "", password: "", roles: ["ROLE_USER"] };
         
         static $inject = ["$http", "$rootScope", "$window"];
         constructor(public $http: ng.IHttpService, 

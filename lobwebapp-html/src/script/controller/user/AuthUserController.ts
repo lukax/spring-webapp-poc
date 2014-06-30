@@ -14,32 +14,33 @@ export module controller.user {
         constructor(public $scope: AuthUserViewModel,
                     public AuthService: d.service.contract.AuthService,
                     public AlertService: d.service.contract.AlertService) {
+        
+            this.processParams();            
+            this.populateScope();
+        }
 
+        processParams() {
             var error = this.$scope.navigator.params().error;
             var logout = this.$scope.navigator.params().logout;
-            switch (error) {
+
+            switch (String(error)) {
                 case "0":
                     this.AlertService.add({ content: "Login ou senha Inválido", type: enums.AlertType.WARNING });
                     this.AuthService.logout(()=>{}, ()=>{});
                     break;
                 case "1":
-                    this.AlertService.add({ content: "Usuário não possui permissão para acessar esta página", type: enums.AlertType.WARNING });
+                    this.AlertService.add({ content: "Você não possui permissão para acessar esta página", type: enums.AlertType.WARNING });
                     this.AuthService.logout(()=>{}, ()=>{});
                     break;
             }
-            if (logout == "true") {
+
+            if (logout) {
                 this.logout();
             }
             else if (this.AuthService.isLoggedIn()) { 
                 // If not logging out, and user is logged in already send him to default page
                 this.toDefaultPage();
             }
-            
-            this.populateScope();
-        }
-
-        toDefaultPage(){
-            this.$scope.navigator.url("/product/list");
         }
 
         login() {
@@ -66,6 +67,10 @@ export module controller.user {
                     this.AlertService.add({ title: "Logout", content: String(errorData.message), type: enums.AlertType.WARNING });
                     this.unlock();
                 });
+        }
+
+        toDefaultPage(){
+            this.$scope.navigator.url("/product/list");
         }
         
 		lock(){
