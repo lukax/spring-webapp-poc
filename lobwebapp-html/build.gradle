@@ -1,7 +1,6 @@
 apply(plugin: "distribution")
 apply(plugin: "node")
 apply(plugin: "grunt")
-defaultTasks("build", "test")
 
 buildscript {
     repositories {
