@@ -4,6 +4,7 @@
   "description": "Line of Business Web application Front End, based on AngularJS",
   "dependencies": {},
   "devDependencies": {
+    "bower": "~1.3.5",
     "karma": "~0.10.4",
     "karma-phantomjs-launcher": "~0.1.0",
     "karma-jasmine": "~0.1.0",

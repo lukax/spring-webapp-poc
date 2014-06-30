@@ -1,6 +1,17 @@
 apply(plugin: "distribution")
-
+apply(plugin: "node")
+apply(plugin: "grunt")
 defaultTasks("build", "test")
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath "com.moowork.gradle:gradle-node-plugin:0.4"
+        classpath "com.moowork.gradle:gradle-grunt-plugin:0.5"
+    }
+}
 
 distributions {
     main {
@@ -10,19 +21,17 @@ distributions {
     }
 }
 
-task build(type: Exec, dependsOn: "processResources") {
-	commandLine("grunt", "build")
-	
-	doLast {
-		tasks.distZip.execute()
-	}
+
+task build(dependsOn: ["processResources"]) << {
+	tasks.grunt_build.execute();
+	tasks.distZip.execute()
 }
 
-task test(type: Exec, dependsOn: "build") {
-	commandLine("grunt", "test")
-}
+task processResources(dependsOn: ["npmInstall", "bowerInstall"])
 
-task processResources(type: Exec) {
-	commandLine("npm", "install")
-	commandLine("bower", "install")
+task test(dependsOn: ["build", "grunt_test"])
+
+task bowerInstall(type: NodeTask, dependsOn: ["npmInstall"]) {
+    script = file("node_modules/bower/bin/bower")
+    args = ["install"]
 }
