@@ -46,7 +46,10 @@ export module controller.base {
 
         editEntity(id: number) {
             if (this.redirectUrl) {
-                this.redirectUrl = new URI(this.redirectUrl).addSearch(this.redirectParam, String(id)).toString();
+                this.redirectUrl = new URI(this.redirectUrl)
+                    .removeSearch(this.redirectParam)
+                    .addSearch(this.redirectParam, String(id))
+                    .toString();
                 this.$scope.navigator.url(this.redirectUrl);
             }
             else 
