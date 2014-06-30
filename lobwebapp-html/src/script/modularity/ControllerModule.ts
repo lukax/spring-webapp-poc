@@ -42,7 +42,7 @@ export module modularity {
                     resolve: this.loadDependencies(x.deps) 
                     });
                 });
-            $routeProvider.otherwise(AppRoutes.main().url);
+            $routeProvider.otherwise({ redirectTo: AppRoutes.main().url });
         };
 
         enableHtml5 = ($locationProvider: ng.ILocationProvider) => {
@@ -51,7 +51,7 @@ export module modularity {
         
         blockNotAllowedUrls = ($rootScope: ng.IRootScopeService, $location: ng.ILocationService, AuthService: d.service.contract.AuthService, $timeout: ng.ITimeoutService) => {
             var isAllowedUrl = (route: string) => {
-                return route == AppRoutes.main().url;
+                return (route == null || route == AppRoutes.main().url);
             };
             $rootScope.$on("$routeChangeStart", (event: any, to: any, toParams: any, from: any, fromParams: any) => {
                 if(!isAllowedUrl(to.originalPath) && !AuthService.isLoggedIn()){
