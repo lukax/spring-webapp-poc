@@ -33,7 +33,7 @@ task build(dependsOn: ["processResources"]) {
 	}
 }
 
-task processResources(dependsOn: ["npmInstall", "bowerInstall"])
+task processResources(dependsOn: ["npmInstall", "bowerInstall", "installGrunt"])
 
 task test(dependsOn: ["build", "grunt_test"])
 
