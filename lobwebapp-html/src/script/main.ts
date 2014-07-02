@@ -66,6 +66,6 @@ require(["util/Progress"], (progress: any)=> {
 });
 
 require(["util/Progress", "modularity/AppModule"], (progress: any, app: any) => {
-    new app.modularity.AppModule().bootstrap(document);
+    new app.modularity.AppModule("dev").bootstrap(document);
     new progress.util.Progress().done();
 });

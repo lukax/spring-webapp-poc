@@ -7,7 +7,7 @@
 
 export module modularity {
     export class DirectiveModule {
-        constructor() {
+        constructor(public profile: string) {
             //Global usage directives
             angular.module("lwa.directive", 
                 ["lwa.service",

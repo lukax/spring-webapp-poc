@@ -146,3 +146,13 @@ export var routes: AppRoute[] =
         }
     ];
 
+export var applyProfile = (profile: string) => {
+	routes.forEach((x) => {
+		if(profile == "dev"){
+			x.deps.forEach((dep, i) => {
+				x.deps[i] = dep.replace("service/impl/", "service/mock/")
+								.replace("ServiceImpl", "ServiceMock");
+			})
+		}
+	});
+}

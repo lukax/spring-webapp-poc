@@ -1,7 +1,6 @@
 ///<reference path="../reference.d.ts"/>
 
 ///<amd-dependency path="angularRoute"/>
-import a = require("./ServiceModule");
 import f = require("./../controller/MainNavbarController");
 import g = require("./../controller/AlertController");
 import h = require("./../util/DependencyManager");
@@ -9,10 +8,8 @@ import AppRoutes = require("./AppRoutes");
 
 export module modularity {
     export class ControllerModule {
-        constructor() {
-            new a.modularity.ServiceModule();
+        constructor(public profile: string) {
             var mod = angular.module("lwa.controller", ["ngRoute", "lwa.service"]);
-            
             mod .config(["$controllerProvider", "$provide", "$compileProvider", "$filterProvider", ($controllerProvider: ng.IControllerProvider, $provide: ng.auto.IProvideService,
                          $compileProvider: ng.ICompileProvider, $filterProvider: ng.IFilterProvider) => {
                     mod.lazy = {
@@ -35,6 +32,8 @@ export module modularity {
         }
 
         routeProviderCfg = ($routeProvider: ng.IRouteProvider) => {
+           	AppRoutes.applyProfile(this.profile);
+
             (<any>$routeProvider).whenAppRoute = (route: AppRoutes.AppRoute) => {
                 var resolve = {};
                 if(route.secured)
