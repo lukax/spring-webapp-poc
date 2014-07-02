@@ -35,7 +35,6 @@ export module controller.order {
                 if(customerId != null) this.fetchCustomer(customerId);
                 if(productId != null) this.fetchProduct(productId);
                 this.populateScope(); 
-                this.setupValidations();
             });
         }
 
@@ -89,17 +88,6 @@ export module controller.order {
                     this.removeCurrentItem();
                     this.unlock();
                 });
-        }
-        
-        setupValidations() {
-            this.$scope.invalid = {};
-            this.$scope.$watchCollection("entity.items", ()=>{
-                this.$scope.invalid.orderItems = this.$scope.entity.items.length == 0;
-            });
-            this.$scope.$watch("entity.payment.status + exchange", () =>{
-                this.$scope.invalid.paymentQuantity = (this.$scope.entity.payment.status == enums.PaymentStatus.OK) && 
-                    (this.$scope.exchange == null || this.$scope.exchange < 0);
-            });
         }
 
         syncExchange(){

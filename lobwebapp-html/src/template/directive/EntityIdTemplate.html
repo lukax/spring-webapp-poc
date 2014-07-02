@@ -1,6 +1,6 @@
-<div class="form-group" ng-if="id > 0">
-    <label for="inputId" class="col-md-1 control-label">ID</label>
+<div class="form-group" ng-hide="ref <= 0">
+    <label class="col-md-1 control-label">ID</label>
 	<div class="col-md-11 form-control-static">
-    	{{id}}
+    	{{entity.id}}
 	</div>
 </div>

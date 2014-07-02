@@ -24,7 +24,7 @@ export module service.mock.base {
                     this.getRepository().push(angular.copy(entity));
 
                     successCallback(entity, 200, null, null);
-                });
+                }, 1000);
         }
 
         update(entity: T,
@@ -44,7 +44,7 @@ export module service.mock.base {
                             else return false;
                         });
                     if (!success) errorCallback({ message: "ID Inexistente"}, 404, null, null);
-                }, 100);
+                }, 1000);
         }
 
         remove(entity: T,
@@ -63,7 +63,7 @@ export module service.mock.base {
                             else return false;
                         });
                     if (!success) errorCallback({ message: "ID Inexistente"}, 404, null, null);
-                }, 100);
+                }, 1000);
         }
 
         find(id: number,
@@ -83,7 +83,7 @@ export module service.mock.base {
                         });
                     if (success) successCallback(retrievedEntity, 200, null, null);
                     else errorCallback({ message: "ID Inexistente" }, 404, null, null);
-                }, 100);
+                }, 1000);
         }
 
         list(

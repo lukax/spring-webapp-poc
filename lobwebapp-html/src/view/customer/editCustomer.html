@@ -1,13 +1,10 @@
 <form class="form-horizontal" role="form" name="customerForm" novalidate ng-submit="saveOrUpdateEntity(entity)">
 
-	<entity-id id="entity.id"></entity-id>
+	<entity-id></entity-id>
 	
-	<div class="form-group" ng-class="{'has-error': customerForm.inputName.$invalid}">
-		<label for="inputName" class="col-md-1 control-label">Nome</label>
-		<div class="col-md-11">
-			<input type="text" class="form-control" id="inputName" name="inputName" autofocus ng-model="entity.name" required ng-minlength="5" ng-maxlength="100">
-		</div>
-	</div>
+	<form-item input-label="Nome" input-id="inputName" form="customerForm">
+		<input type="text" class="form-control" id="inputName" name="inputName" autofocus ng-model="entity.name" required ng-minlength="5" ng-maxlength="100">
+	</form-item>
 	
 	<save-changes disabled="readMode"
 	save-disabled="customerForm.$invalid || customerForm.$pristine"

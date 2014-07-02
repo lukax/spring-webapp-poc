@@ -23,9 +23,7 @@ export module directive {
             };
 
             $scope.$watch("entityId + invalid", ()=> {
-                if($scope.invalid == null)
-                    $scope.error = $scope.entityId == null || $scope.entityId <= 0;
-                else
+                if($scope.invalid != null)
                     $scope.error = $scope.invalid;
             });
             

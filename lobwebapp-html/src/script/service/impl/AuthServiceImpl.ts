@@ -5,7 +5,7 @@ export module service.impl {
     export class AuthServiceImpl implements d.service.contract.AuthService {
         private url = "/api/oauth/token";
         private clientCredentials = "bG9id2ViYXBwLWh0bWw6";
-        private defaultUser: domain.User = { id: 1, name: "Lucas", isLogged: true, username: "", password: "", roles: ["ROLE_USER"] };
+        private defaultUser: domain.User = { id: 1, name: "Lucas", username: "", password: "", roles: ["ROLE_USER"] };
         
         static $inject = ["$http", "$rootScope", "$window"];
         constructor(public $http: ng.IHttpService, 
@@ -66,8 +66,13 @@ export module service.impl {
         }
 
         getUser(): domain.User {
-            var retrievedUser = angular.fromJson((<any>this.$window.localStorage).AUTHSERVICE_USER) || { id: 0, username: "", password: "", roles: [], name: "" };
-            return retrievedUser;
+            var user = null;
+            try { 
+            	user = angular.fromJson((<any>this.$window.localStorage).AUTHSERVICE_USER);
+            } catch(Exception) { 
+            	console.log("[ERROR]: Could not retrieve user"); 
+        	}
+            return user;
         }
 
         private authorize(authToken: domain.AuthToken) {
@@ -82,13 +87,13 @@ export module service.impl {
         }
 
         private getToken() {
-            var retrievedToken = null;
+            var token = null;
             try {
-                retrievedToken = angular.fromJson((<any>this.$window.localStorage).AUTHSERVICE_TOKEN);
+                token = angular.fromJson((<any>this.$window.localStorage).AUTHSERVICE_TOKEN);
+            } catch (Exception) { 
+            	console.log("[ERROR]: Could not retrieve token"); 
             }
-            catch (Exception) { 
-            }
-            return retrievedToken;
+            return token;
         }
 
         private setToken(authToken: domain.AuthToken) {
@@ -96,9 +101,8 @@ export module service.impl {
         }
 
         private setUser(user: domain.User) {
-            if(user == null) user = { id: 0, username: "", password: "", roles: [], name: "" };
             (<any>this.$window.localStorage).AUTHSERVICE_USER = angular.toJson(user);
-            this.$rootScope.$broadcast("USER_CHANGED", [user]);
+            this.$rootScope.$broadcast("USER_CHANGED", [(user)]);
         }
     }
 }

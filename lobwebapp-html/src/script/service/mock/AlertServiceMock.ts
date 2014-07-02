@@ -14,6 +14,11 @@ export module service.mock {
         }
 
         add(alert: domain.util.Alert) {
+        	if(alert == null){
+            	console.log("[WARN]: Null alert");
+            	return;
+            }
+
             if (!alert.date) alert.date = new Date();
             if (!alert.type) alert.type = enums.AlertType.OK;
             var alerts = this.list();
@@ -23,6 +28,11 @@ export module service.mock {
         }
 
         addMessageResponse(messageResponse: domain.util.MessageResponse, title: string) {
+            if(messageResponse == null){
+            	console.log("[WARN]: Null message response");
+            	return;
+            }
+
             var alert: domain.util.Alert = { content: messageResponse.message, title: title, type: enums.AlertType.DANGER, date: new Date() }
             if((<domain.util.ValidationMessageResponse>messageResponse).validations)
             (<domain.util.ValidationMessageResponse>messageResponse).validations.forEach((x) => {

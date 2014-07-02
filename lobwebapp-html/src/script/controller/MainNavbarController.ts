@@ -11,13 +11,10 @@ export module controller {
         constructor(public $scope: MainNavbarViewModel, 
                     public AuthService: d.service.contract.AuthService) {
                         
-            this.$scope.$watch("user", (newValue: domain.User) => {
-                this.$scope.isUserLogged = (newValue.id != 0);
-            });
             this.$scope.$on("USER_CHANGED", (event, data: any[]) => {
                 this.$scope.user = data[0];
+                this.$scope.isUserLogged = (data[0] != null);
             });
-            this.$scope.user = this.AuthService.getUser();
         }
 
     }

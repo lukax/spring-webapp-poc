@@ -1,6 +1,6 @@
 <form class="form-horizontal form-validation" role="form" name="orderForm" novalidate ng-submit="saveOrUpdateEntity(entity)">
     
-    <entity-id id="entity.id"></entity-id>
+    <entity-id></entity-id>
     
     <quick-search label="Cliente" resource-url="customer" entity-id="entity.customer.id" fetch="fetchCustomer(entity.customer.id)">
         <div class="form-control-static">
@@ -8,8 +8,8 @@
         </div>
     </quick-search>
 
-    <quick-search label="Produtos" resource-url="product" invalid="invalid.orderItems" entity-id="item.product.id" fetch="fetchProduct(item.product.id)">
-        <div class="col-md-3" ng-class="{'has-error': orderForm.productQuantity.$invalid && invalid.orderItems}">
+    <quick-search label="Produtos" resource-url="product" entity-id="item.product.id" fetch="fetchProduct(item.product.id)">
+        <div class="col-md-3" ng-class="{'has-error': orderForm.productQuantity.$invalid}">
             <div class="input-group">
                 <input type="number" required min="1" class="form-control" id="productQuantity" name="productQuantity" placeholder="Qt" ng-model="item.quantity" ui-keyup="{'enter': 'addItem(item)'}" ng-disabled="!item.product.id">
                 <div class="input-group-btn">
@@ -51,13 +51,12 @@
         </div>
     </div>
     
-    <div class="form-group lwa-fade-left" ng-hide="total <= 0" ng-class="{'has-error': orderForm.inputPaymend.$invalid || invalid.paymentQuantity }">
+    <div class="form-group lwa-fade-left" ng-hide="total <= 0" ng-class="{'has-error': orderForm.inputPaymend.$invalid }">
         <label for="inputPayment" class="col-md-1 col-md-offset-1 control-label">Pagamento</label>
         <div class="col-md-10">
             <div class="input-group">
                 <span class="input-group-addon">R$</span>
-                <input type="number" class="form-control" id="inputPayment" name="inputPayment" ng-model="entity.payment.quantity"
-                ng-pattern="/^(?=.*[0-9])\d*(?:\.\d{1,2})?$/" ng-disabled="entity.payment.status != 'OK'">
+                <input type="number" class="form-control" id="inputPayment" name="inputPayment" ng-model="entity.payment.quantity" ng-pattern="/^(?=.*[0-9])\d*(?:\.\d{1,2})?$/" ng-disabled="entity.payment.status != 'OK'">
                 <div class="input-group-btn">
                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                     {{entity.payment.mode | paymentMode}} <span class="caret"></span>
@@ -84,7 +83,7 @@
         </div>
     </div>
     
-    <div class="form-group lwa-fade-left" ng-hide="exchange <= 0 || invalid.paymentQuantity || entity.payment.status == 'PENDING'">
+    <div class="form-group lwa-fade-left" ng-hide="exchange <= 0 || entity.payment.status == 'PENDING'">
         <label for="inputExchange" class="col-md-1 col-md-offset-1 control-label">Troco</label>
         <div class="col-md-10">
             <div class="input-group">
@@ -104,9 +103,7 @@
     </div>
 
     <save-changes disabled="readMode"
-    save-disabled="invalid.orderItems || 
-                    invalid.paymentQuantity || 
-                    orderForm.$invalid || orderForm.$pristine"
+    save-disabled="orderForm.$invalid || orderForm.$pristine"
     remove-disabled="isEntityNew"
     discard-disabled="!isPreviousChanges"
     on-remove="removeEntity(entity)"
