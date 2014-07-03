@@ -5,8 +5,8 @@
     
     <input id="imageUploadInput" type="file" name="files[]" style="visibility: hidden;">
 
-    <div class="btn-group">
-    	<a class="btn btn-default lwa-fade-left disabled" ng-hide="!loading" title="Upload status">
+    <div class="btn-group" ng-hide="!loading">
+    	<a class="btn btn-default lwa-fade-left disabled" title="Upload status">
     	    <span class="glyphicon glyphicon-upload"></span>
     	    <strong> {{percentage | number:1}}%</strong>
     	</a>
