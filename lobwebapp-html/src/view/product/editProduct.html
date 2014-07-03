@@ -17,8 +17,7 @@
 				<input type="text" class="form-control" id="inputName" name="inputName" placeholder="Digite o nome do Produto" autofocus ng-model="entity.name" required ng-minlength="5" ng-maxlength="100">
 			</form-item>
 
-			<div ng-init="toggle = { priceInfo: false }"></div>
-			<form-item input-label="Preço" input-id="inputPrice" form="productForm">
+			<form-item input-label="Preço" input-id="inputPrice" form="productForm" ng-init="toggle = { priceInfo: false }">
 				<div class="input-group">
 					<span class="input-group-addon">R$</span>
 					<input type="text" class="form-control" id="inputPrice" name="inputPrice"
@@ -61,12 +60,11 @@
 					</div>
 				</div>
 			</div>
-			<div class="form-group" ng-class="{'has-error': productForm.inputDescription.$invalid}">
-				<div class="col-md-offset-1 col-md-11">
-					<textarea class="form-control" id="inputDescription" name="inputDescription"
-					placeholder="Digite uma Descrição" rows="2" ng-model="entity.description"></textarea>
-				</div>
-			</div>
+
+			<form-item input-id="inputDescription" form="productForm">
+				<textarea class="form-control" id="inputDescription" name="inputDescription"
+				placeholder="Digite uma Descrição" rows="2" ng-model="entity.description"></textarea>
+			</form-item>
 
 			<save-changes disabled="readMode"
 			save-disabled="productForm.$invalid || productForm.$pristine"
