@@ -123,7 +123,8 @@ export module service.mock.base {
         }
 
         addToRepository(entity: T) {
-            this.repository.push(entity);
+            //Properly mock a json repository
+            this.repository.push(<T>(angular.fromJson(angular.toJson(entity))));
         }
     }
 }
