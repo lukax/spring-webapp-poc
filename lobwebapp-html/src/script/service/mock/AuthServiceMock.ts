@@ -16,10 +16,10 @@ export module service.mock {
                 this.$timeout(() => {
                     if(!this.isLoggedIn() && (this.defaultUser.password === user.password)) {
                         this.setUser(this.defaultUser);
-                        successCallback(this.getUser(), 200, null, null);
+                        successCallback(this.getUser(), 200, () => "", null);
                     }
                     else {
-                        errorCallback({ message: "Senha incorreta ou Usuário já fez login"}, 200, null, null);
+                        errorCallback({ message: "Senha incorreta ou Usuário já fez login" }, 200, () => "", null);
                     }
                 }, 1000);
         }
@@ -30,10 +30,10 @@ export module service.mock {
                 if (this.isLoggedIn()) {
                 	var previousUser = this.getUser();
                     this.setUser(null);
-                    successCallback(previousUser, 200, null, null);
+                    successCallback(previousUser, 200, () => "", null);
                 }
                 else {
-                    errorCallback({ message: "Usuário já saiu"}, 200, null, null);
+                    errorCallback({ message: "Usuário já saiu" }, 200, () => "", null);
                 }
         }
 

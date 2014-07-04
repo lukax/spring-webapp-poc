@@ -28,8 +28,8 @@ export module service.mock {
                     var items = this.getRepository().filter(function (element) {
                         return element.name.toLowerCase() == name.toLowerCase();
                     });
-                    if (items.length !== 0) successCallback(items, 200, null, null);
-                    else errorCallback({ message: "Nome Inexistente"}, 404, null, null);
+                    if (items.length !== 0) successCallback(items, 200, () => "", null);
+                    else errorCallback({ message: "Nome Inexistente" }, 404, () => "", null);
                 }, 100);
         }
 
@@ -41,8 +41,8 @@ export module service.mock {
                     this.getRepository().forEach((item) => {
                         if (categories.indexOf(item.category) === -1) categories.push(item.category);
                     });
-                    if (categories.length > 0) successCallback(categories, 200, null, null);
-                    else errorCallback({ message: "Nenhum Grupo Encontrado"}, 404, null, null);
+                    if (categories.length > 0) successCallback(categories, 200, () => "", null);
+                    else errorCallback({ message: "Nenhum Grupo Encontrado" }, 404, () => "", null);
                 }, 100);
         }
 

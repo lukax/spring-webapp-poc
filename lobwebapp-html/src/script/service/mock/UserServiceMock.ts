@@ -20,8 +20,8 @@ export module service.mock {
                     var items = this.getRepository().filter(function (x: domain.User) {
                         return x.username.toLowerCase() == username.toLowerCase();
                     });
-                    if (items.length !== 0) successCallback(items[0], 200, null, null);
-                    else errorCallback(null, 404, null, null);
+                    if (items.length !== 0) successCallback(items[0], 200, () => "", null);
+                    else errorCallback(null, 404, () => "", null);
                 }, 100);
         }
     }
