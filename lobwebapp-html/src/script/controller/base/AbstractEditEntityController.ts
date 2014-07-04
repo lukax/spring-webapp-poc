@@ -5,45 +5,42 @@ import URI = require("urijs");
 import enums = require("./../../util/EnumUtil");
 
 export module controller.base{
-	export interface EditEntityViewModel<T extends domain.base.AbstractEntity> extends d.controller.base.ViewModel{
+	export interface IEditEntityController<T extends domain.base.AbstractEntity> extends d.controller.base.IController{
 		entity: T;
-		isEntityNew: boolean;
-		readMode: boolean;
-		isPreviousChanges: boolean;
+        isEntityNew: boolean;
+        isPreviousChanges: boolean;
+        isReadMode: boolean;
 		saveOrUpdateEntity(entity: T): void;
 		removeEntity(entity: T): void;
 		discardChanges(): void;
 	}
 
-	export class AbstractEditEntityController<T extends domain.base.AbstractEntity> implements d.controller.base.Controller{
-		private entityName: string;
-        private tempObjKey: string;
+	export class AbstractEditEntityController<T extends domain.base.AbstractEntity> implements IEditEntityController<T> {
+        private _tempObjKey: string;
+        private _entity: T;
+        entity: T;
+        isEntityNew: boolean;
+        isPreviousChanges: boolean;
+        isReadMode: boolean;
 
-		setEntityName(name: string){
-			this.entityName = name;
-		}
-
-        constructor(public $scope: EditEntityViewModel<T>,
+        constructor(public $scope: d.controller.base.IAppScope,
                     public EntityService: d.service.contract.base.EntityService<T>,
                     public AlertService: d.service.contract.AlertService,
-                    public contextUrl: string) {
-            this.entityName = "Item";
-            this.tempObjKey = "TMP_" + this.contextUrl.toUpperCase();
+                    public contextUrl: string,
+                    public entityName: string) {
+            this.$scope.vm = this;
+            this._tempObjKey = "TMP_" + this.contextUrl.toUpperCase();
 
-			this.$scope.saveOrUpdateEntity = (entity) => this.saveOrUpdateEntity(entity);
-			this.$scope.removeEntity = (entity) => this.removeEntity(entity);
-			this.$scope.discardChanges = () => this.discardChanges();
-
-			this.$scope.$watch("entity.id", () => {
-				this.$scope.isEntityNew = this.isEntityNew();
-				});
+            this.$scope.$watch("vm.entity", () => {
+                this.isEntityNew = (this.entity && this.entity.id == 0);
+                }, true);
 			this.$scope.$on("$destroy", () => {
 				this.saveTemporaryChanges();    
 				});
-		}
-		
+        }
+
 		saveOrUpdateEntity(entity: T) {
-			if (this.$scope.entity.id == 0) this.saveEntity(entity);
+			if (this.entity.id == 0) this.saveEntity(entity);
 			else this.updateEntity(entity);
 		}
 
@@ -95,7 +92,7 @@ export module controller.base{
 			this.EntityService.find(actualId,
 				(successData) => {
 					if(!this.restoreTemporaryChanges(successData))
-						this.$scope.entity = successData;
+						this.entity = successData;
 					
 					if(done) done();
 					this.unlock();
@@ -109,7 +106,7 @@ export module controller.base{
 
 		discardChanges(){
 			this.discardTemporaryChanges();
-			this.findEntity(""+this.$scope.entity.id);
+			this.findEntity(String(this.entity.id));
 		}
 
 		newEntity() {
@@ -117,38 +114,34 @@ export module controller.base{
 		}
 
 		lock(){
-			this.$scope.readMode = true;
+			this.isReadMode = true;
 			this.$scope.navigator.Progress.start();
 		}
 
 		unlock(){
-			this.$scope.readMode = false;
+			this.isReadMode = false;
 			this.$scope.navigator.Progress.done();
 		}
-
-		isEntityNew() {
-			return (this.$scope.entity && this.$scope.entity.id == 0);
-		}
-		
+        
 		private saveTemporaryChanges(){
-			localStorage[this.tempObjKey] = angular.toJson(this.$scope.entity);
+			localStorage[this._tempObjKey] = angular.toJson(this.entity);
         }
 
         private discardTemporaryChanges(){
-			delete localStorage[this.tempObjKey];
+			delete localStorage[this._tempObjKey];
         }
 
 		private restoreTemporaryChanges(fetchedEntity: T){
 			var previousEntity = null;
-			try{ previousEntity = angular.fromJson(localStorage[this.tempObjKey]); }
+			try{ previousEntity = angular.fromJson(localStorage[this._tempObjKey]); }
 			catch(e){ console.log("[INFO]: could not restore previous changes")}
 			if(previousEntity != null && previousEntity.id == fetchedEntity.id && !_.isEqual(previousEntity, fetchedEntity)){
-				this.$scope.entity = previousEntity;
+				this.entity = previousEntity;
 				console.log("[INFO]: previous changes restored");
-				this.$scope.isPreviousChanges = true;
+				this.isPreviousChanges = true;
 				return true;
 			}
-			this.$scope.isPreviousChanges = false;
+			this.isPreviousChanges = false;
 			return false;
 		}
 	}

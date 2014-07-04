@@ -85,7 +85,7 @@ export module modularity {
             $httpProvider.interceptors.push(logoutUserOn401);
         }
 
-        scopeVariablesCfg = ($rootScope: d.controller.base.ViewModel, NavigatorService: d.service.contract.NavigatorService) => {
+        scopeVariablesCfg = ($rootScope: d.controller.base.IAppScope, NavigatorService: d.service.contract.NavigatorService) => {
             $rootScope.navigator = NavigatorService;
         }
 

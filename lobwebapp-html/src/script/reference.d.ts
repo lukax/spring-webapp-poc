@@ -32,6 +32,9 @@
 ///<reference path="service/contract/UserService.ts"/>
 ///<reference path="service/contract/StockService.ts"/>
 
+///<reference path="controller/base/IAppScope.ts"/>
+///<reference path="controller/base/IController.ts"/>
+
 ///<reference path="util/EnumUtil.ts"/>
 
 declare var dc: any;

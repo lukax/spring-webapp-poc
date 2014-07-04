@@ -6,7 +6,7 @@
 import enums = require("./../../util/EnumUtil");
 
 export module controller.order {
-    export interface GraphOrderViewModel extends d.controller.base.ViewModel {
+    export interface IGraphOrderController extends d.controller.base.IController {
     }
 
     interface XOrder extends domain.Order {
@@ -16,9 +16,9 @@ export module controller.order {
         productQt: number;
     }
 
-    export class GraphOrderController implements d.controller.base.Controller {
+    export class GraphOrderController implements IGraphOrderController {
         static $inject = ["$scope", "OrderService", "AlertService"];
-        constructor(public $scope: GraphOrderViewModel,
+        constructor(public $scope: d.controller.base.IAppScope,
                     public OrderService: d.service.contract.OrderService,
                     public AlertService: d.service.contract.AlertService) {
             

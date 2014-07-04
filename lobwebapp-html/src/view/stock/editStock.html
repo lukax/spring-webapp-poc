@@ -1,29 +1,29 @@
-<form class="form-horizontal" role="form" name="stockForm" novalidate ng-submit="saveOrUpdateEntity(entity)">
+<form class="form-horizontal" role="form" name="stockForm" novalidate ng-submit="vm.saveOrUpdateEntity(vm.entity)">
     <entity-id></entity-id>
-    
-    <quick-search label="Produto" resource-url="product" entity-id="entity.product.id" fetch="fetchProduct(entity.product.id)">
+
+    <quick-search label="Produto" resource-url="product" entity-id="vm.entity.product.id" fetch="vm.fetchProduct(vm.entity.product.id)">
         <p class="form-control-static">
-            <product-detail product="entity.product"></product-detail>
+            <product-detail product="vm.entity.product"></product-detail>
         </p>
     </quick-search>
 
     <div class="form-group">
-        <div ng-class="{'has-error': stockForm.quantity.$invalid || invalid.quantity }">
+        <div ng-class="{'has-error': stockForm.quantity.$invalid }">
             <label for="quantity" class="col-md-1 control-label">Qt.</label>
             <div class="col-md-5">
-                <input type="number" class="form-control" id="quantity" name="quantity" autofocus ng-model="entity.quantity" required min="0" max="1000">
+                <input type="number" class="form-control" id="quantity" name="quantity" autofocus ng-model="vm.entity.quantity" required min="0" max="1000">
             </div>
         </div>
-        <div ng-class="{'has-error': stockForm.minQuantity.$invalid || invalid.minQuantity }">
+        <div ng-class="{'has-error': stockForm.minQuantity.$invalid }">
             <label for="minQuantity" class="col-md-1 control-label">Min</label>
             <div class="col-md-2">
-                <input type="number" class="form-control" id="minQuantity" name="minQuantity" ng-model="entity.minQuantity" min="0" max="1000">
+                <input type="number" class="form-control" id="minQuantity" name="minQuantity" ng-model="vm.entity.minQuantity" min="0" max="1000">
             </div>
         </div>
-        <div ng-class="{'has-error': stockForm.maxQuantity.$invalid || invalid.maxQuantity }">
+        <div ng-class="{'has-error': stockForm.maxQuantity.$invalid }">
             <label for="maxQuantity" class="col-md-1 control-label">Max</label>
             <div class="col-md-2">
-                <input type="number" class="form-control" id="maxQuantity" name="maxQuantity" ng-model="entity.maxQuantity" min="0" max="1000">
+                <input type="number" class="form-control" id="maxQuantity" name="maxQuantity" ng-model="vm.entity.maxQuantity" min="0" max="1000">
             </div>
         </div>
     </div>
@@ -31,19 +31,16 @@
     <div class="form-group" ng-class="{'has-error': stockForm.unit.$invalid}">
         <label for="unit" class="col-md-1 control-label">Unid.</label>
         <div class="col-md-11">
-            <input type="text" class="form-control" id="unit" name="unit" autofocus ng-model="entity.unit" required ng-maxlength="10"data-typeahead="unit for unit in units | limitTo:5">
+            <input type="text" class="form-control" id="unit" name="unit" autofocus ng-model="entity.unit" required ng-maxlength="10" data-typeahead="unit for unit in vm.units | limitTo:5">
         </div>
     </div>
 
-    <save-changes disabled="readMode"
-    save-disabled="invalid.quantity || 
-                    invalid.minQuantity || 
-                    invalid.maxQuantity || 
-                    stockForm.$invalid || stockForm.$pristine"
-    remove-disabled="isEntityNew"
-    discard-disabled="!isPreviousChanges"
-    on-remove="removeEntity(entity)"
-    on-discard="discardChanges()">
+    <save-changes disabled="vm.isReadMode"
+                  save-disabled="stockForm.$invalid || stockForm.$pristine"
+                  remove-disabled="vm.isEntityNew"
+                  discard-disabled="!vm.isPreviousChanges"
+                  on-remove="vm.removeEntity(vm.entity)"
+                  on-discard="vm.discardChanges()">
     </save-changes>
 
 </form>
