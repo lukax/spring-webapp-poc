@@ -9,7 +9,8 @@ export module service.mock {
         constructor(public $timeout: ng.ITimeoutService) {
             super($timeout);
 
-            this.addToRepository({ id: 1, name: "Notebook", description: "Dell Inspiron 15R Special Edition Intel Core i5-3230M 2.6 GHz 6144 MB 750 GB", quantity: 9, costPrice: 2102.30, price: 2699.00, category: "Informática/Computadores", ncm: "8471.30.19"});
+            this.addToRepository({ id: 0, name: "", description: "", quantity: 0, costPrice: 0, price: 0, category: "", ncm: ""});
+            this.addToRepository({ id: 1, name: "Notebook", description: "Dell Inspiron 15R Special Edition Intel Core i5-3230M 2.6 GHz 6144 MB 750 GB", quantity: 9, costPrice: 2102.30, price: 2699.00, category: "Informática/Computadores", ncm: "8471.30.19" });
             this.addToRepository({ id: 2, name: "Notebook", description: "Acer Aspire E1-471-6413 Intel Core i3-2328M 2.2 GHz 6144 MB 500 GB", quantity: 13, costPrice: 976.00, price: 1407.12, category: "Informática/Computadores", ncm: "8471.30.19"});
             this.addToRepository({ id: 3, name: "Memória", description: "Kingston KVR1333D3N9 8192 MB PC DDR3 1333 MHz", quantity: 34, costPrice: 76.34, price: 143.75, category: "Informática/Componentes", ncm: "8473.30.42"});
             this.addToRepository({ id: 4, name: "Memória", description: "Markvision KMM2GBD3-1333 2048 MB PC DDR3 1333 MHz", quantity: 27, costPrice: 27.32, price: 25.10, category: "Informática/Componentes", ncm: "8473.30.42"});
