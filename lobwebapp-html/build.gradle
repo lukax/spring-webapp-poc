@@ -23,7 +23,7 @@ distributions {
 ext.srcDir = new File("src")
 ext.bowerDir = new File("$srcDir/lib")
 
-task processResources(dependsOn: ["npmInstall", "bowerInstall", "installGrunt"])
+task processResources(dependsOn: ["npmInstall", "installGrunt", "bowerInstall"])
 
 task build(type: GruntTask, dependsOn: processResources) {
     inputs.dir(srcDir)
@@ -43,7 +43,6 @@ task run(type: GruntTask, dependsOn: build) {
     args = ["server:dist"]
 }
 
-
 task bowerInstall(type: NodeTask, dependsOn: "npmInstall") {
     inputs.file(file("bower.json"))
     outputs.dir(bowerDir)
@@ -51,3 +50,6 @@ task bowerInstall(type: NodeTask, dependsOn: "npmInstall") {
     script = file("node_modules/bower/bin/bower")
     args = ["install"]
 }
+
+clean.dependsOn("grunt_clean")
+grunt_clean.dependsOn("installGrunt")
