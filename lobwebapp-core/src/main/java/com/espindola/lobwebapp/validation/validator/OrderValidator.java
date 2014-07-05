@@ -14,6 +14,7 @@ import com.espindola.lobwebapp.validation.validator.base.AbstractEntityValidator
 public class OrderValidator extends AbstractEntityValidator<Order> {
 
 	private PaymentValidator paymentValidator;
+	private Order order;
 
 	@Autowired
 	public OrderValidator(PaymentValidator paymentValidator) {
@@ -22,6 +23,8 @@ public class OrderValidator extends AbstractEntityValidator<Order> {
 
 	@Override
 	protected void validateEntity(Order t, Errors e) {
+		this.order = t;
+		
 		validateProperty("date", e);
 		validateProperty("payment", e);
 
@@ -45,7 +48,7 @@ public class OrderValidator extends AbstractEntityValidator<Order> {
 			required(property);
 			break;
 		case "payment":
-			validateSub(paymentValidator, property, super.target, e);
+			validateSub(paymentValidator, "payment", (order != null ? order.getPayment() : target), e);
 			break;
 		}
 

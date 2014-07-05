@@ -43,6 +43,8 @@ public abstract class AbstractEntityValidator<T extends AbstractEntity>
 			validate((T) target, errors);
 		else if(target instanceof Map<?, ?>)
 			validate((Map<String, String>) target, errors);
+		else
+			throw new IllegalArgumentException("param target must be of type AbtractEntity or Map<string, string>");
 	}
 	
 	public void validate(T target, Errors errors){		
@@ -67,7 +69,7 @@ public abstract class AbstractEntityValidator<T extends AbstractEntity>
 		else if(target instanceof Map<?,?>)
 			bindingResult = new MapBindingResult((Map<?,?>)target, objectName);
 		
-		validator.validate(target, errors);
+		validator.validate(target, bindingResult);
 		
 		for (ObjectError subObjErr : bindingResult.getAllErrors()) {
 			errors.rejectValue(objectName + "." + subObjErr.getObjectName(),
