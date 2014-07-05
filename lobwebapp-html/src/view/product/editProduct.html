@@ -9,7 +9,7 @@
 		</div>
 	</div>
 	<div class="col-md-10">
-		<form class="form-horizontal" role="form" name="productForm" novalidate ng-submit="vm.saveOrUpdateEntity(vm.entity)">
+		<form class="form-horizontal" role="form" name="productForm" novalidate ng-submit="vm.saveOrUpdateEntity()">
 
 			<entity-id></entity-id>
 			
@@ -68,7 +68,7 @@
 			save-disabled="productForm.$invalid || productForm.$pristine"
 			remove-disabled="vm.isEntityNew"
 			discard-disabled="!vm.isPreviousChanges"
-			on-remove="vm.removeEntity(entity)"
+			on-remove="vm.removeEntity()"
 			on-discard="vm.discardChanges()">
 			</save-changes>
 

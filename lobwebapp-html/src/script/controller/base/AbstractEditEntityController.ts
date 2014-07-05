@@ -10,8 +10,8 @@ export module controller.base{
         isEntityNew: boolean;
         isPreviousChanges: boolean;
         isReadMode: boolean;
-		saveOrUpdateEntity(entity: T): void;
-		removeEntity(entity: T): void;
+		saveOrUpdateEntity(): void;
+		removeEntity(): void;
 		discardChanges(): void;
 	}
 
@@ -39,14 +39,14 @@ export module controller.base{
 				});
         }
 
-		saveOrUpdateEntity(entity: T) {
-			if (this.entity.id == 0) this.saveEntity(entity);
-			else this.updateEntity(entity);
+		saveOrUpdateEntity() {
+			if (this.isEntityNew) this.saveEntity();
+			else this.updateEntity();
 		}
 
-		saveEntity(entity: T) {
+		saveEntity() {
 			this.lock();
-			this.EntityService.save(entity,
+			this.EntityService.save(this.entity,
 				(successData, successStatus, successHeaders) => {
 					this.$scope.navigator.url(new URI(this.contextUrl).segment(successHeaders("Entity-Id")).toString());
 				},
@@ -57,9 +57,9 @@ export module controller.base{
 				});
 		}
 
-		updateEntity(entity: T) {
+		updateEntity() {
 			this.lock();
-			this.EntityService.update(entity,
+			this.EntityService.update(this.entity,
 				() => {
 					this.unlock();
 				},
@@ -70,9 +70,9 @@ export module controller.base{
 				});
 		}
 
-		removeEntity(entity: T) {
+		removeEntity() {
 			this.lock();
-			this.EntityService.remove(entity,
+			this.EntityService.remove(this.entity,
 				() => {
 					this.newEntity();
 				},

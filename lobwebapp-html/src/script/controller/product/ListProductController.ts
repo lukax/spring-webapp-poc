@@ -16,7 +16,6 @@ export module controller.product {
             super($scope, ProductService, AlertService, "/product", "productId");
             
             this.listProduct(0);
-            this.listProduct = (page) => this.listProduct(page);
         }
 
         listProduct(pageIndex: number) {

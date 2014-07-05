@@ -6,10 +6,10 @@ import URI = require("urijs");
 export module controller.base {
     export interface IListEntityController<T extends domain.base.AbstractEntity> extends d.controller.base.IController {
         entities: T[];
-        editEntity(id: number): void;
-        listEntity(page: number): void;
         searchText: string;
         page: domain.util.Page;
+        editEntity(id: number): void;
+        listEntity(page: number): void;
     }
 
     export class AbstractListEntityController<T extends domain.base.AbstractEntity> implements IListEntityController<T>{

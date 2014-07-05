@@ -37,7 +37,8 @@ export module controller.order {
                 if(productId != null) this.fetchProduct(productId);
             });
 
-            this.$scope.$watch("vm.entity", () => {
+            this.$scope.$watch("vm.entity", (newValue) => {
+                if(newValue == null) return;   
                 this.exchange = this.OrderService.getExchange(this.entity);
                 if (this.entity.payment.status == enums.PaymentStatus.PENDING)
                     this.entity.payment.quantity = 0;

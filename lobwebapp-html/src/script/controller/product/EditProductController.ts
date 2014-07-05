@@ -27,7 +27,13 @@ export module controller.product {
             var productId = this.$scope.navigator.params().productId;
 
             this.findEntity(productId, ()=> { 
-                this.populateScope(); 
+                this.imageUrl = this.ProductService.getImageUrl(this.entity.id);
+                this.fetchCategories();
+                this.$scope.$watch("vm.entity", (newValue) => {
+                    if(newValue == null) return;
+                    this.markUp = 100 * this.ProductService.getMarkUp(this.entity);
+                    this.filterCategories();
+                }, true);
             });
         }
         
@@ -47,14 +53,6 @@ export module controller.product {
                 this.categories = this.$filter("filter")(this.allCategories, this.entity.category);
         }
         
-        populateScope() {
-            this.imageUrl = this.ProductService.getImageUrl(this.entity.id);
-            this.fetchCategories();
-            this.$scope.$watch("vm.entity", () => {
-                this.markUp = 100 * this.ProductService.getMarkUp(this.entity);
-                this.filterCategories();
-            }, true);
-        }
     }
 }
 

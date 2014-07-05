@@ -1,5 +1,5 @@
 <div class="row">
-    <search-bar text="searchText" on-update="listEntity(0)"></search-bar>
+    <search-bar text="searchText" on-update="vm.listEntity(0)"></search-bar>
     <table class="table table-striped table-condensed table-hover">
         <thead>
             <tr ng-init="reverse = false">
@@ -8,11 +8,11 @@
             </tr>
         </thead>
         <tbody>
-            <tr class="lwa-list" ng-repeat="customer in entities | filter:searchText | orderBy:predicate:reverse" ng-click="editEntity(customer.id)">
+            <tr class="lwa-list" ng-repeat="customer in vm.entities | filter:searchText | orderBy:predicate:reverse" ng-click="vm.editEntity(customer.id)">
                 <td>{{customer.id}}</td>
                 <td>{{customer.name}}</td>
             </tr>
         </tbody>
     </table>
-    <list-pager page="page" change-page="listEntity(pageIndex)"></list-pager>
+    <list-pager page="vm.page" change-page="vm.listEntity(vm.pageIndex)"></list-pager>
 </div>

@@ -1,4 +1,4 @@
-<form class="form-horizontal" role="form" name="stockForm" novalidate ng-submit="vm.saveOrUpdateEntity(vm.entity)">
+<form class="form-horizontal" role="form" name="stockForm" novalidate ng-submit="vm.saveOrUpdateEntity()">
     <entity-id></entity-id>
 
     <quick-search label="Produto" resource-url="product" entity-id="vm.entity.product.id" fetch="vm.fetchProduct(vm.entity.product.id)">
@@ -39,7 +39,7 @@
                   save-disabled="stockForm.$invalid || stockForm.$pristine"
                   remove-disabled="vm.isEntityNew"
                   discard-disabled="!vm.isPreviousChanges"
-                  on-remove="vm.removeEntity(vm.entity)"
+                  on-remove="vm.removeEntity()"
                   on-discard="vm.discardChanges()">
     </save-changes>
 

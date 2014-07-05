@@ -21,6 +21,7 @@ export module controller.order {
         constructor(public $scope: d.controller.base.IAppScope,
                     public OrderService: d.service.contract.OrderService,
                     public AlertService: d.service.contract.AlertService) {
+            this.$scope.vm = this;
             
             this.$scope.navigator.Progress.start();  
             this.OrderService.list((successData) => {

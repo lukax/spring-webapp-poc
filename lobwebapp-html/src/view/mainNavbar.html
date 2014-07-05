@@ -8,7 +8,7 @@
         </button>
     </div>
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-        <ul class="nav navbar-nav" ng-hide="!isUserLogged">
+        <ul class="nav navbar-nav" ng-hide="!vm.isLoggedIn">
             <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown">
                     Pedido <b class="caret"></b>
@@ -49,11 +49,11 @@
         </ul>
         <div class="navbar-right">
             <ul class="nav navbar-nav">
-                <li ng-if="!isUserLogged">
+                <li ng-if="!vm.isLoggedIn">
                     <a ng-href="/user/auth">Entrar</a>
                 </li>
-                <p class="navbar-text" ng-if="isUserLogged">Olá {{user.name}}</p>
-                <li ng-if="isUserLogged">
+                <p class="navbar-text" ng-if="vm.isLoggedIn">Olá {{user.name}}</p>
+                <li ng-if="vm.isLoggedIn">
                     <a ng-href="/user/auth?logout">Sair</a>
                 </li>
             </ul>

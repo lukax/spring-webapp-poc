@@ -22,30 +22,6 @@ export module controller.user {
             this.processParams();     
         }
 
-        processParams() {
-            var error = this.$scope.navigator.params().error;
-            var logout = this.$scope.navigator.params().logout;
-
-            switch (String(error)) {
-                case "0":
-                    this.AlertService.add({ content: "Login ou senha Inválido", type: enums.AlertType.WARNING });
-                    this.AuthService.logout(()=>{}, ()=>{});
-                    break;
-                case "1":
-                    this.AlertService.add({ content: "Você não possui permissão para acessar esta página", type: enums.AlertType.WARNING });
-                    this.AuthService.logout(()=>{}, ()=>{});
-                    break;
-            }
-
-            if (logout) {
-                this.logout();
-            }
-            else if (this.AuthService.isLoggedIn()) { 
-                // If not logging out, and user is logged in already send him to default page
-                this.toDefaultPage();
-            }
-        }
-
         login() {
             this.lock = true;
             this.AuthService.login(this.user,
@@ -74,6 +50,30 @@ export module controller.user {
 
         toDefaultPage(){
             this.$scope.navigator.url("/product/list");
+        }
+
+        private processParams() {
+            var error = this.$scope.navigator.params().error;
+            var logout = this.$scope.navigator.params().logout;
+
+            switch (String(error)) {
+                case "0":
+                    this.AlertService.add({ content: "Login ou senha Inválido", type: enums.AlertType.WARNING });
+                    this.AuthService.logout(()=>{}, ()=>{});
+                    break;
+                case "1":
+                    this.AlertService.add({ content: "Você não possui permissão para acessar esta página", type: enums.AlertType.WARNING });
+                    this.AuthService.logout(()=>{}, ()=>{});
+                    break;
+            }
+
+            if (logout) {
+                this.logout();
+            }
+            else if (this.AuthService.isLoggedIn()) { 
+                // If not logging out, and user is logged in already send him to default page
+                this.toDefaultPage();
+            }
         }
 
     }
