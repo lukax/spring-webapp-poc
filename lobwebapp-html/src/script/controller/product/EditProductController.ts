@@ -48,7 +48,7 @@ export module controller.product {
                 this.categories = this.$filter("filter")(this.allCategories, this.entity.category);
         }
         
-        onEntityChanged(entity: T){
+        onEntityChanged(entity: domain.Product){
             super.onEntityChanged(entity);
             if(entity == null) return;
             this.markUp = 100 * this.ProductService.getMarkUp(entity);
