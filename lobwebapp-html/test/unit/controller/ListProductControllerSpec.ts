@@ -39,7 +39,7 @@ describe("controller: ListProductController", () => {
 
         ctrl.listProduct(0);
         $timeout.flush();
-        expect($scope.entities).toEqual(jasmine.any(Array));
+        expect($scope.vm.entities).toEqual(jasmine.any(Array));
     }));
 
     it("should edit a product", inject(($controller: ng.IControllerService, $timeout: ng.ITimeoutService, $location: ng.ILocationService) => {
@@ -59,6 +59,6 @@ describe("controller: ListProductController", () => {
         });
 
         $timeout.flush();
-        expect($scope.searchText).toBe("SSD");
+        expect($scope.vm.searchText).toBe("SSD");
     }))
 });

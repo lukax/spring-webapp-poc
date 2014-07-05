@@ -14,6 +14,6 @@ module d.service.contract {
 
         getUser(): domain.User;
 
-        isLoggedIn(): void;
+        isLoggedIn(): boolean;
     }
 }

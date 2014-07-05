@@ -71,7 +71,10 @@ export module modularity {
                 return{
                     "responseError" : (response) => {
                         if(response.status == 401){
-                            return $q.reject({ error: 1 });
+                            $location.url(AppRoutes.main().errorUrl)
+                                .search({error: 1})
+                                .replace();
+                            return $q.reject(response);
                         }
                         if (response.status == 500) {
                             return $q.reject(response);
@@ -85,7 +88,7 @@ export module modularity {
             $httpProvider.interceptors.push(logoutUserOn401);
         }
 
-        scopeVariablesCfg = ($rootScope: d.controller.base.ViewModel, NavigatorService: d.service.contract.NavigatorService) => {
+        scopeVariablesCfg = ($rootScope: d.controller.base.IAppScope, NavigatorService: d.service.contract.NavigatorService) => {
             $rootScope.navigator = NavigatorService;
         }
 

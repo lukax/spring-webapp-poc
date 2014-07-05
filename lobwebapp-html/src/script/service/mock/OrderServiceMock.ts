@@ -9,6 +9,7 @@ export module service.mock {
         constructor(public $timeout: ng.ITimeoutService) {
             super($timeout);
 
+            this.addToRepository({ id: 0, customer: { id: 0, name: "" }, date: 0, payment: { id: 0, quantity: 0, mode: "", status: "" }, items: [] });
             this.addToRepository({
                 id: 1, customer: { id: 1, name: "John Doe" }, date: new Date(13, 11, 1).getTime(), payment: { id: 1, quantity: 3400, mode: "CREDIT_CARD", status: "OK" },
                 items: [

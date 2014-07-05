@@ -9,6 +9,7 @@ export module service.mock {
         constructor(public $timeout: ng.ITimeoutService) {
             super($timeout);
 
+            this.addToRepository({ id: 0, username: "", password: "", roles: [], name: "" });
             this.addToRepository({ id: 1, username: "user", password: "password", roles: ["ROLE_USER"], name: "Lucas Espindola" });
         }
 
@@ -19,8 +20,8 @@ export module service.mock {
                     var items = this.getRepository().filter(function (x: domain.User) {
                         return x.username.toLowerCase() == username.toLowerCase();
                     });
-                    if (items.length !== 0) successCallback(items[0], 200, null, null);
-                    else errorCallback(null, 404, null, null);
+                    if (items.length !== 0) successCallback(items[0], 200, () => "", null);
+                    else errorCallback(null, 404, () => "", null);
                 }, 100);
         }
     }
