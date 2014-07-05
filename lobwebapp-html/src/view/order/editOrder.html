@@ -1,4 +1,4 @@
-<form class="form-horizontal form-validation" role="form" name="orderForm" novalidate ng-submit="saveOrUpdateEntity()">
+<form class="form-horizontal form-validation" role="form" name="orderForm" novalidate ng-submit="vm.saveOrUpdateEntity()">
     
     <entity-id></entity-id>
     
@@ -11,9 +11,9 @@
     <quick-search label="Produtos" resource-url="product" entity-id="vm.item.product.id" fetch="vm.fetchProduct(vm.item.product.id)">
         <div class="col-md-3" ng-class="{'has-error': orderForm.productQuantity.$invalid}">
             <div class="input-group">
-                <input type="number" required min="1" class="form-control" id="productQuantity" name="productQuantity" placeholder="Qt" ng-model="vm.item.quantity" ui-keyup="{'enter': 'vm.addItem(vm.item)'}" ng-disabled="!vm.item.product.id">
+                <input type="number" class="form-control" id="productQuantity" name="productQuantity" placeholder="Qt" ng-model="vm.item.quantity" ui-keyup="{'enter': 'vm.addItem(vm.item)'}" ng-disabled="!vm.item.product.id" min="1">
                 <div class="input-group-btn">
-                    <button type="button" class="btn btn-primary" data-toggle="tooltip" title="Adicionar produto à lista" ng-click="vm.addItem(vm.item)" ng-disabled="orderForm.productQuantity.$invalid || orderForm.productId.$invalid || vm.isReadMode">
+                    <button type="button" class="btn btn-primary" data-toggle="tooltip" title="Adicionar produto à lista" ng-click="vm.addItem(vm.item)" ng-disabled="vm.item.product.id <= 0 || orderForm.productId.$invalid || vm.isReadMode">
                     <span class="glyphicon glyphicon-plus"></span>
                     </button>
                 </div>
@@ -51,7 +51,7 @@
         </div>
     </div>
     
-    <div class="form-group lwa-fade-left" ng-hide="vm.total <= 0" ng-class="{'has-error': orderForm.inputPaymend.$invalid }">
+    <div class="form-group lwa-fade-left" ng-hide="vm.total <= 0" ng-class="{'has-error': orderForm.inputPayment.$invalid }">
         <label for="inputPayment" class="col-md-1 col-md-offset-1 control-label">Pagamento</label>
         <div class="col-md-10">
             <div class="input-group">

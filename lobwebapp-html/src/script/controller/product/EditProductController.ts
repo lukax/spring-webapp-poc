@@ -29,11 +29,6 @@ export module controller.product {
             this.findEntity(productId, ()=> { 
                 this.imageUrl = this.ProductService.getImageUrl(this.entity.id);
                 this.fetchCategories();
-                this.$scope.$watch("vm.entity", (newValue) => {
-                    if(newValue == null) return;
-                    this.markUp = 100 * this.ProductService.getMarkUp(this.entity);
-                    this.filterCategories();
-                }, true);
             });
         }
         
@@ -53,6 +48,12 @@ export module controller.product {
                 this.categories = this.$filter("filter")(this.allCategories, this.entity.category);
         }
         
+        onEntityChanged(entity: T){
+            super.onEntityChanged(entity);
+            if(entity == null) return;
+            this.markUp = 100 * this.ProductService.getMarkUp(entity);
+            this.filterCategories();        
+        }
     }
 }
 

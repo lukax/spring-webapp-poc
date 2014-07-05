@@ -31,8 +31,8 @@ export module controller.base{
             this.$scope.vm = this;
             this._tempObjKey = "TMP_" + this.contextUrl.toUpperCase();
 
-            this.$scope.$watch("vm.entity", () => {
-                this.isEntityNew = (this.entity && this.entity.id == 0);
+            this.$scope.$watch("vm.entity", (newValue: T) => {
+            	this.onEntityChanged(newValue);
                 }, true);
 			this.$scope.$on("$destroy", () => {
 				this.saveTemporaryChanges();    
@@ -121,6 +121,10 @@ export module controller.base{
 		unlock(){
 			this.isReadMode = false;
 			this.$scope.navigator.Progress.done();
+		}
+
+		onEntityChanged(entity: T){
+            this.isEntityNew = (entity && entity.id == 0);
 		}
         
 		private saveTemporaryChanges(){

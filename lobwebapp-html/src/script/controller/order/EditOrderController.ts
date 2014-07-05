@@ -36,14 +36,6 @@ export module controller.order {
                 if(customerId != null) this.fetchCustomer(customerId);
                 if(productId != null) this.fetchProduct(productId);
             });
-
-            this.$scope.$watch("vm.entity", (newValue) => {
-                if(newValue == null) return;   
-                this.exchange = this.OrderService.getExchange(this.entity);
-                if (this.entity.payment.status == enums.PaymentStatus.PENDING)
-                    this.entity.payment.quantity = 0;
-                this.total = this.OrderService.getTotal(this.entity);
-            }, true);
         }
 
         addItem(item: domain.OrderItem) {
@@ -65,7 +57,7 @@ export module controller.order {
         }
         
         removeCurrentItem(){
-            this.item = { product: null, quantity: 0 };
+            this.item = { product: null, quantity: null };
         }
 
         fetchCustomer(id: number) {
@@ -80,7 +72,6 @@ export module controller.order {
                     this.entity.customer.id = 0;
                     this.unlock();
                 });
-            
         }
 
         fetchProduct(id: number) {
@@ -98,6 +89,14 @@ export module controller.order {
                 });
         }
 
+        onEntityChanged(entity: domain.Order){
+            super.onEntityChanged(entity);
+            if(entity == null) return;   
+            this.exchange = this.OrderService.getExchange(entity);
+            if (entity.payment.status == enums.PaymentStatus.PENDING)
+                entity.payment.quantity = 0;
+            this.total = this.OrderService.getTotal(entity);
+        }
     }
 }
 
