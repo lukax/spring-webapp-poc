@@ -71,7 +71,10 @@ export module modularity {
                 return{
                     "responseError" : (response) => {
                         if(response.status == 401){
-                            return $q.reject({ error: 1 });
+                            $location.url(AppRoutes.main().errorUrl)
+                                .search({error: 1})
+                                .replace();
+                            return $q.reject(response);
                         }
                         if (response.status == 500) {
                             return $q.reject(response);

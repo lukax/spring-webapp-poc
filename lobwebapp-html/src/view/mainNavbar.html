@@ -52,7 +52,7 @@
                 <li ng-if="!vm.isLoggedIn">
                     <a ng-href="/user/auth">Entrar</a>
                 </li>
-                <p class="navbar-text" ng-if="vm.isLoggedIn">Olá {{user.name}}</p>
+                <p class="navbar-text" ng-if="vm.isLoggedIn">Olá {{vm.user.name}}</p>
                 <li ng-if="vm.isLoggedIn">
                     <a ng-href="/user/auth?logout">Sair</a>
                 </li>

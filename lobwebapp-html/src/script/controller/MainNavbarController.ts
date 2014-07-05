@@ -14,11 +14,18 @@ export module controller {
         constructor(public $scope: d.controller.base.IAppScope, 
                     public AuthService: d.service.contract.AuthService) {
             this.$scope.vm = this;
-                        
+            
+            this.retrieveAuthInfo();
+        }
+
+        private retrieveAuthInfo(){
+            this.user = this.AuthService.getUser();
+            this.isLoggedIn = this.AuthService.isLoggedIn();
+            
             this.$scope.$on("USER_CHANGED", (event, data: any[]) => {
                 this.user = data[0];
-                this.isLoggedIn = (data[0] != null);
-            });
+                this.isLoggedIn = this.AuthService.isLoggedIn();
+                });
         }
 
     }

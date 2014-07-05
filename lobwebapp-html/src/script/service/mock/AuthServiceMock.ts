@@ -15,8 +15,11 @@ export module service.mock {
             errorCallback: (data: domain.util.MessageResponse, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
                 this.$timeout(() => {
                     if(!this.isLoggedIn() && (this.defaultUser.password === user.password)) {
-                        this.setUser(this.defaultUser);
-                        successCallback(this.getUser(), 200, () => "", null);
+                        var user = this.defaultUser;
+                        this.setUser(user);
+
+                        successCallback(user, 200, () => "", null);
+                        this.$rootScope.$broadcast("USER_CHANGED", [(user)]);
                     }
                     else {
                         errorCallback({ message: "Senha incorreta ou Usuário já fez login" }, 200, () => "", null);
@@ -27,17 +30,19 @@ export module service.mock {
         logout(
             successCallback: (previousUser: domain.User, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
             errorCallback: (data: domain.util.MessageResponse, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
-                if (this.isLoggedIn()) {
+                if (this.getUser() && this.getUser().id != 0) {
                 	var previousUser = this.getUser();
                     this.setUser(null);
+                    
                     successCallback(previousUser, 200, () => "", null);
+                    this.$rootScope.$broadcast("USER_CHANGED", [(previousUser)]);
                 }
                 else {
                     errorCallback({ message: "Usuário já saiu" }, 200, () => "", null);
                 }
         }
 
-        isLoggedIn() {
+        isLoggedIn(): boolean {
             return true;//(this.getUser() != null);
         }
 
@@ -47,7 +52,6 @@ export module service.mock {
 
         private setUser(user: domain.User) {
         	this.user = user;
-            this.$rootScope.$broadcast("USER_CHANGED", [(user)]);
         }
 
     }

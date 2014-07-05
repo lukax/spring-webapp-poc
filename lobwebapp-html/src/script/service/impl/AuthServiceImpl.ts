@@ -35,8 +35,9 @@ export module service.impl {
                         this.setUser(user);
                         this.setToken(data);
                         this.authorize(data);
-                    
+
                         successCallback(user, status, headers, config);
+                        this.$rootScope.$broadcast("USER_CHANGED", [(user)]);
                     })
                     .error(errorCallback);
         }
@@ -51,12 +52,13 @@ export module service.impl {
                     this.unauthorize();
                 
                     successCallback(previousUser, 200, null, null);
+                    this.$rootScope.$broadcast("USER_CHANGED", [(previousUser)]);
                 }
                 else
                     errorCallback({ message: "Usuário já saiu" }, 200, null, null);
         }
 
-        isLoggedIn() {
+        isLoggedIn(): boolean {
             var token = this.getToken();
             if (token != null) {
                 this.authorize(token);
@@ -102,7 +104,6 @@ export module service.impl {
 
         private setUser(user: domain.User) {
             (<any>this.$window.localStorage).AUTHSERVICE_USER = angular.toJson(user);
-            this.$rootScope.$broadcast("USER_CHANGED", [(user)]);
         }
     }
 }
