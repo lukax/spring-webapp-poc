@@ -1,12 +1,12 @@
 ///<reference path="../../reference.d.ts"/>
 
-export module service.impl {
-    export class NavigatorServiceImpl implements d.service.contract.NavigatorService {
+module service.impl {
+    export class NavigatorServiceImpl implements service.contract.NavigatorService {
 
         static $inject = ["$location", "$routeParams", "Progress"];
         constructor(public $location: ng.ILocationService, 
                     public $routeParams: any,
-                    public Progress: d.service.contract.Progress) {
+                    public Progress: service.contract.Progress) {
         }
 
         public params() {

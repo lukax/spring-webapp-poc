@@ -1,18 +1,15 @@
 ///<reference path="../../reference.d.ts"/>
 
-import enums = require("./../../util/EnumUtil");
-import i0 = require("./../base/AbstractListEntityController");
-
-export module controller.product {
-    export interface IListProductController extends i0.controller.base.IListEntityController<domain.Product>{
+module controller.product {
+    export interface IListProductController extends controller.base.IListEntityController<domain.Product>{
         listProduct(page: number): void;
     }
 
-    export class ListProductController extends i0.controller.base.AbstractListEntityController<domain.Product> implements IListProductController{
+    export class ListProductController extends controller.base.AbstractListEntityController<domain.Product> implements IListProductController{
         static $inject = ["$scope", "ProductService", "AlertService"];
-        constructor(public $scope: d.controller.base.IAppScope,
-                    public ProductService: d.service.contract.ProductService,
-                    public AlertService: d.service.contract.AlertService) {
+        constructor(public $scope: controller.base.IAppScope,
+                    public ProductService: service.contract.ProductService,
+                    public AlertService: service.contract.AlertService) {
             super($scope, ProductService, AlertService, "/product", "productId");
             
             this.listProduct(0);
@@ -25,7 +22,7 @@ export module controller.product {
             } else {
                 this.ProductService.findByName(searchText,
                     (successData, successStatus, headers) => {
-                        this.page = { index: pageIndex, size: Number(headers(enums.Headers.PAGE_TOTAL)) };
+                        this.page = { index: pageIndex, size: Number(headers(util.Headers.PAGE_TOTAL)) };
                         this.entities = successData;
                         this.$scope.navigator.Progress.done();
                     },
@@ -40,7 +37,3 @@ export module controller.product {
         
     }
 }
-
-export var register = (moduleName: string) => {
-    angular.module(moduleName).lazy.controller("ListProductController", controller.product.ListProductController);
-};

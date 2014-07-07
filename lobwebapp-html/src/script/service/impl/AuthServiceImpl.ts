@@ -1,8 +1,7 @@
 ///<reference path="../../reference.d.ts"/>
-import a = require("./UserServiceImpl");
 
-export module service.impl {
-    export class AuthServiceImpl implements d.service.contract.AuthService {
+module service.impl {
+    export class AuthServiceImpl implements service.contract.AuthService {
         private url = "/api/oauth/token";
         private clientCredentials = "bG9id2ViYXBwLWh0bWw6";
         private defaultUser: domain.User = { id: 1, name: "Lucas", username: "", password: "", roles: ["ROLE_USER"] };
@@ -107,7 +106,3 @@ export module service.impl {
         }
     }
 }
-
-export var register = (moduleName: string) => {
-    angular.module(moduleName).lazy.service("AuthService", service.impl.AuthServiceImpl);
-};

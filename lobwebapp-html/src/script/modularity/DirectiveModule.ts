@@ -1,11 +1,6 @@
 ///<reference path="../reference.d.ts"/>
 
-///<amd-dependency path="angularAnimate"/>
-///<amd-dependency path="angularUi"/>
-///<amd-dependency path="angularUiBootstrap"/>
-///<amd-dependency path="angularUiUtils"/>
-
-export module modularity {
+module modularity {
     export class DirectiveModule {
         constructor(public profile: string) {
             //Global usage directives

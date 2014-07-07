@@ -1,9 +1,6 @@
 ///<reference path="../reference.d.ts"/>
 
-import URI = require("urijs");
-import enums = require("./../util/EnumUtil");
-
-export module directive {
+module directive {
     export interface ImageUploadViewModel extends ng.IScope {
         url: string;
         placeholder: string;
@@ -68,7 +65,7 @@ export module directive {
                 (AlertService, Progress, $scope: ImageUploadViewModel) => {
             
             $scope.uploadFailed = () => {
-                AlertService.add({ title: "Upload falhou", content: "A imagem precisa estar em um formato válido e ser menor que 5 MB", type: enums.AlertType.DANGER });
+                AlertService.add({ title: "Upload falhou", content: "A imagem precisa estar em um formato válido e ser menor que 5 MB", type: util.AlertType.DANGER });
                 $scope.loading = false;
             }
             $scope.uploadDone = () => {
@@ -84,7 +81,3 @@ export module directive {
 
     }
 }
-
-export var register = (moduleName: string) => {
-    angular.module(moduleName).lazy.directive("imageUpload", [() => new directive.ImageUploadDirective()]);
-};

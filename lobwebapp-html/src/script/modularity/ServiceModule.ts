@@ -1,25 +1,19 @@
 ///<reference path="../reference.d.ts"/>
 
-import a = require("./../service/mock/AlertServiceMock");
-import b0 = require("./../service/mock/AuthServiceMock");
-import b1 = require("./../service/impl/AuthServiceImpl");
-import c = require("./../service/impl/NavigatorServiceImpl");
-import d = require("./../util/Progress");
-
-export module modularity {
+module modularity {
     export class ServiceModule {
         constructor(public profile: string) {
             var mod = angular.module("lwa.service", []);
-            	mod .service("AlertService", <Function>a.service.mock.AlertServiceMock)
-                    .service("NavigatorService", <Function>c.service.impl.NavigatorServiceImpl)
-                    .service("Progress", <Function>d.util.Progress)
+            	mod .service("AlertService", <Function>service.mock.AlertServiceMock)
+                    .service("NavigatorService", <Function>service.impl.NavigatorServiceImpl)
+                    .service("Progress", <Function>util.Progress)
                     ;
                     
             if(profile == "dev"){
-                mod .service("AuthService", <Function>b0.service.mock.AuthServiceMock);
+                mod .service("AuthService", <Function>service.mock.AuthServiceMock);
             }
             else{
-                mod .service("AuthService", <Function>b1.service.impl.AuthServiceImpl);
+                mod .service("AuthService", <Function>service.impl.AuthServiceImpl);
             }
         }
 

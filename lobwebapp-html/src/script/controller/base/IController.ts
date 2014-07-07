@@ -1,7 +1,7 @@
 ///<reference path="../../reference.d.ts"/>
 
-module d.controller.base {
+module controller.base {
     export interface IController {
-        $scope: d.controller.base.IAppScope;
+        $scope: controller.base.IAppScope;
     }
 }

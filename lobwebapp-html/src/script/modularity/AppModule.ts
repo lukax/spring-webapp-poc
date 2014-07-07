@@ -1,16 +1,11 @@
 ///<reference path="../reference.d.ts"/>
 
-///<amd-dependency path="angular"/>
-import a = require("./DirectiveModule");
-import b = require("./ServiceModule");
-import c = require("./ControllerModule");
-
-export module modularity {
+module modularity {
     export class AppModule {
         constructor(public profile: string) {
-            new a.modularity.DirectiveModule(profile);
-            new b.modularity.ServiceModule(profile);
-            new c.modularity.ControllerModule(profile);
+            new modularity.DirectiveModule(profile);
+            new modularity.ServiceModule(profile);
+            new modularity.ControllerModule(profile);
             
             angular.module("lwa", ["lwa.directive", "lwa.controller"])
                 //Throw hard exception on angular errors

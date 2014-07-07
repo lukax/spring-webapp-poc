@@ -1,9 +1,7 @@
 ///<reference path="../../reference.d.ts"/>
 
-import a = require("./base/EntityServiceMock");
-
-export module service.mock {
-    export class StockServiceMock extends a.service.mock.base.EntityServiceMock<domain.Stock> implements d.service.contract.StockService {
+module service.mock {
+    export class StockServiceMock extends base.EntityServiceMock<domain.Stock> implements service.contract.StockService {
 
         static $inject = ["$timeout"];
         constructor(public $timeout: ng.ITimeoutService) {
@@ -11,7 +9,7 @@ export module service.mock {
 
             this.addToRepository({
                 id: 1,
-                product: { id: 1, name: "Notebook", description: "Dell Inspiron 15R Special Edition Intel Core i5-3230M 2.6 GHz 6144 MB 750 GB", quantity: 9, costPrice: 2102.30, price: 2699.00, category: "Informática/Computadores", ncm: "8471.30.19" },
+                product: { id: 1, name: "Notebook", description: "Dell Inspiron 15R Special Edition Intel Core i5-3230M 2.6 GHz 6144 MB 750 GB", quantity: 9, costPrice: 2102.30, price: 2699.00, category: "Informï¿½tica/Computadores", ncm: "8471.30.19" },
                 quantity: 59,
                 minQuantity: 3,
                 maxQuantity: 100,
@@ -34,7 +32,3 @@ export module service.mock {
         }
     }
 }
-
-export var register = (moduleName: string) => {
-    angular.module(moduleName).lazy.service("StockService", service.mock.StockServiceMock);
-};

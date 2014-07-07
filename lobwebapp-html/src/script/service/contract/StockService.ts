@@ -1,7 +1,7 @@
 ///<reference path="../../reference.d.ts"/>
 
-module d.service.contract {
-    export interface StockService extends d.service.contract.base.EntityService<domain.Stock> {
+module service.contract {
+    export interface StockService extends base.EntityService<domain.Stock> {
 
     	listUnit(
             successCallback: (data: string[], status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,

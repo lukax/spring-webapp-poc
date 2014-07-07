@@ -1,43 +1,39 @@
 ///<reference path="../../reference.d.ts"/>
 
-import _ = require("underscore");
-import URI = require("urijs");
-import enums = require("./../../util/EnumUtil");
-
-export module controller.base{
-	export interface IEditEntityController<T extends domain.base.AbstractEntity> extends d.controller.base.IController{
+module controller.base{
+	export interface IEditEntityController<T extends domain.base.AbstractEntity> extends controller.base.IController{
 		entity: T;
-        isEntityNew: boolean;
-        isPreviousChanges: boolean;
-        isReadMode: boolean;
+    isEntityNew: boolean;
+    isPreviousChanges: boolean;
+    isReadMode: boolean;
 		saveOrUpdateEntity(): void;
 		removeEntity(): void;
 		discardChanges(): void;
 	}
 
 	export class AbstractEditEntityController<T extends domain.base.AbstractEntity> implements IEditEntityController<T> {
-        private _tempObjKey: string;
-        private _entity: T;
-        entity: T;
-        isEntityNew: boolean;
-        isPreviousChanges: boolean;
-        isReadMode: boolean;
+    private _tempObjKey: string;
+    private _entity: T;
+    entity: T;
+    isEntityNew: boolean;
+    isPreviousChanges: boolean;
+    isReadMode: boolean;
 
-        constructor(public $scope: d.controller.base.IAppScope,
-                    public EntityService: d.service.contract.base.EntityService<T>,
-                    public AlertService: d.service.contract.AlertService,
-                    public contextUrl: string,
-                    public entityName: string) {
-            this.$scope.vm = this;
-            this._tempObjKey = "TMP_" + this.contextUrl.toUpperCase();
+    constructor(public $scope: controller.base.IAppScope,
+                public EntityService: service.contract.base.EntityService<T>,
+                public AlertService: service.contract.AlertService,
+                public contextUrl: string,
+                public entityName: string) {
+      this.$scope.vm = this;
+      this._tempObjKey = "TMP_" + this.contextUrl.toUpperCase();
 
-            this.$scope.$watch("vm.entity", (newValue: T) => {
-            	this.onEntityChanged(newValue);
-                }, true);
+      this.$scope.$watch("vm.entity", (newValue: T) => {
+      	this.onEntityChanged(newValue);
+        }, true);
 			this.$scope.$on("$destroy", () => {
-				this.saveTemporaryChanges();    
+				this.saveTemporaryChanges();
 				});
-        }
+    }
 
 		saveOrUpdateEntity() {
 			if (this.isEntityNew) this.saveEntity();
@@ -87,13 +83,13 @@ export module controller.base{
 			var actualId;
 			if(prettyId == "new") actualId = 0;
 			else actualId = Number(prettyId);
-			
+
 			this.lock();
 			this.EntityService.find(actualId,
 				(successData) => {
-					if(!this.restoreTemporaryChanges(successData))
+					if(!this.restoreTemporaryChanges(successData)){
 						this.entity = successData;
-					
+          }
 					if(done) done();
 					this.unlock();
 				},
@@ -101,6 +97,7 @@ export module controller.base{
 					console.log(errorData);
 					this.AlertService.addMessageResponse(errorData, this.entityName + " não pôde ser encontrado");
 					this.newEntity();
+          this.unlock();
 				});
 		}
 
@@ -124,16 +121,16 @@ export module controller.base{
 		}
 
 		onEntityChanged(entity: T){
-            this.isEntityNew = (entity && entity.id == 0);
+      this.isEntityNew = (entity && entity.id == 0);
 		}
-        
-		private saveTemporaryChanges(){
-			localStorage[this._tempObjKey] = angular.toJson(this.entity);
-        }
 
-        private discardTemporaryChanges(){
+		private saveTemporaryChanges(){
+		  localStorage[this._tempObjKey] = angular.toJson(this.entity);
+    }
+
+    private discardTemporaryChanges(){
 			delete localStorage[this._tempObjKey];
-        }
+    }
 
 		private restoreTemporaryChanges(fetchedEntity: T){
 			var previousEntity = null;

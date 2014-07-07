@@ -1,10 +1,7 @@
 ///<reference path="../../reference.d.ts"/>
 
-import enums = require("./../../util/EnumUtil");
-import URI = require("urijs");
-
-export module controller.base {
-    export interface IListEntityController<T extends domain.base.AbstractEntity> extends d.controller.base.IController {
+module controller.base {
+    export interface IListEntityController<T extends domain.base.AbstractEntity> extends controller.base.IController {
         entities: T[];
         searchText: string;
         page: domain.util.Page;
@@ -19,9 +16,9 @@ export module controller.base {
         searchText: string;
         page: domain.util.Page;
 
-        constructor(public $scope: d.controller.base.IAppScope,
-                    public EntityService: d.service.contract.base.EntityService<T>,
-                    public AlertService: d.service.contract.AlertService,
+        constructor(public $scope: controller.base.IAppScope,
+                    public EntityService: service.contract.base.EntityService<T>,
+                    public AlertService: service.contract.AlertService,
                     public contextUrl: string,
                     public redirectParam: string) {
             this.$scope.vm = this;
@@ -34,10 +31,10 @@ export module controller.base {
             this.$scope.navigator.Progress.start();
                 this.EntityService.list(
                     (successData, successStatus, headers) => {
-                        this.page = { index: pageIndex, size: Number(headers(enums.Headers.PAGE_TOTAL)) };
+                        this.page = { index: pageIndex, size: Number(headers(util.Headers.PAGE_TOTAL)) };
                         this.entities = successData;
                         this.$scope.navigator.Progress.done();
-                        if (this._redirectUrl) this.AlertService.add({ title: "Busca Rápida", content: "Clique em um item da lista para voltar para a página anterior", type: enums.AlertType.INFO });
+                        if (this._redirectUrl) this.AlertService.add({ title: "Busca Rápida", content: "Clique em um item da lista para voltar para a página anterior", type: util.AlertType.INFO });
                     },
                     (errorData) => {
                         console.log(errorData);

@@ -1,15 +1,15 @@
 ///<reference path="../reference.d.ts"/>
 
-export module util {
+module util {
     export class DependencyManager {
 
         constructor(public $q: ng.IQService, 
                     public $rootScope: ng.IRootScopeService,
-                    public Progress: d.service.contract.Progress) {
+                    public Progress: service.contract.Progress) {
 
         }
 
-        public resolve(paths: string[], moduleName: string) {
+        public resolve(paths: string[], moduleName: string): ng.IPromise<any[]> {
             var deferred = this.$q.defer();
             this.Progress.start();
 
@@ -24,7 +24,7 @@ export module util {
             require(paths, () => {
                 this.$rootScope.$apply(() => {
                     this.Progress.done();
-                    deferred.resolve();
+                    deferred.resolve(arguments);
                 });
             });
 

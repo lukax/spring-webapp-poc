@@ -1,11 +1,8 @@
 ///<reference path="../../reference.d.ts"/>
 
-import _ = require("underscore");
-import a = require("./base/EntityServiceImpl");
-
-export module service.impl {
-    export class ProductServiceImpl extends a.service.impl.base.EntityServiceImpl<domain.Product> 
-            implements d.service.contract.ProductService, d.service.contract.base.HasDefaultValue<domain.Product> {
+module service.impl {
+    export class ProductServiceImpl extends base.EntityServiceImpl<domain.Product> 
+            implements service.contract.ProductService, service.contract.base.HasDefaultValue<domain.Product> {
 
         static $inject = ["$http"];
         constructor($http: ng.IHttpService) {
@@ -60,7 +57,3 @@ export module service.impl {
         }
     }
 }
-
-export var register = (moduleName: string) => {
-    angular.module(moduleName).lazy.service("ProductService", service.impl.ProductServiceImpl);
-};

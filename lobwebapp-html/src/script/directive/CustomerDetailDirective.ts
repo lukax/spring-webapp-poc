@@ -1,6 +1,6 @@
 ///<reference path="../reference.d.ts"/>
 
-export module directive {
+module directive {
     export class CustomerDetailDirective implements ng.IDirective {
         restrict = "E";
         scope = {
@@ -9,7 +9,3 @@ export module directive {
         template = "{{customer.name}}";
     }
 }
-
-export var register = (moduleName: string) => {
-    angular.module(moduleName).lazy.directive("customerDetail", [() => new directive.CustomerDetailDirective()]);
-};

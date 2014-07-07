@@ -1,14 +1,12 @@
 ///<reference path="../../../reference.d.ts"/>
 
-import _ = require("underscore");
-
-export module service.impl.base {
-    export class EntityServiceImpl<T extends domain.base.AbstractEntity> implements d.service.contract.base.EntityService<T> {
+module service.impl.base {
+    export class EntityServiceImpl<T extends domain.base.AbstractEntity> implements service.contract.base.EntityService<T> {
 
         private rootUrl = "/api/v1/";
         public url: string;
 
-        constructor(contextUrl: string, public $http: ng.IHttpService, public hasDefault?: d.service.contract.base.HasDefaultValue<T>) {
+        constructor(contextUrl: string, public $http: ng.IHttpService, public hasDefault?: service.contract.base.HasDefaultValue<T>) {
             this.url = this.rootUrl + contextUrl;
         }
 

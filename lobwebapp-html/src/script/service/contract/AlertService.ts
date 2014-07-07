@@ -1,6 +1,6 @@
 ///<reference path="../../reference.d.ts"/>
 
-module d.service.contract {
+module service.contract {
     export interface AlertService {
         add(alert: domain.util.Alert): domain.util.Alert;
         addMessageResponse(messageResponse: domain.util.MessageResponse, title: string): domain.util.Alert;

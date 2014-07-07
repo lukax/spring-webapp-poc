@@ -1,12 +1,8 @@
 ///<reference path="../../reference.d.ts"/>
-///<amd-dependency path="crossfilter"/>
-///<amd-dependency path="d3"/>
-///<amd-dependency path="dc"/>
+declare var dc: any;
 
-import enums = require("./../../util/EnumUtil");
-
-export module controller.order {
-    export interface IGraphOrderController extends d.controller.base.IController {
+module controller.order {
+    export interface IGraphOrderController extends controller.base.IController {
     }
 
     interface XOrder extends domain.Order {
@@ -18,24 +14,24 @@ export module controller.order {
 
     export class GraphOrderController implements IGraphOrderController {
         static $inject = ["$scope", "OrderService", "AlertService"];
-        constructor(public $scope: d.controller.base.IAppScope,
-                    public OrderService: d.service.contract.OrderService,
-                    public AlertService: d.service.contract.AlertService) {
+        constructor(public $scope: controller.base.IAppScope,
+                    public OrderService: service.contract.OrderService,
+                    public AlertService: service.contract.AlertService) {
             this.$scope.vm = this;
-            
-            this.$scope.navigator.Progress.start();  
+
+            this.$scope.navigator.Progress.start();
             this.OrderService.list((successData) => {
                 this.buildGraph(successData);
                 this.$scope.navigator.Progress.done();
             }, () => { });
         }
-                
+
         buildGraph(orders: domain.Order[]){
-            
+
             var dateFormat = d3.time.format("%m/%d/%Y");
             var numberFormat = d3.format(".2f");
             var daysSinceJanuary = Math.floor((new Date().getTime() - new Date("1/1/"+new Date().getFullYear()).getTime())*1/1000*1/60*1/60*1/24);
-            
+
             orders.forEach((o: XOrder) => {
                 o.dd = new Date(o.date);
                 o.month = d3.time.month(o.dd);
@@ -46,7 +42,7 @@ export module controller.order {
                     o.productQt += item.quantity;
                 });
             });
-            
+
             var data = crossfilter(orders);
             var all = data.groupAll();
 
@@ -83,7 +79,7 @@ export module controller.order {
                     return Math.abs(d.total);
                 });
 
-            dc.bubbleChart("#year-performance-chart") 
+            dc.bubbleChart("#year-performance-chart")
                     .width(990) // (optional) define chart width, :default = 200
                     .height(250)  // (optional) define chart height, :default = 200
                     .transitionDuration(1500) // (optional) define chart transition duration, :default = 750
@@ -123,20 +119,20 @@ export module controller.order {
                                .join("\n");
                     })
                     ;
-                
+
                 var paymentStatusDimension = data.dimension((d: domain.Order)=>{
                     switch(d.payment.status){
-                        case enums.PaymentStatus.OK:
+                        case util.PaymentStatus.OK:
                             return "Pago";
-                        case enums.PaymentStatus.PENDING:
+                        case util.PaymentStatus.PENDING:
                             return "Pendente";
-                        case enums.PaymentStatus.CANCELLED:
+                        case util.PaymentStatus.CANCELLED:
                             return "Cancelado";
                     }
                 });
-                
+
                 var paymentStatusGroup = paymentStatusDimension.group();
-                    
+
                 dc.pieChart("#payment-status-chart")
                     .width(180) // (optional) define chart width, :default = 200
                     .height(180) // (optional) define chart height, :default = 200
@@ -148,24 +144,24 @@ export module controller.order {
                     })
                     .title((d) => {
                         return "Pagamento: " + d.data.key + " em " + d.value + " pedido(s)";
-                    }) 
+                    })
                     ;
-                    
-                    
+
+
                 var monthOfYear = data.dimension((d: XOrder) => {
                    var month = d.dd.getMonth();
                    var name = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
                    return month+"."+name[month];
                 });
                 var monthOfYearGroup = monthOfYear.group();
-                    
+
                 dc.pieChart("#month-of-year-chart")
                     .width(180) // (optional) define chart width, :default = 200
                     .height(180) // (optional) define chart height, :default = 200
                     .radius(90) // define pie radius
                     .group(monthOfYearGroup)
-                    .dimension(monthOfYear)   
-                    .innerRadius(40)   
+                    .dimension(monthOfYear)
+                    .innerRadius(40)
                     .label((d) => {
                         return d.data.key.split(".")[1];
                     })
@@ -173,15 +169,15 @@ export module controller.order {
                         return d.value + " pedidos em " + d.data.key.split(".")[1];
                     })
                     ;
-                    
-                    
+
+
                 var dayOfWeek = data.dimension((d: XOrder) =>{
                     var day = d.dd.getDay();
                     var name=["Dom","Seg","Ter","Qua","Qui","Sex","Sab"];
-                    return day+"."+name[day]; 
+                    return day+"."+name[day];
                 });
                 var dayOfWeekGroup = dayOfWeek.group();
-                    
+
                 dc.rowChart("#day-of-week-chart")
                     .height(180)
                     .margins({top: 20, left: 10, right: 10, bottom: 20})
@@ -196,12 +192,12 @@ export module controller.order {
                     .elasticX(true)
                     .xAxis().ticks(4);
                     ;
-        
-               
+
+
                 /*var totalPerDateGroup = dateDimension.group().reduceSum((d)=> {
                     return d.total;
                 });
-                
+
                 dc.barChart("#orderTotal-per-day")
                     .width(420)
                     .height(180)
@@ -213,13 +209,9 @@ export module controller.order {
                     .gap(1)
                     .x(d3.time.scale().domain([new Date("30/12/2013"), new Date()]))
                 ;*/
-        
-        
+
+
             dc.renderAll();
         }
     }
 }
-
-export var register = (moduleName: string) => {
-    angular.module(moduleName).lazy.controller("GraphOrderController", controller.order.GraphOrderController);
-};

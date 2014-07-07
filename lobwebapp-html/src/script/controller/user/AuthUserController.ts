@@ -1,9 +1,7 @@
 ///<reference path="../../reference.d.ts"/>
 
-import enums = require("./../../util/EnumUtil");
-
-export module controller.user {
-    export interface IAuthUserController extends d.controller.base.IController {
+module controller.user {
+    export interface IAuthUserController extends controller.base.IController {
         user: domain.User;
         lock: boolean;
         login: () => void;
@@ -14,9 +12,9 @@ export module controller.user {
         lock: boolean;
 
         static $inject = ["$scope", "AuthService", "AlertService"];
-        constructor(public $scope: d.controller.base.IAppScope,
-                    public AuthService: d.service.contract.AuthService,
-                    public AlertService: d.service.contract.AlertService) {
+        constructor(public $scope: controller.base.IAppScope,
+                    public AuthService: service.contract.AuthService,
+                    public AlertService: service.contract.AlertService) {
             this.$scope.vm = this;
 
             this.processParams();     
@@ -29,7 +27,7 @@ export module controller.user {
                     this.toDefaultPage();
                 },
                 () => {
-                    this.AlertService.add({ title: "Login", content: "Usuário ou senha inválido", type: enums.AlertType.WARNING });
+                    this.AlertService.add({ title: "Login", content: "Usuário ou senha inválido", type: util.AlertType.WARNING });
                     this.lock = false;
                 });
         }
@@ -43,7 +41,7 @@ export module controller.user {
                 },
                 (errorData) => {
                     console.log(errorData);
-                    this.AlertService.add({ title: "Logout", content: String(errorData.message), type: enums.AlertType.WARNING });
+                    this.AlertService.add({ title: "Logout", content: String(errorData.message), type: util.AlertType.WARNING });
                     this.lock = false;
                 });
         }
@@ -58,11 +56,11 @@ export module controller.user {
 
             switch (String(error)) {
                 case "0":
-                    this.AlertService.add({ content: "Login ou senha Inválido", type: enums.AlertType.WARNING });
+                    this.AlertService.add({ content: "Login ou senha Inválido", type: util.AlertType.WARNING });
                     this.AuthService.logout(()=>{}, ()=>{});
                     break;
                 case "1":
-                    this.AlertService.add({ content: "Você não possui permissão para acessar esta página", type: enums.AlertType.WARNING });
+                    this.AlertService.add({ content: "Você não possui permissão para acessar esta página", type: util.AlertType.WARNING });
                     this.AuthService.logout(()=>{}, ()=>{});
                     break;
             }
@@ -78,7 +76,3 @@ export module controller.user {
 
     }
 }
-
-export var register = (moduleName: string) => {
-    angular.module(moduleName).lazy.controller("AuthUserController", controller.user.AuthUserController);
-};

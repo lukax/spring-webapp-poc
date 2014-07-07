@@ -1,6 +1,6 @@
 ///<reference path="../reference.d.ts"/>
 
-export module directive {
+module directive {
     export class QuickSearchDirective implements ng.IDirective {
         restrict = 'E';
         transclude = true;
@@ -30,8 +30,3 @@ export module directive {
         }];
     }
 }
-
-
-export var register = (moduleName: string) => {
-    angular.module(moduleName).lazy.directive("quickSearch", [() => new directive.QuickSearchDirective()]);
-};

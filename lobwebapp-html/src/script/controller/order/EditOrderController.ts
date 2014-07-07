@@ -1,11 +1,7 @@
 ///<reference path="../../reference.d.ts"/>
 
-import _ = require("underscore");
-import i0 = require("./../base/AbstractEditEntityController");
-import enums = require("./../../util/EnumUtil");
-
-export module controller.order {
-    export interface IEditOrderController extends i0.controller.base.IEditEntityController<domain.Order> {
+module controller.order {
+    export interface IEditOrderController extends controller.base.IEditEntityController<domain.Order> {
         item: domain.OrderItem;
         exchange: number;
         total: number;
@@ -15,17 +11,17 @@ export module controller.order {
         fetchCustomer(id: number): void;
     }
 
-    export class EditOrderController extends i0.controller.base.AbstractEditEntityController<domain.Order> implements IEditOrderController {
+    export class EditOrderController extends controller.base.AbstractEditEntityController<domain.Order> implements IEditOrderController {
         item: domain.OrderItem;
         exchange: number;
         total: number;
 
         static $inject = ["$scope", "ProductService", "AlertService", "CustomerService", "OrderService"];
-        constructor(public $scope: d.controller.base.IAppScope,
-                    public ProductService: d.service.contract.ProductService,
-                    public AlertService: d.service.contract.AlertService,
-                    public CustomerService: d.service.contract.CustomerService,
-                    public OrderService: d.service.contract.OrderService) {
+        constructor(public $scope: controller.base.IAppScope,
+                    public ProductService: service.contract.ProductService,
+                    public AlertService: service.contract.AlertService,
+                    public CustomerService: service.contract.CustomerService,
+                    public OrderService: service.contract.OrderService) {
             super($scope, OrderService, AlertService, "/order", "Pedido");
             
             var orderId = this.$scope.navigator.params().orderId;
@@ -93,14 +89,9 @@ export module controller.order {
             super.onEntityChanged(entity);
             if(entity == null) return;   
             this.exchange = this.OrderService.getExchange(entity);
-            if (entity.payment.status == enums.PaymentStatus.PENDING)
+            if (entity.payment.status == util.PaymentStatus.PENDING)
                 entity.payment.quantity = 0;
             this.total = this.OrderService.getTotal(entity);
         }
     }
 }
-
-
-export var register = (moduleName: string) => {
-    angular.module(moduleName).lazy.controller("EditOrderController", controller.order.EditOrderController);
-};

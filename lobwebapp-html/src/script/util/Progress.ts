@@ -1,10 +1,9 @@
 ///<reference path="../reference.d.ts"/>
-///<amd-dependency path="jquery"/>
 
-import NProgress = require("NProgress");
+declare var NProgress: any;
 
-export module util{
-    export class Progress implements d.service.contract.Progress {
+module util{
+    export class Progress implements service.contract.Progress {
         static dontStart: boolean;
 
         constructor(){

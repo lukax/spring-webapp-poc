@@ -1,9 +1,7 @@
 ///<reference path="../../reference.d.ts"/>
 
-import a = require("./base/PersonServiceMock");
-
-export module service.mock {
-    export class CustomerServiceMock extends a.service.mock.base.PersonServiceMock<domain.Customer> implements d.service.contract.CustomerService {
+module service.mock {
+    export class CustomerServiceMock extends base.PersonServiceMock<domain.Customer> implements service.contract.CustomerService {
 
         static $inject = ["$timeout"];
         constructor(public $timeout: ng.ITimeoutService) {
@@ -17,7 +15,3 @@ export module service.mock {
 
     }
 }
-
-export var register = (moduleName: string) => {
-    angular.module(moduleName).lazy.service("CustomerService", service.mock.CustomerServiceMock);
-};

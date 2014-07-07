@@ -1,7 +1,7 @@
 ///<reference path="../../reference.d.ts"/>
 
-module d.service.contract {
-    export interface ProductService extends d.service.contract.base.EntityService<domain.Product> {
+module service.contract {
+    export interface ProductService extends base.EntityService<domain.Product> {
 
         findByName(name: string,
             successCallback: (data: domain.Product[], status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,

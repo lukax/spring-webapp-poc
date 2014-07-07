@@ -1,17 +1,14 @@
 ///<reference path="../../reference.d.ts"/>
 
-import enums = require("./../../util/EnumUtil");
-import i0 = require("./../base/AbstractListEntityController");
-
-export module controller.customer {
-    export interface IListCustomerController extends i0.controller.base.IListEntityController<domain.Customer>{
+module controller.customer {
+    export interface IListCustomerController extends controller.base.IListEntityController<domain.Customer>{
     }
 
-    export class ListCustomerController extends i0.controller.base.AbstractListEntityController<domain.Customer> implements IListCustomerController{
+    export class ListCustomerController extends controller.base.AbstractListEntityController<domain.Customer> implements IListCustomerController{
         static $inject = ["$scope", "CustomerService", "AlertService"];
-        constructor(public $scope: d.controller.base.IAppScope,
-                    public CustomerService: d.service.contract.CustomerService,
-                    public AlertService: d.service.contract.AlertService) {
+        constructor(public $scope: controller.base.IAppScope,
+                    public CustomerService: service.contract.CustomerService,
+                    public AlertService: service.contract.AlertService) {
             super($scope, CustomerService, AlertService, "/customer", "customerId");
             
             this.listEntity(0);
@@ -19,7 +16,3 @@ export module controller.customer {
         
     }
 }
-
-export var register = (moduleName: string) => {
-    angular.module(moduleName).lazy.controller("ListCustomerController", controller.customer.ListCustomerController);
-};

@@ -1,10 +1,7 @@
 ///<reference path="../../reference.d.ts"/>
 
-import _ = require("underscore");
-import enums = require("./../../util/EnumUtil");
-
-export module service.mock {
-    export class AlertServiceMock implements d.service.contract.AlertService {
+module service.mock {
+    export class AlertServiceMock implements contract.AlertService {
         private alerts: domain.util.Alert[] = [];
         private lifeSecs: number = 10;
         
@@ -20,7 +17,7 @@ export module service.mock {
             }
 
             if (!alert.date) alert.date = new Date();
-            if (!alert.type) alert.type = enums.AlertType.OK;
+            if (!alert.type) alert.type = util.AlertType.OK;
             var alerts = this.list();
             alerts.push(alert);
             this.setAlerts(alerts);
@@ -33,7 +30,7 @@ export module service.mock {
             	return;
             }
 
-            var alert: domain.util.Alert = { content: messageResponse.message, title: title, type: enums.AlertType.DANGER, date: new Date() }
+            var alert: domain.util.Alert = { content: messageResponse.message, title: title, type: util.AlertType.DANGER, date: new Date() }
             if((<domain.util.ValidationMessageResponse>messageResponse).validations)
             (<domain.util.ValidationMessageResponse>messageResponse).validations.forEach((x) => {
                 alert.content += ", " + x.message.toLowerCase();
@@ -81,7 +78,7 @@ export module service.mock {
                 alerts.forEach((x, index) => {
                     var differenceInSecs = Math.abs((new Date().getTime() - x.date.getTime()) / 1000);
                     if (differenceInSecs > this.lifeSecs) {
-                        if(x.type != enums.AlertType.DANGER)
+                        if(x.type != util.AlertType.DANGER)
                             alerts.splice(index, 1);
                     }
                     });
@@ -91,7 +88,3 @@ export module service.mock {
 
     }
 }
-
-export var register = (moduleName: string) => {
-    angular.module(moduleName).lazy.service("AlertService", service.mock.AlertServiceMock);
-};

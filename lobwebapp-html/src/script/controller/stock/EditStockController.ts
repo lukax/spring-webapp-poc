@@ -1,23 +1,20 @@
 ///<reference path="../../reference.d.ts"/>
 
-import i0 = require("./../base/AbstractEditEntityController");
-import enums = require("./../../util/EnumUtil");
-
-export module controller.stock {
-    export interface IEditStockController extends i0.controller.base.IEditEntityController<domain.Stock> {
+module controller.stock {
+    export interface IEditStockController extends controller.base.IEditEntityController<domain.Stock> {
         fetchProduct: (productId: number) => void;
         units: string[];
     }
 
-    export class EditStockController extends i0.controller.base.AbstractEditEntityController<domain.Stock> implements IEditStockController {
+    export class EditStockController extends controller.base.AbstractEditEntityController<domain.Stock> implements IEditStockController {
         private allUnits: string[] = [];
         units: string[];
 
         static $inject = ["$scope", "StockService", "ProductService", "AlertService", "$filter"];
-        constructor(public $scope: d.controller.base.IAppScope,
-                    public StockService: d.service.contract.StockService,
-                    public ProductService: d.service.contract.ProductService,
-                    public AlertService: d.service.contract.AlertService,
+        constructor(public $scope: controller.base.IAppScope,
+                    public StockService: service.contract.StockService,
+                    public ProductService: service.contract.ProductService,
+                    public AlertService: service.contract.AlertService,
                     public $filter: ng.IFilterService) {
             super($scope, StockService, AlertService, "/stock", "Estoque");
             
@@ -66,7 +63,3 @@ export module controller.stock {
                 
     }
 }
-
-export var register = (moduleName: string) => {
-    angular.module(moduleName).lazy.controller("EditStockController", controller.stock.EditStockController);
-};

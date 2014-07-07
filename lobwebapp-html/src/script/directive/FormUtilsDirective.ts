@@ -1,6 +1,6 @@
 ///<reference path="../reference.d.ts"/>
 
-export module directive {
+module directive {
     export class EntityIdDirective implements ng.IDirective {
         restrict = "E";
         templateUrl = "/template/directive/EntityIdTemplate.html";
@@ -31,9 +31,3 @@ export module directive {
     	templateUrl = "/template/directive/FormItemTemplate.html";
     }
 }
-
-export var register = (moduleName: string) => {
-    angular.module(moduleName).lazy.directive("entityId", [() => new directive.EntityIdDirective()]);
-	angular.module(moduleName).lazy.directive("saveChanges", [() => new directive.SaveChangesDirective()]);
-    angular.module(moduleName).lazy.directive("formItem", [() => new directive.FormItemDirective()]);
-};
