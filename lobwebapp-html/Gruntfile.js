@@ -173,11 +173,13 @@ module.exports = function (grunt) {
         },
         ts: {
             dev: {
-                src: ['<%= yeoman.app %>/script/**/*.ts'],
+                src: ['<%= yeoman.app %>/scripts/**/*.ts'],
+                html: ['<%= yeoman.app %>/scripts/**/*.html'],
+                reference: '<%= yeoman.app %>/scripts/reference.ts',
+                out: '<%= yeoman.app %>/scripts/out.js',
+                watch: '<%= yeoman.app %>/scripts',
                 options: {
-                    target: 'es5',
-                    declaration: false,
-                    removeComments: false
+                    target: 'es5'
                 }
             },
             dist: {
@@ -204,7 +206,7 @@ module.exports = function (grunt) {
             dev: {
                 options: {
                     name: "main",
-                    mainConfigFile: "<%= yeoman.app %>/script/main.js",
+                    mainConfigFile: "<%= yeoman.app %>/script/app.js",
                     out: "<%= yeoman.app %>/script/app.js",
                     //normalizeDirDefines: "all",
                     optimize: "none"
@@ -217,15 +219,6 @@ module.exports = function (grunt) {
                     out: "<%= yeoman.dist %>/script/app.js"
                 }
             }
-        },
-        ts_reference: {
-          dev: {
-            options: {
-              srcDir: '<%= yeoman.app %>/script'
-            },
-            src: ['<%= yeoman.app %>/script/**/*.ts'],
-            dest: '<%= yeoman.app %>/script/reference.d.ts'
-          }
         }
     });
 
@@ -235,8 +228,8 @@ module.exports = function (grunt) {
         }
         grunt.task.run([
             'less:dev',
-            'ts:dev',
-            'requirejs:dev',
+            //'ts:dev',
+            //'requirejs:dev',
             'connect:livereload',
             'open',
             'watch'
@@ -260,7 +253,7 @@ module.exports = function (grunt) {
             'htmlmin:dist',
             'less:dist',
             'ts:dist',
-            'requirejs:dist',
+            //'requirejs:dist',
             'uglify:dist'
             ]);
     });
@@ -280,5 +273,4 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-requirejs');
     grunt.loadNpmTasks("grunt-open");
     grunt.loadNpmTasks("grunt-ts");
-    grunt.loadNpmTasks("grunt-ts-reference");
 };

@@ -1,26 +1,31 @@
-/* 
+// Type definitions for RequireJS 2.1.8
+// Project: http://requirejs.org/
+// Definitions by: Josh Baldwin <https://github.com/jbaldwin/>
+// Definitions: https://github.com/borisyankov/DefinitelyTyped
+
+/*
 require-2.1.8.d.ts may be freely distributed under the MIT license.
 
 Copyright (c) 2013 Josh Baldwin https://github.com/jbaldwin/require.d.ts
 
 Permission is hereby granted, free of charge, to any person
-obtaining a copy of this software and associated documentation 
-files (the "Software"), to deal in the Software without 
-restriction, including without limitation the rights to use, 
-copy, modify, merge, publish, distribute, sublicense, and/or sell 
-copies of the Software, and to permit persons to whom the 
+obtaining a copy of this software and associated documentation
+files (the "Software"), to deal in the Software without
+restriction, including without limitation the rights to use,
+copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the
 Software is furnished to do so, subject to the following conditions:
 
-The above copyright notice and this permission notice shall be 
+The above copyright notice and this permission notice shall be
 included in all copies or substantial portions of the Software.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, 
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES 
-OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND 
-NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT 
-HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, 
-WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
-FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR 
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 OTHER DEALINGS IN THE SOFTWARE.
 */
 
@@ -70,9 +75,9 @@ interface RequireConfig {
 	// The root path to use for all module lookups.
 	baseUrl?: string;
 
-	// Path mappings for module names not found directly under 
+	// Path mappings for module names not found directly under
 	// baseUrl.
-	paths?: { [key: string]: string; };
+	paths?: { [key: string]: any; };
 
 	// Dictionary of Shim's.
 	// does not cover case of key->string[]
@@ -224,6 +229,13 @@ interface Require {
 	config(config: RequireConfig): Require;
 
 	/**
+	* CommonJS require call
+	* @param module Module to load
+	* @return The loaded module
+	*/
+	(module: string): any;
+
+	/**
 	* Start the main app logic.
 	* Callback is optional.
 	* Can alternatively use deps and callback.
@@ -235,7 +247,13 @@ interface Require {
 	* @see Require()
 	* @param ready Called when required modules are ready.
 	**/
-	(modules: string[], ready: (...modules: any[]) => void ): void;
+	(modules: string[], ready: Function): void;
+
+	/**
+	* @see http://requirejs.org/docs/api.html#errbacks
+	* @param ready Called when required modules are ready.
+	**/
+	(modules: string[], ready: Function, errback: Function): void;
 
 	/**
 	* Generate URLs from require module
@@ -243,6 +261,18 @@ interface Require {
 	* @return URL string
 	**/
 	toUrl(module: string): string;
+
+	/**
+	* Returns true if the module has already been loaded and defined.
+	* @param module Module to check
+	**/
+	defined(module: string): boolean;
+
+	/**
+	* Returns true if the module has already been requested or is in the process of loading and should be available at some point.
+	* @param module Module to check
+	**/
+	specified(module: string): boolean;
 
 	/**
 	* On Error override
@@ -283,7 +313,7 @@ interface RequireDefine {
 	*	callback param deps module dependencies
 	*	callback return module definition
 	**/
-	(deps: string[], ready: (...deps: any[]) => any): void;
+    	(deps: string[], ready: Function): void;
 
 	/**
 	*  Define module with simplified CommonJS wrapper.
@@ -303,7 +333,15 @@ interface RequireDefine {
 	*	callback deps module dependencies
 	*	callback return module definition
 	**/
-	(name: string, deps: string[], ready: (...deps: any[]) => any): void;
+	(name: string, deps: string[], ready: Function): void;
+
+	/**
+	* Define a module with a name.
+	* @param name The name of the module.
+	* @param ready Callback function when the dependencies are loaded.
+	*	callback return module definition
+	**/
+	(name: string, ready: Function): void;
 }
 
 // Ambient declarations for 'require' and 'define'
