@@ -2,7 +2,6 @@
 /// <reference path="directive/DirectiveModule.ts" />
 /// <reference path="controller/Routes.ts" />
 /// <reference path="controller/ControllerModule.ts" />
-/// <reference path="core/AppModule.ts" />
 
 //grunt-start
 /// <reference path="controller/base/AbstractEditEntityController.ts" />
@@ -75,4 +74,4 @@
 /// <reference path="vendor.d.ts" />
 //grunt-end
 
-/// <reference path="main.ts" />
+/// <reference path="AppModule.ts" />
