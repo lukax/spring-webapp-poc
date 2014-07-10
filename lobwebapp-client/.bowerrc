@@ -1,3 +1,4 @@
 {
-    "directory": "src/lib"
+    "directory": "vendor",
+	"json": "bower.json"
 }

@@ -1,5 +1,5 @@
-///<reference path="../../vendor/angularjs/angular.d.ts"/>
-///<reference path="../../vendor/angularjs/angular-route.d.ts"/>
+///<reference path="../../vendor/angular/angular.d.ts"/>
+///<reference path="../../vendor/angular/angular-route.d.ts"/>
 ///<reference path="../../vendor/jquery/jquery.d.ts"/>
 ///<reference path="../../vendor/requirejs/require.d.ts"/>
 ///<reference path="../../vendor/underscore/underscore.d.ts"/>

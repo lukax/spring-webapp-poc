@@ -8,9 +8,12 @@ logs/
 .springBeans
 
 ## client
-node_modules/
-bin/
+*.sw*
+*~
 build/
+bin/
+node_modules/
+vendor/
 dist/
 *.tmp.*
 .sass-cache
@@ -19,6 +22,8 @@ dist/
 .idea/
 lib/
 vendor/
+
+
 
 ##################################################################
 

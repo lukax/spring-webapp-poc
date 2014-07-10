@@ -26,61 +26,61 @@ module core{
                 url: "/user/auth",
                 secured: false,
                 errorUrl: "/user/auth?error=0",
-                templateUrl: "views/user/authUser.html",
+                templateUrl: "assets/views/user/authUser.html",
                 controller: "AuthUserController"
             }, {
                 name: "productList",
                 url: "/product/list",
                 secured: true,
-                templateUrl: "views/product/listProduct.html",
+                templateUrl: "assets/views/product/listProduct.html",
                 controller: "ListProductController"
             }, {
                 name: "productEdit",
                 url: "/product/:productId",
                 secured: true,
-                templateUrl: "views/product/editProduct.html",
+                templateUrl: "assets/views/product/editProduct.html",
                 controller: "EditProductController"
             }, {
                 name: "orderGraph",
                 url: "/order/graph",
                 secured: true,
-                templateUrl: "views/order/graphOrder.html",
+                templateUrl: "assets/views/order/graphOrder.html",
                 controller: "GraphOrderController"
             }, {
                 name: "orderList",
                 url: "/order/list",
                 secured: true,
-                templateUrl: "views/order/listOrder.html",
+                templateUrl: "assets/views/order/listOrder.html",
                 controller: "ListOrderController"
             }, {
                 name: "orderEdit",
                 url: "/order/:orderId",
                 secured: true,
-                templateUrl: "views/order/editOrder.html",
+                templateUrl: "assets/views/order/editOrder.html",
                 controller: "EditOrderController"
             }, {
                 name: "customerList",
                 url: "/customer/list",
                 secured: true,
-                templateUrl: "views/customer/listCustomer.html",
+                templateUrl: "assets/views/customer/listCustomer.html",
                 controller: "ListCustomerController"
             }, {
                 name: "customerEdit",
                 url: "/customer/:customerId",
                 secured: true,
-                templateUrl: "views/customer/editCustomer.html",
+                templateUrl: "assets/views/customer/editCustomer.html",
                 controller: "EditCustomerController"
             }, {
                 name: "stockList",
                 url: "/stock/list",
                 secured: true,
-                templateUrl: "views/stock/listStock.html",
+                templateUrl: "assets/views/stock/listStock.html",
                 controller: "ListStockController"
             }, {
                 name: "stockEdit",
                 url: "/stock/:stockId",
                 secured: true,
-                templateUrl: "views/stock/editStock.html",
+                templateUrl: "assets/views/stock/editStock.html",
                 controller: "EditStockController"
             }
         ];

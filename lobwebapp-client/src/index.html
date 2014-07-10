@@ -3,16 +3,21 @@
 <head>
   <title>LOBWebApp</title>
   <base href="/">
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width">
-  <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
-  <link rel="stylesheet" href="css/main.css">
-  <script data-main="scripts/out.js" src="lib/requirejs/require.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon">
+
+  <!-- compiled CSS --><% styles.forEach( function ( file ) { %>
+  <link rel="stylesheet" type="text/css" href="<%= file %>" /><% }); %>
+  <!-- compiled JavaScript --><% scripts.forEach( function ( file ) { %>
+  <script type="text/javascript" src="<%= file %>"></script><% }); %>
+
 </head>
 <body>
-  <div ng-include="'views/mainNavbar.html'"></div>
+
+  <div ng-include="'assets/views/mainNavbar.html'"></div>
   <div class="container-fluid" ng-view></div>
   <br>
-  <div class="container" ng-include="'views/alert.html'"></div>
+  <div class="container" ng-include="'assets/views/alert.html'"></div>
+
 </body>
 </html>
