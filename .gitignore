@@ -2,22 +2,23 @@
 ## CUSTOM
 #################
 
-## core
+## server
 target/
 logs/
 .springBeans
 
-## html
-node_modules
-bin
-build
-dist
+## client
+node_modules/
+bin/
+build/
+dist/
 *.tmp.*
 .sass-cache
-components
-dist
-.idea
-lib
+components/
+dist/
+.idea/
+lib/
+vendor/
 
 ##################################################################
 
