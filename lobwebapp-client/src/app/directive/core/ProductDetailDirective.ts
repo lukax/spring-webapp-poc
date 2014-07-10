@@ -7,7 +7,7 @@ module directive {
             product: "=",
             quantity: "="
         };
-        templateUrl = "/template/directive/ProductDetailTemplate.html";
+        template = tpl.ProductDetailDirective.html;
 
     }
 }

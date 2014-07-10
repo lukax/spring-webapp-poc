@@ -7,6 +7,6 @@ module directive {
             text: '=',
             onUpdate: '&'
         };
-        templateUrl = '/template/directive/SearchBarTemplate.html';
+        templateUrl = tpl.SearchBarDirective.html;
 	}
 }

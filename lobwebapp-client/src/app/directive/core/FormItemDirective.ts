@@ -10,6 +10,6 @@ module directive {
     		inputLabel: "@",
     		form: "="
     	};
-    	templateUrl = "/template/directive/FormItemTemplate.html";
+    	template = tpl.FormItemDirective.html;
     }
 }

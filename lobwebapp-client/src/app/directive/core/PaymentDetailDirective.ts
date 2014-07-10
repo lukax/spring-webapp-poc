@@ -6,7 +6,7 @@ module directive {
         scope = {
             payment: '='
         };
-        templateUrl = "template/directive/PaymentDetailTemplate.html";
+        template = tpl.PaymentDetailDirective.html;
         link = (scope: any, element: any, attrs: ng.IAttributes) => {
             scope.$watch("payment.status", () => {
                 if(scope.payment != null){
@@ -29,7 +29,7 @@ module directive {
     }
 }
 
-module filter {    
+module filter {
     export class PaymentStatusFilter {
         constructor(input: util.PaymentMode) {
             var localizedInput: string = "";

@@ -26,8 +26,8 @@ module.exports = {
     ts: [ 'src/**/*.ts', '!src/**/*.spec.ts' ],
     tsunit: [ 'src/**/*.spec.ts' ],
     tshtml: [ 'src/app/**/*.html' ],
-    tsreference: [ 'src/app/reference.ts' ],
-    tsout: [ 'src/app/app.js' ],
+    tsreference: 'src/app/reference.ts',
+    tsout: 'src/app/app.js',
 
     atpl: [ 'src/app/**/*.tpl.html' ],
     ctpl: [ 'src/common/**/*.tpl.html' ],
@@ -79,5 +79,6 @@ module.exports = {
     ],
     assets: [
     ]
-  },
+  }
+
 };

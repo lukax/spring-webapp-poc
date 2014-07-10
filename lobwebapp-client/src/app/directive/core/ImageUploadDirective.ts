@@ -21,14 +21,14 @@ module directive {
             placeholder: "="
         };
 
-        templateUrl = '/template/directive/ImageUploadTemplate.html';
+        template = tpl.ImageUploadDirective.html;
 
         link = ($scope: ImageUploadViewModel, element: any, attrs: any)=>{
             element.find("#imageUploadIncludeImage").on("click", ()=>{
                 if(!$scope.loading)
-                    element.find("#imageUploadInput").click();    
+                    element.find("#imageUploadInput").click();
             });
-            
+
             element.find("#imageUploadInput").fileupload({
                 dataType: "json", //server return type
                 acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
@@ -45,7 +45,7 @@ module directive {
             });
 
             $scope.$watch("url", (newValue: string)=>{
-                if(newValue == null || newValue == "") 
+                if(newValue == null || newValue == "")
                     $scope.imageSrc = $scope.placeholder;
                 else {
                     //update url
@@ -58,12 +58,12 @@ module directive {
                             $scope.imageSrc = $scope.placeholder;
                         });
                 }
-            }); 
+            });
         };
 
         controller = ["AlertService", "Progress", "$scope",
                 (AlertService, Progress, $scope: ImageUploadViewModel) => {
-            
+
             $scope.uploadFailed = () => {
                 AlertService.add({ title: "Upload falhou", content: "A imagem precisa estar em um formato válido e ser menor que 5 MB", type: util.AlertType.DANGER });
                 $scope.loading = false;

@@ -4,7 +4,7 @@
 ///<amd-dependency path="underscore"/>
 import i0 = require("script/controller/product/ListProductController");
 import i1 = require("script/service/mock/ProductServiceMock");
-import i2 = require("script/service/mock/AlertServiceMock");
+import i2 = require("script/service/mock/AlertServiceImpl");
 import i3 = require("script/service/impl/NavigatorServiceImpl");
 import i4 = require("script/modularity/ControllerModule");
 
@@ -15,7 +15,7 @@ describe("controller: ListProductController", () => {
     beforeEach(() => {
         module(($provide: ng.auto.IProvideService, $controllerProvider: ng.IControllerProvider)=>{
             $provide.service("ProductService", i1.service.mock.ProductServiceMock);
-            $provide.service("AlertService", i2.service.mock.AlertServiceMock);
+            $provide.service("AlertService", i2.service.mock.AlertServiceImpl);
             $provide.service("$routeParams", () => {
                 return { }
             });

@@ -11,12 +11,12 @@ module directive {
             entityId: '=',
             fetch: '&'
         };
-        templateUrl = '/template/directive/QuickSearchTemplate.html';
+        template = tpl.QuickSearchDirective.html;
         controller = ["$scope", "$location", ($scope: any, $location: ng.ILocationService) => {
             $scope.search = () => {
                 $location.url("/" + $scope.resourceUrl + "/list?redirect=" + encodeURIComponent($location.url()));
             };
-            
+
             $scope.fetchEntity = () => {
                 if($scope.entityId > 0)
                     $scope.fetch();
@@ -26,7 +26,7 @@ module directive {
                 if($scope.invalid != null)
                     $scope.error = $scope.invalid;
             });
-            
+
         }];
     }
 }

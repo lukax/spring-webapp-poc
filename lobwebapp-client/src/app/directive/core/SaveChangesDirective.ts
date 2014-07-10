@@ -11,6 +11,6 @@ module directive {
             onRemove: "&",
             onDiscard: "&"
         };
-        templateUrl = "/template/directive/SaveChangesTemplate.html";
+        template = tpl.SaveChangesDirective.html;
     }
 }

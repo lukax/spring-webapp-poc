@@ -7,6 +7,6 @@ module directive {
             page: '=',
             changePage: '&'
         };
-        templateUrl = '/template/directive/ListPagerTemplate.html';
+        template = tpl.ListPagerDirective.html;
     }
 }

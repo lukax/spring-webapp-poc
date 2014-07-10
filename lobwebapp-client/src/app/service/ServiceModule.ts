@@ -3,7 +3,7 @@
 var ServiceModule = angular.module("lwa.service", []);
 
 ServiceModule
-    .service("AlertService", service.mock.AlertServiceMock)
+    .service("AlertService", service.impl.AlertServiceImpl)
     .service("NavigatorService", service.impl.NavigatorServiceImpl)
     .service("Progress", util.Progress)
 
