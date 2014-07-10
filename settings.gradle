@@ -1,1 +1,1 @@
-include("lobwebapp-html", "lobwebapp-core")
+include("lobwebapp-client", "lobwebapp-server")
