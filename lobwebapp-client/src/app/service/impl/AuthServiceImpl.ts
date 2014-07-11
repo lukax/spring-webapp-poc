@@ -38,7 +38,7 @@ module service.impl {
     }
 
     logout(successCallback:(data:domain.User, status:number, headers:(headerName:string) => string, config:ng.IRequestConfig) => any, errorCallback:(data:domain.util.MessageResponse, status:number, headers:(headerName:string) => string, config:ng.IRequestConfig) => any) {
-      if (this.getUser() && this.getUser().id != 0) {
+      if (this.getUser() && this.getUser().id !== 0) {
         var previousUser = this.getUser();
         this.setToken(null);
         this.setUser(null);

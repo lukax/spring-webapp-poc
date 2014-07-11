@@ -2,17 +2,6 @@
 
 var ControllerModule = angular.module("lwa.controller", ["ngRoute", "lwa.service"]);
 
-ControllerModule
-  .config(["$controllerProvider", "$provide", "$compileProvider", "$filterProvider", controller.ControllerModuleConfig.lazyLoadCfg])
-  .config(["$routeProvider", controller.ControllerModuleConfig.routeProviderCfg])
-  .config(["$locationProvider", controller.ControllerModuleConfig.html5Cfg])
-  .config(["$httpProvider", controller.ControllerModuleConfig.httpInterceptorsCfg])
-
-  .run(["$rootScope", "NavigatorService", controller.ControllerModuleConfig.scopeVariablesCfg])
-  .run(["$rootScope", "$location", controller.ControllerModuleConfig.eventListenersCfg])
-
-;
-
 module controller {
   export class ControllerModuleConfig {
     static lazyLoadCfg = ($controllerProvider:ng.IControllerProvider, $provide:ng.auto.IProvideService, $compileProvider:ng.ICompileProvider, $filterProvider:ng.IFilterProvider) => {
@@ -107,3 +96,13 @@ module controller {
 
   }
 }
+
+ControllerModule
+  .config(["$controllerProvider", "$provide", "$compileProvider", "$filterProvider", controller.ControllerModuleConfig.lazyLoadCfg])
+  .config(["$routeProvider", controller.ControllerModuleConfig.routeProviderCfg])
+  .config(["$locationProvider", controller.ControllerModuleConfig.html5Cfg])
+  .config(["$httpProvider", controller.ControllerModuleConfig.httpInterceptorsCfg])
+
+  .run(["$rootScope", "NavigatorService", controller.ControllerModuleConfig.scopeVariablesCfg])
+  .run(["$rootScope", "$location", controller.ControllerModuleConfig.eventListenersCfg])
+  ;

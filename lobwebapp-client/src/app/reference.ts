@@ -3,6 +3,12 @@
 /// <reference path="controller/Routes.ts" />
 /// <reference path="controller/ControllerModule.ts" />
 
+
+/// <reference path="service/mock/base/EntityServiceMock.ts" />
+/// <reference path="service/mock/base/PersonServiceMock.ts" />
+/// <reference path="service/impl/base/EntityServiceImpl.ts" />
+/// <reference path="service/impl/base/PersonServiceImpl.ts" />
+
 //grunt-start
 /// <reference path="directive/core/EntityIdDirective.html.ts" />
 /// <reference path="directive/core/FormItemDirective.html.ts" />
@@ -70,16 +76,12 @@
 /// <reference path="service/impl/ProductServiceImpl.ts" />
 /// <reference path="service/impl/StockServiceImpl.ts" />
 /// <reference path="service/impl/UserServiceImpl.ts" />
-/// <reference path="service/impl/base/EntityServiceImpl.ts" />
-/// <reference path="service/impl/base/PersonServiceImpl.ts" />
 /// <reference path="service/mock/AuthServiceMock.ts" />
 /// <reference path="service/mock/CustomerServiceMock.ts" />
 /// <reference path="service/mock/OrderServiceMock.ts" />
 /// <reference path="service/mock/ProductServiceMock.ts" />
 /// <reference path="service/mock/StockServiceMock.ts" />
 /// <reference path="service/mock/UserServiceMock.ts" />
-/// <reference path="service/mock/base/EntityServiceMock.ts" />
-/// <reference path="service/mock/base/PersonServiceMock.ts" />
 /// <reference path="util/DependencyManager.ts" />
 /// <reference path="util/EnumUtil.ts" />
 /// <reference path="util/Progress.ts" />
