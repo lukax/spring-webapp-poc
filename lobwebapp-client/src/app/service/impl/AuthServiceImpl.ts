@@ -7,7 +7,6 @@ module service.impl {
     private defaultUser:domain.User = { id: 1, name: "Lucas", username: "", password: "", roles: ["ROLE_USER"] };
 
     static $inject = ["$http", "$rootScope", "$window"];
-
     constructor(public $http:ng.IHttpService, public $rootScope:ng.IRootScopeService, public $window:ng.IWindowService) {
 
     }

@@ -62,7 +62,7 @@ module service.impl {
     }
 
     private setAlerts(alerts:domain.util.Alert[]) {
-      if (!_.isEqual(this.alerts, alerts)) {
+      if (!angular.equals(this.alerts, alerts)) {
         this.alerts = alerts;
         this.$rootScope.$broadcast("ALERTS_CHANGED", this.list());
       }
@@ -73,7 +73,7 @@ module service.impl {
         var alerts = this.list();
         if (alerts.length >= 3) {
           //Remove first alert to keep list from getting big
-          alerts = _.rest(this.list());
+          alerts.splice(0, 1);
         }
         alerts.forEach((x, index) => {
           var differenceInSecs = Math.abs((new Date().getTime() - x.date.getTime()) / 1000);

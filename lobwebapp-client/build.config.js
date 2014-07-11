@@ -71,7 +71,6 @@ module.exports = {
       'vendor/angular-ui/build/angular-ui.js',
       'vendor/angular-ui-utils/ui-utils.js',
       'vendor/angular-ui-bootstrap-bower/ui-bootstrap.js',
-      'vendor/underscore/underscore.js',
       'vendor/nprogress/nprogress.js',
       'vendor/uri.js/src/URI'
     ],

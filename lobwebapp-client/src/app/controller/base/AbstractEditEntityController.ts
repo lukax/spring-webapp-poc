@@ -136,7 +136,7 @@ module controller.base{
 			var previousEntity = null;
 			try{ previousEntity = angular.fromJson(localStorage[this._tempObjKey]); }
 			catch(e){ console.log("[INFO]: could not restore previous changes")}
-			if(previousEntity != null && previousEntity.id == fetchedEntity.id && !_.isEqual(previousEntity, fetchedEntity)){
+			if(previousEntity != null && previousEntity.id == fetchedEntity.id && !angular.equals(previousEntity, fetchedEntity)){
 				this.entity = previousEntity;
 				console.log("[INFO]: previous changes restored");
 				this.isPreviousChanges = true;

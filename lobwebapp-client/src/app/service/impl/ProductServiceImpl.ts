@@ -23,10 +23,12 @@ module service.impl {
     }
 
     listCategory(successCallback:(data:string[], status:number, headers:(headerName:string) => string, config:ng.IRequestConfig) => any, errorCallback:(data:domain.util.MessageResponse, status:number, headers:(headerName:string) => string, config:ng.IRequestConfig) => any) {
-      this.list((successData, status, headers, config) => {
-          var categories = _.uniq(_.map(successData, (x) => {
-            return x.category;
-          }));
+      this.list((products, status, headers, config) => {
+          var categories = [];
+          products.forEach((x) => {
+            if(categories.indexOf(x) === -1)
+              categories.push(x);
+          });
           successCallback(categories, status, headers, config);
         },
         errorCallback);

@@ -4,7 +4,6 @@ module service.impl {
   export class OrderServiceImpl extends base.EntityServiceImpl<domain.Order> implements service.contract.OrderService, service.contract.base.HasDefaultValue<domain.Order> {
 
     static $inject = ["$http"];
-
     constructor($http:ng.IHttpService) {
       super("order", $http, this);
     }

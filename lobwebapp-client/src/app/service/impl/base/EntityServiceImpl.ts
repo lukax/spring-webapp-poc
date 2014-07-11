@@ -55,7 +55,7 @@ module service.impl.base {
 
     exists(entity:T, successCallback:(data:boolean, status:number, headers:(headerName:string) => string, config:ng.IRequestConfig) => any, errorCallback:(data:domain.util.MessageResponse, status:number, headers:(headerName:string) => string, config:ng.IRequestConfig) => any) {
       this.find(entity.id, (d, s, h, c) => {
-        if (_.isEqual(d, entity))
+        if (angular.equals(d, entity))
           successCallback(true, s, h, c);
         else
           successCallback(false, s, h, c);

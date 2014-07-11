@@ -4,7 +4,6 @@ module service.impl {
   export class UserServiceImpl extends base.PersonServiceImpl<domain.User> implements service.contract.UserService, service.contract.base.HasDefaultValue<domain.User> {
 
     static $inject = ["$http"];
-
     constructor($http:ng.IHttpService) {
       super("user", $http, this);
     }
