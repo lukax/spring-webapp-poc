@@ -17,8 +17,11 @@ module controller.order {
     total:number;
 
     static $inject = ["$scope", "ProductService", "AlertService", "CustomerService", "OrderService"];
-
-    constructor(public $scope:controller.base.IAppScope, public ProductService:service.contract.ProductService, public AlertService:service.contract.AlertService, public CustomerService:service.contract.CustomerService, public OrderService:service.contract.OrderService) {
+    constructor(public $scope:controller.base.IAppScope,
+                public ProductService:service.contract.ProductService,
+                public AlertService:service.contract.AlertService,
+                public CustomerService:service.contract.CustomerService,
+                public OrderService:service.contract.OrderService) {
       super($scope, OrderService, AlertService, "/order", "Pedido");
 
       var orderId = this.$scope.navigator.params().orderId;
@@ -95,3 +98,5 @@ module controller.order {
     }
   }
 }
+
+ControllerModule.controller("EditOrderController", controller.order.EditOrderController);

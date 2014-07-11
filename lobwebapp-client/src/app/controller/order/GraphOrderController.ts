@@ -13,6 +13,7 @@ module controller.order {
     }
 
     export class GraphOrderController implements IGraphOrderController {
+
         static $inject = ["$scope", "OrderService", "AlertService"];
         constructor(public $scope: controller.base.IAppScope,
                     public OrderService: service.contract.OrderService,
@@ -27,7 +28,6 @@ module controller.order {
         }
 
         buildGraph(orders: domain.Order[]){
-
             var dateFormat = d3.time.format("%m/%d/%Y");
             var numberFormat = d3.format(".2f");
             var daysSinceJanuary = Math.floor((new Date().getTime() - new Date("1/1/"+new Date().getFullYear()).getTime())*1/1000*1/60*1/60*1/24);
@@ -215,3 +215,5 @@ module controller.order {
         }
     }
 }
+
+ControllerModule.controller("GraphOrderController", controller.order.GraphOrderController);

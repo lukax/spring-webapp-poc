@@ -49,3 +49,5 @@ module service.mock {
     }
   }
 }
+
+ServiceModule.service("ProductService", service.mock.ProductServiceMock);

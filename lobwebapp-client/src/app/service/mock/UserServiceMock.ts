@@ -22,3 +22,5 @@ module service.mock {
     }
   }
 }
+
+ServiceModule.service("UserService", service.mock.UserServiceMock);

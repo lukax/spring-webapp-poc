@@ -38,3 +38,5 @@ module service.mock {
 
   }
 }
+
+ServiceModule.service("OrderService", service.mock.OrderServiceMock);

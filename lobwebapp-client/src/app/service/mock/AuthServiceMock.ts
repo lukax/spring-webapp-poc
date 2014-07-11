@@ -54,3 +54,4 @@ module service.mock {
   }
 }
 
+ServiceModule.service("AuthService", service.mock.AuthServiceMock);

@@ -1,4 +1,4 @@
-module core{
+module controller{
     export interface AppRoute {
         name: string;
         url: string;

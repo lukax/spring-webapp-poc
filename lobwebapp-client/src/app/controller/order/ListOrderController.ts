@@ -10,9 +10,11 @@ module controller.order {
                     public OrderService: service.contract.OrderService,
                     public AlertService: service.contract.AlertService) {
             super($scope, OrderService, AlertService, "/order", "orderId");
-            
+
             this.listEntity(0);
         }
-        
+
     }
 }
+
+ControllerModule.controller("ListOrderController", controller.order.ListOrderController);

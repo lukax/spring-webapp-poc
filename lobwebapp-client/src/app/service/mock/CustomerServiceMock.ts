@@ -15,3 +15,5 @@ module service.mock {
 
   }
 }
+
+ServiceModule.service("CustomerService", service.mock.CustomerServiceMock);

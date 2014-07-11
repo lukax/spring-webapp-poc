@@ -88,3 +88,5 @@ module service.impl {
 
   }
 }
+
+ServiceModule.service("AlertService", service.impl.AlertServiceImpl);

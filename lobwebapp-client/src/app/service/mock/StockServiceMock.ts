@@ -30,3 +30,5 @@ module service.mock {
     }
   }
 }
+
+ServiceModule.service("StockService", service.mock.StockServiceMock);
