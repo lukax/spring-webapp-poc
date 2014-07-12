@@ -1,12 +1,4 @@
-///<reference path="../../reference.d.ts"/>
-///<amd-dependency path="angular"/>
-///<amd-dependency path="angularMocks"/>
-///<amd-dependency path="underscore"/>
-import i0 = require("script/controller/product/ListProductController");
-import i1 = require("script/service/mock/ProductServiceMock");
-import i2 = require("script/service/mock/AlertServiceImpl");
-import i3 = require("script/service/impl/NavigatorServiceImpl");
-import i4 = require("script/modularity/ControllerModule");
+///<reference path="../../reference.ts"/>
 
 describe("controller: ListProductController", () => {
 
@@ -14,16 +6,16 @@ describe("controller: ListProductController", () => {
 
     beforeEach(() => {
         module(($provide: ng.auto.IProvideService, $controllerProvider: ng.IControllerProvider)=>{
-            $provide.service("ProductService", i1.service.mock.ProductServiceMock);
-            $provide.service("AlertService", i2.service.mock.AlertServiceImpl);
+            $provide.service("ProductService", service.mock.ProductServiceMock);
+            $provide.service("AlertService", service.impl.AlertServiceImpl);
             $provide.service("$routeParams", () => {
                 return { }
             });
             $provide.service("Progress", () => {
                 return { start: () => {}, done: () => {}, set: () => {} }
             });
-            $provide.service("NavigatorService", i3.service.impl.NavigatorServiceImpl);
-            $controllerProvider.register("ListProductController", i0.controller.product.ListProductController);
+            $provide.service("NavigatorService", service.impl.NavigatorServiceImpl);
+            $controllerProvider.register("ListProductController", controller.product.ListProductController);
         });
         inject(($rootScope: ng.IRootScopeService, NavigatorService)=> {
             $scope = $rootScope.$new();

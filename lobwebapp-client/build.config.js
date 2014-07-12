@@ -65,6 +65,7 @@ module.exports = {
    */
   vendor_files: {
     js: [
+      'vendor/jquery/dist/jquery.js',
       'vendor/angular/angular.js',
       'vendor/angular-route/angular-route.js',
       'vendor/angular-animate/angular-animate.js',
@@ -72,7 +73,7 @@ module.exports = {
       'vendor/angular-ui-utils/ui-utils.js',
       'vendor/angular-ui-bootstrap-bower/ui-bootstrap.js',
       'vendor/nprogress/nprogress.js',
-      'vendor/uri.js/src/URI'
+      'vendor/uri.js/src/URI.js'
     ],
     css: [
     ],

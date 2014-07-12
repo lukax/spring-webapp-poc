@@ -20,7 +20,7 @@ describe("service: AuthService", () => {
     $httpBackend.flush();
 
     expect(sucSpy).toHaveBeenCalled();
-    expect(sucSpy.calls.length).toBe(1);
+    expect((<any>sucSpy.calls).length).toBe(1);
     expect(AuthService.isLoggedIn()).toBeTruthy();
     expect(errSpy).not.toHaveBeenCalled();
   })));
