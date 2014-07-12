@@ -2,6 +2,11 @@
   "author": "Lucas Espindola",
   "name": "lobwebapp-html",
   "version": "0.2.1",
+  "homepage": "https://github.com/lukax/LOBWebApp",
+  "licenses": {
+    "type": "GPL",
+    "url": "https://raw.github.com/lukax/LOBWebApp/master/LICENSE"
+  },
   "description": "Line of Business Web application Front End, based on AngularJS",
   "dependencies": {},
   "bugs": "https://github.com/lukax/LOBWebApp/issues",

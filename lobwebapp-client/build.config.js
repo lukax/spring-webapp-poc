@@ -20,14 +20,14 @@ module.exports = {
    * app's unit tests.
    */
   app_files: {
-    js: [ 'src/**/*.js', '!src/**/*.spec.js', '!src/assets/**/*.js' ],
+    js: [ 'src/**/*.js', '!src/app/**/*.js', '!src/**/*.spec.js', '!src/assets/**/*.js', 'src/app/app.js' ],
     jsunit: [ 'src/**/*.spec.js' ],
 
     ts: [ 'src/**/*.ts', '!src/**/*.spec.ts' ],
-    tsunit: [ 'src/**/*.spec.ts' ],
     tshtml: [ 'src/app/**/*.html' ],
     tsreference: 'src/app/reference.ts',
     tsout: 'src/app/app.js',
+    tsunit: [ 'src/**/*.spec.ts' ],
 
     atpl: [ 'src/app/**/*.tpl.html' ],
     ctpl: [ 'src/common/**/*.tpl.html' ],
