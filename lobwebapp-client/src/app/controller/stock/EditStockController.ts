@@ -10,16 +10,17 @@ module controller.stock {
     private allUnits:string[] = [];
     units:string[];
 
-    static $inject = ["$scope", "StockService", "ProductService", "AlertService", "$filter"];
+    static $inject = ["$scope", "StockService", "ProductService", "AlertService", "NavigatorService", "$filter"];
     constructor(public $scope:controller.base.IAppScope,
                 public StockService:service.contract.StockService,
                 public ProductService:service.contract.ProductService,
                 public AlertService:service.contract.AlertService,
+                public NavigatorService:service.contract.NavigatorService,
                 public $filter:ng.IFilterService) {
-      super($scope, StockService, AlertService, "/stock", "Estoque");
+      super($scope, StockService, AlertService, NavigatorService, "/stock", "Estoque");
 
-      var stockId = this.$scope.navigator.params().stockId;
-      var productId = this.$scope.navigator.params().productId;
+      var stockId = this.NavigatorService.params().stockId;
+      var productId = this.NavigatorService.params().productId;
 
       this.findEntity(stockId, ()=> {
         if (productId != null) this.fetchProduct(productId);

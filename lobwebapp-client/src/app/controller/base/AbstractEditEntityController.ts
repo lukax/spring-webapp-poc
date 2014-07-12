@@ -22,6 +22,7 @@ module controller.base{
     constructor(public $scope: controller.base.IAppScope,
                 public EntityService: service.contract.base.EntityService<T>,
                 public AlertService: service.contract.AlertService,
+                public NavigatorService: service.contract.NavigatorService,
                 public contextUrl: string,
                 public entityName: string) {
       this.$scope.vm = this;
@@ -44,7 +45,7 @@ module controller.base{
 			this.lock();
 			this.EntityService.save(this.entity,
 				(successData, successStatus, successHeaders) => {
-					this.$scope.navigator.url(new URI(this.contextUrl).segment(successHeaders("Entity-Id")).toString());
+					this.NavigatorService.url(new URI(this.contextUrl).segment(successHeaders("Entity-Id")).toString());
 				},
 				(errorData) => {
 					console.log(errorData);
@@ -107,17 +108,17 @@ module controller.base{
 		}
 
 		newEntity() {
-			this.$scope.navigator.url(new URI(this.contextUrl).segment("new").toString());
+			this.NavigatorService.url(new URI(this.contextUrl).segment("new").toString());
 		}
 
 		lock(){
 			this.isReadMode = true;
-			this.$scope.navigator.Progress.start();
+			this.NavigatorService.Progress.start();
 		}
 
 		unlock(){
 			this.isReadMode = false;
-			this.$scope.navigator.Progress.done();
+			this.NavigatorService.Progress.done();
 		}
 
 		onEntityChanged(entity: T){

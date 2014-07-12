@@ -13,15 +13,15 @@ module controller.product {
     categories:string[];
     imageUrl:string;
 
-    static $inject = ["$scope", "ProductService", "AlertService", "$filter"];
-
+    static $inject = ["$scope", "ProductService", "AlertService", "NavigatorService", "$filter"];
     constructor(public $scope:controller.base.IAppScope,
                 public ProductService:service.contract.ProductService,
                 public AlertService:service.contract.AlertService,
+                public NavigatorService:service.contract.NavigatorService,
                 public $filter:ng.IFilterService) {
-      super($scope, ProductService, AlertService, "/product", "Produto");
+      super($scope, ProductService, AlertService, NavigatorService, "/product", "Produto");
 
-      var productId = this.$scope.navigator.params().productId;
+      var productId = this.NavigatorService.params().productId;
 
       this.findEntity(String(productId), ()=> {
         this.imageUrl = this.ProductService.getImageUrl(this.entity.id);

@@ -11,10 +11,11 @@ module controller.user {
     user:domain.User = { id: 0, username: "", password: "", roles: [], name: "" };
     lock:boolean;
 
-    static $inject = ["$scope", "AuthService", "AlertService"];
+    static $inject = ["$scope", "AuthService", "AlertService", "NavigatorService"];
     constructor(public $scope:controller.base.IAppScope,
                 public AuthService:service.contract.AuthService,
-                public AlertService:service.contract.AlertService) {
+                public AlertService:service.contract.AlertService,
+                public NavigatorService:service.contract.NavigatorService) {
       this.$scope.vm = this;
 
       this.processParams();
@@ -47,12 +48,12 @@ module controller.user {
     }
 
     toDefaultPage() {
-      this.$scope.navigator.url("/product/list");
+      this.NavigatorService.url("/product/list");
     }
 
     private processParams() {
-      var error = this.$scope.navigator.params().error;
-      var logout = this.$scope.navigator.params().logout;
+      var error = this.NavigatorService.params().error;
+      var logout = this.NavigatorService.params().logout;
 
       switch (String(error)) {
         case "0":

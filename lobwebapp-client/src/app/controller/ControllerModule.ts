@@ -69,10 +69,6 @@ module controller {
       $httpProvider.interceptors.push(logoutUserOn401);
     };
 
-    static scopeVariablesCfg = ($rootScope:controller.base.IAppScope, NavigatorService:service.contract.NavigatorService) => {
-      $rootScope.navigator = NavigatorService;
-    };
-
     static authenticationResolver = () => {
       return {
         authentication: ["$q", "AuthService", ($q:ng.IQService, AuthService:service.contract.AuthService) => {
@@ -103,6 +99,5 @@ ControllerModule
   .config(["$locationProvider", controller.ControllerModuleConfig.html5Cfg])
   .config(["$httpProvider", controller.ControllerModuleConfig.httpInterceptorsCfg])
 
-  .run(["$rootScope", "NavigatorService", controller.ControllerModuleConfig.scopeVariablesCfg])
   .run(["$rootScope", "$location", controller.ControllerModuleConfig.eventListenersCfg])
   ;

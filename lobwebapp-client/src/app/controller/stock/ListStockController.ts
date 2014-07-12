@@ -6,11 +6,12 @@ module controller.stock {
 
     export class ListStockController extends controller.base.AbstractListEntityController<domain.Stock> implements IListStockController{
 
-      static $inject = ["$scope", "StockService", "AlertService"];
+      static $inject = ["$scope", "StockService", "AlertService", "NavigatorService"];
         constructor(public $scope: controller.base.IAppScope,
                     public StockService: service.contract.StockService,
-                    public AlertService: service.contract.AlertService) {
-            super($scope, StockService, AlertService, "/stock", "stockId");
+                    public AlertService: service.contract.AlertService,
+                    public NavigatorService:service.contract.NavigatorService) {
+            super($scope, StockService, AlertService, NavigatorService, "/stock", "stockId");
 
             this.listEntity(0);
         }

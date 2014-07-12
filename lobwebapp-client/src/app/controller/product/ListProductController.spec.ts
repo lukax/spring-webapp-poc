@@ -17,9 +17,8 @@ describe("controller: ListProductController", () => {
             $provide.service("NavigatorService", service.impl.NavigatorServiceImpl);
             $controllerProvider.register("ListProductController", controller.product.ListProductController);
         });
-        inject(($rootScope: ng.IRootScopeService, NavigatorService)=> {
-            $scope = $rootScope.$new();
-            $scope.navigator = NavigatorService;
+        inject(($rootScope: ng.IRootScopeService)=> {
+          $scope = $rootScope.$new();
         });
     });
 
@@ -44,7 +43,7 @@ describe("controller: ListProductController", () => {
         expect($location.path()).toBe("/product/0");
     }));
 
-    xit("should get searchText from url Params", inject(($controller: ng.IControllerService, $timeout: ng.ITimeoutService, $routeParams: any) => {
+    it("should get searchText from url Params", inject(($controller: ng.IControllerService, $timeout: ng.ITimeoutService, $routeParams: any) => {
         $routeParams.search = "SSD";
         var ctrl = $controller("ListProductController", {
             $scope: $scope

@@ -14,16 +14,17 @@ module controller.order {
 
     export class GraphOrderController implements IGraphOrderController {
 
-        static $inject = ["$scope", "OrderService", "AlertService"];
+        static $inject = ["$scope", "OrderService", "AlertService", "NavigatorService"];
         constructor(public $scope: controller.base.IAppScope,
                     public OrderService: service.contract.OrderService,
-                    public AlertService: service.contract.AlertService) {
+                    public AlertService: service.contract.AlertService,
+                    public NavigatorService:service.contract.NavigatorService) {
             this.$scope.vm = this;
 
-            this.$scope.navigator.Progress.start();
+            this.NavigatorService.Progress.start();
             this.OrderService.list((successData) => {
                 this.buildGraph(successData);
-                this.$scope.navigator.Progress.done();
+                this.NavigatorService.Progress.done();
             }, () => { });
         }
 

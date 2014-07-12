@@ -6,13 +6,14 @@ module controller.customer {
 
   export class EditCustomerController extends controller.base.AbstractEditEntityController<domain.Customer> implements IEditCustomerController {
 
-    static $inject = ["$scope", "CustomerService", "AlertService"];
+    static $inject = ["$scope", "CustomerService", "AlertService", "NavigatorService"];
     constructor(public $scope:controller.base.IAppScope,
                 public CustomerService:service.contract.CustomerService,
-                public AlertService:service.contract.AlertService) {
-      super($scope, CustomerService, AlertService, "/customer", "Cliente");
+                public AlertService:service.contract.AlertService,
+                public NavigatorService:service.contract.NavigatorService) {
+      super($scope, CustomerService, AlertService, NavigatorService, "/customer", "Cliente");
 
-      this.findEntity(this.$scope.navigator.params().customerId);
+      this.findEntity(this.NavigatorService.params().customerId);
     }
 
   }

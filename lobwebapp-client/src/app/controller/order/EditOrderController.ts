@@ -16,17 +16,18 @@ module controller.order {
     exchange:number;
     total:number;
 
-    static $inject = ["$scope", "ProductService", "AlertService", "CustomerService", "OrderService"];
+    static $inject = ["$scope", "ProductService", "AlertService", "NavigatorService", "CustomerService", "OrderService"];
     constructor(public $scope:controller.base.IAppScope,
                 public ProductService:service.contract.ProductService,
                 public AlertService:service.contract.AlertService,
+                public NavigatorService:service.contract.NavigatorService,
                 public CustomerService:service.contract.CustomerService,
                 public OrderService:service.contract.OrderService) {
-      super($scope, OrderService, AlertService, "/order", "Pedido");
+      super($scope, OrderService, AlertService, NavigatorService, "/order", "Pedido");
 
-      var orderId = this.$scope.navigator.params().orderId;
-      var customerId = this.$scope.navigator.params().customerId;
-      var productId = this.$scope.navigator.params().productId;
+      var orderId = this.NavigatorService.params().orderId;
+      var customerId = this.NavigatorService.params().customerId;
+      var productId = this.NavigatorService.params().productId;
 
       this.findEntity(orderId, () => {
         if (customerId != null) this.fetchCustomer(customerId);

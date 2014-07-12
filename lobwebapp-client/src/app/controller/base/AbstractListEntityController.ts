@@ -19,27 +19,28 @@ module controller.base {
     constructor(public $scope:controller.base.IAppScope,
                 public EntityService:service.contract.base.EntityService<T>,
                 public AlertService:service.contract.AlertService,
+                public NavigatorService:service.contract.NavigatorService,
                 public contextUrl:string,
                 public redirectParam:string) {
       this.$scope.vm = this;
 
-      this._redirectUrl = $scope.navigator.params().redirect != null ? decodeURIComponent($scope.navigator.params().redirect) : null;
-      this.searchText = (this.$scope.navigator.params().search || "");
+      this._redirectUrl = NavigatorService.params().redirect != null ? decodeURIComponent(NavigatorService.params().redirect) : null;
+      this.searchText = (this.NavigatorService.params().search || "");
     }
 
     listEntity(pageIndex:number) {
-      this.$scope.navigator.Progress.start();
+      this.NavigatorService.Progress.start();
       this.EntityService.list(
         (successData, successStatus, headers) => {
           this.page = { index: pageIndex, size: Number(headers(util.Headers.PAGE_TOTAL)) };
           this.entities = successData;
-          this.$scope.navigator.Progress.done();
+          this.NavigatorService.Progress.done();
           if (this._redirectUrl) this.AlertService.add({ title: "Busca Rápida", content: "Clique em um item da lista para voltar para a página anterior", type: util.AlertType.INFO });
         },
         (errorData) => {
           console.log(errorData);
           this.AlertService.addMessageResponse(errorData, "Não foi possível listar");
-          this.$scope.navigator.Progress.done();
+          this.NavigatorService.Progress.done();
         }, { index: pageIndex, size: this._defaultPageSize });
     }
 
@@ -49,10 +50,10 @@ module controller.base {
           .removeSearch(this.redirectParam)
           .addSearch(this.redirectParam, String(id))
           .toString();
-        this.$scope.navigator.url(this._redirectUrl);
+        this.NavigatorService.url(this._redirectUrl);
       }
       else
-        this.$scope.navigator.url(new URI(this.contextUrl).segment(String(id)).toString());
+        this.NavigatorService.url(new URI(this.contextUrl).segment(String(id)).toString());
     }
 
   }

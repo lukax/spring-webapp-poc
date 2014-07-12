@@ -7,9 +7,12 @@ module controller.product {
 
   export class ListProductController extends controller.base.AbstractListEntityController<domain.Product> implements IListProductController {
 
-    static $inject = ["$scope", "ProductService", "AlertService"];
-    constructor(public $scope:controller.base.IAppScope, public ProductService:service.contract.ProductService, public AlertService:service.contract.AlertService) {
-      super($scope, ProductService, AlertService, "/product", "productId");
+    static $inject = ["$scope", "ProductService", "AlertService", "NavigatorService"];
+    constructor(public $scope:controller.base.IAppScope,
+                public ProductService:service.contract.ProductService,
+                public AlertService:service.contract.AlertService,
+                public NavigatorService:service.contract.NavigatorService) {
+      super($scope, ProductService, AlertService, NavigatorService, "/product", "productId");
 
       this.listProduct(0);
     }
@@ -23,12 +26,12 @@ module controller.product {
           (successData, successStatus, headers) => {
             this.page = { index: pageIndex, size: Number(headers(util.Headers.PAGE_TOTAL)) };
             this.entities = successData;
-            this.$scope.navigator.Progress.done();
+            this.NavigatorService.Progress.done();
           },
           (errorData) => {
             console.log(errorData);
             this.AlertService.addMessageResponse(errorData, "Não foi possível listar produtos");
-            this.$scope.navigator.Progress.done();
+            this.NavigatorService.Progress.done();
           },
           { index: pageIndex, size: this._defaultPageSize });
       }
