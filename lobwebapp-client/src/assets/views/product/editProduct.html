@@ -12,7 +12,7 @@
 		<form class="form-horizontal" role="form" name="productForm" novalidate ng-submit="vm.saveOrUpdateEntity()">
 
 			<entity-id></entity-id>
-			
+
 			<form-item input-label="Nome" input-id="inputName" form="productForm">
 				<input type="text" class="form-control" id="inputName" name="inputName" placeholder="Digite o nome do Produto" autofocus ng-model="vm.entity.name" required ng-minlength="5" ng-maxlength="100">
 			</form-item>
@@ -22,7 +22,7 @@
 					<span class="input-group-addon">R$</span>
 					<input type="text" class="form-control" id="inputPrice" name="inputPrice" ng-model="vm.entity.price" required ng-pattern="/^(?=.*[1-9])\d*(?:\.\d{1,2})?$/">
 					<div class="input-group-btn">
-                        <button type="button" class="btn btn-default dropdown-toggle" id="btnPriceInfoId" ng-click="vm.togglePriceInfo = !vm.togglePriceInfo" ui-jq="tooltip" title="Detalhar Cálculo de Preço" ng-disabled="productForm.inputPrice.$invalid">
+                        <button type="button" class="btn btn-default dropdown-toggle" id="btnPriceInfoId" ng-click="vm.togglePriceInfo = !vm.togglePriceInfo" title="Detalhar Cálculo de Preço" ng-disabled="productForm.inputPrice.$invalid">
                             <span class="glyphicon glyphicon-chevron-down" ng-class="{'glyphicon-chevron-down': !vm.togglePriceInfo, 'glyphicon-chevron-up': vm.togglePriceInfo}"></span>
                         </button>
 					</div>
@@ -44,7 +44,7 @@
                     </div>
                 </form-item>
             </div>
-						
+
 			<div class="form-group">
 				<div ng-class="{'has-error': productForm.inputNcm.$invalid}">
 					<label for="inputNcm" class="col-md-1 control-label">NCM</label>

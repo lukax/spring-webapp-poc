@@ -17,11 +17,22 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-ngmin');
   grunt.loadNpmTasks('grunt-html2js');
   grunt.loadNpmTasks("grunt-ts");
+  grunt.loadNpmTasks("grunt-contrib-connect");
+  grunt.loadNpmTasks("grunt-open");
 
   /**
    * Load in our build configuration file.
    */
   var userConfig = require('./build.config.js');
+
+  var mountFolder = function (connect, dir) {
+    return connect.static(require('path').resolve(dir));
+  };
+  var modRewrite = require('connect-modrewrite');
+  var rewriteRules = [
+    '^/api/(.*)$ http://localhost:8080/$1 [P]', /* API Proxy */
+    '!\\.html|\\.js|\\.map|\\.ts|\\.css|\\.eot|\\.jpeg|\\.svg|\\.ttf|\\.woff|\\.ico|\\.gif|\\.otf|\\.png$ /index.html [L]' /* HTML5 Redirect */
+  ];
 
   /**
    * This is the configuration object Grunt uses to give each plugin its
@@ -90,6 +101,28 @@ module.exports = function (grunt) {
       '<%= compile_dir %>'
     ],
 
+    connect: {
+      options: {
+        port: 9000,
+        // Change this to '0.0.0.0' to access the server from outside.
+        hostname: 'localhost'
+      },
+      build: {
+        options: {
+          middleware: function (connect) {
+            return [
+              modRewrite(rewriteRules),
+              mountFolder(connect, grunt.template.process('<%= build_dir %>'))
+            ];
+          }
+        }
+      }
+    },
+    open: {
+      server: {
+        url: 'http://localhost:<%= connect.options.port %>'
+      }
+    },
     /**
      * The `copy` task just copies files from A to B. We use it here to copy
      * our project assets (images, fonts, etc.) and javascripts into
@@ -524,6 +557,9 @@ module.exports = function (grunt) {
     'less:compile', 'copy:compile_assets', 'ngmin', 'concat:compile_js', 'uglify', 'index:compile'
   ]);
 
+  grunt.registerTask('server', [
+    'open', 'connect:build:keepalive'
+  ]);
   /**
    * A utility function to get all app JavaScript sources.
    */
