@@ -67,6 +67,8 @@ module.exports = {
     js: [
       'vendor/jquery/dist/jquery.js',
       'vendor/jquery.maskedinput/jquery.maskedinput.js',
+      'vendor/jquery-file-upload/js/vendor/jquery.ui.widget.js',
+      'vendor/jquery-file-upload/js/jquery.fileupload.js',
       'vendor/angular/angular.js',
       'vendor/angular-route/angular-route.js',
       'vendor/angular-animate/angular-animate.js',
@@ -79,8 +81,13 @@ module.exports = {
       'vendor/crossfilter/crossfilter.js'
     ],
     css: [
+      'vendor/nprogress/nprogress.css',
+      'vendor/animate.css/animate.css'
     ],
     assets: [
+      'vendor/bootstrap/dist/fonts/glyphicons-halflings-regular.woff',
+      'vendor/bootstrap/dist/fonts/glyphicons-halflings-regular.ttf',
+      'vendor/bootstrap/dist/fonts/glyphicons-halflings-regular.svg'
     ]
   }
 
