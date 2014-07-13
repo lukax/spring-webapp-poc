@@ -31,7 +31,7 @@ task build(type: GruntTask, dependsOn: processResources) {
     args = ["build"]
 
     doLast {
-        tasks.distZip.execute()        
+        tasks.distZip.execute()
     }
 }
 
@@ -52,4 +52,4 @@ task bowerInstall(type: NodeTask, dependsOn: "npmInstall") {
 }
 
 clean.dependsOn("grunt_clean")
-grunt_clean.dependsOn("installGrunt")
+grunt_clean.dependsOn(["npmInstall", "installGrunt"])
