@@ -1,1 +1,1 @@
-(function ( window, angular, d3, crossfilter, URI, undefined ) {
+(function ( window, angular, d3, crossfilter, URI, NProgress, undefined ) {

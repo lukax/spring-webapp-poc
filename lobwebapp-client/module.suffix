@@ -1,1 +1,1 @@
-})( window, window.angular, window.d3, window.crossfilter, window.URI );
+})( window, window.angular, window.d3, window.crossfilter, window.URI, window.NProgress );
