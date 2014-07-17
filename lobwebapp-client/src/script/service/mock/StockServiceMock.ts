@@ -10,8 +10,16 @@ export module service.mock {
             super($timeout);
 
             this.addToRepository({
+              id: 0,
+              product: { id: 0, name: "", description: "", quantity: 0, costPrice: 0, price: 0, category: "", ncm: "" },
+              quantity: 0,
+              minQuantity: 0,
+              maxQuantity: 0,
+              unit: ""
+            });
+            this.addToRepository({
                 id: 1,
-                product: { id: 1, name: "Notebook", description: "Dell Inspiron 15R Special Edition Intel Core i5-3230M 2.6 GHz 6144 MB 750 GB", quantity: 9, costPrice: 2102.30, price: 2699.00, category: "Informática/Computadores", ncm: "8471.30.19" },
+                product: { id: 1, name: "Notebook", description: "Dell Inspiron 15R Special Edition Intel Core i5-3230M 2.6 GHz 6144 MB 750 GB", quantity: 9, costPrice: 2102.30, price: 2699.00, category: "Informï¿½tica/Computadores", ncm: "8471.30.19" },
                 quantity: 59,
                 minQuantity: 3,
                 maxQuantity: 100,

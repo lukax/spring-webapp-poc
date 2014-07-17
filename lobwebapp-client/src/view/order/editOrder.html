@@ -1,7 +1,7 @@
 <form class="form-horizontal form-validation" role="form" name="orderForm" novalidate ng-submit="vm.saveOrUpdateEntity()">
-    
+
     <entity-id></entity-id>
-    
+
     <quick-search label="Cliente" resource-url="customer" entity-id="vm.entity.customer.id" fetch="vm.fetchCustomer(vm.entity.customer.id)">
         <div class="form-control-static">
             <customer-detail customer="vm.entity.customer"></customer-detail>
@@ -25,7 +25,7 @@
             </div>
         </div>
     </quick-search>
-    
+
     <div class="form-group">
         <div class="col-md-offset-1 col-md-11">
             <ul class="list-group">
@@ -40,7 +40,7 @@
             </ul>
         </div>
     </div>
-    
+
     <div class="form-group">
         <label for="inputTotal" class="col-md-1 control-label">Total</label>
         <div class="col-md-11">
@@ -50,8 +50,8 @@
             </div>
         </div>
     </div>
-    
-    <div class="form-group lwa-fade-left" ng-hide="vm.total <= 0" ng-class="{'has-error': orderForm.inputPayment.$invalid }">
+
+    <div class="form-group" ng-hide="vm.total <= 0" ng-class="{'has-error': orderForm.inputPayment.$invalid }">
         <label for="inputPayment" class="col-md-1 col-md-offset-1 control-label">Pagamento</label>
         <div class="col-md-10">
             <div class="input-group">
@@ -82,7 +82,7 @@
             </div>
         </div>
     </div>
-    
+
     <div class="form-group" ng-hide="vm.exchange <= 0 || vm.entity.payment.status == 'PENDING'">
         <label for="inputExchange" class="col-md-1 col-md-offset-1 control-label">Troco</label>
         <div class="col-md-10">
@@ -92,7 +92,7 @@
             </div>
         </div>
     </div>
-    
+
     <div class="form-group">
         <div class="col-md-offset-1 col-md-1 form-control-static">
             <span class="label label-default">{{vm.entity.date | date:'dd/MM/yy HH:mm'}}</span>
@@ -109,5 +109,5 @@
     on-remove="vm.removeEntity()"
     on-discard="vm.discardChanges()">
     </save-changes>
-    
+
 </form>

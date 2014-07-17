@@ -87,7 +87,7 @@ export module service.mock.base {
                         });
                     if (success) successCallback(retrievedEntity, 200, () => "", null);
                     else errorCallback({ message: "ID Inexistente" }, 404, () => "", null);
-                }, 1000);
+                });
         }
 
         list(
