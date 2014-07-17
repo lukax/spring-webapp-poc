@@ -66,28 +66,17 @@ module.exports = {
   vendor_files: {
     js: [
       'vendor/jquery/dist/jquery.js',
-      'vendor/jquery.maskedinput/jquery.maskedinput.js',
       'vendor/jquery-file-upload/js/vendor/jquery.ui.widget.js',
       'vendor/jquery-file-upload/js/jquery.fileupload.js',
       'vendor/angular/angular.js',
       'vendor/angular-route/angular-route.js',
-      'vendor/angular-animate/angular-animate.js',
-      'vendor/angular-ui/build/angular-ui.js',
-      'vendor/angular-ui-utils/ui-utils.js',
-      'vendor/angular-ui-bootstrap-bower/ui-bootstrap.js',
       'vendor/nprogress/nprogress.js',
       'vendor/uri.js/src/URI.js',
       'vendor/d3/d3.js',
       'vendor/crossfilter/crossfilter.js'
     ],
     css: [
-      'vendor/nprogress/nprogress.css',
-      'vendor/animate.css/animate.css'
-    ],
-    assets: [
-      'vendor/bootstrap/dist/fonts/glyphicons-halflings-regular.woff',
-      'vendor/bootstrap/dist/fonts/glyphicons-halflings-regular.ttf',
-      'vendor/bootstrap/dist/fonts/glyphicons-halflings-regular.svg'
+      'vendor/nprogress/nprogress.css'
     ]
   }
 

@@ -1,6 +1,4 @@
-@import "../../vendor/lesshat/build/lesshat.less";
 @import "../../vendor/bootstrap/less/bootstrap.less";
-@import "typeahead.less";
 @import "bootstrap-theme.less";
 @import "variables.less";
 
@@ -30,32 +28,4 @@
   z-index: 10000;
   top: 5px;
   right: 5px;
-}
-
-
-//== ANIMATIONS
-
-.lwa-fade-left.ng-enter, .lwa-fade-left.ng-hide-remove{
-    .animation(fadeInLeft 500ms);
-}
-
-.lwa-fade-left.ng-leave, .lwa-fade-left.ng-hide-add{
-    .animation(fadeOutLeft 300ms);
-}
-
-.lwa-list{
-    cursor: pointer;
-}
-.lwa-list.ng-enter{
-    .animation(fadeInLeft 500ms);
-}
-.lwa-list.ng-leave{
-    .animation(fadeOut 300ms);
-}
-
-.alert.ng-enter{
-//    .animation(fadeIn 500ms);
-}
-.alert.ng-leave{
-//    .animation(fadeOut 500ms);
 }

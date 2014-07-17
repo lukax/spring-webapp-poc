@@ -23,7 +23,7 @@ module product.edit {
 
       var productId = this.NavigatorService.params().productId;
 
-      this.findEntity(String(productId), ()=> {
+      this.findEntity(productId, ()=> {
         this.imageUrl = this.ProductService.getImageUrl(this.entity.id);
         this.fetchCategories();
       });
