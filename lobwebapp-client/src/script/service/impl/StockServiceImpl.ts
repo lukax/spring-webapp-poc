@@ -4,7 +4,7 @@ import _ = require("underscore");
 import i0 = require("./base/EntityServiceImpl");
 
 export module service.impl {
-    export class StockServiceImpl extends i0.service.impl.base.EntityServiceImpl<domain.Stock> 
+    export class StockServiceImpl extends i0.service.impl.base.EntityServiceImpl<domain.Stock>
         implements d.service.contract.StockService, d.service.contract.base.HasDefaultValue<domain.Stock> {
 
         static $inject = ["$http"];
@@ -28,6 +28,6 @@ export module service.impl {
     }
 }
 
-export var register = (moduleName: string) => {
-    angular.module(moduleName).lazy.service("StockService", service.impl.StockServiceImpl);
+export var register = (module: ng.ILazyModule) => {
+  module.service("StockService", service.impl.StockServiceImpl);
 };

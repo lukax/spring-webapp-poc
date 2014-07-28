@@ -13,13 +13,13 @@ export module controller.stock {
                     public StockService: d.service.contract.StockService,
                     public AlertService: d.service.contract.AlertService) {
             super($scope, StockService, AlertService, "/stock", "stockId");
-            
+
             this.listEntity(0);
         }
 
     }
 }
 
-export var register = (moduleName: string) => {
-    angular.module(moduleName).lazy.controller("ListStockController", controller.stock.ListStockController);
+export var register = (module: ng.ILazyModule) => {
+  module.controller("ListStockController", controller.stock.ListStockController);
 };

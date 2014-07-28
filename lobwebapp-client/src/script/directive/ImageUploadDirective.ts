@@ -29,9 +29,9 @@ export module directive {
         link = ($scope: ImageUploadViewModel, element: any, attrs: any)=>{
             element.find("#imageUploadIncludeImage").on("click", ()=>{
                 if(!$scope.loading)
-                    element.find("#imageUploadInput").click();    
+                    element.find("#imageUploadInput").click();
             });
-            
+
             element.find("#imageUploadInput").fileupload({
                 dataType: "json", //server return type
                 acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
@@ -48,7 +48,7 @@ export module directive {
             });
 
             $scope.$watch("url", (newValue: string)=>{
-                if(newValue == null || newValue == "") 
+                if(newValue == null || newValue == "")
                     $scope.imageSrc = $scope.placeholder;
                 else {
                     //update url
@@ -61,12 +61,12 @@ export module directive {
                             $scope.imageSrc = $scope.placeholder;
                         });
                 }
-            }); 
+            });
         };
 
         controller = ["AlertService", "Progress", "$scope",
                 (AlertService, Progress, $scope: ImageUploadViewModel) => {
-            
+
             $scope.uploadFailed = () => {
                 AlertService.add({ title: "Upload falhou", content: "A imagem precisa estar em um formato válido e ser menor que 5 MB", type: enums.AlertType.DANGER });
                 $scope.loading = false;
@@ -85,6 +85,6 @@ export module directive {
     }
 }
 
-export var register = (moduleName: string) => {
-    angular.module(moduleName).lazy.directive("imageUpload", [() => new directive.ImageUploadDirective()]);
+export var register = (module: ng.ILazyModule) => {
+  module.directive("imageUpload", [() => new directive.ImageUploadDirective()]);
 };

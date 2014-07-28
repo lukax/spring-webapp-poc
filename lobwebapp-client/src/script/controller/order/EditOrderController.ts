@@ -27,12 +27,12 @@ export module controller.order {
                     public CustomerService: d.service.contract.CustomerService,
                     public OrderService: d.service.contract.OrderService) {
             super($scope, OrderService, AlertService, "/order", "Pedido");
-            
+
             var orderId = this.$scope.navigator.params().orderId;
             var customerId = this.$scope.navigator.params().customerId;
             var productId = this.$scope.navigator.params().productId;
 
-            this.findEntity(orderId, () => { 
+            this.findEntity(orderId, () => {
                 if(customerId != null) this.fetchCustomer(customerId);
                 if(productId != null) this.fetchProduct(productId);
             });
@@ -47,7 +47,7 @@ export module controller.order {
                 return false;
             });
             if (!exists) {
-                this.entity.items.push(this.item);        
+                this.entity.items.push(this.item);
             }
             this.removeCurrentItem();
         }
@@ -55,7 +55,7 @@ export module controller.order {
         removeItem(orderItem: domain.OrderItem) {
             this.entity.items = _.without(this.entity.items, orderItem);
         }
-        
+
         removeCurrentItem(){
             this.item = { product: null, quantity: null };
         }
@@ -91,7 +91,7 @@ export module controller.order {
 
         onEntityChanged(entity: domain.Order){
             super.onEntityChanged(entity);
-            if(entity == null) return;   
+            if(entity == null) return;
             this.exchange = this.OrderService.getExchange(entity);
             if (entity.payment.status == enums.PaymentStatus.PENDING)
                 entity.payment.quantity = 0;
@@ -101,6 +101,6 @@ export module controller.order {
 }
 
 
-export var register = (moduleName: string) => {
-    angular.module(moduleName).lazy.controller("EditOrderController", controller.order.EditOrderController);
+export var register = (module: ng.ILazyModule) => {
+  module.controller("EditOrderController", controller.order.EditOrderController);
 };

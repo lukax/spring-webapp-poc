@@ -16,7 +16,7 @@ export module directive {
             $scope.search = () => {
                 $location.url("/" + $scope.resourceUrl + "/list?redirect=" + encodeURIComponent($location.url()));
             };
-            
+
             $scope.fetchEntity = () => {
                 if($scope.entityId > 0)
                     $scope.fetch();
@@ -26,12 +26,12 @@ export module directive {
                 if($scope.invalid != null)
                     $scope.error = $scope.invalid;
             });
-            
+
         }];
     }
 }
 
 
-export var register = (moduleName: string) => {
-    angular.module(moduleName).lazy.directive("quickSearch", [() => new directive.QuickSearchDirective()]);
+export var register = (module: ng.ILazyModule) => {
+  module.directive("quickSearch", [() => new directive.QuickSearchDirective()]);
 };

@@ -20,7 +20,7 @@ export module controller.stock {
                     public AlertService: d.service.contract.AlertService,
                     public $filter: ng.IFilterService) {
             super($scope, StockService, AlertService, "/stock", "Estoque");
-            
+
             var stockId = this.$scope.navigator.params().stockId;
             var productId = this.$scope.navigator.params().productId;
 
@@ -51,7 +51,7 @@ export module controller.stock {
                     this.allUnits = successData;
                 },
                 (errorData) => {
-                    console.log(errorData);    
+                    console.log(errorData);
                     this.AlertService.addMessageResponse(errorData, "Não foi possível carregar as unidades");
                 });
             this.$scope.$watch("entity.unit", ()=>{
@@ -63,10 +63,10 @@ export module controller.stock {
             if(this.entity.unit != null)
                 this.units = this.$filter("filter")(this.allUnits, this.entity.unit);
         }
-                
+
     }
 }
 
-export var register = (moduleName: string) => {
-    angular.module(moduleName).lazy.controller("EditStockController", controller.stock.EditStockController);
+export var register = (module: ng.ILazyModule) => {
+    module.controller("EditStockController", controller.stock.EditStockController);
 };

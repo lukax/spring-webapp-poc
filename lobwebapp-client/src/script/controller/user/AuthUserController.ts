@@ -19,7 +19,7 @@ export module controller.user {
                     public AlertService: d.service.contract.AlertService) {
             this.$scope.vm = this;
 
-            this.processParams();     
+            this.processParams();
         }
 
         login() {
@@ -70,7 +70,7 @@ export module controller.user {
             if (logout) {
                 this.logout();
             }
-            else if (this.AuthService.isLoggedIn()) { 
+            else if (this.AuthService.isLoggedIn()) {
                 // If not logging out, and user is logged in already send him to default page
                 this.toDefaultPage();
             }
@@ -79,6 +79,6 @@ export module controller.user {
     }
 }
 
-export var register = (moduleName: string) => {
-    angular.module(moduleName).lazy.controller("AuthUserController", controller.user.AuthUserController);
+export var register = (module: ng.ILazyModule) => {
+  module.controller("AuthUserController", controller.user.AuthUserController);
 };

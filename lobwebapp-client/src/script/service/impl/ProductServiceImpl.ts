@@ -4,7 +4,7 @@ import _ = require("underscore");
 import a = require("./base/EntityServiceImpl");
 
 export module service.impl {
-    export class ProductServiceImpl extends a.service.impl.base.EntityServiceImpl<domain.Product> 
+    export class ProductServiceImpl extends a.service.impl.base.EntityServiceImpl<domain.Product>
             implements d.service.contract.ProductService, d.service.contract.base.HasDefaultValue<domain.Product> {
 
         static $inject = ["$http"];
@@ -20,9 +20,9 @@ export module service.impl {
                     name: "%" + name + "%"
                 };
                 var headers = this.getPageableRequestHeaders(page);
-                
+
                 this.$http({method: "GET",
-                            url: this.url, 
+                            url: this.url,
                             params: params,
                             headers: headers })
                     .success(successCallback)
@@ -50,17 +50,17 @@ export module service.impl {
         }
 
         getMarkUp(product: domain.Product){
-            if (product.costPrice == 0) 
+            if (product.costPrice == 0)
                 return 0;
             return (product.price - product.costPrice) / product.costPrice;
         }
-        
+
         getDefault(): domain.Product{
             return { id: 0, name: "", description: "", price: 0, costPrice: 0, category: "", ncm: "" };
         }
     }
 }
 
-export var register = (moduleName: string) => {
-    angular.module(moduleName).lazy.service("ProductService", service.impl.ProductServiceImpl);
+export var register = (module: ng.ILazyModule) => {
+  module.service("ProductService", service.impl.ProductServiceImpl);
 };

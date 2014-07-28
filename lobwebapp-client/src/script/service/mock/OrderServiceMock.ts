@@ -37,10 +37,10 @@ export module service.mock {
             });
             return sum;
         }
-        
+
     }
 }
 
-export var register = (moduleName: string) => {
-    angular.module(moduleName).lazy.service("OrderService", service.mock.OrderServiceMock);
+export var register = (module: ng.ILazyModule) => {
+  module.service("OrderService", service.mock.OrderServiceMock);
 };

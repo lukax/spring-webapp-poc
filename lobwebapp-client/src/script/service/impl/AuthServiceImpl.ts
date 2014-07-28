@@ -6,9 +6,9 @@ export module service.impl {
         private url = "/api/oauth/token";
         private clientCredentials = "bG9id2ViYXBwLWh0bWw6";
         private defaultUser: domain.User = { id: 1, name: "Lucas", username: "", password: "", roles: ["ROLE_USER"] };
-        
+
         static $inject = ["$http", "$rootScope", "$window"];
-        constructor(public $http: ng.IHttpService, 
+        constructor(public $http: ng.IHttpService,
                     public $rootScope: ng.IRootScopeService,
                     public $window: ng.IWindowService) {
 
@@ -17,18 +17,18 @@ export module service.impl {
         login(user: domain.User,
             successCallback: (data: domain.User, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
             errorCallback: (error: domain.util.MessageResponse, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any) {
-                var data = "grant_type=password" + 
-                            "&username=" + user.username + 
-                            "&password=" + user.password + 
+                var data = "grant_type=password" +
+                            "&username=" + user.username +
+                            "&password=" + user.password +
                             "&scope=write";
                 var headers = {
                     "Authorization": "Basic " + this.clientCredentials,
                     "Content-Type": "application/x-www-form-urlencoded"
                 };
-                
-                this.$http({method: "POST", 
-                             url: this.url, 
-                             data: data, 
+
+                this.$http({method: "POST",
+                             url: this.url,
+                             data: data,
                              headers: headers})
                     .success((data: domain.AuthToken, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => {
                         var user = angular.copy(this.defaultUser); //TODO: make server return user information after login...
@@ -50,7 +50,7 @@ export module service.impl {
                     this.setToken(null);
                     this.setUser(null);
                     this.unauthorize();
-                
+
                     successCallback(previousUser, 200, null, null);
                     this.$rootScope.$broadcast("USER_CHANGED", [(previousUser)]);
                 }
@@ -69,10 +69,10 @@ export module service.impl {
 
         getUser(): domain.User {
             var user = null;
-            try { 
+            try {
             	user = angular.fromJson((<any>this.$window.localStorage).AUTHSERVICE_USER);
-            } catch(Exception) { 
-            	console.log("[ERROR]: Could not retrieve user"); 
+            } catch(Exception) {
+            	console.log("[ERROR]: Could not retrieve user");
         	}
             return user;
         }
@@ -92,8 +92,8 @@ export module service.impl {
             var token = null;
             try {
                 token = angular.fromJson((<any>this.$window.localStorage).AUTHSERVICE_TOKEN);
-            } catch (Exception) { 
-            	console.log("[ERROR]: Could not retrieve token"); 
+            } catch (Exception) {
+            	console.log("[ERROR]: Could not retrieve token");
             }
             return token;
         }
@@ -108,6 +108,6 @@ export module service.impl {
     }
 }
 
-export var register = (moduleName: string) => {
-    angular.module(moduleName).lazy.service("AuthService", service.impl.AuthServiceImpl);
+export var register = (module: ng.ILazyModule) => {
+  module.service("AuthService", service.impl.AuthServiceImpl);
 };

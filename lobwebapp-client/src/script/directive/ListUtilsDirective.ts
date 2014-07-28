@@ -21,7 +21,7 @@ export module directive {
 }
 
 
-export var register = (moduleName: string) => {
-    angular.module(moduleName).lazy.directive("searchBar", [() => new directive.SearchBarDirective()]);
-    angular.module(moduleName).lazy.directive("listPager", [() => new directive.ListPagerDirective()]);
+export var register = (module: ng.ILazyModule) => {
+  module.directive("searchBar", [() => new directive.SearchBarDirective()]);
+  module.directive("listPager", [() => new directive.ListPagerDirective()]);
 };

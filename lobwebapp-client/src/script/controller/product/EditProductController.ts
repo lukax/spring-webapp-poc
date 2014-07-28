@@ -5,7 +5,7 @@ import i0 = require("./../base/AbstractEditEntityController");
 import enums = require("./../../util/EnumUtil");
 
 export module controller.product {
-    export interface IEditProductController extends i0.controller.base.IEditEntityController<domain.Product> {  
+    export interface IEditProductController extends i0.controller.base.IEditEntityController<domain.Product> {
         markUp: number;
         categories: string[];
         imageUrl: string;
@@ -26,12 +26,12 @@ export module controller.product {
 
             var productId = this.$scope.navigator.params().productId;
 
-            this.findEntity(productId, ()=> { 
+            this.findEntity(productId, ()=> {
                 this.imageUrl = this.ProductService.getImageUrl(this.entity.id);
                 this.fetchCategories();
             });
         }
-        
+
         fetchCategories() {
             this.ProductService.listCategory(
                 (successData) => {
@@ -47,16 +47,16 @@ export module controller.product {
             if(this.entity.category != null)
                 this.categories = this.$filter("filter")(this.allCategories, this.entity.category);
         }
-        
+
         onEntityChanged(entity: domain.Product){
             super.onEntityChanged(entity);
             if(entity == null) return;
             this.markUp = 100 * this.ProductService.getMarkUp(entity);
-            this.filterCategories();        
+            this.filterCategories();
         }
     }
 }
 
-export var register = (moduleName: string) => {
-    angular.module(moduleName).lazy.controller("EditProductController", controller.product.EditProductController);
+export var register = (module: ng.ILazyModule) => {
+  module.controller("EditProductController", controller.product.EditProductController);
 };

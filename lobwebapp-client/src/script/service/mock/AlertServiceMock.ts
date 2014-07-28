@@ -7,7 +7,7 @@ export module service.mock {
     export class AlertServiceMock implements d.service.contract.AlertService {
         private alerts: domain.util.Alert[] = [];
         private lifeSecs: number = 10;
-        
+
         static $inject = ["$rootScope", "$interval"];
         constructor(public $rootScope: ng.IRootScopeService, public $interval: any) {
             this.removeExpiredAlertsOnInterval();
@@ -92,6 +92,6 @@ export module service.mock {
     }
 }
 
-export var register = (moduleName: string) => {
-    angular.module(moduleName).lazy.service("AlertService", service.mock.AlertServiceMock);
+export var register = (module: ng.ILazyModule) => {
+  module.service("AlertService", service.mock.AlertServiceMock);
 };

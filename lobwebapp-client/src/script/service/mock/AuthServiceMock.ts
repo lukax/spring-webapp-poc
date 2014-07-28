@@ -4,7 +4,7 @@ export module service.mock {
     export class AuthServiceMock implements d.service.contract.AuthService {
         private defaultUser: domain.User = { id: 1, username: "usuario", password: "senha", roles: [], name: "Usuário" };
         private user: domain.User;
-        
+
         static $inject = ["$timeout", "$rootScope"];
         constructor(public $timeout: ng.ITimeoutService, public $rootScope: ng.IRootScopeService) {
 
@@ -33,7 +33,7 @@ export module service.mock {
                 if (this.getUser() && this.getUser().id != 0) {
                 	var previousUser = this.getUser();
                     this.setUser(null);
-                    
+
                     successCallback(previousUser, 200, () => "", null);
                     this.$rootScope.$broadcast("USER_CHANGED", [(previousUser)]);
                 }
@@ -57,6 +57,6 @@ export module service.mock {
     }
 }
 
-export var register = (moduleName: string) => {
-    angular.module(moduleName).lazy.service("AuthService", service.mock.AuthServiceMock);
+export var register = (module: ng.ILazyModule) => {
+  module.service("AuthService", service.mock.AuthServiceMock);
 };

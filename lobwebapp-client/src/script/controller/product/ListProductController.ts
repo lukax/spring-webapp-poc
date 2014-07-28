@@ -14,7 +14,7 @@ export module controller.product {
                     public ProductService: d.service.contract.ProductService,
                     public AlertService: d.service.contract.AlertService) {
             super($scope, ProductService, AlertService, "/product", "productId");
-            
+
             this.listProduct(0);
         }
 
@@ -37,10 +37,10 @@ export module controller.product {
                     { index: pageIndex, size: this._defaultPageSize });
             }
         }
-        
+
     }
 }
 
-export var register = (moduleName: string) => {
-    angular.module(moduleName).lazy.controller("ListProductController", controller.product.ListProductController);
+export var register = (module: ng.ILazyModule) => {
+  module.controller("ListProductController", controller.product.ListProductController);
 };

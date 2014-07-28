@@ -13,13 +13,13 @@ export module controller.customer {
                     public CustomerService: d.service.contract.CustomerService,
                     public AlertService: d.service.contract.AlertService) {
             super($scope, CustomerService, AlertService, "/customer", "customerId");
-            
+
             this.listEntity(0);
         }
-        
+
     }
 }
 
-export var register = (moduleName: string) => {
-    angular.module(moduleName).lazy.controller("ListCustomerController", controller.customer.ListCustomerController);
+export var register = (module: ng.ILazyModule) => {
+  module.controller("ListCustomerController", controller.customer.ListCustomerController);
 };

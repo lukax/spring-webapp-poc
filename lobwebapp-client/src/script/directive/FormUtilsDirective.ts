@@ -32,8 +32,8 @@ export module directive {
     }
 }
 
-export var register = (moduleName: string) => {
-    angular.module(moduleName).lazy.directive("entityId", [() => new directive.EntityIdDirective()]);
-	angular.module(moduleName).lazy.directive("saveChanges", [() => new directive.SaveChangesDirective()]);
-    angular.module(moduleName).lazy.directive("formItem", [() => new directive.FormItemDirective()]);
+export var register = (module: ng.ILazyModule) => {
+  module.directive("entityId", [() => new directive.EntityIdDirective()]);
+  module.directive("saveChanges", [() => new directive.SaveChangesDirective()]);
+  module.directive("formItem", [() => new directive.FormItemDirective()]);
 };

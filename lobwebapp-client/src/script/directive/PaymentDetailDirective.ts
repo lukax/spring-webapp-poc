@@ -31,7 +31,7 @@ export module directive {
     }
 }
 
-export module filter {    
+export module filter {
     export class PaymentStatusFilter {
         constructor(input: enums.PaymentMode) {
             var localizedInput: string = "";
@@ -75,8 +75,8 @@ export module filter {
     }
 }
 
-export var register = (moduleName: string) => {    
-    angular.module(moduleName).lazy.filter("paymentStatus", [() => filter.PaymentStatusFilter]);
-    angular.module(moduleName).lazy.filter("paymentMode", [() => filter.PaymentModeFilter]);
-    angular.module(moduleName).lazy.directive("paymentDetail", [() => new directive.PaymentDetailDirective()]);
+export var register = (module: ng.ILazyModule) => {
+  module.filter("paymentStatus", [() => filter.PaymentStatusFilter]);
+  module.filter("paymentMode", [() => filter.PaymentModeFilter]);
+  module.directive("paymentDetail", [() => new directive.PaymentDetailDirective()]);
 };
