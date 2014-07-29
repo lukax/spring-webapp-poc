@@ -95,7 +95,7 @@ export module modularity {
     }
 
     authenticationResolver() {
-      var definition = {
+      return {
         authentication: ["$q", "AuthService", ($q:ng.IQService, AuthService:d.service.contract.AuthService) => {
           var deferred = $q.defer();
           if (AuthService.isLoggedIn())
@@ -105,16 +105,14 @@ export module modularity {
           return (deferred.promise);
         }]
       }
-      return definition;
     }
 
-    dependencyResolver(deps:Array<string>) {
-      var definition = {
+    dependencyResolver(deps:string[]) {
+      return {
         dependencies: ["$q", "$rootScope", "Progress", ($q:ng.IQService, $rootScope:ng.IRootScopeService, Progress:d.service.contract.Progress) => {
           return (new h.util.DependencyManager($q, $rootScope, Progress)).resolve(deps, this.module.lazy);
         }]
       }
-      return definition;
     }
   }
 }
