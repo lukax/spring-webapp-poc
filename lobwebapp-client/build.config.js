@@ -70,13 +70,20 @@ module.exports = {
       'vendor/jquery-file-upload/js/jquery.fileupload.js',
       'vendor/angular/angular.js',
       'vendor/angular-route/angular-route.js',
+      'vendor/angular-animate/angular-animate.js',
+      'vendor/angular-animate-sequence/angular-animate-stylers.js',
+      'vendor/angular-animate-sequence/angular-animate-sequence.js',
+      'vendor/material/material-design.js',
       'vendor/nprogress/nprogress.js',
       'vendor/uri.js/src/URI.js',
-      'vendor/d3/d3.js',
-      'vendor/crossfilter/crossfilter.js'
+      //'vendor/d3/d3.js',
+      //'vendor/crossfilter/crossfilter.js'
     ],
     css: [
-      'vendor/nprogress/nprogress.css'
+      'vendor/nprogress/nprogress.css',
+      'vendor/material/material-design.css'
+    ],
+    assets: [
     ]
   }
 

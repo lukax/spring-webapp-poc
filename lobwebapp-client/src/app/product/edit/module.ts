@@ -1,4 +1,8 @@
-angular.module("lwa.product.edit", ["lwa.entity", "lwa.product.core", "ngRoute"])
+angular.module("lwa.product.edit",
+  ["lwa.entity",
+   "lwa.product.core",
+   "ngRoute",
+   "ngMaterial"])
 
   .config(($routeProvider:ng.route.IRouteProvider) => {
     $routeProvider
