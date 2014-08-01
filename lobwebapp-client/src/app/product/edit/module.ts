@@ -6,10 +6,10 @@ angular.module("lwa.product.edit",
 
   .config(($routeProvider:ng.route.IRouteProvider) => {
     $routeProvider
-      .when("/product/edit", {
+      .when("/product/:productId", {
         controller: "EditProductController",
         template: tpl.editProduct.html
       })
-      .otherwise({ redirectTo: "/product/edit" })
+      .otherwise({ redirectTo: "/product/0" })
     ;
   });
