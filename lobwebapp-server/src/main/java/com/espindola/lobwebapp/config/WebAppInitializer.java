@@ -22,7 +22,7 @@ public class WebAppInitializer implements WebApplicationInitializer {
 		servletContext.addListener(new ContextLoaderListener(rootContext));
 
 		// Default Profile is production
-		servletContext.setInitParameter("spring.profiles.default", "dev");
+		servletContext.setInitParameter("spring.profiles.default", "prod");
 
 		registerDefaultServlet(servletContext);
 		registerRestv1Servlet(servletContext);

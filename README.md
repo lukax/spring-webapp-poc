@@ -1,4 +1,4 @@
-# LOBWEBAPP [![Build Status](https://travis-ci.org/lukax/LOBWebApp.svg?branch=develop)](https://travis-ci.org/lukax/LOBWebApp) [![Codeship Status for lukax/LOBWebApp](https://www.codeship.io/projects/df194520-5fc1-0131-549f-3a23184f235a/status?branch=develop)](https://www.codeship.io/projects/12140)
+# LOBWEBAPP [![Build Status](https://travis-ci.org/lukax/LOBWebApp.svg?branch=master)](https://travis-ci.org/lukax/LOBWebApp) [![Codeship Status for lukax/LOBWebApp](https://www.codeship.io/projects/df194520-5fc1-0131-549f-3a23184f235a/status?branch=master)](https://www.codeship.io/projects/12140)
 
 Line Of Business WEB APPlication
 

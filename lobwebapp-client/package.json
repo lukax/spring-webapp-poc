@@ -1,6 +1,6 @@
 {
   "name": "lobwebapp-html",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Line of Business Web application Front End, based on AngularJS",
   "dependencies": {},
   "devDependencies": {

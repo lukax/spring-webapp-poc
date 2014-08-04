@@ -1,5 +1,5 @@
 group = "com.espindola"
-version = "0.2.1"
+version = "0.2.2"
 
 defaultTasks("clean", "build", "test")
 
