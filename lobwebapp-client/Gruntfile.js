@@ -6,7 +6,7 @@ var mountFolder = function (connect, dir) {
 };
 var modRewrite = require('connect-modrewrite');
 var rewriteRules = [
-    '^/api/(.*)$ http://localhost:8080/$1 [P]', /* API Proxy */
+    '^/api/(.*)$ http://lobwebapp.herokuapp.com/$1 [P]', /* API Proxy */
     '!\\.html|\\.js|\\.map|\\.ts|\\.css|\\.eot|\\.jpeg|\\.svg|\\.ttf|\\.woff|\\.ico|\\.gif|\\.otf|\\.png$ /index.html [L]' /* HTML5 Redirect */
 ];
 // # Globbing
