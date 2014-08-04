@@ -17,7 +17,6 @@ export module controller.base {
 
   export class AbstractEditEntityController<T extends domain.base.AbstractEntity> implements IEditEntityController<T> {
     private _tempObjKey:string;
-    private _entity:T;
     entity:T;
     isEntityNew:boolean;
     isPreviousChanges:boolean;
@@ -53,6 +52,7 @@ export module controller.base {
         },
         (errorData) => {
           console.log(errorData);
+          this.discardTemporaryChanges();
           this.AlertService.addMessageResponse(errorData, this.entityName + " não pôde ser salvo");
           this.unlock();
         });
@@ -66,6 +66,7 @@ export module controller.base {
         },
         (errorData) => {
           console.log(errorData);
+          this.discardTemporaryChanges();
           this.AlertService.addMessageResponse(errorData, this.entityName + " não pôde ser atualizado");
           this.unlock();
         });
@@ -79,6 +80,7 @@ export module controller.base {
         },
         (errorData) => {
           console.log(errorData);
+          this.discardTemporaryChanges();
           this.AlertService.addMessageResponse(errorData, this.entityName + " não pôde ser removido");
           this.unlock();
         });
@@ -100,6 +102,7 @@ export module controller.base {
         },
         (errorData) => {
           console.log(errorData);
+          this.discardTemporaryChanges();
           this.AlertService.addMessageResponse(errorData, this.entityName + " não pôde ser encontrado");
           this.newEntity();
         });

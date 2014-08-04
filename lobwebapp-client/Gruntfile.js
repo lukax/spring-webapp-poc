@@ -121,13 +121,13 @@ module.exports = function (grunt) {
                 }]
             }
         },
-        htmlmin: {                                     
-            dist: {                                    
-                options: {                             
+        htmlmin: {
+            dist: {
+                options: {
                     removeComments: true,
                     collapseWhitespace: true
                 },
-                files: [{                               
+                files: [{
                     expand: true,
                     cwd: '<%= yeoman.app %>',
                     dest: '<%= yeoman.dist %>',
@@ -203,7 +203,7 @@ module.exports = function (grunt) {
         requirejs: {
             dev: {
                 options: {
-                    name: "main",                  
+                    name: "main",
                     mainConfigFile: "<%= yeoman.app %>/script/main.js",
                     out: "<%= yeoman.app %>/script/app.js",
                     //normalizeDirDefines: "all",
@@ -212,7 +212,7 @@ module.exports = function (grunt) {
             },
             dist: {
                 options: {
-                    name: "main",                  
+                    name: "main",
                     mainConfigFile: "<%= yeoman.app %>/script/main.js",
                     out: "<%= yeoman.dist %>/script/app.js"
                 }
