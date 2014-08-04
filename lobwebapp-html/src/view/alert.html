@@ -1,6 +1,0 @@
-<div ng-controller="AlertController">
-    <alert ng-repeat="alert in alerts" type="alert.type" close="vm.remove(alert)">
-        <strong>{{alert.title}}</strong> {{alert.content}}
-        <div class="pull-right">{{alert.date | date:'HH:mm:ss'}}</div>
-    </alert>
-</div>

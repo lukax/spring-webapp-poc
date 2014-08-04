@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+<configuration>
+	<property resource="application.properties" />
+
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>${logging.std.level}</level>
+	    </filter>
+		<encoder>
+			<pattern>%-5level: [%d{MMM-dd HH:mm:ss,SSS}] %logger{3} - %msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>${logging.file.level}</level>
+	    </filter>
+		<file>${logging.file.path}/lobwebapp-core.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${logging.file.path}/lobwebapp-core.%d{YY-MM-dd}.%i.log</fileNamePattern>
+			<maxHistory>${logging.file.number}</maxHistory>
+			<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+		        <maxFileSize>${logging.file.size}</maxFileSize>
+	      </timeBasedFileNamingAndTriggeringPolicy>
+	    </rollingPolicy>
+		<encoder>
+			<pattern>%d{HH:mm:ss.SSS} %-5level: %logger{10} - %msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<logger name="com.espindola.lobwebapp" level="DEBUG"/>
+
+	<root level="${logging.level}">
+		<appender-ref ref="STDOUT"/>
+		<appender-ref ref="FILE" />
+	</root>
+
+</configuration>

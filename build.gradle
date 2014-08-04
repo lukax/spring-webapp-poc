@@ -1,0 +1,17 @@
+group = "com.espindola"
+version = "0.2.2"
+
+defaultTasks("clean", "build", "test")
+
+allprojects {
+	repositories { 
+		mavenCentral()
+		maven {
+			url("http://repository.jboss.org/nexus/content/groups/public")
+		}
+	}
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = "2.0"
+}

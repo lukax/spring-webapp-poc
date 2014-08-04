@@ -1,0 +1,16 @@
+<div>
+	<div class="btn-group pull-right">
+		<button class="btn btn-primary" type="submit" title="Salvar"  
+			ng-disabled="disabled || saveDisabled">
+			<span class="glyphicon glyphicon-floppy-disk"></span> Salvar
+		</button>
+		<button class="btn btn-default" type="button" data-toggle="tooltip" title="Descartar" ng-click="onDiscard()"
+			ng-hide="disabled || discardDisabled">
+			<span class="glyphicon glyphicon-remove"></span>
+		</button>
+		<button class="btn btn-default" type="button" data-toggle="tooltip" title="Remover" ng-click="onRemove()" 
+			ng-disabled="disabled || removeDisabled" ng-hide="!discardDisabled">
+			<span class="glyphicon glyphicon-trash"></span>
+		</button>
+	</div>
+</div>
