@@ -41,6 +41,10 @@ module product.core {
       }, 100);
     }
 
+    default() {
+      return { id: 0, name: "", description: "", price: 0, costPrice: 0, category: "", ncm: "" };
+    }
+
     getImageUrl(productId:number) {
       return "/api/product/" + productId + "/image";
     }

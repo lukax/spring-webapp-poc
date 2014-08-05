@@ -34,5 +34,7 @@ module entity {
             successCallback: (data: boolean, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
             errorCallback: (data: MessageResponse, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any
             ): void;
+
+        default(): T;
     }
 }

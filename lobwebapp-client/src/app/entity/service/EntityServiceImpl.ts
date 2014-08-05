@@ -56,7 +56,10 @@ module entity {
       }, (d, s, h, c) => {
         errorCallback(d, s, h, c);
       });
+    }
 
+    default() {
+      return <T>{ id: 0 };
     }
   }
 }

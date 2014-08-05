@@ -82,24 +82,26 @@ module entity{
 
 		findEntity(prettyId: string, done?: ()=> void) {
 			var actualId;
-			if(prettyId == "new") actualId = 0;
-			else actualId = Number(prettyId);
-
-			this.lock();
-			this.EntityService.find(actualId,
-				(successData) => {
-					if(!this.restoreTemporaryChanges(successData)){
-						this.entity = successData;
-          }
-					if(done) done();
-					this.unlock();
-				},
-				(errorData) => {
-					console.log(errorData);
-					this.AlertService.addMessageResponse(errorData, this.entityName + " não pôde ser encontrado");
-					this.newEntity();
-          this.unlock();
-				});
+			if(prettyId == "new") {
+        this.entity = this.EntityService.default();
+      }
+      else {
+        this.lock();
+        this.EntityService.find(actualId,
+          (successData) => {
+            if(!this.restoreTemporaryChanges(successData)){
+              this.entity = successData;
+            }
+            if(done) done();
+            this.unlock();
+          },
+          (errorData) => {
+            console.log(errorData);
+            this.AlertService.addMessageResponse(errorData, this.entityName + " não pôde ser encontrado");
+            this.newEntity();
+            this.unlock();
+          });
+      }
 		}
 
 		discardChanges(){

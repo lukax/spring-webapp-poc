@@ -108,6 +108,10 @@ module entity {
       }, 100);
     }
 
+    default() {
+      return <T>{ id: 0 };
+    }
+
     getRepository() {
       return angular.copy(this.repository);
     }

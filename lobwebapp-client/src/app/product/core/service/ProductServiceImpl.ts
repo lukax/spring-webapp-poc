@@ -35,6 +35,10 @@ module product.core {
         errorCallback);
     }
 
+    default() {
+      return { id: 0, name: "", description: "", price: 0, costPrice: 0, category: "", ncm: "" };
+    }
+
     getImageUrl(productId:number) {
       var authHeader = this.$http.defaults.headers.common.Authorization;
       var params = "";
