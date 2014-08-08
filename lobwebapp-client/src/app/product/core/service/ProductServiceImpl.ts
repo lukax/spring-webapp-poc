@@ -4,8 +4,9 @@ module product.core {
   export class ProductServiceImpl extends entity.EntityServiceImpl<product.core.Product> implements ProductService {
 
     static $inject = ["$http", "apiUrl"];
+
     constructor(public $http:ng.IHttpService,
-                public apiUrl: string) {
+                public apiUrl:string) {
       super($http, apiUrl);
     }
 
@@ -27,7 +28,7 @@ module product.core {
       this.list((products, status, headers, config) => {
           var categories = [];
           products.forEach((x) => {
-            if(categories.indexOf(x) === -1)
+            if (categories.indexOf(x) === -1)
               categories.push(x);
           });
           successCallback(categories, status, headers, config);

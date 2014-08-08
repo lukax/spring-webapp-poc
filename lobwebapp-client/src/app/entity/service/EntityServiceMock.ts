@@ -123,4 +123,4 @@ module entity {
   }
 }
 
-angular.module("lwa.entity").service("EntityService", entity.EntityServiceMock);
+//angular.module("lwa.entity").service("EntityService", entity.EntityServiceMock);

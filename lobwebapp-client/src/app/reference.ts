@@ -28,6 +28,7 @@
 /// <reference path="product/core/service/ProductServiceImpl.ts" />
 /// <reference path="product/core/service/ProductServiceMock.ts" />
 /// <reference path="product/edit/controller/EditProductController.ts" />
+/// <reference path="product/edit/editProduct.tpl.html.ts" />
 /// <reference path="vendor.d.ts" />
 //grunt-end
 
