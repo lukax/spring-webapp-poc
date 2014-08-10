@@ -28,6 +28,7 @@ module.exports = {
     tshtml: [ 'src/app/**/*.html' ],
     tsreference: 'src/app/reference.ts',
     tsout: 'src/app.js',
+    tsunitout: 'src/app.spec.js',
 
     atpl: [ 'src/app/**/*.tpl.html' ],
     ctpl: [ 'src/common/**/*.tpl.html' ],

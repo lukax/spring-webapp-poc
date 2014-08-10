@@ -398,7 +398,11 @@ module.exports = function (grunt) {
         out: '<%= app_files.tsout %>'
       },
       test: {
-        src: '<%= app_files.tsunit %>'
+        src: '<%= app_files.tsunit %>',
+        out: '<%= app_files.tsunitout %>',
+        options: {
+
+        }
       }
     },
 
