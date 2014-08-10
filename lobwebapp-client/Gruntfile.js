@@ -500,6 +500,13 @@ module.exports = function (grunt) {
         tasks: [ 'less:build' ]
       },
 
+      ts: {
+        files: [ '<%= app_files.ts %>',
+          '<%= app_files.tsunit %>',
+          '<%= app_files.tshtml %>'],
+        tasks: [ 'ts:build' ]
+      },
+
       /**
        * When a JavaScript unit test file changes, we only want to lint it and
        * run the unit tests. We don't want to do any live reloading.
@@ -512,13 +519,6 @@ module.exports = function (grunt) {
         options: {
           livereload: false
         }
-      },
-
-      ts: {
-        files: [ '<%= app_files.ts %>',
-                 '<%= app_files.tsunit %>',
-                 '<%= app_files.tshtml %>'],
-        tasks: [ 'ts:build' ]
       }
 
     }
