@@ -42,7 +42,6 @@ module entity{
 		}
 
 		saveEntity() {
-			this.lock();
 			this.EntityService.save(this.entity,
 				(successData, successStatus, successHeaders) => {
 					this.NavigatorService.url(new URI(this.contextUrl).segment(successHeaders("Entity-Id")).toString());
@@ -50,25 +49,20 @@ module entity{
 				(errorData) => {
 					console.log(errorData);
 					this.AlertService.addMessageResponse(errorData, this.entityName + " não pôde ser salvo");
-					this.unlock();
 				});
 		}
 
 		updateEntity() {
-			this.lock();
 			this.EntityService.update(this.entity,
 				() => {
-					this.unlock();
 				},
 				(errorData) => {
 					console.log(errorData);
 					this.AlertService.addMessageResponse(errorData, this.entityName + " não pôde ser atualizado");
-					this.unlock();
 				});
 		}
 
 		removeEntity() {
-			this.lock();
 			this.EntityService.remove(this.entity,
 				() => {
 					this.newEntity();
@@ -76,7 +70,6 @@ module entity{
 				(errorData) => {
 					console.log(errorData);
 					this.AlertService.addMessageResponse(errorData, this.entityName + " não pôde ser removido");
-					this.unlock();
 				});
 		}
 
@@ -86,20 +79,17 @@ module entity{
         this.entity = this.EntityService.default();
       }
       else {
-        this.lock();
         this.EntityService.find(actualId,
           (successData) => {
             if(!this.restoreTemporaryChanges(successData)){
               this.entity = successData;
             }
             if(done) done();
-            this.unlock();
           },
           (errorData) => {
             console.log(errorData);
             this.AlertService.addMessageResponse(errorData, this.entityName + " não pôde ser encontrado");
             this.newEntity();
-            this.unlock();
           });
       }
 		}
@@ -111,16 +101,6 @@ module entity{
 
 		newEntity() {
 			this.NavigatorService.url(new URI(this.contextUrl).segment("new").toString());
-		}
-
-		lock(){
-			this.isReadMode = true;
-			this.NavigatorService.Progress.start();
-		}
-
-		unlock(){
-			this.isReadMode = false;
-			this.NavigatorService.Progress.done();
 		}
 
 		onEntityChanged(entity: T){
