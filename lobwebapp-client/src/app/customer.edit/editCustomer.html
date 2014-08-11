@@ -1,0 +1,17 @@
+<form class="form-horizontal" role="form" name="customerForm" novalidate ng-submit="vm.saveOrUpdateEntity()">
+
+	<entity-id></entity-id>
+	
+	<form-item input-label="Nome" input-id="inputName" form="customerForm">
+		<input type="text" class="form-control" id="inputName" name="inputName" autofocus ng-model="vm.entity.name" required ng-minlength="5" ng-maxlength="100">
+	</form-item>
+	
+	<save-changes disabled="vm.isReadMode"
+	save-disabled="customerForm.$invalid || customerForm.$pristine"
+	remove-disabled="vm.isEntityNew"
+	discard-disabled="!vm.isPreviousChanges"
+	on-remove="vm.removeEntity()"
+	on-discard="vm.discardChanges()">
+	</save-changes>
+
+</form>

@@ -1,0 +1,91 @@
+<div class="row">
+  <div class="col-md-2">
+    <div class="list-group">
+      <a class="list-group-item link active">Detalhes</a>
+      <a class="list-group-item link" ng-href="/stock/list?search={{vm.entity.name}}"
+         ng-hide="vm.isEntityNew">Estoque</a>
+    </div>
+    <div ng-hide="vm.isEntityNew">
+      <image-upload url="vm.imageUrl" placeholder="'/img/imageplaceholder.png'"></image-upload>
+    </div>
+  </div>
+  <div class="col-md-10">
+    <form class="form-horizontal" role="form" name="productForm" novalidate ng-submit="vm.saveOrUpdateEntity()">
+
+      <entity-id></entity-id>
+
+      <form-item input-label="Nome" input-id="inputName" form="productForm">
+        <input type="text" class="form-control" id="inputName" name="inputName" placeholder="Digite o nome do Produto"
+               autofocus ng-model="vm.entity.name" required ng-minlength="5" ng-maxlength="100">
+      </form-item>
+
+      <form-item input-label="Preço" input-id="inputPrice" form="productForm" ng-init="vm.togglePriceInfo = false">
+        <div class="input-group">
+          <span class="input-group-addon">R$</span>
+          <input type="text" class="form-control" id="inputPrice" name="inputPrice" ng-model="vm.entity.price" required
+                 ng-pattern="/^(?=.*[1-9])\d*(?:\.\d{1,2})?$/">
+
+          <div class="input-group-btn">
+            <button type="button" class="btn btn-default dropdown-toggle" id="btnPriceInfoId"
+                    ng-click="vm.togglePriceInfo = !vm.togglePriceInfo" ui-jq="tooltip"
+                    title="Detalhar Cálculo de Preço" ng-disabled="productForm.inputPrice.$invalid">
+              <span class="glyphicon glyphicon-chevron-down"
+                    ng-class="{'glyphicon-chevron-down': !vm.togglePriceInfo, 'glyphicon-chevron-up': vm.togglePriceInfo}"></span>
+            </button>
+          </div>
+        </div>
+      </form-item>
+
+      <div class="lwa-fade-left" ng-show="vm.togglePriceInfo">
+        <form-item input-label="Custo" input-id="inputCostPrice" form="productForm">
+          <div class="input-group">
+            <span class="input-group-addon">R$</span>
+            <input type="text" class="form-control" id="inputCostPrice" name="inputCostPrice"
+                   ng-model="vm.entity.costPrice" ng-pattern="/^(?=.*[0-9])\d*(?:\.\d{1,2})?$/">
+          </div>
+        </form-item>
+
+        <form-item input-label="Lucro" input-id="inputMarkUp" form="productForm">
+          <div class="input-group">
+            <span class="input-group-addon">%</span>
+            <input type="text" class="form-control" id="inputMarkUp" name="inputMarkUp" readonly
+                   value="{{ vm.markUp | number:2 }}">
+          </div>
+        </form-item>
+      </div>
+
+      <div class="form-group">
+        <div ng-class="{'has-error': productForm.inputNcm.$invalid}">
+          <label for="inputNcm" class="col-md-1 control-label">NCM</label>
+
+          <div class="col-md-4">
+            <input type="text" class="form-control" id="inputNcm" name="inputNcm" ng-model="vm.entity.ncm" ui-jq="mask"
+                   ui-options="'9999.99.99'">
+          </div>
+        </div>
+        <div ng-class="{'has-error': productForm.inputCategory.$invalid}">
+          <label for="inputCategory" class="col-md-1 control-label">Categoria</label>
+
+          <div class="col-md-6">
+            <input type="text" class="form-control" id="inputCategory" name="inputCategory"
+                   ng-model="vm.entity.category" data-typeahead="category for category in vm.categories | limitTo:5">
+          </div>
+        </div>
+      </div>
+
+      <form-item input-id="inputDescription" form="productForm">
+        <textarea class="form-control" id="inputDescription" name="inputDescription" placeholder="Digite uma Descrição"
+                  rows="2" ng-model="vm.entity.description"></textarea>
+      </form-item>
+
+      <save-changes disabled="vm.isReadMode"
+                    save-disabled="productForm.$invalid || productForm.$pristine"
+                    remove-disabled="vm.isEntityNew"
+                    discard-disabled="!vm.isPreviousChanges"
+                    on-remove="vm.removeEntity()"
+                    on-discard="vm.discardChanges()">
+      </save-changes>
+
+    </form>
+  </div>
+</div>

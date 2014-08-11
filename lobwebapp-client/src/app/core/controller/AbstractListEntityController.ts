@@ -1,0 +1,59 @@
+///<reference path="../../reference.ts"/>
+
+module core {
+  export interface IListEntityController<T extends core.AbstractEntity> extends IController {
+    entities: T[];
+    searchText: string;
+    page: core.Page;
+    editEntity(id:number): void;
+    listEntity(page:number): void;
+  }
+
+  export class AbstractListEntityController<T extends core.AbstractEntity> implements IListEntityController<T> {
+    private _redirectUrl:string;
+    _defaultPageSize:number = 50;
+    entities:T[];
+    searchText:string;
+    page:core.Page;
+
+    constructor(public $scope:core.IAppScope,
+                public EntityService:core.EntityService<T>,
+                public AlertService:core.AlertService,
+                public NavigatorService:core.NavigatorService,
+                public contextUrl:string, public redirectParam:string) {
+      this.$scope.vm = this;
+
+      this._redirectUrl = NavigatorService.params().redirect != null ? decodeURIComponent(NavigatorService.params().redirect) : null;
+      this.searchText = (this.NavigatorService.params().search || "");
+    }
+
+    listEntity(pageIndex:number) {
+      this.NavigatorService.Progress.start();
+      this.EntityService.list(
+        (successData, successStatus, headers) => {
+          this.page = { index: pageIndex, size: Number(headers(Headers.PAGE_TOTAL)) };
+          this.entities = successData;
+          this.NavigatorService.Progress.done();
+          if (this._redirectUrl) this.AlertService.add({ title: "Busca Rápida", content: "Clique em um item da lista para voltar para a página anterior", type: AlertType.INFO });
+        },
+        (errorData) => {
+          console.log(errorData);
+          this.AlertService.addMessageResponse(errorData, "Não foi possível listar");
+          this.NavigatorService.Progress.done();
+        }, { index: pageIndex, size: this._defaultPageSize });
+    }
+
+    editEntity(id:number) {
+      if (this._redirectUrl) {
+        this._redirectUrl = new URI(this._redirectUrl)
+          .removeSearch(this.redirectParam)
+          .addSearch(this.redirectParam, String(id))
+          .toString();
+        this.NavigatorService.url(this._redirectUrl);
+      }
+      else
+        this.NavigatorService.url(new URI(this.contextUrl).segment(String(id)).toString());
+    }
+
+  }
+}

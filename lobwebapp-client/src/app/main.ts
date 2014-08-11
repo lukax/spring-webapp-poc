@@ -1,1 +1,1 @@
-angular.module("lwa", ["lwa.product.edit"]);
+angular.module("app", ["app.product.edit"]);
