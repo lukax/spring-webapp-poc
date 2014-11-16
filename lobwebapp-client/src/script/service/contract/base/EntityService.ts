@@ -1,6 +1,6 @@
 ///<reference path="../../../reference.d.ts"/>
 
-module d.service.contract.base {
+module service.contract.base {
     export interface HasDefaultValue<T extends domain.base.AbstractEntity>{
         getDefault():  T;
     }

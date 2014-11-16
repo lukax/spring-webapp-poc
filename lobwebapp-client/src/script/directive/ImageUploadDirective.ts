@@ -1,34 +1,30 @@
 ///<reference path="../reference.d.ts"/>
 
 import URI = require("urijs");
-import enums = require("./../util/EnumUtil");
+import enumUtil = require("./../util/EnumUtil");
 
-export module directive {
-    export interface ImageUploadViewModel extends ng.IScope {
-        url: string;
-        placeholder: string;
-        imageSrc: string;
-        percentage: number;
-        loading: boolean;
-        uploadDone: () => void;
-        uploadFailed: () => void;
-        uploadStatus: (percentage: number) => void;
-    }
+export interface ImageUploadViewModel extends ng.IScope {
+    url: string;
+    placeholder: string;
+    imageSrc: string;
+    percentage: number;
+    loading: boolean;
+    uploadDone: () => void;
+    uploadFailed: () => void;
+    uploadStatus: (percentage: number) => void;
+}
 
-    export class ImageUploadDirective implements ng.IDirective {
-
-        restrict = 'E';
-
-        scope: ImageUploadViewModel = <ImageUploadViewModel>{
+export function ImageUploadDirective(): ng.IDirective {
+    return {
+        restrict: 'E',
+        scope: <ImageUploadViewModel>{
             url: "=",
             placeholder: "="
-        };
-
-        templateUrl = '/template/directive/ImageUploadTemplate.html';
-
-        link = ($scope: ImageUploadViewModel, element: any, attrs: any)=>{
-            element.find("#imageUploadIncludeImage").on("click", ()=>{
-                if(!$scope.loading)
+        },
+        templateUrl: '/template/directive/ImageUploadTemplate.html',
+        link: ($scope: ImageUploadViewModel, element: any, attrs: any) => {
+            element.find("#imageUploadIncludeImage").on("click", () => {
+                if (!$scope.loading)
                     element.find("#imageUploadInput").click();
             });
 
@@ -39,7 +35,7 @@ export module directive {
                 done: (e, data) => {
                     $scope.uploadDone();
                 },
-                fail: (e, data) =>{
+                fail: (e, data) => {
                     $scope.uploadFailed();
                 },
                 progressall: (e, data) => {
@@ -47,44 +43,40 @@ export module directive {
                 }
             });
 
-            $scope.$watch("url", (newValue: string)=>{
-                if(newValue == null || newValue == "")
+            $scope.$watch("url", (newValue: string) => {
+                if (newValue == null || newValue == "")
                     $scope.imageSrc = $scope.placeholder;
                 else {
                     //update url
-                    element.find("#imageUploadInput").fileupload("option","url",newValue);
+                    element.find("#imageUploadInput").fileupload("option", "url", newValue);
                     $.ajax(newValue)
-                        .done((data)=>{
+                        .done((data) => {
                             $scope.imageSrc = newValue;
                         })
-                        .fail(()=>{
+                        .fail(() => {
                             $scope.imageSrc = $scope.placeholder;
                         });
                 }
             });
-        };
+        },
+        controller: ["AlertService", "Progress", "$scope",
+            (AlertService, Progress, $scope: ImageUploadViewModel) => {
 
-        controller = ["AlertService", "Progress", "$scope",
-                (AlertService, Progress, $scope: ImageUploadViewModel) => {
-
-            $scope.uploadFailed = () => {
-                AlertService.add({ title: "Upload falhou", content: "A imagem precisa estar em um formato válido e ser menor que 5 MB", type: enums.AlertType.DANGER });
-                $scope.loading = false;
-            }
-            $scope.uploadDone = () => {
-                $scope.url = new URI($scope.url).addSearch("cache", new Date().getTime().toString()).toString();
-                $scope.loading = false;
-            }
-            $scope.uploadStatus = (percentage: number) => {
-                $scope.percentage = percentage * 100;
-                $scope.loading = true;
-                Progress.set(percentage);
-            }
-        }];
-
+                $scope.uploadFailed = () => {
+                    AlertService.add({ title: "Upload falhou", content: "A imagem precisa estar em um formato válido e ser menor que 5 MB", type: enumUtil.AlertType.DANGER });
+                    $scope.loading = false;
+                }
+                $scope.uploadDone = () => {
+                    $scope.url = new URI($scope.url).addSearch("cache", new Date().getTime().toString()).toString();
+                    $scope.loading = false;
+                }
+                $scope.uploadStatus = (percentage: number) => {
+                    $scope.percentage = percentage * 100;
+                    $scope.loading = true;
+                    Progress.set(percentage);
+                }
+            }]
     }
-}
 
-export var register = (module: ng.ILazyModule) => {
-  module.directive("imageUpload", [() => new directive.ImageUploadDirective()]);
-};
+
+}

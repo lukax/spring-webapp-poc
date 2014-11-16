@@ -2,11 +2,10 @@
 ///<amd-dependency path="angular"/>
 ///<amd-dependency path="angularMocks"/>
 ///<amd-dependency path="underscore"/>
-import i0 = require("script/controller/product/ListProductController");
-import i1 = require("script/service/mock/ProductServiceMock");
-import i2 = require("script/service/mock/AlertServiceMock");
-import i3 = require("script/service/impl/NavigatorServiceImpl");
-import i4 = require("script/modularity/ControllerModule");
+import listProduct = require("script/controller/product/ListProductController");
+import ProductServiceMock = require("script/service/mock/ProductServiceMock");
+import AlertServiceMock = require("script/service/mock/AlertServiceMock");
+import NavigatorServiceImpl = require("script/service/impl/NavigatorServiceImpl");
 
 describe("controller: ListProductController", () => {
 
@@ -14,16 +13,16 @@ describe("controller: ListProductController", () => {
 
     beforeEach(() => {
         module(($provide: ng.auto.IProvideService, $controllerProvider: ng.IControllerProvider)=>{
-            $provide.service("ProductService", i1.service.mock.ProductServiceMock);
-            $provide.service("AlertService", i2.service.mock.AlertServiceMock);
+            $provide.service("ProductService", ProductServiceMock);
+            $provide.service("AlertService", AlertServiceMock);
             $provide.service("$routeParams", () => {
                 return { }
             });
             $provide.service("Progress", () => {
                 return { start: () => {}, done: () => {}, set: () => {} }
             });
-            $provide.service("NavigatorService", i3.service.impl.NavigatorServiceImpl);
-            $controllerProvider.register("ListProductController", i0.controller.product.ListProductController);
+            $provide.service("NavigatorService", NavigatorServiceImpl);
+            $controllerProvider.register("ListProductController", listProduct.ListProductController);
         });
         inject(($rootScope: ng.IRootScopeService, NavigatorService)=> {
             $scope = $rootScope.$new();

@@ -61,11 +61,6 @@ require.config({
     }
 });
 
-require(["util/Progress"], (progress: any)=> {
-    new progress.util.Progress().start();
-});
-
-require(["util/Progress", "modularity/AppModule"], (progress: any, app: any) => {
-    new app.modularity.AppModule("prod").bootstrap(document);
-    new progress.util.Progress().done();
+require(["modularity/AppModule"], (app: any) => {
+    new app("dev").bootstrap(document);
 });

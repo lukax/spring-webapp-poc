@@ -1,21 +1,16 @@
 ///<reference path="../../reference.d.ts"/>
-import i0 = require("./base/PersonServiceImpl");
+import PersonServiceImpl = require("./base/PersonServiceImpl");
 
-export module service.impl {
-    export class CustomerServiceImpl extends i0.service.impl.base.PersonServiceImpl<domain.Customer>
-        implements d.service.contract.CustomerService, d.service.contract.base.HasDefaultValue<domain.Customer> {
+class CustomerServiceImpl extends PersonServiceImpl<domain.Customer>
+    implements service.contract.CustomerService, service.contract.base.HasDefaultValue<domain.Customer> {
 
-        static $inject = ["$http"];
-        constructor($http: ng.IHttpService) {
-            super("customer", $http, this);
-        }
+    static $inject = ["$http"];
+    constructor($http: ng.IHttpService) {
+        super("customer", $http, this);
+    }
 
-        getDefault(): domain.Customer {
-            return { id: 0, name: "" };
-        }
+    getDefault(): domain.Customer {
+        return { id: 0, name: "" };
     }
 }
-
-export var register = (module: ng.ILazyModule) => {
-  module.service("CustomerService", service.impl.CustomerServiceImpl);
-};
+export = CustomerServiceImpl;

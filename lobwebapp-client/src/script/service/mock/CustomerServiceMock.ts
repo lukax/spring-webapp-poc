@@ -1,23 +1,17 @@
 ///<reference path="../../reference.d.ts"/>
+import PersonServiceMock = require("./base/PersonServiceMock");
 
-import a = require("./base/PersonServiceMock");
+class CustomerServiceMock extends PersonServiceMock<domain.Customer> implements service.contract.CustomerService {
 
-export module service.mock {
-    export class CustomerServiceMock extends a.service.mock.base.PersonServiceMock<domain.Customer> implements d.service.contract.CustomerService {
+    static $inject = ["$timeout"];
+    constructor(public $timeout: ng.ITimeoutService) {
+        super($timeout);
 
-        static $inject = ["$timeout"];
-        constructor(public $timeout: ng.ITimeoutService) {
-            super($timeout);
-
-            this.addToRepository({ id: 0, name: "" });
-            this.addToRepository({ id: 1, name: "John Doe" });
-            this.addToRepository({ id: 2, name: "Jane Doe" });
-            this.addToRepository({ id: 3, name: "Jonnie Doe" });
-        }
-
+        this.addToRepository({ id: 0, name: "" });
+        this.addToRepository({ id: 1, name: "John Doe" });
+        this.addToRepository({ id: 2, name: "Jane Doe" });
+        this.addToRepository({ id: 3, name: "Jonnie Doe" });
     }
-}
 
-export var register = (module: ng.ILazyModule) => {
-  module.service("CustomerService", service.mock.CustomerServiceMock);
-};
+}
+export = CustomerServiceMock;

@@ -1,6 +1,6 @@
 ///<reference path="../../reference.d.ts"/>
 
-module d.service.contract {
+module service.contract {
     export interface NavigatorService {
         Progress: Progress;
         params(): any;

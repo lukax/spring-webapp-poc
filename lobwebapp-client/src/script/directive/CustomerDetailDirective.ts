@@ -1,15 +1,11 @@
 ///<reference path="../reference.d.ts"/>
 
-export module directive {
-    export class CustomerDetailDirective implements ng.IDirective {
-        restrict = "E";
-        scope = {
+export function CustomerDetailDirective() : ng.IDirective {
+    return {
+        restrict: "E",
+        scope: {
             customer: "="
-        };
-        template = "{{customer.name}}";
-    }
+        },
+        template: "{{customer.name}}"
+    };
 }
-
-export var register = (module: ng.ILazyModule) => {
-  module.directive("customerDetail", [() => new directive.CustomerDetailDirective()]);
-};

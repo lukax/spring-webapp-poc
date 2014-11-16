@@ -94,8 +94,8 @@
     <TypeScriptCompile Include="src\script\controller\AlertController.ts" />
     <TypeScriptCompile Include="src\script\controller\base\AbstractEditEntityController.ts" />
     <TypeScriptCompile Include="src\script\controller\base\AbstractListEntityController.ts" />
-    <TypeScriptCompile Include="src\script\controller\base\Controller.ts" />
-    <TypeScriptCompile Include="src\script\controller\base\ViewModel.ts" />
+    <TypeScriptCompile Include="src\script\controller\base\IAppScope.ts" />
+    <TypeScriptCompile Include="src\script\controller\base\IController.ts" />
     <TypeScriptCompile Include="src\script\controller\customer\EditCustomerController.ts" />
     <TypeScriptCompile Include="src\script\controller\customer\ListCustomerController.ts" />
     <TypeScriptCompile Include="src\script\controller\MainNavbarController.ts" />
@@ -138,7 +138,7 @@
     <TypeScriptCompile Include="src\script\service\contract\AuthService.ts" />
     <TypeScriptCompile Include="src\script\service\contract\base\PersonService.ts" />
     <TypeScriptCompile Include="src\script\service\contract\base\EntityService.ts" />
-    <TypeScriptCompile Include="src\script\service\contract\Navigator.ts" />
+    <TypeScriptCompile Include="src\script\service\contract\NavigatorService.ts" />
     <TypeScriptCompile Include="src\script\service\contract\OrderService.ts" />
     <TypeScriptCompile Include="src\script\service\contract\ProductService.ts" />
     <TypeScriptCompile Include="src\script\service\contract\CustomerService.ts" />
@@ -147,6 +147,7 @@
     <TypeScriptCompile Include="src\script\service\impl\AuthServiceImpl.ts" />
     <TypeScriptCompile Include="src\script\service\impl\base\PersonServiceImpl.ts" />
     <TypeScriptCompile Include="src\script\service\impl\base\EntityServiceImpl.ts" />
+    <TypeScriptCompile Include="src\script\service\impl\NavigatorServiceImpl.ts" />
     <TypeScriptCompile Include="src\script\service\impl\StockServiceImpl.ts" />
     <TypeScriptCompile Include="src\script\service\impl\OrderServiceImpl.ts" />
     <TypeScriptCompile Include="src\script\service\impl\UserServiceImpl.ts" />
@@ -159,9 +160,9 @@
     <TypeScriptCompile Include="src\script\service\mock\OrderServiceMock.ts" />
     <TypeScriptCompile Include="src\script\service\mock\ProductServiceMock.ts" />
     <TypeScriptCompile Include="src\script\service\mock\CustomerServiceMock.ts" />
+    <TypeScriptCompile Include="src\script\service\mock\StockServiceMock.ts" />
     <TypeScriptCompile Include="src\script\service\mock\UserServiceMock.ts" />
     <TypeScriptCompile Include="src\script\util\DependencyManager.ts" />
-    <TypeScriptCompile Include="src\script\util\Navigator.ts" />
     <TypeScriptCompile Include="src\script\util\Progress.ts" />
     <TypeScriptCompile Include="src\script\util\EnumUtil.ts" />
     <TypeScriptCompile Include="test\reference.d.ts" />

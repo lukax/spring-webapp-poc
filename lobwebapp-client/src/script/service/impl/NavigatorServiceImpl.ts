@@ -1,20 +1,19 @@
 ///<reference path="../../reference.d.ts"/>
 
-export module service.impl {
-    export class NavigatorServiceImpl implements d.service.contract.NavigatorService {
+class NavigatorServiceImpl implements service.contract.NavigatorService {
 
-        static $inject = ["$location", "$routeParams", "Progress"];
-        constructor(public $location: ng.ILocationService, 
-                    public $routeParams: any,
-                    public Progress: d.service.contract.Progress) {
-        }
+    static $inject = ["$location", "$routeParams", "Progress"];
+    constructor(public $location: ng.ILocationService,
+        public $routeParams: any,
+        public Progress: service.contract.Progress) {
+    }
 
-        public params() {
-        	return this.$routeParams;
-        }
+    public params() {
+        return this.$routeParams;
+    }
 
-        public url(to : string){
-        	this.$location.url(to);
-        }
+    public url(to: string) {
+        this.$location.url(to);
     }
 }
+export = NavigatorServiceImpl;

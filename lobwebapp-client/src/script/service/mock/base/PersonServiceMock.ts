@@ -1,12 +1,10 @@
 ///<reference path="../../../reference.d.ts"/>
+import EntityServiceMock = require("./EntityServiceMock");
 
-import i0 = require("./EntityServiceMock");
+class PersonServiceMock<T extends domain.base.Person> extends EntityServiceMock<T> implements service.contract.base.PersonService<T> {
 
-export module service.mock.base {
-    export class PersonServiceMock<T extends domain.base.Person> extends i0.service.mock.base.EntityServiceMock<T> implements d.service.contract.base.PersonService<T> {
-
-        constructor($timeout: ng.ITimeoutService) {
-            super($timeout);
-        }
+    constructor($timeout: ng.ITimeoutService) {
+        super($timeout);
     }
 }
+export = PersonServiceMock;

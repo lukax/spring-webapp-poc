@@ -1,6 +1,6 @@
 ///<reference path="../../reference.d.ts"/>
 
-module d.service.contract {
+module service.contract {
     export interface AuthService {
         login(user: domain.User,
             successCallback: (user: domain.User, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,

@@ -2,13 +2,13 @@
 ///<amd-dependency path="angular"/>
 ///<amd-dependency path="angularMocks"/>
 ///<amd-dependency path="underscore"/>
-import svc = require("script/service/impl/base/EntityServiceImpl");
+import EntityServiceImpl = require("script/service/impl/base/EntityServiceImpl");
 
 describe('service: EntityService', () => {
     beforeEach(() => {
         module(($provide: ng.auto.IProvideService) => {
             $provide.constant("contextUrl", "product");
-            $provide.service("EntityService", <any>["contextUrl", "$http", svc.service.impl.base.EntityServiceImpl]);
+            $provide.service("EntityService", <any>["contextUrl", "$http", EntityServiceImpl]);
         });
         
     });
@@ -17,7 +17,7 @@ describe('service: EntityService', () => {
     var sampleNewEntity: domain.base.AbstractEntity = { id: 0 };
     var sampleExistantEntity: domain.base.AbstractEntity = { id: 213121 };
 
-    it("should retrieve a list of entity", inject((EntityService: d.service.contract.base.EntityService<domain.base.AbstractEntity>, $httpBackend: ng.IHttpBackendService) => {
+    it("should retrieve a list of entity", inject((EntityService: service.contract.base.EntityService<domain.base.AbstractEntity>, $httpBackend: ng.IHttpBackendService) => {
         var sucSpy = jasmine.createSpy("sucSpy");
         var errSpy = jasmine.createSpy("errSpy");
 
@@ -31,7 +31,7 @@ describe('service: EntityService', () => {
         expect(errSpy).not.toHaveBeenCalled();
     }));
 
-    it("should save an entity", inject((EntityService: d.service.contract.base.EntityService<domain.base.AbstractEntity>, $httpBackend: ng.IHttpBackendService) => {
+    it("should save an entity", inject((EntityService: service.contract.base.EntityService<domain.base.AbstractEntity>, $httpBackend: ng.IHttpBackendService) => {
         var sucSpy = jasmine.createSpy("sucSpy"),
             errSpy = jasmine.createSpy("errSpy");
         var headers = { Location: contextUrl + "/" + sampleNewEntity.id, "Entity-Id": '' + sampleNewEntity.id };
@@ -47,7 +47,7 @@ describe('service: EntityService', () => {
         expect(errSpy).not.toHaveBeenCalled();
     }));
 
-    it("should update an entity", inject((EntityService: d.service.contract.base.EntityService<domain.base.AbstractEntity>, $httpBackend: ng.IHttpBackendService) => {
+    it("should update an entity", inject((EntityService: service.contract.base.EntityService<domain.base.AbstractEntity>, $httpBackend: ng.IHttpBackendService) => {
         var sucSpy = jasmine.createSpy("sucSpy"),
             errSpy = jasmine.createSpy("errSpy");
 
@@ -60,7 +60,7 @@ describe('service: EntityService', () => {
         expect(errSpy).not.toHaveBeenCalled();
     }));
 
-    it("should remove an entity", inject((EntityService: d.service.contract.base.EntityService<domain.base.AbstractEntity>, $httpBackend: ng.IHttpBackendService) => {
+    it("should remove an entity", inject((EntityService: service.contract.base.EntityService<domain.base.AbstractEntity>, $httpBackend: ng.IHttpBackendService) => {
         var sucSpy = jasmine.createSpy("sucSpy"),
             errSpy = jasmine.createSpy("errSpy");
 
@@ -73,7 +73,7 @@ describe('service: EntityService', () => {
         expect(errSpy).not.toHaveBeenCalled();
     }));
 
-    it("should find an entity by id", inject((EntityService: d.service.contract.base.EntityService<domain.base.AbstractEntity>, $httpBackend: ng.IHttpBackendService) => {
+    it("should find an entity by id", inject((EntityService: service.contract.base.EntityService<domain.base.AbstractEntity>, $httpBackend: ng.IHttpBackendService) => {
         var sucSpy = jasmine.createSpy("sucSpy"),
             errSpy = jasmine.createSpy("errSpy");
 
@@ -86,7 +86,7 @@ describe('service: EntityService', () => {
         expect(errSpy).not.toHaveBeenCalled();
     }));
 
-    it("should check if contains an entity", inject((EntityService: d.service.contract.base.EntityService<domain.base.AbstractEntity>, $httpBackend: ng.IHttpBackendService) => {
+    it("should check if contains an entity", inject((EntityService: service.contract.base.EntityService<domain.base.AbstractEntity>, $httpBackend: ng.IHttpBackendService) => {
         var sucSpy = jasmine.createSpy("sucSpy"),
             errSpy = jasmine.createSpy("errSpy");
 
