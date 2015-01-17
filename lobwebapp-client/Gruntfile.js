@@ -165,15 +165,15 @@ module.exports = function (grunt) {
             dist: {
                 files: [{
                     expand: true,
-                    cwd: '<%= yeoman.app %>/script/',
+                    cwd: '<%= yeoman.app %>/app/',
                     src: '**/*.js',
-                    dest: '<%= yeoman.dist %>/script/'
+                    dest: '<%= yeoman.dist %>/app/'
                 }]
             }
         },
         ts: {
             dev: {
-                src: ['<%= yeoman.app %>/script/**/*.ts'],
+                src: ['<%= yeoman.app %>/app/**/*.ts'],
                 options: {
                     target: 'es5',
                     declaration: false,
@@ -181,14 +181,14 @@ module.exports = function (grunt) {
                 }
             },
             dist: {
-                src: ['<%= yeoman.app %>/script/**/*.ts'],
+                src: ['<%= yeoman.app %>/app/**/*.ts'],
                 options: {
                     target: 'es5',
                     sourcemap: false
                 }
             },
             test: {
-                src: ['<%= yeoman.app %>/script/**/*.ts', '<%= yeoman.test%>/**/*.ts'],
+                src: ['<%= yeoman.app %>/app/**/*.ts', '<%= yeoman.test%>/**/*.ts'],
                 options: {
                     target: 'es5'
                 }
@@ -204,8 +204,8 @@ module.exports = function (grunt) {
             dev: {
                 options: {
                     name: "main",
-                    mainConfigFile: "<%= yeoman.app %>/script/main.js",
-                    out: "<%= yeoman.app %>/script/app.js",
+                    mainConfigFile: "<%= yeoman.app %>/app/main.js",
+                    out: "<%= yeoman.app %>/app/app.js",
                     //normalizeDirDefines: "all",
                     optimize: "none"
                 }
@@ -213,14 +213,14 @@ module.exports = function (grunt) {
             dist: {
                 options: {
                     name: "main",
-                    mainConfigFile: "<%= yeoman.app %>/script/main.js",
-                    out: "<%= yeoman.dist %>/script/app.js"
+                    mainConfigFile: "<%= yeoman.app %>/app/main.js",
+                    out: "<%= yeoman.dist %>/app/app.js"
                 }
             }
         }
     });
 
-    grunt.registerTask('server', function (target) {
+    grunt.registerTask('serve', function (target) {
         if (target === 'dist') {
             return grunt.task.run(['build', 'open', 'connect:dist:keepalive']);
         }

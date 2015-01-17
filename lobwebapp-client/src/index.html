@@ -10,14 +10,14 @@
     <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="css/main.css">
 
-    <script data-main="script/app.js" src="lib/requirejs/require.js"></script>
+    <script data-main="app/app.js" src="lib/requirejs/require.js"></script>
 </head>
 <body>
 
-    <div ng-include="'view/mainNavbar.html'"></div>
+    <div ng-include="'app/lwa.core/view/mainNavbar.html'"></div>
     <div class="container-fluid" ng-view></div>
     <br>
-    <div class="container" ng-include="'view/alert.html'"></div>
+    <div class="container" ng-include="'app/lwa.core/view/alert.html'"></div>
 
 </body>
 </html>
