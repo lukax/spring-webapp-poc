@@ -47,7 +47,7 @@ module.exports = function (grunt) {
             },
 
             tsdev: {
-                files: '<%= yeoman.app %>/script/**/*.ts',
+                files: '<%= yeoman.app %>/app/**/*.ts',
                 tasks: ['ts:dev', 'requirejs:dev']
             },
             tstest: {
