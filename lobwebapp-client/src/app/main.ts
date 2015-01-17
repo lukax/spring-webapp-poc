@@ -63,7 +63,7 @@ require.config({
 
 require(
   [
-    "angular", "angularRoute", "angularAnimate", "angularUi", "angularUiUtils", "angularUiBootstrap",
+    "angular",
     "lwa.core/module",
     "lwa.customer/module",
     "lwa.order/module",
@@ -72,16 +72,16 @@ require(
     "lwa.user/module"
   ],
   (angular: ng.IAngularStatic) => {
-    angular.module("lwa",
-      [
-        "lwa.core",
-        "lwa.customer",
-        "lwa.order",
-        "lwa.product",
-        "lwa.stock",
-        "lwa.user"
-      ]);
     (<any>angular.element(document)).ready(() => {
+      angular.module("lwa",
+        [
+          "lwa.core",
+          "lwa.customer",
+          "lwa.order",
+          "lwa.product",
+          "lwa.stock",
+          "lwa.user"
+        ]);
         angular.bootstrap(document, ["lwa"]);
     });
 });

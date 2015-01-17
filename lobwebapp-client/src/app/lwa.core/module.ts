@@ -1,4 +1,9 @@
 ﻿///<reference path="../reference.d.ts"/>
+///<amd-dependency path="angularRoute"/>
+///<amd-dependency path="angularAnimate"/>
+///<amd-dependency path="angularUi"/>
+///<amd-dependency path="angularUiUtils"/>
+///<amd-dependency path="angularUiBootstrap"/>
 import AlertService = require("./service/AlertServiceMock");
 import NavigatorService = require("./service/NavigatorServiceImpl");
 import Progress = require("./util/Progress");
@@ -9,6 +14,7 @@ import formUtilsDirective = require("./directive/FormUtilsDirective");
 import imageUploadDirective = require("./directive/ImageUploadDirective");
 import listUtilsDirective = require("./directive/ListUtilsDirective");
 import quickSearchDirective = require("./directive/QuickSearchDirective");
+
 
 var CoreModule = angular.module("lwa.core", [
     "ngRoute",
