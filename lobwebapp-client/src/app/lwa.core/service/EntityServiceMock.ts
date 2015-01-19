@@ -5,7 +5,7 @@ class EntityServiceMock<T extends domain.base.AbstractEntity> implements service
     private repository: T[];
 
     constructor(public $timeout: ng.ITimeoutService) {
-        this.repository = [];
+        this.repository = new Array<T>();
     }
 
     save(entity: T,
@@ -19,7 +19,7 @@ class EntityServiceMock<T extends domain.base.AbstractEntity> implements service
                     if (x.id > storId) storId = x.id;
                 });
             entity.id = ++storId;
-            this.getRepository().push(angular.copy(entity));
+            this.getRepository().push(angular.fromJson(angular.toJson(entity)));
 
             successCallback(entity, 200, (s) => {
                 if (s == "Entity-Id")
@@ -38,7 +38,7 @@ class EntityServiceMock<T extends domain.base.AbstractEntity> implements service
             this.getRepository().some(
                 (item: T, index: number) => {
                     if (item.id == entity.id) {
-                        this.getRepository()[index] = angular.copy(entity);
+                        this.getRepository()[index] = angular.fromJson(angular.toJson(entity));
                         success = true;
                         successCallback(entity, 200, () => "", null);
                         return true;
@@ -77,7 +77,7 @@ class EntityServiceMock<T extends domain.base.AbstractEntity> implements service
             this.getRepository().some(
                 (item: T) => {
                     if (item.id == id) {
-                        angular.copy(item, retrievedEntity);
+                        retrievedEntity = angular.fromJson(angular.toJson(item));
                         success = true;
                         return true;
                     }
@@ -93,7 +93,7 @@ class EntityServiceMock<T extends domain.base.AbstractEntity> implements service
         errorCallback: (data: domain.util.MessageResponse, status: number, headers: (headerName: string) => string, config: ng.IRequestConfig) => any,
         pageable?: domain.util.Page) {
         this.$timeout(() => {
-            var repo = this.getRepository();
+            var repo = angular.fromJson(angular.toJson(this.getRepository()));
             if (pageable) {
                 repo.splice(0, pageable.index);
                 repo.splice(pageable.index + pageable.size, repo.length - 1);
@@ -121,12 +121,11 @@ class EntityServiceMock<T extends domain.base.AbstractEntity> implements service
     }
 
     getRepository() {
-        return angular.copy(this.repository);
+        return this.repository;
     }
 
     addToRepository(entity: T) {
-        //Properly mock a json repository
-        this.repository.push(<T>(angular.fromJson(angular.toJson(entity))));
+      this.repository.push(angular.fromJson(angular.toJson(entity)));
     }
 }
 export = EntityServiceMock;
