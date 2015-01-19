@@ -13,7 +13,7 @@ ProductModule.controller("ListProductCtrl", ListProductCtrl);
 //ProductModule.service("ProductService", ProductServiceImpl);
 ProductModule.service("ProductService", ProductServiceMock);
 //Directives
-ProductModule.directive("ProductDetail", productDetailDirective);
+ProductModule.directive("productDetail", productDetailDirective);
 //Routes
 ProductModule.config(["$routeProvider", ($routeProvider: ng.IRouteProvider) => {
     $routeProvider
